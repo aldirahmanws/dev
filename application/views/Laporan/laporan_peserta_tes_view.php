@@ -13,7 +13,7 @@
 
                   <div class="col-sm-10">
                     <div class="col-sm-4">
-                    <select name="ss" id="ss" class="form-control" required="">
+                    <select name="ss" id="ss" class="form-control select2" required="">
                       <option value="">Pilih Tahun</option>  
                       <?php 
 
@@ -23,7 +23,7 @@
                             }
                             ?>
                     </select>
-                    <br>
+                    <br> <br>
                       <p class="btn btn-info" onclick="tampil()">Tampilkan</p>
                       <p class="btn btn-primary" onclick="print1()"> Cetak </p>
                   </div>

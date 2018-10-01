@@ -205,6 +205,29 @@ class Laporan extends CI_Controller {
 			redirect('login');
 		}
 	}
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public function laporan_buku_induk(){
+		if ($this->session->userdata('logged_in') == TRUE) {
+		$data['getProdi'] = $this->laporan_model->getProdi();
+		$data['main_view'] = 'Laporan/laporan_buku_induk_view';
+		$this->load->view('template', $data);	
+		} else {
+			redirect('login');
+		}
+	}
+
+	public function laporan_buku_indukku(){
+		if ($this->session->userdata('logged_in') == TRUE) {
+    $angkatan = $this->input->get('angkatan');
+    $id_prodi = $this->input->get('id_prodi');
+    $kelulusan = $this->input->get('kelulusan');
+    $this->laporan_model->laporan_buku_induk($angkatan, $id_prodi, $kelulusan);
+    } else {
+			redirect('login');
+		}	
+  	}
 }
 
 

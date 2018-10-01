@@ -261,6 +261,7 @@ a:hover .tooltiptext {
               <ul class="treeview-menu">
                 <li <?php if($this->uri->segment(2) == 'laporan_mahasiswa') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>laporan/laporan_mahasiswa"><i class="fa fa-circle-o"></i>Laporan Mahasiswa Per<br> Periode</a>
                 </li>
+                 <li <?php if($this->uri->segment(2) == 'laporan_buku_induk') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>laporan/laporan_buku_induk"><i class="fa fa-circle-o"></i>Laporan Buku Induk</a>
                 <li <?php if($this->uri->segment(2) == 'laporan_dmm') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>laporan/laporan_dmm"><i class="fa fa-circle-o"></i>Laporan KRS</a></li>
                 <li <?php if($this->uri->segment(2) == 'laporan_khs') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>laporan/laporan_khs"><i class="fa fa-circle-o"></i>Laporan KHS </a></li>
                 <li <?php if($this->uri->segment(2) == 'laporan_transkrip') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>laporan/laporan_transkrip"><i class="fa fa-circle-o"></i>Laporan Transkrip</a></li>
@@ -352,7 +353,7 @@ a:hover .tooltiptext {
         </li>
          <li <?php if($this->uri->segment(1) == 'informasi') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>informasi"><i class="fa fa-info-circle"></i>Informasi</a></li>
 
-        <li class="treeview <?php if($this->uri->segment(2) == 'laporan_mahasiswa' OR $this->uri->segment(2) == 'laporan_dmm' OR $this->uri->segment(2) == 'laporan_transkrip' OR $this->uri->segment(2) == 'laporan_tamu' OR $this->uri->segment(2) == 'laporan_peserta_tes' OR $this->uri->segment(2) == 'laporan_data_getstudent') echo 'active'; else echo  '';?>">
+        <li class="treeview <?php if($this->uri->segment(2) == 'laporan_mahasiswa' OR $this->uri->segment(2) == 'laporan_dmm' OR $this->uri->segment(2) == 'laporan_transkrip' OR $this->uri->segment(2) == 'laporan_tamu' OR $this->uri->segment(2) == 'laporan_peserta_tes' OR $this->uri->segment(2) == 'laporan_data_getstudent' OR $this->uri->segment(2) == 'laporan_buku_induk' OR $this->uri->segment(2) == 'laporan_khs') echo 'active'; else echo  '';?>">
               <a href="#"><i class="fa fa-share"></i><span>Laporan</span>
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
@@ -360,6 +361,8 @@ a:hover .tooltiptext {
               </a>
               <ul class="treeview-menu">
                 <li <?php if($this->uri->segment(2) == 'laporan_mahasiswa') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>laporan/laporan_mahasiswa"><i class="fa fa-circle-o"></i>Laporan Mahasiswa Per<br> Periode</a>
+                </li>
+                <li <?php if($this->uri->segment(2) == 'laporan_buku_induk') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>laporan/laporan_buku_induk"><i class="fa fa-circle-o"></i>Laporan Buku Induk</a>
                 </li>
                 <li <?php if($this->uri->segment(2) == 'laporan_dmm') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>laporan/laporan_dmm"><i class="fa fa-circle-o"></i>Laporan KRS</a></li>
                 <li <?php if($this->uri->segment(2) == 'laporan_transkrip') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>laporan/laporan_khs"><i class="fa fa-circle-o"></i>Laporan KHS <br>

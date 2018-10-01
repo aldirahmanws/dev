@@ -1052,6 +1052,165 @@ class Laporan_model extends CI_Model {
                 
                 }
     }
+
+    function laporan_buku_induk($angkatan, $id_prodi, $kelulusan){
+      $query = $this->db->select('tb_mahasiswa.nim, tb_mahasiswa.nama_mahasiswa, tb_bio.tempat_lahir, tb_bio.tanggal_lahir, tb_ibu.nama_ibu, tb_agama.agama, tb_bio.id_kelamin, tb_kependudukan.kewarganegaraan, tb_alamat.kecamatan, tb_alamat.kelurahan, tb_alamat.rt, tb_alamat.rw, tb_alamat.jalan, tb_bio.foto_mahasiswa, tb_sekolah.nama_sekolah, tb_alamat.alamat_mhs, tb_kontak.no_telepon, tb_kontak.no_hp, tb_mhs_add.tgl_du, tb_ld.no_seri_ijazah, tb_ld.tgl_sk_yudisium')
+                ->from('tb_ld')
+                ->join('tb_mahasiswa','tb_mahasiswa.id_mahasiswa=tb_ld.id_mahasiswa')
+                ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
+                ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
+                ->join('tb_bio','tb_mahasiswa.id_mahasiswa=tb_bio.id_mahasiswa')
+                ->join('tb_agama','tb_agama.id_agama=tb_bio.id_agama')
+                ->join('tb_mhs_add','tb_mhs_add.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
+                ->join('tb_ibu','tb_ibu.id_mahasiswa=tb_mahasiswa.id_mahasiswa' )
+                ->join('tb_kontak','tb_kontak.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
+                ->join('tb_kependudukan','tb_kependudukan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
+                ->join('tb_alamat','tb_alamat.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
+                ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_mahasiswa.id_sekolah', 'left' )
+                ->where('tb_ld.id_status', '11')
+                ->like('tb_mhs_add.tgl_du' , $angkatan)
+                ->like('tb_prodi.id_prodi' , $id_prodi)
+                ->like('tb_ld.tgl_sk_yudisium' , $kelulusan)
+                ->get();
+      $row = $query->result();
+      $pp = $this->db->select('nama_prodi')
+            ->where('tb_prodi.id_prodi', $id_prodi)
+            ->get('tb_prodi')
+            ->row();
+      $coo = $this->db->select('count(*) as total')
+                ->from('tb_ld')
+                ->join('tb_mahasiswa','tb_mahasiswa.id_mahasiswa=tb_ld.id_mahasiswa')
+                ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
+                ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
+                ->join('tb_bio','tb_mahasiswa.id_mahasiswa=tb_bio.id_mahasiswa')
+                ->join('tb_agama','tb_agama.id_agama=tb_bio.id_agama')
+                ->join('tb_mhs_add','tb_mhs_add.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
+                ->join('tb_ibu','tb_ibu.id_mahasiswa=tb_mahasiswa.id_mahasiswa', 'left' )
+                ->join('tb_kependudukan','tb_kependudukan.id_mahasiswa=tb_mahasiswa.id_mahasiswa', 'left' )
+                ->join('tb_alamat','tb_alamat.id_mahasiswa=tb_mahasiswa.id_mahasiswa', 'left' )
+                ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_mahasiswa.id_sekolah', 'left' )
+                ->where('tb_ld.id_status', '11')
+                ->like('tb_mhs_add.tgl_du' , $angkatan)
+                ->like('tb_prodi.id_prodi' , $id_prodi)
+                ->like('tb_ld.tgl_sk_yudisium' , $kelulusan)
+                ->get();
+      $total = $coo->row();
+
+                if ($query->num_rows() > 0)
+                { 
+                  if(empty($pp->nama_prodi)){
+                    $cc = 'Semua';
+                  } else {
+                    $cc = $pp->nama_prodi;
+                  }
+                  $no = 0;
+                  $option = "";
+                  $option .= '<section class="content" id="ea">
+      <div class="row">
+        <div class="col-xs-12">
+          
+            <h4><b>Laporan Buku Induk</h4></b>
+            <table>
+              <tr>
+                <td width="120px">Perguruan Tinggi</td>
+                <td width="300px">: 033082 - STIE Jakarta International College</td>
+                <td width="120px">Alamat</td>
+                <td>: Jalan Perunggu No 53-54 10640</td>
+              </tr>
+              <tr>
+                <td width="120px">Periode</td>
+                <td width="300px">: '.$angkatan.'</td>
+                <td width="120px">Program Studi</td>
+                <td>: '.$cc.'</td>
+              </tr>
+              <tr>
+                <td width="120px">Jumlah Mahasiswa</td>
+                <td width="300px">: '.$total->total.'</td>
+              </tr>
+            </table>
+            <br>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table2 table-bordered ">
+                <thead>
+                <tr>
+                  <th rowspan="3" style="text-align:center; width:3%">NO</th>
+                  <th rowspan="3" style="text-align:center">NIM</th>
+                  <th rowspan="3" style="text-align:center">NAMA MAHASISWA</th>
+                  <th rowspan="3" style="text-align:center">JK</th>
+                  <th rowspan="3" style="text-align:center">TEMPAT / TGL. LAHIR</th>
+                  <th rowspan="2" style="text-align:center">WNI</th>
+                  <th  style="text-align:center">NAMA SEKOLAH</th>
+                  <th rowspan="3" style="width:10%; text-align:center">FOTO</th>
+                </tr>
+                <tr>
+                  <th  style="text-align:center">TAHUN LULUS</th>
+                 
+                </tr>
+                <tr>
+                  <th style="text-align:center">AGAMA</th>
+                  <th style="text-align:center">NO. IJAZAH</th>
+                </tr>
+                </thead>
+                <tbody>';
+                  foreach ($row as $data) {
+                    if ($data->kewarganegaraan == 'Indonesia' OR $data->kewarganegaraan == 'indonesia' OR $data->kewarganegaraan == 'indo' OR $data->kewarganegaraan == '') {
+                      $warga = 'WNI'; 
+                    } else {
+                      $warga = 'WNA';
+                    }
+                    $option .= '
+                    <tr>
+                      <td rowspan="5">'.++$no.'</td>
+                      <td rowspan="3">'.$data->nim.'</td>
+                      <td rowspan="3"><b>'.$data->nama_mahasiswa.'</b></td>
+                      <td rowspan="5" style="text-align:center; width:3%">'.$data->id_kelamin.'</td>
+                      <td rowspan="5">'.$data->tempat_lahir.', '.$data->tanggal_lahir.'</td>
+                      <td rowspan="3">'.$warga.'</td>
+                      <td>'.$data->nama_sekolah.'</td>
+                      
+                      <td rowspan="5" style="width:10%; text-align:center"><img id="output" width="120" height="160" src="'.base_url('uploads/'.$data->foto_mahasiswa).'" alt="Your Image" onerror="this.src="uploads/user.jpg"></td>
+                    </tr>
+                    <tr>
+                     <td>'.substr($data->tgl_sk_yudisium,0,4).'</td>
+                    </tr>
+                    <tr>
+                     <td>'.$data->no_seri_ijazah.'</td>
+                    </tr>
+                    <tr>
+                      <td>Alamat : </td>
+                      <td>'.$data->alamat_mhs.'</td>
+                      <td rowspan="2">'.$data->agama.'</td>
+                      <td rowspan="2">Nama Ibu : '.$data->nama_ibu.'</td>
+                    </tr>
+                    <tr>
+                      <td>No. Telp : </td>
+                      <td>'.$data->no_telepon.'</td>
+                    </tr>
+                    '
+                    ;
+                    
+                  }
+                  $option .= '</tbody>
+              </table>
+            </div>
+            
+            <!-- /.box-body -->
+          
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>';
+                  echo $option;
+
+                } else{
+                echo '<span class="label label-success"> Tidak Ada Data.</span>';
+                
+                }
+    }
+
     function getPeriode()
     {
         $ea =  $this->db->select('tb_periode.semester')
