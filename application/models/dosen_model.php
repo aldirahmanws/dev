@@ -48,6 +48,27 @@ class Dosen_model extends CI_Model {
               ->row();
   }
 
+  public function  buat_kode_dosen()   {
+          $this->db->SELECT('RIGHT(tb_dosen.id_dosen,4) as kode', FALSE);
+          $this->db->order_by('id_dosen','DESC');    
+          $this->db->limit(1);    
+          $query = $this->db->get('tb_dosen');      //cek dulu apakah ada sudah ada kode di tabel.    
+          if($query->num_rows() <> 0){      
+           //jika kode ternyata sudah ada.      
+           $data = $query->row();      
+           $kode = intval($data->kode) + 1;    
+          }
+          else {      
+           //jika kode belum ada      
+           $kode = 1;    
+          }
+          $kodemax = str_pad($kode, 4, "0", STR_PAD_LEFT); // angka 4 menunjukkan jumlah digit angka 0
+          $kodejadi = "DO".$kodemax;    // hasilnya ODJ-9921-0001 dst.
+          return $kodejadi; 
+    }
+
+ 
+
 	 public function save_dosen()
     {
         $data = array(
@@ -62,6 +83,7 @@ class Dosen_model extends CI_Model {
             'id_agama'       => $this->input->post('agama'),
             'id_kelamin'       => $this->input->post('jenis_kelamin'),
             'alamat'       => $this->input->post('alamat'),
+            'nidn'       => $this->input->post('nidn'),
 
         );
     
@@ -97,6 +119,7 @@ class Dosen_model extends CI_Model {
             'id_agama'       => $this->input->post('agama'),
             'id_kelamin'       => $this->input->post('jenis_kelamin'),
             'alamat'       => $this->input->post('alamat'),
+            'nidn'       => $this->input->post('nidn'),
       );
 
    if (!empty($data)) {

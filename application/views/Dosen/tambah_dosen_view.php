@@ -10,14 +10,18 @@
                 <div class="col-lg-6">
                   <?php echo $this->session->flashdata('message');?>
                   <?php echo form_open('master_dosen/save_dosen'); ?>
+                    <div class="form-group">
+                        <label for="number">KODE DOSEN</label>
+                        <input type="text" name="id_dosen" class="form-control" id="id_dosen" value="<?= $kodedosen; ?>" readonly>
+                      </div>
                       <div class="form-group">
                         <label for="text">Nama Dosen</label>
-                        <input type="text" name="nama_dosen" class="form-control" id="nama_dosen">
+                        <input type="text" name="nama_dosen" class="form-control" id="nama_dosen" required="">
                          
                       </div>
                       <div class="form-group">
                         <label for="number">NIDN / NUP/ NIDK</label>
-                        <input type="text" name="id_dosen" class="form-control" id="id_dosen">
+                        <input type="text" name="nidn" class="form-control" id="nidn" >
                       </div>
                       <div class="form-group">
                         <label for="text">NIP</label>
@@ -43,12 +47,13 @@
                               <option value="6">Konghucu</option>
                           </select> 
                       </div>
-                       <div class="form-group">
+                       
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
                         <label for="text">Tempat Lahir</label>
                         <input type="text" name="tempat_lahir" class="form-control" id="keterangan" >
                       </div>
-                    </div>
-                    <div class="col-lg-6">
                        <div class="form-group">
                         <label for="text">Tanggal Lahir</label>
                         <input type="date" name="tanggal_lahir" class="form-control" id="tanggal_lahir" >

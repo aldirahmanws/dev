@@ -24,6 +24,7 @@ class Master_dosen extends CI_Controller {
 
 	public function page_tambah_dosen(){
 		if ($this->session->userdata('logged_in') == TRUE) {
+		$data['kodedosen'] = $this->dosen_model->buat_kode_dosen();
 		$data['main_view'] = 'Dosen/tambah_dosen_view';
 		$this->load->view('template', $data);
 		} else {
@@ -87,7 +88,7 @@ class Master_dosen extends CI_Controller {
 						$this->email->to($this->input->post('email'));
 						$this->email->subject('STIE Jakarta International College');
 						$this->email->message('
-							<h2> Akun Login Mahasiswa!</h2>
+							<h2> Akun Login Dosen!</h2>
 							<br> Username : '.$nim.'
 							<br> Password : '.$pass.' <br><br>
 							Terimakasih');

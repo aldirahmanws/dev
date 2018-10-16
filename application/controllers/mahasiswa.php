@@ -20,6 +20,7 @@ class Mahasiswa extends CI_Controller {
 			if($this->session->userdata('level') == 5){
 				$id_mahasiswa = $this->session->userdata('id_mahasiswa');
 				$data['id_mahasiswa'] = $this->session->userdata('id_mahasiswa');
+				$data['id_mahasiswa'] = $this->session->userdata('id_mahasiswa');
 				$data['mahasiswa'] = $this->mahasiswa_model->detail_mahasiswa_dikti($id_mahasiswa);
 				$data['main_view'] = 'Mahasiswa/lihat_mahasiswa_dikti_view';
 				$this->load->view('template', $data);	

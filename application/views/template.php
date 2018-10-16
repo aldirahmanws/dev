@@ -106,20 +106,20 @@ a:hover .tooltiptext {
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="../../index2.html" class="logo">
+    <a href="../../index2.html" class="logo" style="background-color: maroon">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>JIC</b></span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><img src="<?php echo base_url(); ?>/assets/img/STIE JIC-WHITE-01.png" alt="User Image" style="border: none;width: 120px;margin-top: -10px;"></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
+    <nav class="navbar navbar-static-top" style="background-color: maroon">
       <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" style="background-color: maroon">
         
       </a>
-      <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">
+      <div class="navbar-custom-menu" style="background-color: maroon">
+        <ul class="nav navbar-nav" style="background-color: maroon">
           <!-- Messages: style can be found in dropdown.less-->
           
           <!-- Notifications: style can be found in dropdown.less -->
@@ -127,8 +127,8 @@ a:hover .tooltiptext {
           <!-- Tasks: style can be found in dropdown.less -->
           
           <!-- User Account: style can be found in dropdown.less -->
-          <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <li class="dropdown user user-menu" style="background-color: maroon">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="background-color: maroon">
               <img src="<?php echo base_url(); ?>/assets/img/JIC-WHITE-02.png" class="user-image" alt="User Image">
               <span class="hidden-xs"><?php if ($this->session->userdata('level') == 2) { 
                       echo $dosen->nama_dosen;} else if ($this->session->userdata('level') == 5) {
@@ -140,7 +140,7 @@ a:hover .tooltiptext {
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
-              <li class="user-header">
+              <li class="user-header" style="background-color: maroon">
                 <img src="<?php echo base_url(); ?>/assets/img/JIC-WHITE-02.png" class="img-circle" alt="User Image">
 
                 <p>
