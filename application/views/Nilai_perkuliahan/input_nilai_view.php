@@ -23,27 +23,32 @@
         </tr> 
         <tr>
             <td class="left_column">Absensi </td>
-            <td>: <input type="text" name="absensi" id="absensi" class="validate[required] text-input" size="50" style="width:5%" maxlength="5" required="" value="<?php echo $dnilai->absensi; ?>">
+            <td>: <input type="text" name="absensi" id="absensi" class="validate[required] text-input" size="50" style="width:5%" maxlength="5" required="" value="<?php echo $dnilai->absensi; ?>"  onkeyup="sum(); get_skala()">
              </td>
         </tr> 
          <tr>
-            <td class="left_column">Nilai Tugas</td>
-            <td>: <input type="text" name="nilai_tugas" id="nilai_tugas" class="validate[required] text-input" size="50" style="width:5%" maxlength="5" required="" value="<?php echo $dnilai->nilai_tugas; ?>">
+            <td class="left_column">Nilai Tugas & Latihan</td>
+            <td>: <input type="text" name="nilai_tugas" id="nilai_tugas" class="validate[required] text-input" size="50" style="width:5%" maxlength="5" required="" value="<?php echo $dnilai->nilai_tugas; ?>" onkeyup="sum(); get_skala()">
+             </td>
+        </tr> 
+        <tr>
+            <td class="left_column">Penyajian Paper</td>
+            <td>: <input type="text" name="nilai_paper" id="nilai_paper" class="validate[required] text-input" size="50" style="width:5%" maxlength="5" required="" value="<?php echo $dnilai->nilai_paper; ?>" onkeyup="sum(); get_skala()">
              </td>
         </tr> 
          <tr>
             <td class="left_column">Nilai UTS </td>
-            <td>: <input type="text" name="nilai_uts" id="nilai_uts" class="validate[required] text-input" size="50" style="width:5%" maxlength="5" required="" value="<?php echo $dnilai->nilai_uts; ?>">
+            <td>: <input type="text" name="nilai_uts" id="nilai_uts" class="validate[required] text-input" size="50" style="width:5%" maxlength="5" required="" value="<?php echo $dnilai->nilai_uts; ?>" onkeyup="sum(); get_skala()">
              </td>
         </tr> 
          <tr>
             <td class="left_column">Nilai UAS </td>
-            <td>: <input type="text" name="nilai_uas" id="nilai_uas" class="validate[required] text-input" size="50" style="width:5%" maxlength="5" required="" value="<?php echo $dnilai->nilai_uas; ?>">
+            <td>: <input type="text" name="nilai_uas" id="nilai_uas" class="validate[required] text-input" size="50" style="width:5%" maxlength="5" required="" value="<?php echo $dnilai->nilai_uas; ?>" onkeyup="sum(); get_skala()">
              </td>
         </tr> 
         <tr>
-            <td class="left_column">Nilai Akhir<font color="#FF0000">*</font></td>
-            <td>: <input type="text" name="nilai" id="nilai" class="validate[required] text-input" size="50" style="width:5%" maxlength="5" required="" value="<?php echo $dnilai->nilai_d; ?>" onkeyup="return get_skala(this.value)">  <input type="hidden" name="id_skala_nilai" id="ee" value="">
+            <td class="left_column">Nilai Akhir</td>
+            <td>: <input type="text"  name="nilai" id="nilai" class="validate[required] text-input" size="50" style="width:5%; background-color: #E0E0E0" maxlength="5" required="" value="<?php echo $dnilai->nilai_d; ?>" readonly onkeyup="return get_skala(this.value)">  <input type="hidden" name="id_skala_nilai" id="ee" value="">
               <input type="hidden" name="id_kp" id="kp" value="<?php echo $dnilai->id_kp; ?>">
                <input type="hidden" name="id_prodi" id="id_prodi" value="<?php echo $dnilai->id_prodi; ?>">
              </td>
@@ -59,6 +64,21 @@
     </table>
 
 </div>
+
+
+<script>
+function sum() {
+      var absensi = document.getElementById('absensi').value;
+            var nilai_tugas = document.getElementById('nilai_tugas').value;
+            var nilai_paper = document.getElementById('nilai_paper').value;
+            var nilai_uts = document.getElementById('nilai_uts').value;
+            var nilai_uas = document.getElementById('nilai_uas').value;
+      		var nilai_akhir = ( parseInt(absensi) * 20 / 100 )  + ( parseInt(nilai_tugas) * 10 / 100 )  + ( parseInt(nilai_paper) * 10 / 100 )  + ( parseInt(nilai_uts) * 20 / 100 )  + ( parseInt(nilai_uas) * 40 / 100 )  ;
+      if (!isNaN(nilai_akhir)) {
+         document.getElementById('nilai').value = nilai_akhir;
+      }
+}
+</script>
 
 
 <script type="text/javascript">

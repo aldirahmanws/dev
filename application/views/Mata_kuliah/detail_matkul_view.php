@@ -3,20 +3,22 @@
             <i class="fa fa-user-plus"></i> Detail Mata Kuliah</div>
             <div class="panel-body">
               <div class="row">
-         <form  method="post" action="<?php echo base_url(); ?>mata_kuliah/edit_matkul/<?php echo $matkul->kode_matkul; ?>" enctype="multipart/form-data">
+         <form  method="post" action="<?php echo base_url(); ?>mata_kuliah/edit_matkul/<?php echo $matkul->id_matkul; ?>" enctype="multipart/form-data">
 		<table class="table">
     	 <tr>
           <td class="left_column" width="40%">Kode Mata Kuliah <font color="#FF0000">*</font></td>
             <td>: 
-      <input type="text" name="kode_matkul" id="kode_matkul" class="validate[required] text-input" maxlength="20" size="20" style="width:30%" value="<?php echo $matkul->kode_matkul;?>"></td>
+      <input type="text" name="id_matkul" id="id_matkul" class="validate[required] text-input" maxlength="20" size="20" style="width:30%" value="<?php echo $matkul->id_matkul;?>">
+    <input type="hidden" name="kode_matkul" id="kode_matkul" class="validate[required] text-input" maxlength="20" size="20" style="width:30%" value="<?php echo $matkul->kode_matkul;?>">
+  </td>
         </tr>
         <tr>
           <td class="left_column">Nama Mata Kuliah <font color="#FF0000">*</font></td>
-            <td>: <input type="text" name="nama_matkul" id="nama_matkul" class="validate[required] text-input" maxlength="20" size="20" style="width:80%" value="<?php echo $matkul->nama_matkul;?>"> </td>
+            <td>: <input type="text" name="nama_matkul" id="nama_matkul" class="validate[required] text-input"  size="20" style="width:80%" value="<?php echo $matkul->nama_matkul;?>"> </td>
         </tr> 
         <tr>
           <td class="left_column">Nama Mata Kuliah (<i>English Ver.</i>) <font color="#FF0000">*</font></td>
-            <td>: <input type="text" name="matkul_english" id="matkul_english" class="validate[required] text-input" maxlength="20" size="20" style="width:80%" value="<?php echo $matkul->matkul_english;?>"> </td>
+            <td>: <input type="text" name="matkul_english" id="matkul_english" class="validate[required] text-input"  size="20" style="width:80%" value="<?php echo $matkul->matkul_english;?>"> </td>
         </tr> 
         <tr>
             <td class="left_column">Program Studi <font color="#FF0000">*</font></td>

@@ -11,7 +11,7 @@
                   <?php echo $this->session->flashdata('message');?>
                       <div class="form-group">
                         <label for="email">Id Prodi</label>
-                        <input type="text" name="id_prodi" class="form-control" id="id_prodi" placeholder="Masukkan Id prodi" value="<?php echo $edit->id_prodi; ?>" readonly>
+                        <input type="text" name="id_prodi" class="form-control" id="id_prodi" placeholder="Masukkan Id prodi" value="<?php echo $edit->id_prodi; ?>" required>
                       </div>
                       <div class="form-group">
                         <label for="email">Nama Prodi</label>

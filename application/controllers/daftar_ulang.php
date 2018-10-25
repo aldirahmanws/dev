@@ -45,14 +45,14 @@ class daftar_ulang extends CI_Controller {
 							'protocol' => 'smtp',
 							'smtp_host' 	=> 'ssl://smtp.googlemail.com',
 							'smtp_port' 	=> 465,
-							'smtp_user' 	=> 'bayukrisnaovo@gmail.com',
-							'smtp_pass' 	=> 'pacnut12',
+							'smtp_user' 	=> 'jic.itservices@gmail.com',
+							'smtp_pass' 	=> 'm0nash01',
 							'mailtype'		=> 'html',
 							'wordwrap'	=> TRUE
 						);
 						$this->email->initialize($config);
 						$this->email->set_newline("\r\n");
-						$this->email->from('bayukrisnaovo@gmail.com','Panitia PSB');
+						$this->email->from('jic.itservices@gmail.com','STIE Jakarta International College');
 						$this->email->to($this->input->post('email'));
 						
 						$this->email->subject('STIE Jakarta International College');
@@ -104,14 +104,14 @@ class daftar_ulang extends CI_Controller {
 							'protocol' => 'smtp',
 							'smtp_host' 	=> 'ssl://smtp.googlemail.com',
 							'smtp_port' 	=> 465,
-							'smtp_user' 	=> 'bayukrisnaovo@gmail.com',
-							'smtp_pass' 	=> 'pacnut12',
+							'smtp_user' 	=> 'jic.itservices@gmail.com',
+							'smtp_pass' 	=> 'm0nash01',
 							'mailtype'		=> 'html',
 							'wordwrap'	=> TRUE
 						);
 						$this->email->initialize($config);
 						$this->email->set_newline("\r\n");
-						$this->email->from('bayukrisnaovo@gmail.com','Panitia PSB');
+						$this->email->from('jic.itservices@gmail.com.','STIE Jakarta International College');
 						$this->email->to($this->input->post('email'));
 						
 						$this->email->subject('STIE Jakarta International College');

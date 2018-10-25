@@ -60,14 +60,14 @@
               <li><a href="#tab_3" data-toggle="tab">Wali</a></li>
               <!--<li><a href="#tab_4" data-toggle="tab">Kebutuhan Khusus</a></li> -->
           
-              <li class="pull-right"><button class="btn btn-sm btn-primary btn-flat"><i class="fa fa-save"></i> Save</button> </li>
+              <li class="pull-right"><button class="btn btn-sm btn-primary btn-flat" id="myBtn"><i class="fa fa-save"></i> Save</button> </li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="tab_0">
                 <table width="90%" class="table">
                 <tr>
                     <td class="left_column" width="15%">NIM <font color="#FF0000">*</font></td>
-                    <td colspan="3">:  <input type="text" name="nim" id="nim" class="text-input" maxlength="16" size="50" style="width:40%" onkeydown="return onlyNumber(event,this,false,false)" required="">       
+                    <td colspan="3">:  <input type="text" name="nim" id="nim" class="text-input" maxlength="16" size="50" style="width:40%" onkeyup="checkAvailability()" required="">     <span id="user-availability-status"></span>  
                         <input type="hidden" name="jurusan" id="jurusan" class="text-input" maxlength="16" size="50" value="">       
                         <input type="hidden" name="alamat_mhs" id="alamat_mhs" class="text-input" maxlength="16" size="50" value="">       
 
@@ -76,7 +76,7 @@
                 </tr>
                 <tr>
                     <td class="left_column" width="15%" >Nama Prodi <font color="#FF0000">*</font></td>
-                    <td>: <select name="id_prodi" id="id_prodi" required="" onchange="return get_concentrate(this.value)">
+                    <td>: <select name="id_prodi" id="id_prodi" onchange="return get_concentrate(this.value);" onblur="return get_prodi_periode(this.value);" required="">
                             <option>Pilih Prodi</option>  
                              <?php 
 
@@ -91,7 +91,7 @@
                     <td class="left_column">Nama Konsentrasi <font color="#FF0000">*</font></td>
                     <td>:
                         <select name="concentrate" id="concentrate" required="" >
-                            <option>Pilih Konsentrasi</option>
+                            <option>Pilih Prodi Dahulu</option>
                             
                              </select></td>
                 </tr>
@@ -99,6 +99,14 @@
                     <td class="left_column" width="15%">Tanggal Pendaftaran <font color="#FF0000">*</font></td>
                     <td colspan="4">:  <input type="date" name="tgl_du" id="tgl_du" class="validate[required] text-input" maxlength="16" size="50" style="width:20%" required="">                            
                     </td>
+                </tr>
+                <tr>
+                    <td class="left_column">Periode Pendaftaran <font color="#FF0000">*</font></td>
+                    <td>:
+                        <select name="id_periode" id="id_periode" required="">
+                            <option> Pilih Prodi Dahulu </option>
+                            
+                             </select></td>
                 </tr>
                
                 <tr>
@@ -167,7 +175,7 @@
                 </tr>
                 <tr>
                     <td class="left_column">Jenis Tinggal</td>
-                    <td colspan="5">: <select name="jenis_tinggal" id="jenis_tinggal">
+                    <td colspan="5">: <select name="id_jt" id="id_jt">
                     <option value="">-- Pilih Jenis Tinggal --</option>
                     <option value="1">Bersama orang tua</option>
                     <option value="2">Wali</option>
@@ -179,7 +187,7 @@
                 </tr>
                  <tr>
                     <td class="left_column">Alat Transportasi</td>
-                    <td colspan="5">: <select name="alat_transportasi" id="alat_transportasi">
+                    <td colspan="5">: <select name="id_transportasi" id="id_transportasi">
                     <option value="">-- Pilih Alat Transportasi --</option>
                     <option value="1">Jalan kaki</option>
                     <option value="2">Angkutan umum/bus/pete-pete</option>
@@ -202,8 +210,8 @@
                     <td colspan="4">: <input type="text" name="no_hp" id="no_hp" class="text-input" maxlength="20" size="20" style="width:30%"></td>
                 </tr>
                 <tr>
-                    <td class="left_column">Email</td>
-                    <td colspan="5">: <input type="text" name="email" id="email" class="text-input" maxlength="60" size="60" style="width:30%"></td>
+                    <td class="left_column">Email <font color="#FF0000">*</font></td>
+                    <td colspan="5">: <input type="text" name="email" id="email" class="text-input" maxlength="60" size="60" style="width:30%" required=""></td>
                 </tr>
                 <tr>
                     <td class="left_column">Penerima KPS ? <font color="#FF0000">*</font></td>
@@ -313,9 +321,9 @@
                 </tr>
                 
                 <tr>
-                    <td class="left_column">Nama</td>
+                    <td class="left_column">Nama <font color="#FF0000">*</font></td>
                     <td>:
-            <input type="text" name="nama_ibu" id="nama_ibu" class="text-input" size="10" style="width:70%"></td>
+            <input type="text" name="nama_ibu" id="nama_ibu" class="text-input" size="10" style="width:70%" required=""></td>
                 </tr>
                 <tr>
                     <td class="left_column">Tanggal Lahir</td>
@@ -542,4 +550,32 @@ function undisableTxt() {
                     }
                 });
             }
-  </script>      <!-- /.col -->
+  </script> 
+
+  <script type="text/javascript">
+            function get_prodi_periode(p) {
+                var id_prodi = p;
+
+                $.ajax({
+                    url: '<?php echo base_url(); ?>kurikulum/get_prodi_periode/'+id_prodi,
+                    data: 'id_prodi='+id_prodi,
+                    type: 'GET',
+                    dataType: 'html',
+                    success: function(msg) {
+                        $("#id_periode").html(msg);
+                    }
+                });
+            }
+            function checkAvailability() {
+                $.ajax({
+                    url: '<?php echo base_url(); ?>daftar_ulang/cek_nim/',
+                    data: 'nim='+$("#nim").val(),
+                    type: 'POST',
+                    dataType: 'html',
+                    success:function(data){
+                    $("#user-availability-status").html(data);
+                    },
+                    error:function (){}
+                });
+            }
+</script>     <!-- /.col -->

@@ -127,7 +127,7 @@
 
       <tr>
       <td><?php echo ++$no;?></td>
-        <td style="text-align:center"><?php echo $data->kode_matkul;?></td>
+        <td style="text-align:center"><?php echo $data->id_matkul;?></td>
         <td style="text-align:center"><?php echo $data->nama_matkul;?></td>
         <td style="text-align:center"><?php $totalbobot += $data->bobot_matkul;echo $data->bobot_matkul;?></td>
         <td style="text-align:center"><?php $totaltm += $data->bobot_tatap_muka;echo $data->bobot_tatap_muka;?></td>

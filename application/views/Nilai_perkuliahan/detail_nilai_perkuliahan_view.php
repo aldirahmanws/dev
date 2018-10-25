@@ -58,12 +58,13 @@
     <th width="25%" style="text-align:center" rowspan="2">Nama Mahasiswa</th>
     <th width="5%" style="text-align:center" rowspan="2">Angkatan</th>
     <th width="5%" style="text-align:center" rowspan="2">Absensi</th>
-    <th width="5%" style="text-align:center" colspan="3">Nilai</th>
+    <th width="5%" style="text-align:center" colspan="4">Nilai</th>
     <th width="10%" style="text-align:center" colspan="2">Nilai Akhir</th>
     <th style="text-align:center" rowspan="2"> Aksi</th>
   </tr>
    <tr>
     <th  style="text-align:center">Tugas</th>
+    <th  style="text-align:center">Paper</th>
     <th style="text-align:center">UTS</th>
     <th  style="text-align:center">UAS</th>
     <th  style="text-align:center">Angka</th>
@@ -89,6 +90,10 @@
           $a = '<font style="color:red" class="glyphicon glyphicon-warning-sign"></font>';
         } else {
           $a = $data->nilai_tugas; }; echo $a;?></td>
+        <td style="text-align:center"><?php if ($data->nilai_paper == 0) {
+          $a = '<font style="color:red" class="glyphicon glyphicon-warning-sign"></font>';
+        } else {
+          $a = $data->nilai_paper; }; echo $a;?></td>
         <td style="text-align:center"><?php if ($data->nilai_uts == 0) {
           $a = '<font style="color:red" class="glyphicon glyphicon-warning-sign"></font>';
         } else {

@@ -32,19 +32,11 @@ class Setting_periode extends CI_Controller {
 		}
 	}
 	public function simpan_periode()
-	{
-		//set rule di setiap form input
-		$this->form_validation->set_rules('target_mhs_baru', 'Id prodi', 'trim|required');		
-		
-		if ($this->form_validation->run() == TRUE){
+	{	
 			if($this->periode_model->simpan_periode() == TRUE){
 				$this->session->set_flashdata('message', '<div class="alert alert-success"> Periode telah tersimpan </div>');
             	redirect('setting_periode');
 			} 
-			} else{
-				$this->session->set_flashdata('message', '<div class="alert alert-danger"> '.validation_errors().' </div>');
-            	redirect('setting_periode');
-		}
 	}
 	public function edit_periode(){
 			$id_periode = $this->input->post('id_periode');

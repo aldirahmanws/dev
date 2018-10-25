@@ -200,7 +200,7 @@ class Kelas_perkuliahan extends CI_Controller {
 			if(count($result) > 0){
 				foreach ($result as $row) 
 					$result_array[] = array(
-						'label' => $row->kode_matkul.' - '.$row->nama_matkul.' - (sks) '.$row->bobot_matkul.'-'.$row->nama_kurikulum,
+						'label' => $row->id_matkul.' - '.$row->nama_matkul.' - (sks) '.$row->bobot_matkul.'-'.$row->nama_kurikulum,
 						'bobot' => $row->bobot_matkul,
 						'kurikulum' => $row->nama_kurikulum,
 						'prodi' => $row->id_prodi,
@@ -218,7 +218,7 @@ class Kelas_perkuliahan extends CI_Controller {
 			if(count($result) > 0){
 				foreach ($result as $row) 
 					$result_array[] = array(
-						'label' => $row->hari.' - ('.substr($row->jam_awal,0,-3).'-'.substr($row->jam_akhir,0,-3).') - '.$row->nama_matkul,
+						'label' => $row->nama_prodi.' - '.$row->hari.' - ('.substr($row->jam_awal,0,-3).'-'.substr($row->jam_akhir,0,-3).') - '.$row->nama_matkul,
 						'ruang' => $row->nama_ruang,
 						'prodi' => $row->nama_prodi,
 						'konsentrasi' => $row->nama_konsentrasi,
@@ -238,6 +238,21 @@ class Kelas_perkuliahan extends CI_Controller {
 						'label' => $row->nama_kelas.' - '.$row->nama_matkul.' - '.$row->nama_prodi,
 						'prodi' => $row->id_prodi,
 						'periode' => $row->id_periode,
+						'id' => $row->id_kp);
+				echo json_encode($result_array);
+			
+			}
+		}
+	}
+
+	public function get_autocomplete_kp_transfer(){
+		if(isset($_GET['term'])){
+			$result = $this->kelas_perkuliahan_model->autocomplete_kp_transfer($_GET['term']);
+			if(count($result) > 0){
+				foreach ($result as $row) 
+					$result_array[] = array(
+						'label' => $row->nama_prodi.' - '.$row->nama_matkul.' - '.$row->nama_kurikulum,
+						'km' => $row->kode_matkul,
 						'id' => $row->id_kp);
 				echo json_encode($result_array);
 			

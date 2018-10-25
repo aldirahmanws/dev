@@ -10,6 +10,7 @@ class Nilai_perkuliahan extends CI_Controller {
 		$this->load->model('daftar_ulang_model');
 		$this->load->model('finance_model');
 		$this->load->model('nilai_perkuliahan_model');
+		$this->load->model('dosen_model');
 	}
 
 
@@ -36,16 +37,20 @@ class Nilai_perkuliahan extends CI_Controller {
 			$this->load->view('template', $data);
 	}
 
-	public function get_skala() {
-		
-		$nilai = $this->input->post('nilai');
-		$id_prodi = $this->input->post('id_prodi');
-	    $this->nilai_perkuliahan_model->get_skala($nilai, $id_prodi);	
-	}
 
 	public function detail_nilai(){
 		if ($this->session->userdata('logged_in') == TRUE) {
+				
 				$id_kp = $this->uri->segment(3);
+				
+				if($this->session->userdata('level') == 2){
+				$username = $this->session->userdata('username');
+				$session = $this->dosen_model->detail_dosen($username);
+				$id_dosen = $session->id_dosen;
+			} else {
+				$id_dosen = $this->uri->segment(4);
+			}
+				$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
 				$data['kp'] = $this->nilai_perkuliahan_model->detail_nilai($id_kp);
 				$data['dsn'] = $this->kelas_perkuliahan_model->jumlah_dosen($id_kp);
 				$data['mhs'] = $this->kelas_perkuliahan_model->data_kelas_mhs($id_kp);
@@ -60,6 +65,14 @@ class Nilai_perkuliahan extends CI_Controller {
 	public function edit_nilai(){
 		if ($this->session->userdata('logged_in') == TRUE) {
 				$id_kp = $this->uri->segment(3);
+
+				if($this->session->userdata('level') == 2){
+				$username = $this->session->userdata('username');
+				$session = $this->dosen_model->detail_dosen($username);
+				$id_dosen = $session->id_dosen;
+				$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
+			} 
+				
 				$data['dnilai'] = $this->nilai_perkuliahan_model->edit_nilai($id_kp);
 				$data['skala'] = $this->nilai_perkuliahan_model->data_skala_nilai();
 				$data['main_view'] = 'Nilai_perkuliahan/input_nilai_view';
@@ -68,6 +81,13 @@ class Nilai_perkuliahan extends CI_Controller {
 			redirect('login');
 		}
 	}
+
+	public function get_skala() {
+		
+		$nilai = $this->input->post('nilai');
+		$id_prodi = $this->input->post('id_prodi');
+	    $this->nilai_perkuliahan_model->get_skala($nilai, $id_prodi);	
+	} 
 
 	public function save_edit_nilai(){
 			$id_kelas_mhs = $this->uri->segment(3);

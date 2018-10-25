@@ -23,7 +23,6 @@ class Master_konsentrasi extends CI_Controller {
 
 	public function page_tambah_konsentrasi(){
 		if ($this->session->userdata('logged_in') == TRUE) {
-				$data['kodeunik'] = $this->konsentrasi_model->buat_kode();
 				$data['drop_down_prodi'] = $this->konsentrasi_model->get_prodi();
 				$data['konsentrasi'] = $this->konsentrasi_model->data_konsentrasi();
 				$data['main_view'] = 'Konsentrasi/tambah_konsentrasi_view';

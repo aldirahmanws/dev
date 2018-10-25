@@ -92,7 +92,7 @@ class Kelas_perkuliahan_model extends CI_Model {
      $this->db->from('tb_kelas_mhs');
      $this->db->join('tb_mahasiswa','tb_mahasiswa.id_mahasiswa=tb_kelas_mhs.id_mahasiswa');
      $this->db->join('tb_bio','tb_bio.id_mahasiswa=tb_kelas_mhs.id_mahasiswa');
-     $this->db->join('tb_mhs_add','tb_mhs_add.id_mahasiswa=tb_kelas_mhs.id_mahasiswa');
+     $this->db->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa');
      $this->db->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_mahasiswa.id_konsentrasi');
      $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi');
      $this->db->join('tb_kelamin','tb_kelamin.id_kelamin=tb_bio.id_kelamin');
@@ -151,13 +151,29 @@ class Kelas_perkuliahan_model extends CI_Model {
      return $query->result();
   }
 
+  public function autocomplete_kp_transfer($nama){
+    $this->db->select('*');
+     $this->db->from('tb_kp');
+     $this->db->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal');
+     $this->db->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_jadwal.id_konsentrasi');
+     $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi');
+     $this->db->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum');
+     $this->db->join('tb_kurikulum','tb_kurikulum.id_kurikulum=tb_detail_kurikulum.id_kurikulum');
+     $this->db->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul');
+     $this->db->like('tb_matkul.nama_matkul', $nama);
+     $query = $this->db->get();
+     return $query->result();
+  }
+
   public function detail_kelas_mhs($nama){
     $this->db->select('*');
      $this->db->from('tb_kelas_mhs');
      $this->db->join('tb_mahasiswa','tb_mahasiswa.id_mahasiswa=tb_kelas_mhs.id_mahasiswa');
      $this->db->join('tb_bio','tb_bio.id_mahasiswa=tb_mahasiswa.id_mahasiswa');
+     $this->db->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa');
      $this->db->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_mahasiswa.id_konsentrasi');
      $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi');
+     $this->db->join('tb_kelamin','tb_kelamin.id_kelamin=tb_bio.id_kelamin');
      $this->db->where('tb_kelas_mhs.id_kelas_mhs', $nama);
      $query = $this->db->get();
      return $query->row();

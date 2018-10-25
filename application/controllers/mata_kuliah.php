@@ -61,9 +61,9 @@ class Mata_kuliah extends CI_Controller {
 		}
 	}
 	public function edit_matkul(){
-			$id_periode = $this->input->post('nama_matkul');
-					if ($this->mata_kuliah_model->edit_matkul($id_periode) == TRUE) {
-						$this->session->set_flashdata('message', '<div class="alert alert-success"> Edit '.$id_periode.' berhasil </div>');
+			$kode_matkul = $this->input->post('kode_matkul');
+					if ($this->mata_kuliah_model->edit_matkul($kode_matkul) == TRUE) {
+						$this->session->set_flashdata('message', '<div class="alert alert-success"> Edit mata kuliah berhasil </div>');
             			redirect('mata_kuliah');
 					} else {
 						$this->session->set_flashdata('message', '<div class="alert alert-danger"> Edit '.$id_periode.' gagal . </div>');

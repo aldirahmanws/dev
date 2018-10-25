@@ -12,11 +12,11 @@
         </tr>
         <tr>
             <td class="left_column">Nama Mata Kuliah <font color="#FF0000">*</font></td>
-            <td>: <input type="text" name="nama_matkul" id="nama_matkul" class="validate[required] text-input" maxlength="20" size="20" style="width:50%" required=""></td>
+            <td>: <input type="text" name="nama_matkul" id="nama_matkul" class="validate[required] text-input"  size="20" style="width:50%" required=""></td>
         </tr> 
         <tr>
             <td class="left_column">Nama Mata Kuliah (<i>English Ver.</i>)<font color="#FF0000">*</font></td>
-            <td>: <input type="text" name="matkul_english" id="matkul_english" class="validate[required] text-input" maxlength="20" size="20" style="width:50%" required=""></td>
+            <td>: <input type="text" name="matkul_english" id="matkul_english" class="validate[required] text-input"  size="20" style="width:50%" required=""></td>
         </tr> 
         <tr>
             <td class="left_column">Program Studi <font color="#FF0000">*</font></td>

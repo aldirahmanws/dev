@@ -19,6 +19,7 @@
                 <thead>
                 <tr>
                   <th>No</th>
+                  <th>Prodi</th>
                   <th>Mata Kuliah</th>
                   <th>Hari</th>
                   <th>Waktu</th>
@@ -38,6 +39,7 @@
                   
                 <tr>
                   <td>'.++$no.'</td>
+                  <td>'.$data->nama_prodi.'</td>
 
                   <td><a href="" data-toggle="modal" data-target="#modal_lihat'.$data->id_jadwal.'">'.$data->nama_matkul.'</a></td>
                   <td>'.$data->hari.'</td>

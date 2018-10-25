@@ -34,7 +34,7 @@
         <tr>
             <td class="left_column">Angkatan</td>
             <td>: 
-            <input type="text" name="angkatan" id="angkatan" class="text-input" size="2"  style="width:10%; background-color:#E0E0E0;" value="<?php echo $mhs->angkatan; ?>" readonly>         
+            <input type="text" name="angkatan" id="angkatan" class="text-input" size="2"  style="width:10%; background-color:#E0E0E0;" value="<?php echo substr($mhs->tgl_du,0,4); ?>" readonly>         
             </td>
            
             

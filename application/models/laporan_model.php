@@ -492,7 +492,7 @@ class Laporan_model extends CI_Model {
                 }
     }
     function laporan_dmm_dosen($semester, $id_dosen){
-      $query = $this->db->select('tb_matkul.kode_matkul, tb_matkul.nama_matkul, tb_matkul.bobot_matkul, tb_kp.id_kp, tb_prodi.nama_prodi')
+      $query = $this->db->select('tb_matkul.kode_matkul, tb_matkul.nama_matkul, tb_matkul.bobot_matkul, tb_kp.id_kp, tb_prodi.nama_prodi, tb_matkul.id_matkul')
                 ->distinct()
                 ->from('tb_kelas_dosen')
                 ->join('tb_dosen','tb_dosen.id_dosen=tb_kelas_dosen.id_dosen')
@@ -555,7 +555,7 @@ class Laporan_model extends CI_Model {
                     $option .= "
                     <tr>
                       <td>".++$no."</td>
-                      <td>".$data->kode_matkul."</td>
+                      <td>".$data->id_matkul."</td>
                       <td>".$data->nama_matkul."</td>
                       <td>".$data->bobot_matkul."</td>
                       <td>".$data->nama_prodi."</td>
@@ -654,7 +654,7 @@ class Laporan_model extends CI_Model {
                   <th>Nama Matakuliah</th>
                   <th>Sks</th>
                   <th>Jurusan</th>
-                  <th>Kode Dosen</th>
+                  <th>NIDN</th>
                   <th>Nama Dosen</th>
                 </tr>
                 </thead>
@@ -663,11 +663,11 @@ class Laporan_model extends CI_Model {
                     $option .= "
                     <tr>
                       <td>".++$no."</td>
-                      <td>".$data->kode_matkul."</td>
+                      <td>".$data->id_matkul."</td>
                       <td>".$data->nama_matkul."</td>
                       <td>".$data->bobot_matkul."</td>
                       <td>".$data->nama_prodi."</td>
-                      <td>".$data->id_dosen."</td>
+                      <td>".$data->nidn."</td>
                       <td>".$data->nama_dosen."</td>
                     </tr>"
                     ;
@@ -700,6 +700,7 @@ class Laporan_model extends CI_Model {
                 ->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode')
                 ->join('tb_mahasiswa','tb_mahasiswa.id_mahasiswa=tb_kelas_mhs.id_mahasiswa')
                 ->join('tb_bio','tb_mahasiswa.id_mahasiswa=tb_bio.id_mahasiswa')
+                ->join('tb_mhs_add','tb_mhs_add.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
                 ->join('tb_konsentrasi','tb_mahasiswa.id_konsentrasi=tb_konsentrasi.id_konsentrasi')
                 ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
                 ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
@@ -719,6 +720,7 @@ class Laporan_model extends CI_Model {
                 ->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode')
                 ->join('tb_mahasiswa','tb_mahasiswa.id_mahasiswa=tb_kelas_mhs.id_mahasiswa')
                 ->join('tb_bio','tb_mahasiswa.id_mahasiswa=tb_bio.id_mahasiswa')
+                ->join('tb_mhs_add','tb_mhs_add.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
                 ->join('tb_konsentrasi','tb_mahasiswa.id_konsentrasi=tb_konsentrasi.id_konsentrasi')
                 ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
                 ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
@@ -776,7 +778,7 @@ class Laporan_model extends CI_Model {
                       <td>".$data->nim."</td>
                       <td>".$data->nama_mahasiswa."</td>
                       <td>".$data->nama_prodi."</td>
-                      <td>".$data->angkatan."</td>
+                      <td>".substr($data->tgl_du, 0,4)."</td>
                     </tr>"
                     ;
                     
@@ -879,7 +881,7 @@ class Laporan_model extends CI_Model {
                     $option .= "
                     <tr>
                       <td>".++$no."</td>
-                      <td>".$data->kode_matkul."</td>
+                      <td>".$data->id_matkul."</td>
                       <td>".$data->nama_matkul."</td>
                       <td style='text-align:right'>".$data->bobot_matkul."</td>
                       <td style='text-align:right'>".$data->nilai_d."</td>
@@ -1003,7 +1005,7 @@ class Laporan_model extends CI_Model {
                     $option .= "
                     <tr>
                       <td>".++$no."</td>
-                      <td>".$data->kode_matkul."</td>
+                      <td>".$data->id_matkul."</td>
                       <td>".$data->nama_matkul."</td>
                       <td style='text-align:right'>".$data->bobot_matkul."</td>
                       <td style='text-align:right'>".$data->nilai_d."</td>

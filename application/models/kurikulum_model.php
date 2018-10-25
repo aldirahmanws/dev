@@ -37,6 +37,7 @@ class Kurikulum_model extends CI_Model {
     public function autocomplete($nama){
      $this->db->select('*');
      $this->db->from('tb_matkul');
+     $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_matkul.id_prodi');
      $this->db->like('tb_matkul.nama_matkul',$nama);
      $query = $this->db->get();
      return $query->result();

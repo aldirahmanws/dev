@@ -57,6 +57,7 @@
                 <thead>
                 <tr>
                   <th>No</th>
+                  <th>Prodi</th>
                   <th>Kode MK</th>
                   <th>Nama MK</th>
                   <th>Nama Kelas</th>
@@ -86,7 +87,8 @@
                   echo '                  
                 <tr>
                   <td>'.++$no.'</td>
-                  <td><a href="'.base_url('kelas_perkuliahan/detail_kelas/'.$data->id_kp).'">'.$data->kode_matkul.'</a></td>
+                  <td>'.$data->nama_prodi.'</td>
+                  <td><a href="'.base_url('kelas_perkuliahan/detail_kelas/'.$data->id_kp).'">'.$data->id_matkul.'</a></td>
                   <td>'.$data->nama_matkul.'</td>
                   <td>'.$data->nama_kelas.'</td>
                   <td>'.$data->bobot_matkul.'</td>

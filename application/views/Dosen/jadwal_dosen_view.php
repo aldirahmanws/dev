@@ -66,6 +66,7 @@
                 <thead>
                 <tr>
                   <th  style="width:5%">No</th>
+                  <th style="width:10%">Prodi</th>
                   <th style="width:50%">Nama Matkul</th>
                   <th style="width:10%">Semester</th>
                   <th style="width:30%">Waktu</th>
@@ -83,6 +84,7 @@
                   
                 <tr>
                   <td style="width:5%">'.++$no.'</td>
+                  <td style="width:10%">'.$i->nama_prodi.'</td>
                   <td style="width:50%"><a href="'.base_url('nilai_perkuliahan/detail_nilai/'.$i->id_kp.'/'.$dosen->id_dosen).'"/>'.$i->nama_matkul.'</td>
                   <td style="width:10%">'.$i->semester_kurikulum.'</td>
                   <td style="width:30%">'.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).'</td>
@@ -106,6 +108,7 @@
                 <thead>
                 <tr>
                   <th  style="width:5%">No</th>
+                  <th style="width:10%">Prodi</th>
                   <th style="width:50%">Nama Matkul</th>
                   <th style="width:10%">Semester</th>
                   <th style="width:30%">Waktu</th>
@@ -123,6 +126,7 @@
                   
                 <tr>
                   <td style="width:5%">'.++$no.'</td>
+                  <td style="width:10%">'.$i->nama_prodi.'</td>
                   <td style="width:50%"><a href="'.base_url('nilai_perkuliahan/detail_nilai/'.$i->id_kp.'/'.$dosen->id_dosen).'"/>'.$i->nama_matkul.'</td>
                   <td style="width:10%">'.$i->semester_kurikulum.'</td>
                   <td style="width:30%">'.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).'</td>
@@ -146,6 +150,7 @@
                 <thead>
                 <tr>
                   <th  style="width:5%">No</th>
+                  <th style="width:10%">Prodi</th>
                   <th style="width:50%">Nama Matkul</th>
                   <th style="width:10%">Semester</th>
                   <th style="width:30%">Waktu</th>
@@ -163,6 +168,7 @@
                   
                 <tr>
                   <td style="width:5%">'.++$no.'</td>
+                  <td style="width:10%">'.$i->nama_prodi.'</td>
                   <td style="width:50%"><a href="'.base_url('nilai_perkuliahan/detail_nilai/'.$i->id_kp.'/'.$dosen->id_dosen).'"/>'.$i->nama_matkul.'</td>
                   <td style="width:10%">'.$i->semester_kurikulum.'</td>
                   <td style="width:30%">'.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).'</td>
@@ -186,6 +192,7 @@
                 <thead>
                 <tr>
                   <th  style="width:5%">No</th>
+                  <th style="width:10%">Prodi</th>
                   <th style="width:50%">Nama Matkul</th>
                   <th style="width:10%">Semester</th>
                   <th style="width:30%">Waktu</th>
@@ -203,6 +210,7 @@
                   
                 <tr>
                   <td style="width:5%">'.++$no.'</td>
+                  <td style="width:10%">'.$i->nama_prodi.'</td>
                   <td style="width:50%"><a href="'.base_url('nilai_perkuliahan/detail_nilai/'.$i->id_kp.'/'.$dosen->id_dosen).'"/>'.$i->nama_matkul.'</td>
                   <td style="width:10%">'.$i->semester_kurikulum.'</td>
                   <td style="width:30%">'.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).'</td>
@@ -226,6 +234,7 @@
                 <thead>
                 <tr>
                   <th  style="width:5%">No</th>
+                  <th style="width:10%">Prodi</th>
                   <th style="width:50%">Nama Matkul</th>
                   <th style="width:10%">Semester</th>
                   <th style="width:30%">Waktu</th>
@@ -243,6 +252,7 @@
                   
                 <tr>
                   <td style="width:5%">'.++$no.'</td>
+                  <td style="width:10%">'.$i->nama_prodi.'</td>
                   <td style="width:50%"><a href="'.base_url('nilai_perkuliahan/detail_nilai/'.$i->id_kp.'/'.$dosen->id_dosen).'"/>'.$i->nama_matkul.'</td>
                   <td style="width:10%">'.$i->semester_kurikulum.'</td>
                   <td style="width:30%">'.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).'</td>

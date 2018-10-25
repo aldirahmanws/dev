@@ -119,13 +119,15 @@ class Kurikulum extends CI_Controller {
 			if(count($result) > 0){
 				foreach ($result as $row) 
 					$result_array[] = array(
-						'label' => $row->kode_matkul.' - '.$row->nama_matkul.' - (sks) '.$row->bobot_matkul,
+						'label' => $row->id_matkul.' - '.$row->nama_matkul.' - '.$row->nama_prodi,
 						'bobot' => $row->bobot_matkul,
 						'bp' => $row->bobot_praktikum,
 						'btm' => $row->bobot_tatap_muka,
 						'bpl' => $row->bobot_praktik_lapangan,
 						'bs' => $row->bobot_simulasi,
+						'im' => $row->id_matkul,
 						'id' => $row->kode_matkul);
+
 				echo json_encode($result_array);
 			
 			}

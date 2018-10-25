@@ -51,22 +51,24 @@
                       
                </form>
                <br>
-
+              <div class="table-responsive">
               <table id="example3" class="table2 table-hover table-striped table-condensed table-bordered" style="text-transform: uppercase;">
                 
                 <thead>
                 <tr>
                   <th rowspan="2" style="text-align: center;width: 2%">No</th>
+                  <th rowspan="2" style="text-align: center;width: 5%">Prodi</th>
                   <th rowspan="2" style="text-align: center;width: 20%">Kode MK</th>
                   <th rowspan="2" style="text-align: center;width: 40%">Nama MK</th>
                   <th rowspan="2" style="text-align: center;width: 10%">Nama Kelas</th>
                   <th rowspan="2" style="text-align: center;width: 10%">Bobot (SKS)</th>
                   <th rowspan="2" style="text-align: center;width: 10%">Total Mahasiswa</th>
-                  <th colspan="5" style="text-align: center;width: 15%">Data Terisi</th>
+                  <th colspan="6" style="text-align: center;width: 15%">Data Terisi</th>
                 </tr>
                 <tr>
                   <th style="text-align: center;width: 3%">Absensi</th>
                   <th style="text-align: center;width: 3%">Nilai Tugas</th>
+                  <th style="text-align: center;width: 3%">Nilai Paper</th>
                   <th style="text-align: center;width: 3%">Nilai UTS</th>
                   <th style="text-align: center;width: 3%">Nilai UAS</th>
                   <th style="text-align: center;width: 3%">Nilai Akhir</th>
@@ -86,18 +88,21 @@
                   $nilai_tugas = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs WHERE nilai_tugas != 0 AND id_kp = '$data->id_kp'")->row();
                   $nilai_uts = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs WHERE nilai_uts != 0 AND id_kp = '$data->id_kp'")->row();
                   $nilai_uas = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs WHERE nilai_uas != 0 AND id_kp = '$data->id_kp'")->row();
+                  $nilai_paper = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs WHERE nilai_uas != 0 AND id_kp = '$data->id_kp'")->row();
                   
 
                   echo '                  
                 <tr>
                   <td>'.++$no.'</td>
-                  <td><a href="'.base_url('nilai_perkuliahan/detail_nilai/'.$data->id_kp).'">'.$data->kode_matkul.'</a></td>
+                  <td>'.$data->nama_prodi.'</td>
+                  <td><a href="'.base_url('nilai_perkuliahan/detail_nilai/'.$data->id_kp).'">'.$data->id_matkul.'</a></td>
                   <td>'.$data->nama_matkul.'</td>
                   <td>'.$data->nama_kelas.'</td>
                   <td>'.$data->bobot_matkul.'</td>
                   <td>'.$total_mahasiswa->total.'</td>
                   <td>'.$absensi->total.'</td>
                   <td>'.$nilai_tugas->total.'</td>
+                  <td>'.$nilai_paper->total.'</td>
                   <td>'.$nilai_uts->total.'</td>
                   <td>'.$nilai_uas->total.'</td>
                   <td>'.$total_nilai->total.'</td>
@@ -111,6 +116,7 @@
         
                 </tbody>
               </table>
+              </div>
             </div>
             
             <!-- /.box-body -->

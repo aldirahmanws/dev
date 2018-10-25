@@ -23,7 +23,6 @@ class Master_prodi extends CI_Controller {
 	public function page_tambah_prodi(){
 		if ($this->session->userdata('logged_in') == TRUE) {
 		$data['main_view'] = 'Prodi/tambah_prodi_view';
-		$data['kodeunik'] = $this->prodi_model->buat_kode();
 		$this->load->view('template', $data);
 		} else {
 			redirect('login');
@@ -39,8 +38,8 @@ class Master_prodi extends CI_Controller {
 		
 		if ($this->form_validation->run() == TRUE){
 			if($this->prodi_model->save_prodi() == TRUE){
-				$prodi = $this->input->post('prodi');
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Registrasi '.$nama_prodi.' berhasil didaftarkan. </div>');
+				$prodi = $this->input->post('nama_prodi');
+				$this->session->set_flashdata('message', '<div class="alert alert-success"> Data '.$prodi.' berhasil ditambahkan </div>');
             	redirect('master_prodi');
 			} 
 			} else{
@@ -82,16 +81,16 @@ class Master_prodi extends CI_Controller {
 
 				if ($this->form_validation->run() == TRUE) {
 					if ($this->prodi_model->save_edit_prodi($id_prodi) == TRUE) {
-						$data['notif'] = 'Edit prodi berhasil';
+						$this->session->set_flashdata('message', '<div class="alert alert-success"> Data Prodi berhasil diubah </div>');
 						redirect('master_prodi');
 					} else {
 						$data['main_view'] = 'Prodi/master_prodi_view';
-						$data['notif'] = 'Edit prodi gagal';
+						$this->session->set_flashdata('message', '<div class="alert alert-danger"> Data Prodi gagal diubah </div>');
 						redirect('master_prodi/edit_prodi');
 					}
 				} else {
 					$data['main_view'] = 'Prodi/edit_prodi_view';
-					$data['notif'] = validation_errors();
+					$this->session->set_flashdata('message', '<div class="alert alert-danger"> Data Prodi gagal diubah </div>');
 					$this->load->view('template', $data);
 				}
 			}

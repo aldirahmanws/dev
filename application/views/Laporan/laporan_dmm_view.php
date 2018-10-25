@@ -4,7 +4,7 @@
           <!-- Horizontal Form -->
           <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Laporan Mahasiswa</h3>
+              <h3 class="box-title">Laporan KRS</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
@@ -188,7 +188,7 @@ function mySemester(p) {
       }
     });
     $('#nama_matakuliah').autocomplete({
-      source:'<?php echo base_url(); ?>laporan/get_autocomplete_matkul', 
+      source:'<?php echo base_url(); ?>kelas_perkuliahan/get_autocomplete_mk', 
       minLength:1,
       select: function(event, ui){
         $('#nama_matakuliah').val(ui.item.label)  ;

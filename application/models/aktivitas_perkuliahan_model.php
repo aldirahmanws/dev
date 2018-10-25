@@ -176,6 +176,7 @@ class Aktivitas_perkuliahan_model extends CI_Model {
               ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
               ->join('tb_skala_nilai','tb_skala_nilai.id_skala_nilai=tb_kelas_mhs.id_skala_nilai')
               ->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode')
+              ->where('tb_kelas_mhs.id_mahasiswa', $id_mahasiswa)
               ->where('tb_detail_kurikulum.semester_kurikulum >=' , '1')
               ->where('tb_detail_kurikulum.semester_kurikulum <=', $semester_ak)
               ->get('tb_kelas_mhs')

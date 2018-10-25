@@ -11,7 +11,7 @@
                   <?php echo form_open('master_prodi/save_prodi'); ?>
                       <div class="form-group">
                         <label for="email">Id Prodi</label>
-                        <input type="text" name="id_prodi" class="form-control" id="id_prodi" placeholder="Masukkan Id prodi" value="<?= $kodeunik; ?>" readonly>
+                        <input type="text" name="id_prodi" class="form-control" id="id_prodi" placeholder="Masukkan Id prodi" value="" required="">
                       </div>
                       <div class="form-group">
                         <label for="email">Nama Prodi</label>

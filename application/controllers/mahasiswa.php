@@ -143,7 +143,7 @@ class Mahasiswa extends CI_Controller {
 				$semester_aktif = $this->uri->segment(5);
 			}
 			$data['mahasiswa'] = $this->mahasiswa_model->detail_krs_mahasiswa($id_mahasiswa);
-			$data['krs'] = $this->mahasiswa_model->data_krs_mhs($id_mahasiswa, $semester_aktif);
+			$data['krs'] = $this->mahasiswa_model->data_krs_mhs($id_mahasiswa, $semester_aktif, $id_prodi);
 			//$data['periode2'] = $this->mahasiswa_model->getPer($id_prodi);
 			$data['periode'] = $this->mahasiswa_model->Periode_krs($id_prodi);
 			$data['main_view'] = 'Mahasiswa/krs_mahasiswa_view';
@@ -309,12 +309,33 @@ class Mahasiswa extends CI_Controller {
 				$history = $id_mahasiswa;
 			} else {
 				$id_mahasiswa = $this->uri->segment(3);
-				$history = $this->uri->segment(3);
+				$nik = $this->uri->segment(4);
 			}
+			$data['kodeunik_mhs'] = $this->mahasiswa_model->buat_kode_mhs();
 			$data['mahasiswa'] = $this->mahasiswa_model->detail_mahasiswa_dikti($id_mahasiswa);
-			$data['history'] = $this->mahasiswa_model->history_pendidikan($history);
+			$data['history'] = $this->mahasiswa_model->history_pendidikan($nik);
 			$data['getProdi'] = $this->daftar_ulang_model->getProdi();
 			$data['main_view'] = 'Mahasiswa/history_pendidikan_view';
+			$this->load->view('template', $data);
+			} else {
+			redirect('login');
+		}
+	}
+
+	public function transfer_nilai()
+	{
+		if ($this->session->userdata('logged_in') == TRUE) {
+			if($this->session->userdata('level') == 5){
+				$username = $this->session->userdata('username');
+				$session = $this->mahasiswa_model->session_mahasiswa($username);
+				$id_mahasiswa = $session->id_mahasiswa;
+				$history = $id_mahasiswa;
+			} else {
+				$id_mahasiswa = $this->uri->segment(3);
+			}
+			$data['mahasiswa'] = $this->mahasiswa_model->detail_mahasiswa_dikti($id_mahasiswa);
+			$data['transfer'] = $this->mahasiswa_model->data_transfer_nilai($id_mahasiswa);
+			$data['main_view'] = 'Mahasiswa/transfer_nilai_mahasiswa_view';
 			$this->load->view('template', $data);
 			} else {
 			redirect('login');
@@ -324,10 +345,51 @@ class Mahasiswa extends CI_Controller {
 	public function simpan_pendidikan()
 	{
 		$id_mahasiswa = $this->uri->segment(3);
-			if($this->mahasiswa_model->simpan_pendidikan($id_mahasiswa) == TRUE){
+		$nim_lama = $this->input->post('nim_lama');
+		if ($this->input->post('id_jenis_pendaftaran') == 2) {
+			if($this->mahasiswa_model->save_mahasiswa_pindahan() == TRUE && $this->mahasiswa_model->save_ayah() == TRUE  && $this->mahasiswa_model->save_ibu() == TRUE && $this->mahasiswa_model->save_alamat() == TRUE && $this->mahasiswa_model->save_wali() == TRUE && $this->mahasiswa_model->save_kependudukan() == TRUE && $this->mahasiswa_model->save_bio() == TRUE && $this->mahasiswa_model->save_kontak() == TRUE && $this->mahasiswa_model->simpan_pendidikan_pindahan() == TRUE && $this->mahasiswa_model->ubah_status_mhs_pindahan($id_mahasiswa) == TRUE && $this->mahasiswa_model->hapus_user_mhs_pindahan($nim_lama) == TRUE){
+				$nim = $this->input->post('nim');
+				$pass = $this->random_password();
+				$this->user_model->signup_mahasiswa($nim, $pass);
+				$this->load->library('email');
+						$config = array(
+							'protocol' => 'smtp',
+							'smtp_host' 	=> 'ssl://smtp.googlemail.com',
+							'smtp_port' 	=> 465,
+							'smtp_user' 	=> 'bayukrisnaovo@gmail.com',
+							'smtp_pass' 	=> 'pacnut12',
+							'mailtype'		=> 'html',
+							'wordwrap'	=> TRUE
+						);
+						$this->email->initialize($config);
+						$this->email->set_newline("\r\n");
+						$this->email->from('bayukrisnaovo@gmail.com','Panitia PSB');
+						$this->email->to($this->input->post('email'));
+						$this->email->subject('STIE Jakarta International College');
+						$this->email->message('
+							<h2> Akun Login Mahasiswa!</h2>
+							<br> Username : '.$nim.'
+							<br> Password : '.$pass.' <br><br>
+							Terimakasih');
+						
+						if($this->email->send()){
+								$nama_du = $this->input->post('nama_mahasiswa');
+								$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Data '.$nama_du.' berhasil didaftarkan. </div>');
+				            	redirect('mahasiswa/data_mahasiswa');
+						}
+
+				
+			} else{
+				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Data  '.$nama_du.' Sudah Ada </div>');
+            	redirect('mahasiswa/data_mahasiswa');
+			} 
+		} else {
+			if ($this->mahasiswa_model->simpan_pendidikan($id_mahasiswa) == TRUE) {
 				$this->session->set_flashdata('message', '<div class="alert alert-success"> Tambah History Pendidikan Berhasil </div>');
             	redirect('mahasiswa/history_pendidikan/'.$id_mahasiswa);
-			} 
+			}
+		}
+			
 	}
 
 	public function simpan_krs_mhs()
@@ -418,7 +480,7 @@ class Mahasiswa extends CI_Controller {
 
 	public function save_mahasiswa()
 	{
-			if($this->mahasiswa_model->save_mahasiswa() == TRUE && $this->mahasiswa_model->save_ayah() == TRUE  && $this->mahasiswa_model->save_ibu() == TRUE && $this->mahasiswa_model->save_alamat() == TRUE && $this->mahasiswa_model->save_wali() == TRUE && $this->mahasiswa_model->save_kependudukan() == TRUE && $this->mahasiswa_model->save_bio() == TRUE && $this->mahasiswa_model->save_kontak() == TRUE && $this->mahasiswa_model->save_tgl_du_mhs() == TRUE){
+			if($this->mahasiswa_model->save_mahasiswa() == TRUE && $this->mahasiswa_model->save_ayah() == TRUE  && $this->mahasiswa_model->save_ibu() == TRUE && $this->mahasiswa_model->save_alamat() == TRUE && $this->mahasiswa_model->save_wali() == TRUE && $this->mahasiswa_model->save_kependudukan() == TRUE && $this->mahasiswa_model->save_bio() == TRUE && $this->mahasiswa_model->save_kontak() == TRUE && $this->mahasiswa_model->save_pendidikan() == TRUE){
 				$pass = $this->random_password();
 				$nim = $this->input->post('nim');
 				$this->user_model->signup_mahasiswa($nim, $pass);

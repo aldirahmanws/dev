@@ -10,8 +10,11 @@
            <?php } else { ?>
 
 		<a class="btn btn-sm btn-default btn-flat" href="<?php echo base_url(); ?>mahasiswa/data_mahasiswa"><i class="fa fa-angle-left"></i> Back</a>
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/lihat_mahasiswa_dikti/<?php echo $mahasiswa->id_mahasiswa; ?>">Detail Mahasiswa</a>
-        <a class="btn btn-sm btn-warning btn-flat" href="<?php echo base_url();?>mahasiswa/history_pendidikan/<?php echo $mahasiswa->id_mahasiswa; ?>">History Pendidikan</a>
+       <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/lihat_mahasiswa_dikti/<?php echo $mahasiswa->id_mahasiswa; ?>">Detail Mahasiswa</a>
+        <a class="btn btn-sm btn-warning btn-flat" href="<?php echo base_url();?>mahasiswa/history_pendidikan/<?php echo $mahasiswa->id_mahasiswa; ?>/<?php echo $mahasiswa->nik; ?>">History Pendidikan</a>
+        <?php if ($mahasiswa->id_jenis_pendaftaran == '2') { ?>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/transfer_nilai/<?php echo $mahasiswa->id_mahasiswa; ?>">Transfer Nilai</a>
+        <?php } ?>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/krs_mahasiswa/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>/<?php echo $mahasiswa->id_konsentrasi; ?>">KRS Mahasiswa</a>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/jadwal_mhs/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>">Jadwal Kuliah</a>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/history_nilai/<?php echo $mahasiswa->id_mahasiswa; ?>">History Nilai</a>
@@ -123,14 +126,13 @@
                     <div class="form-group">
                         <label class="col-xs-4" >NIM</label>
                         <div class="col-xs-6">
-                            <input type="text" name="nim" class="form-control input-sm pull-left" id="nim" placeholder="" readonly="" value="<?php echo $mahasiswa->nim; ?>">
-                            <input type="hidden" name="id_mahasiswa" class="form-control input-sm pull-left" id="id_mahasiswa" placeholder="" required="" value="<?php echo $mahasiswa->id_mahasiswa; ?>">
+                            <input type="text" name="nim" class="form-control input-sm pull-left" id="nim" placeholder="" required="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-xs-4" >Jenis Pendaftaran</label>
                         <div class="col-xs-6">
-                            <select name="jenis_pendaftaran" id="jenis_pendaftaran" class="form-control input-sm">
+                            <select name="id_jenis_pendaftaran" id="id_jenis_pendaftaran" class="form-control input-sm" required="">
             <option value="">-- Pilih Jenis Pendaftaran --</option>
             <option value="1">Peserta Didik Baru</option>
             <option value="2">Pindahan</option>
@@ -143,7 +145,7 @@
                     <div class="form-group">
                         <label class="col-xs-4" >Jalur Pendaftaran</label>
                         <div class="col-xs-6">
-                            <select name="jalur_pendaftaran" id="jalur_pendaftaran" class="form-control input-sm">
+                            <select name="id_jalur_pendaftaran" id="id_jalur_pendaftaran" class="form-control input-sm" required="">
             <option value="">-- Pilih Jalur Pendaftaran --</option>
             <option value="1">SBMPTN</option>
             <option value="2">SNMPTN</option>
@@ -161,7 +163,7 @@
                     <div class="form-group">
                         <label class="col-xs-4" >Pembiayaan Awal</label>
                         <div class="col-xs-6">
-                            <select name="pembiayaan_awal" id="pembiayaan_awal" class="form-control input-sm">
+                            <select name="id_pembiayaan_awal" id="id_pembiayaan_awal" class="form-control input-sm">
             <option value="">-- Pilih Pembiayaan Awal --</option>
             <option value="1">Mandiri</option>
             <option value="2">Beasiswa Tidak Penuh</option>
@@ -173,13 +175,20 @@
                         <label class=" col-xs-4" >Perguruan Tinggi</label>
                         <div class="col-xs-6">
                             <input type="text" name="perguruan_tinggis" class="form-control input-sm pull-left" id="perguruan_tinggis" placeholder="" required="" value="033082 - STIE Jakarta International College" readonly="">
-                            <input type="hidden" name="perguruan_tinggi" class="form-control input-sm pull-left" id="perguruan_tinggi" placeholder="" required="" value="033082" readonly="">
+                            <input type="hidden" name="id_pt" class="form-control input-sm pull-left" id="id_pt" placeholder="" required="" value="033082" readonly="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class=" col-xs-4" >Tanggal Masuk</label>
+                        <div class="col-xs-6">
+                            <input type="date" name="tgl_du" class="form-control input-sm pull-left" id="tgl_du" placeholder="" required="">
+                            
                         </div>
                     </div>
                     <div class="form-group">
                         <label class=" col-xs-4" >Nama Prodi</label>
                         <div class="col-xs-6">
-                            <select name="id_prodi" onchange="return get_prodi_periode(this.value)" class="form-control input-sm pull-left">
+                            <select name="id_prodi" onchange="return get_concentrate(this.value)" onblur="return get_prodi_periode(this.value)"  class="form-control input-sm pull-left" required="">
                         <option value="">-- Pilih Prodi --</option>
                         <?php 
 
@@ -191,10 +200,19 @@
                       </select>
                   </div>
                         </div>
+                        <div class="form-group">
+                        <label class=" col-xs-4" >Nama Konsentrasi</label>
+                        <div class="col-xs-6">
+                            <select name="concentrate" id="concentrate" class="form-control input-sm pull-left" required="">
+                        <option value="">-- Pilih Prodi Dahulu --</option>
+                    
+                      </select>
+                  </div>
+                        </div>
                     <div class="form-group">
                         <label class=" col-xs-4" >Periode Pendaftaran</label>
                         <div class="col-xs-6">
-                            <select name="id_periode" id="id_periode" class="form-control input-sm pull-left">
+                            <select name="id_periode" id="id_periode" class="form-control input-sm pull-left" required="">
                         <option value="">-- Pilih periode --</option>
                        
                       </select>
@@ -218,6 +236,68 @@
                             <input type="text" name="asal_prodi" class="form-control input-sm pull-left" id="asal_prodi" placeholder="" required="" >
                         </div>
                     </div>
+                    <input type="hidden" name="id_mahasiswa" id="id_mahasiswa" class="text-input" size="10" style="width:70%" value="<?php echo $kodeunik_mhs; ?>" readonly>
+                    <input type="hidden" name="nama_mahasiswa" id="nama_mahasiswa" class="text-input" size="10" style="width:70%" value="<?php echo $mahasiswa->nama_mahasiswa; ?>" readonly>
+                    <input type="hidden" name="id_waktu" id="id_waktu" class="text-input" size="10" style="width:70%" value="<?php echo $mahasiswa->id_waktu; ?>" readonly>
+<input type="hidden" name="id_du" id="id_du" class="text-input" size="10" style="width:70%" value="<?php echo $mahasiswa->id_du; ?>" readonly>
+<input type="hidden" name="id_sekolah" id="id_sekolah" class="text-input" size="10" style="width:70%" value="<?php echo $mahasiswa->id_sekolah; ?>" readonly>
+<input type="hidden" name="id_hasil_tes" id="id_hasil_tes" class="text-input" size="10" style="width:70%" value="<?php echo $mahasiswa->id_hasil_tes; ?>" readonly>
+
+<input type="hidden" name="tempat_lahir" id="tempat_lahir" class="text-input" size="10" style="width:70%" value="<?php echo $mahasiswa->tempat_lahir; ?>" readonly>
+<input type="hidden" name="tanggal_lahir" id="tanggal_lahir" class="text-input" size="10" style="width:70%" value="<?php echo $mahasiswa->tanggal_lahir; ?>" readonly>
+<input type="hidden" name="jenis_kelamin" id="jenis_kelamin" class="text-input" size="10" style="width:70%" value="<?php echo $mahasiswa->id_kelamin; ?>" readonly>
+<input type="hidden" name="agama" id="agama" class="text-input" size="10" style="width:70%" value="<?php echo $mahasiswa->id_agama; ?>">
+
+<input type="hidden" name="nim_lama" id="nim_lama" class="text-input" maxlength="16" size="50" style="width:40%" onkeydown="return onlyNumber(event,this,false,false)" value="<?php echo $mahasiswa->nim; ?>">
+
+<input type="hidden" name="id_grade" id="id_grade" class="text-input" maxlength="16" size="50" style="width:40%" onkeydown="return onlyNumber(event,this,false,false)" value="<?php echo $mahasiswa->id_grade; ?>">
+<input type="hidden" name="jurusan" id="jurusan" class="text-input" maxlength="16" size="50" style="width:40%" onkeydown="return onlyNumber(event,this,false,false)" value="<?php echo $mahasiswa->jurusan; ?>">
+<input type="hidden" name="kps" id="kps" class="text-input" maxlength="16" size="50" style="width:40%" onkeydown="return onlyNumber(event,this,false,false)" value="<?php echo $mahasiswa->kps; ?>">
+<input type="hidden" name="no_kps" id="no_kps" class="text-input" maxlength="16" size="50" style="width:40%" onkeydown="return onlyNumber(event,this,false,false)" value="<?php echo $mahasiswa->no_kps; ?>">
+<input type="hidden" name="foto_mahasiswa" id="foto_mahasiswa" class="text-input" maxlength="16" size="50" style="width:40%" onkeydown="return onlyNumber(event,this,false,false)" value="<?php echo $mahasiswa->foto_mahasiswa; ?>">
+<input type="hidden" name="alamat_mhs" id="alamat_mhs" class="text-input" maxlength="16" size="50" style="width:40%" onkeydown="return onlyNumber(event,this,false,false)" value="<?php echo $mahasiswa->alamat_mhs; ?>">
+
+<input type="hidden" name="nik" id="nik" value="<?php echo $mahasiswa->nik; ?>" class="validate[required] text-input" maxlength="16" size="50" style="width:40%">
+<input type="hidden" name="nisn" id="nisn" class="text-input" maxlength="10" size="10" style="width:70%" value="<?php echo $mahasiswa->nisn; ?>">
+<input type="hidden" name="npwp" id="npwp" class="text-input" maxlength="15" size="15" style="width:70%" value="<?php echo $mahasiswa->npwp; ?>">
+<input type="hidden" name="kewarganegaraan" id="kewarganegaraan" class="validate[required] text-input" style="width:70%" value="<?php echo $mahasiswa->kewarganegaraan; ?>">
+<input type="hidden" name="jalan" id="jalan" class="text-input" maxlength="80" size="80" style="width:70%" value="<?php echo $mahasiswa->jalan; ?>">
+<input type="hidden" name="dusun" id="dusun" class="text-input" maxlength="60" size="60" style="width:80%" value="<?php echo $mahasiswa->dusun; ?>">
+<input type="hidden" name="rt" id="rt" class="text-input" maxlength="2" size="2" style="width:50%" onkeydown="return onlyNumber(event,this,false,false)" value="<?php echo $mahasiswa->rt; ?>">
+<input type="hidden" name="rw" id="rw" class="text-input" maxlength="2" size="2" style="width:50%" onkeydown="return onlyNumber(event,this,false,false)" value="<?php echo $mahasiswa->rw; ?>">
+<input type="hidden" name="kelurahan" id="kelurahan" class="validate[required] text-input" maxlength="60" size="60" style="width:80%" value="<?php echo $mahasiswa->kelurahan; ?>">
+<input type="hidden" name="kode_pos" id="kode_pos" class="text-input" maxlength="5" size="5" style="width:30%" onkeydown="return onlyNumber(event,this,false,false)" value="<?php echo $mahasiswa->kode_pos; ?>">
+<input type="hidden" name="kecamatan" id="kecamatan" class="validate[required] text-input" style="width:70%" value="<?php echo $mahasiswa->kecamatan; ?>">
+<input type="hidden" name="id_jt" id="id_jt" class="validate[required] text-input" style="width:70%" value="<?php echo $mahasiswa->id_jt; ?>">
+<input type="hidden" name="id_transportasi" id="id_transportasi" class="validate[required] text-input" style="width:70%" value="<?php echo $mahasiswa->id_transportasi; ?>">
+
+<input type="hidden" name="no_telepon" id="no_telepon" class="text-input" maxlength="20" size="20" style="width:30%" value="<?php echo $mahasiswa->no_telepon; ?>">
+<input type="hidden" name="no_hp" id="no_hp" class="text-input" maxlength="20" size="20" style="width:30%" value="<?php echo $mahasiswa->no_hp; ?>">
+<input type="text" name="email" id="email" class="text-input" maxlength="60" size="60" style="width:30%" value="<?php echo $mahasiswa->email; ?>">
+<input type="hidden" name="no_kps" id="no_kps" class="text-input" maxlength="80" size="80" disabled style="width:50%" value="<?php echo $mahasiswa->no_kps; ?>">
+<input type="hidden" name="nik_ayah" id="nik_ayah" class="text-input" maxlength="16" size="50" style="width:40%" onkeydown="return onlyNumber(event,this,false,false)" value="<?php echo $mahasiswa->nik_ayah; ?>">
+<input type="hidden" name="nama_ayah" id="nama_ayah" class="text-input" maxlength="100" size="100" style="width:50%" value="<?php echo $mahasiswa->nama_ayah; ?>">
+<input type="hidden" name="tanggal_lahir_ayah" id="tanggal_lahir_ayah" class="text-input" maxlength="50" size="50" style="width:20%" value="<?php echo $mahasiswa->tanggal_lahir_ayah; ?>">
+
+<input type="hidden" name="pendidikan_ayah" id="pendidikan_ayah" class="text-input" maxlength="50" size="50" style="width:20%" value="<?php echo $mahasiswa->pendidikan_ayah; ?>">
+
+<input type="hidden" name="pekerjaan_ayah" id="pekerjaan_ayah" class="text-input" maxlength="50" size="50" style="width:20%" value="<?php echo $mahasiswa->pekerjaan_ayah; ?>">
+<input type="hidden" name="penghasilan_ayah" id="penghasilan_ayah" class="text-input" maxlength="50" size="50" style="width:20%" value="<?php echo $mahasiswa->penghasilan_ayah; ?>">
+
+<input type="hidden" name="nik_ibu" id="nik_ibu" class="text-input" maxlength="16" size="50" style="width:40%" onkeydown="return onlyNumber(event,this,false,false)" value="<?php echo $mahasiswa->nik_ibu; ?>">
+ <input type="hidden" name="nama_ibu" id="nama_ibu" class="text-input" size="10" style="width:70%" value="<?php echo $mahasiswa->nama_ibu; ?>" readonly>
+<input type="hidden" name="tanggal_lahir_ibu" id="tanggal_lahir_ibu" class="text-input" maxlength="60" size="60" style="width:20%" value="<?php echo $mahasiswa->tanggal_lahir_ibu; ?>">
+<input type="hidden" name="pendidikan_ibu" id="pendidikan_ibu" class="text-input" maxlength="60" size="60" style="width:20%" value="<?php echo $mahasiswa->pendidikan_ibu; ?>">
+<input type="hidden" name="pekerjaan_ibu" id="pekerjaan_ibu" class="text-input" maxlength="60" size="60" style="width:20%" value="<?php echo $mahasiswa->pekerjaan_ibu; ?>">
+<input type="hidden" name="penghasilan_ibu" id="penghasilan_ibu" class="text-input" maxlength="60" size="60" style="width:20%" value="<?php echo $mahasiswa->penghasilan_ibu; ?>">
+
+<input type="hidden" name="nama_wali" id="nama_wali" class="text-input" maxlength="100" size="100" style="width:50%" value="<?php echo $mahasiswa->nama_wali; ?>">
+<input type="hidden" name="tanggal_lahir_wali" id="tanggal_lahir_wali" class="text-input" maxlength="50" size="50" style="width:20%" value="<?php echo $mahasiswa->tanggal_lahir_wali; ?>">
+<input type="hidden" name="pendidikan_wali" id="pendidikan_wali" class="text-input" maxlength="50" size="50" style="width:20%" value="<?php echo $mahasiswa->pendidikan_wali; ?>">
+
+<input type="hidden" name="pekerjaan_wali" id="pekerjaan_wali" class="text-input" maxlength="50" size="50" style="width:20%" value="<?php echo $mahasiswa->pekerjaan_wali; ?>">
+
+<input type="hidden" name="penghasilan_wali" id="penghasilan_wali" class="text-input" maxlength="50" size="50" style="width:20%" value="<?php echo $mahasiswa->penghasilan_wali; ?>">
 
                 </div>
 
@@ -332,6 +412,21 @@
                     dataType: 'html',
                     success: function(msg) {
                         $("#id_periode").html(msg);
+                    }
+                });
+            }
+            
+            function get_concentrate(p) {
+                var id_prodi = p;
+
+                $.ajax({
+                    url: '<?php echo base_url(); ?>daftar_ulang/get_concentrate/'+id_prodi,
+                    data: 'id_prodi='+id_prodi,
+                    type: 'GET',
+                    dataType: 'html',
+                    success: function(msg) {
+                        $("#concentrate").html(msg);
+
                     }
                 });
             }

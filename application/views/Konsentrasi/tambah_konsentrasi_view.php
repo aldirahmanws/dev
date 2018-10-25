@@ -11,7 +11,7 @@
                   <?php echo form_open('master_konsentrasi/save_konsentrasi'); ?>
                       <div class="form-group">
                         <label for="email">Id Konsentrasi</label>
-                        <input type="text" name="id_konsentrasi" class="form-control" id="id_konsentrasi" placeholder="Masukkan Id Konsentrasi" value="<?= $kodeunik; ?>" readonly>
+                        <input type="text" name="id_konsentrasi" class="form-control" id="id_konsentrasi" placeholder="Masukkan Id Konsentrasi" value="" required="">
                       </div>
                       <div class="form-group">
                         <label for="email">Nama Konsentrasi</label>

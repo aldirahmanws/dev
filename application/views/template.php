@@ -271,7 +271,7 @@ a:hover .tooltiptext {
           <?php } else { ?>
             <li <?php if($this->uri->segment(1) == 'dashboard') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>dashboard"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
             <li <?php if($this->uri->segment(1) == 'calendar' AND $this->uri->segment(2) == '') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>calendar"><i class="fa fa-calendar"></i><span>Kalender Akademik</span></a></li>
-        <li class="treeview <?php if($this->uri->segment(1) == 'admin' OR $this->uri->segment(2) == 'master_calendar' OR $this->uri->segment(1) == 'master_prodi' OR $this->uri->segment(1) == 'master_konsentrasi' OR $this->uri->segment(1) == 'master_asal_sekolah' OR $this->uri->segment(1) == 'master_biaya_sekolah' OR $this->uri->segment(1) == 'master_dosen' OR $this->uri->segment(1) == 'ruang') echo 'active'; else echo  '';?>">
+        <li class="treeview <?php if($this->uri->segment(1) == 'admin' OR $this->uri->segment(2) == 'master_calendar' OR $this->uri->segment(1) == 'master_prodi' OR $this->uri->segment(1) == 'master_konsentrasi' OR $this->uri->segment(1) == 'master_asal_sekolah' OR $this->uri->segment(1) == 'master_biaya_sekolah' OR $this->uri->segment(1) == 'master_dosen' OR $this->uri->segment(1) == 'ruang' OR $this->uri->segment(1) == 'informasi') echo 'active'; else echo  '';?>">
           <a href="#">
             <i class="fa fa-archive"></i> <span>Master</span>
             <span class="pull-right-container">
@@ -288,6 +288,7 @@ a:hover .tooltiptext {
             <li <?php if($this->uri->segment(1) == 'master_biaya_sekolah') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>master_biaya_sekolah"><i class="fa fa-circle-o"></i> Biaya Kuliah</a></li>
             <li <?php if($this->uri->segment(1) == 'master_dosen') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>master_dosen"><i class="fa fa-circle-o"></i> Dosen</a></li>
             <li <?php if($this->uri->segment(1) == 'ruang') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>ruang"><i class="fa fa-circle-o"></i> Ruangan</a></li>
+            <li <?php if($this->uri->segment(1) == 'informasi') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>informasi"><i class="fa fa-info-circle"></i>Informasi</a></li>
           </ul>
         </li>
         <li class="treeview <?php if($this->uri->segment(2) == 'data_tamu' OR $this->uri->segment(2) == 'data_peserta_tes' OR $this->uri->segment(2) == 'data_sgs' OR $this->uri->segment(2) == 'mahasiswa_data' OR $this->uri->segment(2) == 'data_out') echo 'active'; else echo  '';?>">
@@ -351,7 +352,7 @@ a:hover .tooltiptext {
             
           </ul>
         </li>
-         <li <?php if($this->uri->segment(1) == 'informasi') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>informasi"><i class="fa fa-info-circle"></i>Informasi</a></li>
+         
 
         <li class="treeview <?php if($this->uri->segment(2) == 'laporan_mahasiswa' OR $this->uri->segment(2) == 'laporan_dmm' OR $this->uri->segment(2) == 'laporan_transkrip' OR $this->uri->segment(2) == 'laporan_tamu' OR $this->uri->segment(2) == 'laporan_peserta_tes' OR $this->uri->segment(2) == 'laporan_data_getstudent' OR $this->uri->segment(2) == 'laporan_buku_induk' OR $this->uri->segment(2) == 'laporan_khs') echo 'active'; else echo  '';?>">
               <a href="#"><i class="fa fa-share"></i><span>Laporan</span>
@@ -553,7 +554,22 @@ a:hover .tooltiptext {
 
 <!-- iCheck 1.0.1 -->
 <script src="<?php echo base_url(); ?>assets/plugins/iCheck/icheck.min.js"></script>
+
+
 <!-- FastClick -->
+
+<link href="<?php echo base_url(); ?>assets/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
+
+<script src="<?php echo base_url(); ?>assets/plugins/jquery-datatable/jquery.dataTables.js"></script>
+    <script src="<?php echo base_url(); ?>assets/plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+    <script src="<?php echo base_url(); ?>assets/plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+    <script src="<?php echo base_url(); ?>assets/plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/tables/jquery-datatable.js"></script>
 
 <script>
   $(function () {

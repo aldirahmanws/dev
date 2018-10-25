@@ -12,7 +12,7 @@ class Mata_kuliah_model extends CI_Model {
 	 public function simpan_matkul()
     {
         $data = array(
-            'kode_matkul'           => $this->input->post('kode_matkul'),
+            'id_matkul'           => $this->input->post('kode_matkul'),
             'nama_matkul'           => $this->input->post('nama_matkul'),
             'id_prodi'                 => $this->input->post('id_prodi'),
             'jenis_matkul'      	  => $this->input->post('jenis_matkul'),
@@ -56,8 +56,9 @@ class Mata_kuliah_model extends CI_Model {
               ->row();
   }
 
-  public function edit_matkul($id_periode){
+  public function edit_matkul($kode_matkul){
     $data = array(
+           'id_matkul'                        => $this->input->post('id_matkul'),
            'kode_matkul'                        => $this->input->post('kode_matkul'),
             'nama_matkul'                        => $this->input->post('nama_matkul'),
             'id_prodi'                 => $this->input->post('id_prodi'),
@@ -74,7 +75,7 @@ class Mata_kuliah_model extends CI_Model {
       );
 
     if (!empty($data)) {
-            $this->db->where('kode_matkul', $id_periode)
+            $this->db->where('kode_matkul', $kode_matkul)
         ->update('tb_matkul', $data);
 
           return true;

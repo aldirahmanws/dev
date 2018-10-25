@@ -9,10 +9,10 @@
         
            <?php } else { ?>
 
-         <a class="btn btn-sm btn-primary" href="<?php echo base_url();?>master_dosen/detail_dosen/<?php echo $dosen->id_dosen; ?>">Profil Dosen</a>
-        <a class="btn btn-sm btn-info" href="<?php echo base_url();?>master_dosen/jadwal_dosen/<?php echo $dosen->id_dosen; ?>">Jadwal Dosen</a>
-        <a class="btn btn-sm btn-info" href="<?php echo base_url();?>master_dosen/nilai_dosen/<?php echo $dosen->id_dosen; ?>">Input Nilai</a>
-        <a class="btn btn-sm btn-info" href="<?php echo base_url(); ?>master_dosen">Kembali</a>
+         <a class="btn btn-sm btn-default btn-flat" href="<?php echo base_url(); ?>master_dosen"><i class="fa fa-angle-left"></i> Back</a>
+         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/detail_dosen/<?php echo $dosen->id_dosen; ?>">Profil Dosen</a>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/jadwal_dosen/<?php echo $dosen->id_dosen; ?>">Jadwal Dosen</a>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/nilai_dosen/<?php echo $dosen->id_dosen; ?>">Input Nilai</a>
          <br/><br/> 
            <?php }
 
@@ -38,6 +38,7 @@
                 <thead>
                 <tr>
                   <th rowspan="2" style="text-align: center;width: 2%">No</th>
+                  <th rowspan="2" style="text-align: center;width: 5%">Prodi</th>
                   <th rowspan="2" style="text-align: center;width: 20%">Kode MK</th>
                   <th rowspan="2" style="text-align: center;width: 40%">Nama MK</th>
                   <th rowspan="2" style="text-align: center;width: 10%">Nama Kelas</th>
@@ -72,7 +73,8 @@
                   echo '                  
                 <tr>
                   <td>'.++$no.'</td>
-                  <td><a href="'.base_url('nilai_perkuliahan/detail_nilai/'.$data->id_kp.'/'.$dosen->id_dosen).'">'.$data->kode_matkul.'</a></td>
+                  <td>'.$data->nama_prodi.'</td>
+                  <td><a href="'.base_url('nilai_perkuliahan/detail_nilai/'.$data->id_kp.'/'.$dosen->id_dosen).'">'.$data->id_matkul.'</a></td>
                   <td>'.$data->nama_matkul.'</td>
                   <td>'.$data->nama_kelas.'</td>
                   <td>'.$data->bobot_matkul.'</td>

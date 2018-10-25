@@ -37,7 +37,7 @@
                   
                 <tr>
                   <td>'.++$no.'</td>
-                  <td><a href="" data-toggle="modal" data-target="#modal_view'.$data->kode_matkul.'">'.$data->kode_matkul.'</a></td>
+                  <td><a href="" data-toggle="modal" data-target="#modal_view'.$data->kode_matkul.'">'.$data->id_matkul.'</a></td>
                   <td>'.$data->nama_matkul.'</a></td>
                   <td>'.$data->bobot_matkul.'</td>
                   <td>'.$data->nama_prodi.'</td>

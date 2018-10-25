@@ -123,7 +123,7 @@
                   echo '
                 <tr>
                   <td>'.++$no.'</td>
-                  <td>'.$data->id_dosen.'</a></td>
+                  <td>'.$data->nidn.'</a></td>
                   <td>'.$data->nama_dosen.'</td>
                   <td id="bobot_matkul">'.$data->bobot_matkul.'</td>
                   <td id="rencana">'.$data->rencana.'</td>
@@ -213,7 +213,7 @@
                   <td>
                         <a href="'.base_url('kelas_perkuliahan/hapus_kelas_mhs/'.$data->id_kelas_mhs.'/'.$data->id_kp).'" class="btn btn-danger  btn-sm" onclick="return confirm('.$alert.')"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus</span></a>
 
-                         <a href="'.base_url('kelas_perkuliahan/page_edit_kelas_mhs/'.$data->id_kelas_mhs).'" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-pencil"></i><span class="tooltiptext">Edit</span></a>
+                         <a href="'.base_url('mahasiswa/lihat_mahasiswa_dikti/'.$data->id_mahasiswa).'" class="btn btn-warning btn-sm"><i class="fa fa-list"></i><span class="tooltiptext">Detail</span></a>
                   </td>
 
                 ' ;

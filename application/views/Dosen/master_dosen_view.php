@@ -36,7 +36,7 @@
                   <td>'.++$no.'</td>
                   <td> <a href="'.base_url('master_dosen/detail_dosen/'.$data->id_dosen).'"/>'.$data->nama_dosen.'
                   </td>
-                  <td>'.$data->id_dosen.'</td>
+                  <td>'.$data->nidn.'</td>
                   <td>'.$data->nip.'</td>
                   <td>'.$data->jenis_kelamin.'</td>
                   <td>'.$data->no_hp.'</td>
