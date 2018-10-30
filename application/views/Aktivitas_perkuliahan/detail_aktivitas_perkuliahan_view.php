@@ -19,7 +19,7 @@
         <th style="width:5%;text-align:center" rowspan="2">No.</th>
         <th style="text-align:center" rowspan="2">Kode MK</th>
         <th style="text-align:center" rowspan="2">Nama MK</th>
-         <th style="text-align:center" rowspan="2">Periode</th>
+         <th style="text-align:center" rowspan="2">Semester</th>
         <th style="text-align:center" rowspan="2">Bobot MK<br />(sks)</th>
          <th style="text-align:center" colspan="3">Nilai<br />(sks)</th>
          <th style="text-align:center" rowspan="2">sks * N.indeks</th>
@@ -45,9 +45,9 @@
       ?>
       <tr>
       <td><?php echo ++$no;?></td>
-        <td style="text-align:center"><?php echo $data->kode_matkul;?></td>
+        <td style="text-align:center"><?php echo $data->id_matkul;?></td>
         <td style="text-align:center"><?php echo $data->nama_matkul;?></td>
-        <td style="text-align:center"><?php echo $data->semester;?></td>
+        <td style="text-align:center"><?php echo $data->semester_kurikulum;?></td>
         <td style="text-align:center"><?php $totalbobot2 += $data->bobot_matkul; echo $data->bobot_matkul;?></td>
         <td style="text-align:center"><?php echo $data->nilai_d;?></td>
         <td style="text-align:center"><?php echo $data->nilai_huruf;?></td>
@@ -128,7 +128,7 @@
       ?>
       <tr>
       <td><?php echo ++$no;?></td>
-        <td style="text-align:center"><?php echo $data->kode_matkul;?></td>
+        <td style="text-align:center"><?php echo $data->id_matkul;?></td>
         <td style="text-align:center"><?php echo $data->nama_matkul;?></td>
         <td style="text-align:center"><?php $totalbobot += $data->bobot_matkul; echo $data->bobot_matkul;?></td>
         <td style="text-align:center"><?php echo $data->nilai_d;?></td>

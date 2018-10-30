@@ -9,13 +9,14 @@
           <td class="left_column">Mata Kuliah</td>
             <td>: <input type="text" name="nama_matkul" id="nama_matkul" class="text-input" maxlength="80" size="80" style="width:400px" value="<?php echo $jadwal->nama_matkul; ?>">
             <input type="hidden" name="id_detail_kurikulum" id="id_detail_kurikulum" class="text-input" maxlength="80" size="80" style="width:100px" value="<?php echo $jadwal->id_detail_kurikulum; ?>">
+             <input type="hidden" name="id_prodi" id="id_prodi" class="text-input" maxlength="80" size="80" style="width:100px" value="<?php echo $jadwal->id_prodi; ?>">
             
           </td>
         </tr>
                      
                          <tr>
           <td class="left_column">Konsentrasi</td>
-            <td>: <select name="id_konsentrasi" id="concentrate" class="validate[required]" required=""  >
+            <td>: <select name="id_konsentrasi" id="id_konsentrasi" class="validate[required]" required=""  >
               <option value="<?php echo $jadwal->id_konsentrasi; ?>"> <?php echo $jadwal->nama_konsentrasi; ?></option>
 
 
@@ -40,8 +41,6 @@
         <option value="3"> Rabu </option>
         <option value="4"> Kamis </option>
         <option value="5"> Jumat </option>
-        <option value="6"> Sabtu </option>
-        <option value="7"> Minggu </option>
 
 
       </select>  </td>
@@ -81,7 +80,7 @@
     </table>
     </form>
 </div>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
   <script src="//code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
  <script>
@@ -114,7 +113,7 @@
                     type: 'GET',
                     dataType: 'html',
                     success: function(msg) {
-                        $("#concentrate").html(msg);
+                        $("#id_konsentrasi").html(msg);
 
                     }
                 });
@@ -149,5 +148,3 @@
                 });
               }
 </script>
-
-

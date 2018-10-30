@@ -59,8 +59,7 @@ class Mahasiswa_model extends CI_Model {
 
   public function data_mahasiswa_dikti(){
     return $this->db->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
-              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
-              ->join('tb_alamat','tb_alamat.id_mahasiswa=tb_mahasiswa.id_mahasiswa')  
+              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi') 
               ->join('tb_bio','tb_bio.id_mahasiswa=tb_mahasiswa.id_mahasiswa') 
               ->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
               ->join('tb_status_mhs','tb_status_mhs.id_status=tb_mahasiswa.id_status')
@@ -106,6 +105,15 @@ class Mahasiswa_model extends CI_Model {
       }
 
       public function data_nilai_mhs($id_mahasiswa){
+      return $this->db->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kelas_mhs.id_detail_kurikulum')
+              ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
+              ->join('tb_skala_nilai','tb_skala_nilai.id_skala_nilai=tb_kelas_mhs.id_skala_nilai')
+              ->where('tb_kelas_mhs.id_mahasiswa', $id_mahasiswa)
+              ->get('tb_kelas_mhs')
+              ->result();
+  } 
+
+  public function data_nilai_mhs_pindahan($id_mahasiswa, $smt_pindah){
       return $this->db->join('tb_kp','tb_kp.id_kp=tb_kelas_mhs.id_kp')
               ->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal')
               ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
@@ -113,6 +121,8 @@ class Mahasiswa_model extends CI_Model {
               ->join('tb_skala_nilai','tb_skala_nilai.id_skala_nilai=tb_kelas_mhs.id_skala_nilai')
               ->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode')
               ->where('tb_kelas_mhs.id_mahasiswa', $id_mahasiswa)
+              ->where('tb_detail_kurikulum.semester_kurikulum >=', '1')
+              ->where('tb_detail_kurikulum.semester_kurikulum <=', $smt_pindah)
               ->get('tb_kelas_mhs')
               ->result();
   } 
@@ -179,15 +189,48 @@ class Mahasiswa_model extends CI_Model {
   } 
 
   public function data_transfer_nilai($id_mahasiswa){
-      return $this->db->join('tb_kp','tb_kp.id_kp=tb_kelas_mhs.id_kp')
-              ->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal')
-              ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
-              ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
-              ->where('tb_kelas_mhs.id_mahasiswa', $id_mahasiswa)
-              ->where('tb_kelas_mhs.transfer', '1')
-              ->get('tb_kelas_mhs')
+      return $this->db->join('tb_matkul','tb_matkul.kode_matkul=tb_transfer_nilai.kode_matkul')
+              ->join('tb_skala_nilai','tb_skala_nilai.id_skala_nilai=tb_transfer_nilai.id_skala_nilai')
+              ->where('tb_transfer_nilai.id_mahasiswa', $id_mahasiswa)
+              ->get('tb_transfer_nilai')
               ->result();
   }
+
+  public function simpan_nilai_transfer()
+    {        
+        $data = array(
+            'id_mahasiswa'      =>$this->input->post('id_mahasiswa', TRUE),
+            'kode_matkul_asal'      => $this->input->post('kode_matkul_asal', TRUE),
+            'matkul_asal'      => $this->input->post('matkul_asal', TRUE),
+            'sks_matkul_asal'      => $this->input->post('sks_matkul_asal', TRUE),
+            'nilai_huruf_asal'     => $this->input->post('nilai_huruf_asal', TRUE),
+            'kode_matkul'     => $this->input->post('kode_matkul', TRUE),
+            'nilai_transfer'     => $this->input->post('nilai', TRUE),
+            'id_skala_nilai'     => $this->input->post('id_skala_nilai', TRUE),
+        );
+        $this->db->insert('tb_transfer_nilai', $data);
+        if($this->db->affected_rows() > 0){
+                return true;
+        } else {
+            return false;
+        }
+    }
+
+     public function simpan_nilai_kp()
+    {        
+        $data = array(
+            'id_mahasiswa'      =>$this->input->post('id_mahasiswa', TRUE),
+            'id_detail_kurikulum'      => $this->input->post('id_detail_kurikulum', TRUE),
+            'nilai_d'      => $this->input->post('nilai', TRUE),
+            'id_skala_nilai'      => $this->input->post('id_skala_nilai', TRUE),
+        );
+        $this->db->insert('tb_kelas_mhs', $data);
+        if($this->db->affected_rows() > 0){
+                return true;
+        } else {
+            return false;
+        }
+    }
 
   public function kelas_mhs($id_mahasiswa, $semester_aktif){
       return $this->db->join('tb_kp','tb_kp.id_kp=tb_kelas_mhs.id_kp')
@@ -356,11 +399,15 @@ class Mahasiswa_model extends CI_Model {
     public function simpan_krs_mhs()
     {
       $id_kp2 = explode(',', $this->input->post('id_kp'));
+      $id_detail_kurikulum = explode(',', $this->input->post('id_detail_kurikulum'));
       for($i=0; $i+1<count($id_kp2);$i++){
+        for($i=0; $i+1<count($id_detail_kurikulum);$i++){
         $data = array('id_mahasiswa'        => $this->input->post('id_mahasiswa'),
+                      'id_detail_kurikulum'        => $id_detail_kurikulum[$i],
                       'id_kp'        => $id_kp2[$i]);
         $this->db->insert('tb_kelas_mhs', $data);
       }
+    }
       if($this->db->affected_rows() > 0){
                 return true;
         } else {
@@ -972,6 +1019,7 @@ class Mahasiswa_model extends CI_Model {
   public function data_ld(){
        return $this->db->join('tb_mahasiswa','tb_mahasiswa.id_mahasiswa=tb_ld.id_mahasiswa')
               ->join('tb_bio','tb_bio.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
+              ->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
               ->join('tb_status_mhs','tb_status_mhs.id_status=tb_ld.id_status')
               ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
               ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')

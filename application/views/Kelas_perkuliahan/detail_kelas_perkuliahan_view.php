@@ -490,6 +490,8 @@
 
             <input type="hidden" name="id_periode" id="id_periode" class="validate[required] text-input" maxlength="20" size="40" style="width:80%" value="<?php echo $kp->id_periode; ?>">
 
+            <input type="hidden" name="id_detail_kurikulum" id="id_detail_kurikulum" class="validate[required] text-input" maxlength="20" size="40" style="width:80%" value="<?php echo $kp->id_detail_kurikulum; ?>">
+
           
 
             

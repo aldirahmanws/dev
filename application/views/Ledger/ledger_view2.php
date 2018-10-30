@@ -67,9 +67,30 @@
   font-family:sans-serif;
   font-size:11pt;
   margin-left: 5px;
+
         }
 
     </style>
+
+  <style type="text/css">
+    .rotate {
+
+/* Safari */
+-webkit-transform: rotate(-90deg);
+
+/* Firefox */
+-moz-transform: rotate(-90deg);
+
+/* IE */
+-ms-transform: rotate(-90deg);
+
+/* Opera */
+-o-transform: rotate(-90deg);
+
+float: left;
+
+}
+  </style>
 
     <section class="content">
 
@@ -82,6 +103,7 @@
               <h3 class="box-title">LEDGER</h3>
             </div>
             <div class="box-body">
+              <div class="table-responsive">
               <table class="">
                 <tbody>
                   <form method="get" action="<?php echo base_url("ledger/filter_ledger/")?>">
@@ -103,20 +125,11 @@
                                     ?>
                       </select>
 
-                    </td>                                                                      
-                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Kurikulum</td>     
-                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      
-                      <select name="kurikulum" id="kurikulum">
-                      <option value="iugy"> Pilih Prodi Dahulu </option>
-                        
-                      </select>
-
-                    </td>                                            
-                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Angkatan</td>     
+                    </td>                                                                                                          
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tahun Angkatan</td>     
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <select name="angkatan">
-                        <option value="regreg"> Pilih Angkatan </option>
+                        <option value="regreg"> Pilih Tahun Angkatan </option>
                         <option value="2017">2017</option>
                         <option value="2018">2018</option>
                         <option value="2019">2019</option>
@@ -137,10 +150,12 @@
                   
                 </tbody>
               </table>
-                      
+                      </div>
                </form>
                <br>
                <div class="table-responsive">
+
+             
 
               <table class="table table-bordered table-striped table-hover dataTable js-exportable" style="text-transform: uppercase;">
                 
@@ -152,7 +167,7 @@
                   <?php 
                    foreach ($matkul as $data) { 
                     echo '
-                      <th style="text-align: center">'.$data->nama_matkul.' <br> ('.$data->bobot_matkul.')</th>
+                      <th style="text-align: center">Semester '.$data->semester_kurikulum.' <br>'.$data->nama_matkul.' <br></th>
 
                     '; 
                     }
@@ -160,11 +175,26 @@
                   <th style="text-align: center">IPK</th>
                  
                 </tr>
-               
-                 
                 </thead>
+               
 
                 <tbody>
+
+                <tr>
+                  <th style="text-align: center"></th>
+                  <th style="text-align: center"></th>
+                  <th style="text-align: center"></th>
+                  <?php 
+                   foreach ($matkul as $data) { 
+                    echo '
+                      <th style="text-align: center"> SKS ('.$data->bobot_matkul.')</th>
+
+                    '; 
+                    }
+                    ?>
+                  <th style="text-align: center"></th>
+                 
+                </tr>
 
                 <?php 
                 $no = 0;
@@ -179,9 +209,18 @@
                   <td style="text-align: center"><?php echo $data->nim ?></td>
 
                   <?php foreach ($matkul as $i) { ?>
+
+                    <?php $nilai = $this->db->query("SELECT nilai_huruf AS abc FROM tb_kelas_mhs JOIN tb_mahasiswa ON tb_mahasiswa.id_mahasiswa = tb_kelas_mhs.id_mahasiswa JOIN tb_detail_kurikulum ON tb_detail_kurikulum.id_detail_kurikulum = tb_kelas_mhs.id_detail_kurikulum JOIN tb_matkul ON tb_matkul.kode_matkul = tb_detail_kurikulum.kode_matkul LEFT JOIN tb_skala_nilai ON tb_skala_nilai.id_skala_nilai = tb_kelas_mhs.id_skala_nilai  WHERE tb_matkul.kode_matkul = '$i->kode_matkul' AND tb_mahasiswa.id_mahasiswa = '$data->id_mahasiswa'")->row(); ?>
+
+                    <?php if ($nilai->abc == NULL) {
+                      $a = '-';
+                    } else {
+                      $a = $nilai->abc;
+                    }
+                    ?>
                     
 
-                    <td style="text-align: center"> <?php $nilai = $this->db->query("SELECT nilai_huruf AS abc FROM tb_kelas_mhs JOIN tb_mahasiswa ON tb_mahasiswa.id_mahasiswa = tb_kelas_mhs.id_mahasiswa JOIN tb_kp ON tb_kp.id_kp = tb_kelas_mhs.id_kp JOIN tb_jadwal ON tb_jadwal.id_jadwal = tb_kp.id_jadwal JOIN tb_detail_kurikulum ON tb_detail_kurikulum.id_detail_kurikulum = tb_jadwal.id_detail_kurikulum JOIN tb_matkul ON tb_matkul.kode_matkul = tb_detail_kurikulum.kode_matkul LEFT JOIN tb_skala_nilai ON tb_skala_nilai.id_skala_nilai = tb_kelas_mhs.id_skala_nilai  WHERE tb_matkul.kode_matkul = '$i->kode_matkul' AND tb_mahasiswa.id_mahasiswa = '$data->id_mahasiswa'")->row(); echo $nilai->abc;?></td>
+                    <td style="text-align: center"> <?php echo $a; ?></td>
 
                   <?php } ?>
                   <td style="text-align: center"><?php echo $data->ipk ?></td>

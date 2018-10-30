@@ -192,6 +192,7 @@
             <td class="left_column">Nama Mata Kuliah <font color="#FF0000">*</font></td>
             <td>: <input type="text" name="nama_matkul" id="nama_matkul" class="validate[required] text-input" maxlength="20" size="40" style="width:80%">
             </td>
+           
         </tr> 
           
        <input type="hidden" name="kode_matkul" id="kode_matkul" class="validate[required] text-input" maxlength="20" size="40" style="width:80%" required="">
@@ -199,12 +200,9 @@
         
             <input type="hidden" name="id_kurikulum" id="nama_kurikulum" class="validate[required] text-input" maxlength="20" size="40" style="width:80%" required="" value="<?php echo $this->uri->segment(3); ?>">
 
-            <input type="hidden" name="bobot_matkul" id="bobot_matkul" class="validate[required] text-input" maxlength="20" size="40" style="width:80%" required="">
-
-            <input type="hidden" name="bobot_praktikum" id="bobot_praktikum" class="validate[required] text-input" maxlength="20" size="40" style="width:80%" required="">
-            <input type="hidden" name="bobot_simulasi" id="bobot_simulasi" class="validate[required] text-input" maxlength="20" size="40" style="width:80%" required="">
-            <input type="hidden" name="bobot_praktik_lapangan" id="bobot_praktik_lapangan" class="validate[required] text-input" maxlength="20" size="40" style="width:80%" required="">
-            <input type="hidden" name="bobot_tatap_muka" id="bobot_tatap_muka" class="validate[required] text-input" maxlength="20" size="40" style="width:80%" required="">
+           <input type="hidden" name="id_prodi_matkul" id="id_prodi_matkul" class="validate[required] text-input" maxlength="20" size="40" style="width:80%" required="" value="">
+            <input type="hidden" name="id_prodi_kurikulum" id="id_prodi_kurikulum" class="validate[required] text-input" maxlength="20" size="40" style="width:80%" required="" value="<?php echo $kurikulum->id_prodi; ?>">
+        
             
        
         <tr>
@@ -220,7 +218,7 @@
     </tr>
         
                   <tr>
-                    <td colspan="4"><button type="submit" class="btn btn-primary btn-flat"><i class="fa fa-save"></i> Save</button></td>
+                    <td colspan="4"><button type="submit" class="btn btn-primary btn-flat" id="myBtn"><i class="fa fa-save"></i> Save</button></td>
                   </tr>
               <?php echo form_close();?>
 
@@ -248,17 +246,31 @@
       select: function(event, ui){
         $('#nama_matkul').val(ui.item.label)  ;
         $('#kode_matkul').val(ui.item.id);
-        $('#bobot_matkul').val(ui.item.bobot);
-        $('#bobot_tatap_muka').val(ui.item.btm);
-        $('#bobot_praktikum').val(ui.item.bp);
-        $('#bobot_simulasi').val(ui.item.bs);
-        $('#bobot_praktik_lapangan').val(ui.item.bpl);
+        $('#id_prodi_matkul').val(ui.item.ip);
+        cek_prodi();
       }
     });    
-  });
+  }
+
+  );
 
   </script>
- 
+ <script>
+   function cek_prodi(){
+     var id_prodi_matkul = document.getElementById('id_prodi_matkul').value;
+    var id_prodi_kurikulum = document.getElementById('id_prodi_kurikulum').value;
+   
+
+    if (id_prodi_matkul == id_prodi_kurikulum)
+      {
+         document.getElementById("myBtn").disabled = false;
+
+      } else {
+        document.getElementById("myBtn").disabled = true;
+      }
+    
+    }
+</script>
 
   
 

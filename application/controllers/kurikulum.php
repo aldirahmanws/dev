@@ -97,22 +97,6 @@ class Kurikulum extends CI_Controller {
 		}
 	}
 
-	 function autocomplete(){
-		$searchTerm = $_GET['term'];
-		//mendapatkan data yang sesuai dari tabel daftar_kota
-		$query = $this->db->query("SELECT * FROM tb_matkul WHERE nama_matkul LIKE '%".$searchTerm."%' ORDER BY nama_matkul ASC");
-		foreach($query->result_array() as $row){
-		    $data[] = $row['nama_matkul'];
-		    $data[] = $row['kode_matkul'];
-		    $data[] = $row['bobot_matkul'];
-		    $data[] = $row['bobot_tatap_muka'];
-		    $data[] = $row['bobot_praktik_lapangan'];
-		    $data[] = $row['bobot_simulasi'];
-		    $data[] = $row['bobot_praktikum'];
-		}
-		//return data json
-		echo json_encode($data);
-	}
 	public function get_autocomplete(){
 		if(isset($_GET['term'])){
 			$result = $this->kurikulum_model->autocomplete($_GET['term']);
@@ -126,6 +110,7 @@ class Kurikulum extends CI_Controller {
 						'bpl' => $row->bobot_praktik_lapangan,
 						'bs' => $row->bobot_simulasi,
 						'im' => $row->id_matkul,
+						'ip' => $row->id_prodi,
 						'id' => $row->kode_matkul);
 
 				echo json_encode($result_array);

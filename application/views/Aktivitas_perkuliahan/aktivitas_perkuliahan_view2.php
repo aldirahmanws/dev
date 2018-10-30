@@ -19,7 +19,7 @@
         <th style="width:5%;text-align:center" rowspan="2">No.</th>
         <th style="text-align:center" rowspan="2">Kode MK</th>
         <th style="text-align:center" rowspan="2">Nama MK</th>
-         <th style="text-align:center" rowspan="2">Periode</th>
+         <th style="text-align:center" rowspan="2">Semester</th>
         <th style="text-align:center" rowspan="2">Bobot MK<br />(sks)</th>
          <th style="text-align:center" colspan="3">Nilai<br />(sks)</th>
          <th style="text-align:center" rowspan="2">sks * N.indeks</th>
@@ -44,9 +44,9 @@
       ?>
       <tr>
       <td><?php echo ++$no;?></td>
-        <td style="text-align:center"><?php echo $data->kode_matkul;?></td>
+        <td style="text-align:center"><?php echo $data->id_matkul;?></td>
         <td style="text-align:center"><?php echo $data->nama_matkul;?></td>
-        <td style="text-align:center"><?php echo $data->semester;?></td>
+        <td style="text-align:center"><?php echo $data->semester_kurikulum;?></td>
         <td style="text-align:center"><?php $totalbobot2 += $data->bobot_matkul; echo $data->bobot_matkul;?></td>
         <td style="text-align:center"><?php echo $data->nilai_d;?></td>
         <td style="text-align:center"><?php echo $data->nilai_huruf;?></td>
@@ -127,7 +127,7 @@
       ?>
       <tr>
       <td><?php echo ++$no;?></td>
-        <td style="text-align:center"><?php echo $data->kode_matkul;?></td>
+        <td style="text-align:center"><?php echo $data->id_matkul;?></td>
         <td style="text-align:center"><?php echo $data->nama_matkul;?></td>
         <td style="text-align:center"><?php $totalbobot += $data->bobot_matkul; echo $data->bobot_matkul;?></td>
         <td style="text-align:center"><?php echo $data->nilai_d;?></td>
@@ -173,7 +173,14 @@
             <td width="15%" class="left_column">Nama</td>
             <td>: <input type="text" name="nama" id="nama" class="text-input" maxlength="16" style="width:40%" value="<?php echo $this->input->get('nama_m'); ?>" readonly>
               <input type="hidden" name="id_mahasiswa" id="id_mahasiswa" class="text-input" maxlength="16" style="width:40%" value="<?php echo $this->input->get('id_mahasiswa'); ?>" readonly>
-              <input type="hidden" name="semester_ak" id="semester_ak" class="text-input" maxlength="16" style="width:40%" value="<?php echo $this->input->get('semester_aktif'); ?>" readonly>
+              <input type="hidden" name="semester_ak" id="semester_ak" class="text-input" maxlength="16" style="width:40%" value="<?php if ($this->input->get('smt_pindah') != NULL) {
+                echo $this->input->get('smt_pindah');
+              } else {
+                echo $this->input->get('semester_aktif');
+              }
+              ?>">
+
+
              
             </td>
             <td width="15%" class="left_column">Periode</td>
@@ -197,11 +204,21 @@
               $a = 'Aktif'; }
               else if ($this->input->get('id_status_ak') == 2){
               $a = 'Non Aktif'; }
-              else {
+              else if($this->input->get('id_status_ak') == 3){
                 $a = 'Cuti';
+              } else {
+                $a = 'Pindahan';
               }
             echo $a; ?>" readonly>
-               <input type="hidden" name="id_status_ak" id="id_status_ak" class="text-input" maxlength="16" style="width:40%" value="<?php echo $this->input->get('id_status_ak') ?>">
+               <input type="hidden" name="id_status_ak" id="id_status_ak" class="text-input" maxlength="16" style="width:40%" value="<?php 
+                if ($this->input->get('id_status_ak') == 6) {
+                  echo '19';
+                } else {
+                  echo $this->input->get('id_status_ak');
+                }
+               ?>">
+
+               
             </td>
 
             <td class="left_column" width="15%">IPS</td>
@@ -210,8 +227,10 @@
               $a = round($ips,2);}
               else if ($this->input->get('id_status_ak') == 2){
               $a = '0'; }
-              else {
+              else if($this->input->get('id_status_ak') == 3){
                 $a = '0';
+              } else {
+                $a = round($ips,2);
               }
             echo$a;
 
@@ -229,8 +248,10 @@
               $a = $ab; }
               else if ($this->input->get('id_status_ak') == 2){
               $a = '0'; }
-              else {
+              else if($this->input->get('id_status_ak') == 3){
                 $a = '0';
+              } else {
+                $a = $totalbobot;
               }
             echo $a; ?>" readonly>
               

@@ -143,12 +143,17 @@
         <tr>
             <td class="left_column" width="20%">Status <font color="#FF0000">*</font></td>
             <td colspan="9">:  
-            <select name="id_status_ak" id="id_status_ak" class="validate[required]" required="">
+            <select name="id_status_ak" id="id_status_ak" class="validate[required]" required="" onchange="return get_smt_pindahan(this.value)">
             <option value="19"> Aktif </option>
             <option value="2"> Non Aktif </option>
             <option value="3"> Cuti </option>
-        </select>     </td>
+            <option value="6"> Pindahan </option>
+        </select> 
+
+      </td>
+
         </tr>
+
         <tr>
           <td class="left_column" width="20%">Periode<font color="#FF0000">*</font></td>
             <td colspan="9">:  
@@ -159,6 +164,15 @@
       </td>
         
     </tr>
+    <tr id="smt_pindahan" style="visibility: hidden;">
+            <td class="left_column" width="20%">Semester <font color="#FF0000">*</font></td>
+            <td colspan="9">:  
+            <select name="smt_pindah" id="smt_pindah" class="validate[required]">
+            <option value=""> Pilih Semester </option>
+            <option value="1"> 1 </option>
+            <option value="2"> 2 </option>
+        </select>     </td>
+        </tr>
     <tr>
       <td colspan="9"> <span id="user-availability-status"></span> </td>
     </tr>
@@ -269,4 +283,13 @@
                     }
                 });
             }
+</script>
+<script>
+
+function get_smt_pindahan(param){
+if(param=="6")
+document.getElementById("smt_pindahan").style.visibility = 'visible';
+else
+document.getElementById("smt_pindahan").style.visibility = 'hidden';
+}
 </script>

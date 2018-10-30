@@ -205,6 +205,7 @@ class Kelas_perkuliahan extends CI_Controller {
 						'kurikulum' => $row->nama_kurikulum,
 						'prodi' => $row->id_prodi,
 						'idk' => $row->id_detail_kurikulum,
+						'im' => $row->id_matkul,
 						'id' => $row->kode_matkul);
 				echo json_encode($result_array);
 			
@@ -253,6 +254,7 @@ class Kelas_perkuliahan extends CI_Controller {
 					$result_array[] = array(
 						'label' => $row->nama_prodi.' - '.$row->nama_matkul.' - '.$row->nama_kurikulum,
 						'km' => $row->kode_matkul,
+						'im' => $row->id_matkul,
 						'id' => $row->id_kp);
 				echo json_encode($result_array);
 			

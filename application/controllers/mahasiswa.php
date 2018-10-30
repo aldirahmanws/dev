@@ -342,8 +342,18 @@ class Mahasiswa extends CI_Controller {
 		}
 	}
 
+	public function simpan_nilai_transfer()
+	{
+		$id_mahasiswa = $this->uri->segment(3);
+			if($this->mahasiswa_model->simpan_nilai_transfer() == TRUE && $this->mahasiswa_model->simpan_nilai_kp() == TRUE){
+				$this->session->set_flashdata('message', '<div class="alert alert-success"> Nilai berhasil ditransfer </div>');
+            	redirect('mahasiswa/transfer_nilai/'.$id_mahasiswa);
+			} 
+	}
+
 	public function simpan_pendidikan()
 	{
+		$nik = $this->input->post('nik');
 		$id_mahasiswa = $this->uri->segment(3);
 		$nim_lama = $this->input->post('nim_lama');
 		if ($this->input->post('id_jenis_pendaftaran') == 2) {
@@ -375,18 +385,18 @@ class Mahasiswa extends CI_Controller {
 						if($this->email->send()){
 								$nama_du = $this->input->post('nama_mahasiswa');
 								$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Data '.$nama_du.' berhasil didaftarkan. </div>');
-				            	redirect('mahasiswa/data_mahasiswa');
+				            	redirect('mahasiswa/history_pendidikan/'.$id_mahasiswa.'/'.$nik);
 						}
 
 				
 			} else{
 				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Data  '.$nama_du.' Sudah Ada </div>');
-            	redirect('mahasiswa/data_mahasiswa');
+            	redirect('mahasiswa/history_pendidikan/'.$id_mahasiswa.'/'.$nik);
 			} 
 		} else {
 			if ($this->mahasiswa_model->simpan_pendidikan($id_mahasiswa) == TRUE) {
 				$this->session->set_flashdata('message', '<div class="alert alert-success"> Tambah History Pendidikan Berhasil </div>');
-            	redirect('mahasiswa/history_pendidikan/'.$id_mahasiswa);
+            	redirect('mahasiswa/history_pendidikan/'.$id_mahasiswa.'/'.$nik);
 			}
 		}
 			
@@ -454,6 +464,7 @@ class Mahasiswa extends CI_Controller {
             	redirect('mahasiswa/prestasi/'.$id_mahasiswa);
 			} 
 	}
+
 
 	public function edit_prestasi()
 	{

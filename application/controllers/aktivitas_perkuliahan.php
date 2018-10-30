@@ -35,8 +35,13 @@ class Aktivitas_perkuliahan extends CI_Controller {
 	{
 			$id_mahasiswa = $this->input->get('id_mahasiswa');
 			$id_periode = $this->input->get('id_periode');
+			$smt_pindah = $this->input->get('smt_pindah');
 			$data['nilai'] = $this->aktivitas_perkuliahan_model->filter_ap($id_mahasiswa,$id_periode);
-			$data['nilai2'] = $this->mahasiswa_model->data_nilai_mhs($id_mahasiswa);
+			if ($this->input->get('id_status_ak') == 6) {
+				$data['nilai2'] = $this->mahasiswa_model->data_nilai_mhs_pindahan($id_mahasiswa, $smt_pindah);
+			} else {
+				$data['nilai2'] = $this->mahasiswa_model->data_nilai_mhs($id_mahasiswa);
+			}
 			$data['main_view'] = 'Aktivitas_perkuliahan/aktivitas_perkuliahan_view2';
 			$this->load->view('template', $data);
 	}
@@ -71,7 +76,7 @@ class Aktivitas_perkuliahan extends CI_Controller {
 			$id_periode = $this->uri->segment(5);
 			$semester_ak = $this->uri->segment(6);
 			$data['ap'] = $this->aktivitas_perkuliahan_model->detail_ap($id_aktivitas);
-			$data['nilai'] = $this->aktivitas_perkuliahan_model->filter_ap($id_mahasiswa,$id_periode);
+			$data['nilai'] = $this->aktivitas_perkuliahan_model->data_ips($id_mahasiswa,$semester_ak);
 			$data['nilai2'] = $this->aktivitas_perkuliahan_model->data_ipk($id_mahasiswa, $semester_ak);
 			$data['main_view'] = 'Aktivitas_perkuliahan/detail_aktivitas_perkuliahan_view';
 			$this->load->view('template', $data);

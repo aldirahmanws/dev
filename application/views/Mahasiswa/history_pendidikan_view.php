@@ -12,8 +12,8 @@
 		<a class="btn btn-sm btn-default btn-flat" href="<?php echo base_url(); ?>mahasiswa/data_mahasiswa"><i class="fa fa-angle-left"></i> Back</a>
        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/lihat_mahasiswa_dikti/<?php echo $mahasiswa->id_mahasiswa; ?>">Detail Mahasiswa</a>
         <a class="btn btn-sm btn-warning btn-flat" href="<?php echo base_url();?>mahasiswa/history_pendidikan/<?php echo $mahasiswa->id_mahasiswa; ?>/<?php echo $mahasiswa->nik; ?>">History Pendidikan</a>
-        <?php if ($mahasiswa->id_jenis_pendaftaran == '2') { ?>
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/transfer_nilai/<?php echo $mahasiswa->id_mahasiswa; ?>">Transfer Nilai</a>
+       <?php if ($mahasiswa->id_jenis_pendaftaran == '2') { ?>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/transfer_nilai/<?php echo $mahasiswa->id_mahasiswa; ?>">Nilai Transfer</a>
         <?php } ?>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/krs_mahasiswa/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>/<?php echo $mahasiswa->id_konsentrasi; ?>">KRS Mahasiswa</a>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/jadwal_mhs/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>">Jadwal Kuliah</a>
@@ -126,7 +126,7 @@
                     <div class="form-group">
                         <label class="col-xs-4" >NIM</label>
                         <div class="col-xs-6">
-                            <input type="text" name="nim" class="form-control input-sm pull-left" id="nim" placeholder="" required="">
+                            <input type="text" name="nim" class="form-control input-sm pull-left" id="nim" placeholder="" required="" onkeyup="checkAvailability()"><br><span id="user-availability-status"></span>
                         </div>
                     </div>
                     <div class="form-group">
@@ -273,7 +273,7 @@
 
 <input type="hidden" name="no_telepon" id="no_telepon" class="text-input" maxlength="20" size="20" style="width:30%" value="<?php echo $mahasiswa->no_telepon; ?>">
 <input type="hidden" name="no_hp" id="no_hp" class="text-input" maxlength="20" size="20" style="width:30%" value="<?php echo $mahasiswa->no_hp; ?>">
-<input type="text" name="email" id="email" class="text-input" maxlength="60" size="60" style="width:30%" value="<?php echo $mahasiswa->email; ?>">
+<input type="hidden" name="email" id="email" class="text-input" maxlength="60" size="60" style="width:30%" value="<?php echo $mahasiswa->email; ?>">
 <input type="hidden" name="no_kps" id="no_kps" class="text-input" maxlength="80" size="80" disabled style="width:50%" value="<?php echo $mahasiswa->no_kps; ?>">
 <input type="hidden" name="nik_ayah" id="nik_ayah" class="text-input" maxlength="16" size="50" style="width:40%" onkeydown="return onlyNumber(event,this,false,false)" value="<?php echo $mahasiswa->nik_ayah; ?>">
 <input type="hidden" name="nama_ayah" id="nama_ayah" class="text-input" maxlength="100" size="100" style="width:50%" value="<?php echo $mahasiswa->nama_ayah; ?>">
@@ -302,7 +302,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button class="btn btn-primary btn-flat"><i class="fa fa-save"></i> Save</button>
+                    <button class="btn btn-primary btn-flat" id="myBtn"><i class="fa fa-save"></i> Save</button>
                 </div>
             <?php echo form_close();?>
             </div></div>
@@ -428,6 +428,18 @@
                         $("#concentrate").html(msg);
 
                     }
+                });
+            }
+            function checkAvailability() {
+                $.ajax({
+                    url: '<?php echo base_url(); ?>daftar_ulang/cek_nim/',
+                    data: 'nim='+$("#nim").val(),
+                    type: 'POST',
+                    dataType: 'html',
+                    success:function(data){
+                    $("#user-availability-status").html(data);
+                    },
+                    error:function (){}
                 });
             }
 </script>

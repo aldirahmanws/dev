@@ -36,7 +36,7 @@
                 <label class="radio-inline"><input type="radio" name="jenis_kelamin" id="jenis_kelamin" value="P"> Perempuan</label> &nbsp; </td>
             <td class="left_column">Agama <font color="#FF0000">*</font></td>
             <td>:  <select name="agama" id="agama" required="">
-            <option>Pilih Agama</option>
+            <option value="">Pilih Agama</option>
             
                               <option value="1">Islam</option>
                               <option value="2">Katholik</option>
@@ -77,7 +77,7 @@
                 <tr>
                     <td class="left_column" width="15%" >Nama Prodi <font color="#FF0000">*</font></td>
                     <td>: <select name="id_prodi" id="id_prodi" onchange="return get_concentrate(this.value);" onblur="return get_prodi_periode(this.value);" required="">
-                            <option>Pilih Prodi</option>  
+                            <option value="">Pilih Prodi</option>  
                              <?php 
 
                   foreach($getProdi as $row)
@@ -91,7 +91,7 @@
                     <td class="left_column">Nama Konsentrasi <font color="#FF0000">*</font></td>
                     <td>:
                         <select name="concentrate" id="concentrate" required="" >
-                            <option>Pilih Prodi Dahulu</option>
+                            <option value="">Pilih Prodi Dahulu</option>
                             
                              </select></td>
                 </tr>
@@ -104,7 +104,7 @@
                     <td class="left_column">Periode Pendaftaran <font color="#FF0000">*</font></td>
                     <td>:
                         <select name="id_periode" id="id_periode" required="">
-                            <option> Pilih Prodi Dahulu </option>
+                            <option value=""> Pilih Prodi Dahulu </option>
                             
                              </select></td>
                 </tr>
@@ -112,7 +112,7 @@
                 <tr>
                     <td class="left_column" width="15%"> Grade <font color="#FF0000">*</font></td>
                     <td colspan="4">:  <select name="id_grade" id="id_grade" required="">
-                            <option>Pilih Grade</option>  
+                            <option value="">Pilih Grade</option>  
                              <?php 
 
                   foreach($getGrade as $row)

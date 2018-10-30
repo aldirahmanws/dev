@@ -378,6 +378,7 @@ class Kelas_perkuliahan_model extends CI_Model {
     {
         $data = array(
             'id_kp'        => $this->input->post('id_kp'),
+            'id_detail_kurikulum'        => $this->input->post('id_detail_kurikulum'),
             'id_mahasiswa'        => $this->input->post('id_mahasiswa')
         );
     

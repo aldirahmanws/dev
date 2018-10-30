@@ -16,8 +16,9 @@
          <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/lihat_mahasiswa_dikti/<?php echo $mahasiswa->id_mahasiswa; ?>">Detail Mahasiswa</a>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/history_pendidikan/<?php echo $mahasiswa->id_mahasiswa; ?>/<?php echo $mahasiswa->nik; ?>">History Pendidikan</a>
         <?php if ($mahasiswa->id_jenis_pendaftaran == '2') { ?>
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/history_pendidikan/<?php echo $mahasiswa->id_mahasiswa; ?>">Transfer Nilai</a>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/transfer_nilai/<?php echo $mahasiswa->id_mahasiswa; ?>">Nilai Transfer</a>
         <?php } ?>
+
         <a class="btn btn-sm btn-warning btn-flat" href="<?php echo base_url();?>mahasiswa/krs_mahasiswa/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>/<?php echo $mahasiswa->id_konsentrasi; ?>">KRS Mahasiswa</a>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/jadwal_mhs/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>">Jadwal Kuliah</a>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/history_nilai/<?php echo $mahasiswa->id_mahasiswa; ?>">History Nilai</a>
@@ -92,6 +93,7 @@
                   <?php 
                 $no = 0;
                 $id_kp = '';
+                $id_detail_kurikulum = '';
                 if ($mahasiswa->id_status != '1') {
                 foreach ($krs as $i) {
                   if ($i->id_konsentrasi == $this->uri->segment(6) OR $i->nama_konsentrasi == 'Semua' OR $i->id_konsentrasi == $mahasiswa->id_konsentrasi) {
@@ -99,7 +101,8 @@
                   $total_mahasiswa = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs WHERE id_kp = '$i->id_kp'")->row();
                   if(date('Y-m-d') > $i->tgl_mulai AND date('Y-m-d') < $i->tgl_akhir){
                   if ($total_mahasiswa->total < $i->kapasitas) {
-                   $id_kp .= $i->id_kp.',';        
+                   $id_kp .= $i->id_kp.',';
+                   $id_detail_kurikulum .= $i->id_detail_kurikulum.',';         
                   echo '
                   
                 <tr>
@@ -134,6 +137,7 @@
               <input type="hidden" class="form-control" id="id_mahasiswa" name="id_mahasiswa" value="<?php echo $id_mahasiswa ?>">
               <input type="hidden" class="form-control" id="semester_aktif" name="semester_aktif" value="<?php echo $semester_aktif ?>">
                <input type="hidden" class="form-control" id="id_kp" name="id_kp" value="<?php echo $id_kp ?>">
+               <input type="hidden" class="form-control" id="id_detail_kurikulum" name="id_detail_kurikulum" value="<?php echo $id_detail_kurikulum ?>">
                <?php
                if ($mahasiswa->id_status != '1') { echo ' 
               <button type="submit"  class="btn btn-success">Simpan</button> ';
@@ -196,6 +200,7 @@
        <input type="hidden" name="semester_aktif" id="semester_aktif" class="validate[required] text-input"  size="40" style="width: 90%;" value="<?php echo $mahasiswa->semester_aktif; ?>">
       </td>
       <input type="hidden" name="id_kp" id="id_kp2" class="validate[required] text-input"  size="5" style="width: 90%;">
+      <input type="hidden" name="id_detail_kurikulum" id="id_detail_kurikulum" class="validate[required] text-input"  style="width: 90%;">
         </tr> 
                   <tr>
                     <td colspan="4"><button type="submit" class="btn btn-info">Simpan</button></td>
