@@ -118,7 +118,7 @@
               } else {
                 echo '
                  <tr>
-                    <td colspan="6"> Waktu mengisi KRS sudah melebihi batas akhir</td>
+                    <td colspan="6"> Waktu mengisi KRS '.$i->nama_matkul.' sudah berakhir. Segera hubungi akademik!</td>
                   </tr>
                 ';
               } }
@@ -138,8 +138,9 @@
               <input type="hidden" class="form-control" id="semester_aktif" name="semester_aktif" value="<?php echo $semester_aktif ?>">
                <input type="hidden" class="form-control" id="id_kp" name="id_kp" value="<?php echo $id_kp ?>">
                <input type="hidden" class="form-control" id="id_detail_kurikulum" name="id_detail_kurikulum" value="<?php echo $id_detail_kurikulum ?>">
+               
                <?php
-               if ($mahasiswa->id_status != '1') { echo ' 
+               if ($mahasiswa->id_status != '1' ) { echo ' 
               <button type="submit"  class="btn btn-success">Simpan</button> ';
             } 
                  ?>
@@ -200,7 +201,7 @@
        <input type="hidden" name="semester_aktif" id="semester_aktif" class="validate[required] text-input"  size="40" style="width: 90%;" value="<?php echo $mahasiswa->semester_aktif; ?>">
       </td>
       <input type="hidden" name="id_kp" id="id_kp2" class="validate[required] text-input"  size="5" style="width: 90%;">
-      <input type="hidden" name="id_detail_kurikulum" id="id_detail_kurikulum" class="validate[required] text-input"  style="width: 90%;">
+      <input type="hidden" name="id_detail_kurikulum" id="id_detail_kurikulum2" class="validate[required] text-input"  style="width: 90%;">
         </tr> 
                   <tr>
                     <td colspan="4"><button type="submit" class="btn btn-info">Simpan</button></td>
@@ -228,9 +229,12 @@
       minLength:1,
       select: function(event, ui){
         $('#nama_matkul').val(ui.item.label);
+        $('#id_detail_kurikulum2').val(ui.item.idk);
         $('#id_kp2').val(ui.item.id);
       }
     });    
   });
 
   </script>
+
+

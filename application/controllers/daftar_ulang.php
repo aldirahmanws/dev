@@ -31,7 +31,7 @@ class daftar_ulang extends CI_Controller {
 	}
 	public function save_mahasiswa_pagi()
 	{
-			if($this->mahasiswa_model->save_mahasiswa_pagi() == TRUE && $this->mahasiswa_model->save_ayah() == TRUE  && $this->mahasiswa_model->save_ibu() == TRUE && $this->mahasiswa_model->save_alamat() == TRUE && $this->mahasiswa_model->save_wali() == TRUE && $this->mahasiswa_model->save_kependudukan() == TRUE && $this->mahasiswa_model->save_bio() == TRUE && $this->mahasiswa_model->save_kontak() == TRUE && $this->mahasiswa_model->save_tgl_du() == TRUE){
+			if($this->mahasiswa_model->save_mahasiswa() == TRUE && $this->mahasiswa_model->save_ayah() == TRUE  && $this->mahasiswa_model->save_ibu() == TRUE && $this->mahasiswa_model->save_alamat() == TRUE && $this->mahasiswa_model->save_wali() == TRUE && $this->mahasiswa_model->save_kependudukan() == TRUE && $this->mahasiswa_model->save_bio() == TRUE && $this->mahasiswa_model->save_kontak() == TRUE && $this->mahasiswa_model->save_pendidikan() == TRUE){
 				$id_du = $this->input->post('id_du');
 				$this->tamu_model->save_update_status2($id_du);
 				$pass = $this->random_password();
@@ -191,6 +191,20 @@ class daftar_ulang extends CI_Controller {
 		echo $option;
 
 	}
+
+	public function get_grade($param = NULL) {
+		// $layanan =$this->input->post('layanan');
+		$semester_aktif = $param;
+		$result = $this->daftar_ulang_model->get_grade($semester_aktif);
+		$option = "";
+		$option .= '<option value="">Pilih Grade</option>';
+		foreach ($result as $data) {
+			$option .= "<option value='".$data->id_grade."' >".$data->grade."</option>";
+		}
+		echo $option;
+
+	}
+
 	public function cek_nim(){
 		$nim = $this->input->post('nim');
 		$this->daftar_ulang_model->cek_nim($nim);

@@ -4,7 +4,7 @@
             <i class="fa fa-pencil"></i> Input Nilai</div>
             <div class="panel-body">
               <div class="row">
-         <form  method="post" action="<?php echo base_url(); ?>nilai_perkuliahan/save_edit_nilai/<?php echo $dnilai->id_kelas_mhs; ?>" enctype="multipart/form-data">
+         <form  method="post" action="<?php echo base_url(); ?>nilai_perkuliahan/save_edit_nilai/<?php echo $dnilai->id_kelas_mhs; ?>/<?php echo $dnilai->id_mahasiswa; ?>/<?php echo $dnilai->id_detail_kurikulum; ?>" enctype="multipart/form-data">
     <table class="table">
       <tr>
             <td class="left_column">Nama Mahasiswa</td>

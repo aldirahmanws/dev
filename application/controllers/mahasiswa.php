@@ -13,6 +13,7 @@ class Mahasiswa extends CI_Controller {
 		$this->load->model('user_model');
 		$this->load->model('kelas_perkuliahan_model');
 	}
+	 
 	public function index()
 	{		
 		if ($this->session->userdata('logged_in') == TRUE) {
@@ -197,7 +198,7 @@ class Mahasiswa extends CI_Controller {
 			}
 			$data['periode'] = $this->mahasiswa_model->Periode_krs($id_prodi);
 			$data['mahasiswa'] = $this->mahasiswa_model->detail_krs_mahasiswa($id_mahasiswa, $semester_aktif);
-			$data['kelas'] = $this->mahasiswa_model->kelas_mhs($id_mahasiswa, $semester_aktif);
+			$data['kelas'] = $this->mahasiswa_model->kelas_mhs($id_mahasiswa);
 			$data['main_view'] = 'Mahasiswa/kelas_mahasiswa_view';
 			$this->load->view('template', $data);
 			} else {
@@ -417,9 +418,10 @@ class Mahasiswa extends CI_Controller {
 	public function simpan_krs_mengulang()
 	{
 		$id_mahasiswa = $this->input->post('id_mahasiswa');
+		$id_detail_kurikulum = $this->input->post('id_detail_kurikulum');
 		$id_prodi = $this->uri->segment(3);
 		$semester_aktif = $this->uri->segment(4);
-			if($this->mahasiswa_model->simpan_krs_mengulang() == TRUE){
+			if($this->mahasiswa_model->simpan_krs_mengulang() == TRUE && $this->mahasiswa_model->edit_kelas_mengulang($id_detail_kurikulum, $id_mahasiswa) == TRUE){
 				$this->session->set_flashdata('message', '<div class="alert alert-success"> Mata kuliah mengulang berhasil ditambahkan </div>');
             	redirect('mahasiswa/kelas_mhs/'.$id_mahasiswa.'/'.$id_prodi.'/'.$semester_aktif);
 			} 

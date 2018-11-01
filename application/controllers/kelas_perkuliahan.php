@@ -239,6 +239,7 @@ class Kelas_perkuliahan extends CI_Controller {
 						'label' => $row->nama_kelas.' - '.$row->nama_matkul.' - '.$row->nama_prodi,
 						'prodi' => $row->id_prodi,
 						'periode' => $row->id_periode,
+						'idk' => $row->id_detail_kurikulum,
 						'id' => $row->id_kp);
 				echo json_encode($result_array);
 			

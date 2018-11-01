@@ -108,19 +108,42 @@
                             
                              </select></td>
                 </tr>
-               
+               <tr>
+                    <td class="left_column">Jenis Pendaftaran <font color="#FF0000">*</font></td>
+                    <td>:
+                        <select name="id_jenis_pendaftaran" id="id_jenis_pendaftaran" required="">
+                            <option value="1">Peserta Didik Baru</option>
+                            <option value="2">Pindahan</option>
+                            <option value="3">Alih Jenjang</option>
+                            <option value="4">Lintas Jalur</option>
+                            <option value="5">Rekognisi Pembelajaran Lampau</option>
+                            
+                             </select></td>
+                </tr>
+                <tr>
+                    <td class="left_column" width="15%"> Semester Aktif <font color="#FF0000">*</font></td>
+                    <td colspan="4">:  <select name="semester_aktif" id="semester_aktif" required="" onchange="return get_grade(this.value)"> 
+                            <option value=""> Pilih Semester Aktif </option>
+                            <option value="1"> 1 </option>
+                            <option value="2"> 2 </option>
+                            <option value="3"> 3 </option>
+                            <option value="4"> 4 </option>
+                            <option value="5"> 5 </option>
+                            <option value="6"> 6 </option>
+                            <option value="7"> 7 </option>
+                            <option value="8"> 8 </option>
+                             </select>                            
+                    </td>
+                </tr>
                 <tr>
                     <td class="left_column" width="15%"> Grade <font color="#FF0000">*</font></td>
-                    <td colspan="4">:  <select name="id_grade" id="id_grade" required="">
-                            <option value="">Pilih Grade</option>  
-                             <?php 
+                    <td colspan="4">:  
 
-                  foreach($getGrade as $row)
-                  { 
-                    echo '<option value="'.$row->id_grade.'">'.$row->grade.'</option>';
-                  }
-                  ?>
-                             </select>                            
+                <select name="id_grade" id="id_grade" required="">
+                            <option value="">Pilih Semester Aktif Dahulu</option>  
+                            
+                </select>  
+
                     </td>
                 </tr>
 
@@ -546,6 +569,20 @@ function undisableTxt() {
                     dataType: 'html',
                     success: function(msg) {
                         $("#concentrate").html(msg);
+
+                    }
+                });
+            }
+     function get_grade(p) {
+                var semester_aktif = p;
+
+                $.ajax({
+                    url: '<?php echo base_url(); ?>daftar_ulang/get_grade/'+semester_aktif,
+                    data: 'semester_aktif='+semester_aktif,
+                    type: 'GET',
+                    dataType: 'html',
+                    success: function(msg) {
+                        $("#id_grade").html(msg);
 
                     }
                 });

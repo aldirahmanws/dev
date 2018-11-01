@@ -104,13 +104,28 @@ class Mahasiswa_model extends CI_Model {
      return $query->result();
       }
 
+
       public function data_nilai_mhs($id_mahasiswa){
-      return $this->db->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kelas_mhs.id_detail_kurikulum')
+       $c = $this->db->select('tb_kelas_mhs.id_detail_kurikulum')
+                  ->distinct()
+                          ->where('tb_kelas_mhs.id_mahasiswa', $id_mahasiswa)
+                          ->get('tb_kelas_mhs')
+                          ->result();
+
+      
+              foreach ($c as $b) {
+      $a = $this->db->select('MAX(tb_kelas_mhs.nilai_d) as nilai_d, tb_matkul.nama_matkul, tb_matkul.bobot_matkul, tb_matkul.id_matkul, tb_kelas_mhs.nilai_tugas, tb_kelas_mhs.nilai_paper, tb_kelas_mhs.nilai_uts, tb_kelas_mhs.nilai_uas, tb_kelas_mhs.absensi, tb_skala_nilai.nilai_huruf, tb_skala_nilai.nilai_indeks, tb_detail_kurikulum.semester_kurikulum')
+              ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kelas_mhs.id_detail_kurikulum')
               ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
               ->join('tb_skala_nilai','tb_skala_nilai.id_skala_nilai=tb_kelas_mhs.id_skala_nilai')
-              ->where('tb_kelas_mhs.id_mahasiswa', $id_mahasiswa)
+              ->where('tb_kelas_mhs.id_detail_kurikulum', $b->id_detail_kurikulum)
               ->get('tb_kelas_mhs')
-              ->result();
+              ->row();
+           
+            $row[] = $a;
+              }
+         
+        return $row;
   } 
 
   public function data_nilai_mhs_pindahan($id_mahasiswa, $smt_pindah){
@@ -232,7 +247,7 @@ class Mahasiswa_model extends CI_Model {
         }
     }
 
-  public function kelas_mhs($id_mahasiswa, $semester_aktif){
+  public function kelas_mhs($id_mahasiswa){
       return $this->db->join('tb_kp','tb_kp.id_kp=tb_kelas_mhs.id_kp')
               ->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal')
               ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
@@ -243,7 +258,6 @@ class Mahasiswa_model extends CI_Model {
               ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi')
               ->join('tb_kelas_dosen','tb_kelas_dosen.id_kp=tb_kp.id_kp','left')
               ->join('tb_dosen','tb_dosen.id_dosen=tb_kelas_dosen.id_dosen','left')
-              ->where('tb_detail_kurikulum.semester_kurikulum', $semester_aktif)
               ->where('tb_kelas_mhs.id_mahasiswa', $id_mahasiswa)
               ->get('tb_kelas_mhs')
               ->result();
@@ -420,7 +434,8 @@ class Mahasiswa_model extends CI_Model {
         $data = array(
             'id_mahasiswa'        => $this->input->post('id_mahasiswa'),
             'id_kp'        => $this->input->post('id_kp'),
-            'semester'        => $this->input->post('semester_aktif')
+            'id_detail_kurikulum'        => $this->input->post('id_detail_kurikulum'),
+            'ket'        => $this->input->post('semester_aktif'),
         );
     
         $this->db->insert('tb_kelas_mhs', $data);
@@ -433,12 +448,30 @@ class Mahasiswa_model extends CI_Model {
         }
     }
 
+    public function edit_kelas_mengulang($id_mahasiswa, $id_detail_kurikulum){
+    $data = array(
+            'id_mahasiswa' => $this->input->post('id_mahasiswa'),
+            'id_detail_kurikulum' => $this->input->post('id_detail_kurikulum'),
+            'mark'        => 'y',
+      );
+
+    if (!empty($data)) {
+            $this->db->where('id_mahasiswa', $id_mahasiswa)
+                     ->where('id_detail_kurikulum', $id_detail_kurikulum)
+                     ->update('tb_kelas_mhs', $data);
+
+          return true;
+        } else {
+            return null;
+        }
+  }
+
     public function save_pendidikan()
     {
         $data = array(
             'id_mahasiswa'        => $this->input->post('id_mahasiswa'),
             'tgl_du'        => $this->input->post('tgl_du'),
-            'id_jenis_pendaftaran'        => '1',
+            'id_jenis_pendaftaran'        => $this->input->post('id_jenis_pendaftaran'),
             'id_jalur_pendaftaran'        => '6',
             'id_pt'        => '033082',
             'id_periode'        => $this->input->post('id_periode')
@@ -573,7 +606,7 @@ class Mahasiswa_model extends CI_Model {
             'id_status'      => '19',
             'id_konsentrasi'      => $this->input->post('concentrate', TRUE),
             'id_waktu'      => $this->input->post('id_waktu', TRUE),
-            'semester_aktif'      =>'1',
+            'semester_aktif'      => $this->input->post('semester_aktif', TRUE),
             'id_grade'      => $this->input->post('id_grade', TRUE)
 
         );

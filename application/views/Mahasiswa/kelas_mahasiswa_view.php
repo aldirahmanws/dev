@@ -61,6 +61,8 @@
                 $totalbobot = 0;
                 if ($mahasiswa->id_status == '1') {
                 foreach ($kelas as $i) {
+                  if ($i->semester_kurikulum == $mahasiswa->semester_aktif OR $i->ket == $mahasiswa->semester_aktif) {
+
                   $totalbobot += $i->bobot_matkul;
                   echo '
                 <tr>
@@ -78,6 +80,7 @@
                   <td></td>
                 </tr>
                 ' ;
+              }
             }
           } 
             ?>
@@ -165,6 +168,8 @@
                 $totalbobot = 0;
                 if ($mahasiswa->id_status == '1') {
                 foreach ($kelas as $i) {
+                  if ($i->semester_kurikulum == $mahasiswa->semester_aktif OR $i->ket == $mahasiswa->semester_aktif) {
+              
                   $totalbobot += $i->bobot_matkul;
                   echo '
                 <tr>
@@ -182,6 +187,7 @@
                   <td></td>
                 </tr>
                 ' ;
+              }
             }
           } 
             ?>

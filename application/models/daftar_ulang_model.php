@@ -71,6 +71,12 @@ class Daftar_ulang_model extends CI_Model {
               ->get('tb_prodi')
               ->result();
   }
+
+  public function get_grade($semester_aktif){
+      return $this->db->like('tb_grade.ket',$semester_aktif)
+              ->get('tb_grade')
+              ->result();
+  }
   
     function getPreschool()
     {

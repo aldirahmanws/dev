@@ -86,6 +86,7 @@
         $totalsi = 0;
         $totalbobot = 0;
         foreach($nilai2 as $data):
+        
              $dataee = $data->bobot_matkul * $data->nilai_indeks;
         ;
       ?>

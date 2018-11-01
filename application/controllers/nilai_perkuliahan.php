@@ -91,8 +91,10 @@ class Nilai_perkuliahan extends CI_Controller {
 
 	public function save_edit_nilai(){
 			$id_kelas_mhs = $this->uri->segment(3);
+			$id_mahasiswa = $this->uri->segment(4);
+			$id_detail_kurikulum = $this->uri->segment(5);
 
-					if ($this->nilai_perkuliahan_model->save_edit_nilai($id_kelas_mhs) == TRUE) {
+					if ($this->nilai_perkuliahan_model->save_edit_nilai($id_kelas_mhs) == TRUE && $this->nilai_perkuliahan_model->save_edit_ket_nilai($id_mahasiswa, $id_detail_kurikulum) == TRUE) {
 						$this->session->set_flashdata('message', '<div class="alert alert-success"> Input Nilai Berhasil </div>');
             			$id_kp = $this->input->post('id_kp');
             			redirect('nilai_perkuliahan/detail_nilai/'.$id_kp);

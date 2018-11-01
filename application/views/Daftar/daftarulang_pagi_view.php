@@ -123,7 +123,9 @@
                   <label for="mother">NIM</label>
                   <input type="text" name="nim" class="form-control" id="nim" placeholder="Masukan NIM" value="" required="" onkeyup="checkAvailability()"><span id="user-availability-status"></span>  
                 </div>   
-                      
+                <input type="hidden" name="id_jt" class="form-control" value="">
+                <input type="hidden" name="id_transportasi="form-control" value="">
+                <input type="hidden" name="nama_ayah" class="form-control" value="">
                  <input type="hidden" name="nama_ayah" class="form-control" value="">
                  <input type="hidden" name="nik_ayah" class="form-control" value="">
                  <input type="hidden" name="tanggal_lahir_ayah" class="form-control" value="">

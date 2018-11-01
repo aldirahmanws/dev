@@ -201,6 +201,7 @@ a:hover .tooltiptext {
             <li <?php if($this->uri->segment(1) == 'calendar' && $this->uri->segment(2) == '') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>calendar"><i class="fa fa-calendar"></i><span>Kalender Akademik</span></a></li>
             <li <?php if($this->uri->segment(2) == 'master_calendar') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>calendar/master_calendar"><i class="fa fa-calendar-plus-o"></i> Data Kalender</a></li>
             <li <?php if($this->uri->segment(1) == 'master_asal_sekolah') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>master_asal_sekolah"><i class="fa fa-building-o"></i><span> Asal Sekolah</span></a></li>
+            <li <?php if($this->uri->segment(1) == 'universitas') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>universitas"><i class="fa fa-building-o"></i><span> Universitas</span></a></li>
             <li <?php if($this->uri->segment(2) == 'data_tamu') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>tamu/data_tamu"><i class="fa fa-group"></i><span>Data Tamu</span></a></li>
             <li <?php if($this->uri->segment(2) == 'data_peserta_tes') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>daftar_ulang/data_peserta_tes"><i class="fa fa-male"></i><span>Data Peserta Tes</span></a></li>
             <li <?php if($this->uri->segment(2) == 'data_sgs') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>tamu/data_sgs"><i class="fa  fa-file"></i><span>Data Student Get Student</span></a>
@@ -273,7 +274,7 @@ a:hover .tooltiptext {
           <?php } else { ?>
             <li <?php if($this->uri->segment(1) == 'dashboard') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>dashboard"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li>
             <li <?php if($this->uri->segment(1) == 'calendar' AND $this->uri->segment(2) == '') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>calendar"><i class="fa fa-calendar"></i><span>Kalender Akademik</span></a></li>
-        <li class="treeview <?php if($this->uri->segment(1) == 'admin' OR $this->uri->segment(2) == 'master_calendar' OR $this->uri->segment(1) == 'master_prodi' OR $this->uri->segment(1) == 'master_konsentrasi' OR $this->uri->segment(1) == 'master_asal_sekolah' OR $this->uri->segment(1) == 'master_biaya_sekolah' OR $this->uri->segment(1) == 'master_dosen' OR $this->uri->segment(1) == 'ruang' OR $this->uri->segment(1) == 'informasi') echo 'active'; else echo  '';?>">
+        <li class="treeview <?php if($this->uri->segment(1) == 'admin' OR $this->uri->segment(2) == 'master_calendar' OR $this->uri->segment(1) == 'master_prodi' OR $this->uri->segment(1) == 'master_konsentrasi' OR $this->uri->segment(1) == 'master_asal_sekolah' OR $this->uri->segment(1) == 'master_biaya_sekolah' OR $this->uri->segment(1) == 'master_dosen' OR $this->uri->segment(1) == 'ruang' OR $this->uri->segment(1) == 'informasi' OR $this->uri->segment(1) == 'universitas') echo 'active'; else echo  '';?>">
           <a href="#">
             <i class="fa fa-archive"></i> <span>Master</span>
             <span class="pull-right-container">
@@ -287,6 +288,7 @@ a:hover .tooltiptext {
             <li <?php if($this->uri->segment(1) == 'master_konsentrasi') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>master_konsentrasi"><i class="fa fa-circle-o"></i> Konsentrasi</a
               ></li>
             <li <?php if($this->uri->segment(1) == 'master_asal_sekolah') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>master_asal_sekolah"><i class="fa fa-circle-o"></i> Asal Sekolah</a></li>
+            <li <?php if($this->uri->segment(1) == 'universitas') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>universitas"><i class="fa fa-circle-o"></i><span> Universitas</span></a></li>
             <li <?php if($this->uri->segment(1) == 'master_biaya_sekolah') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>master_biaya_sekolah"><i class="fa fa-circle-o"></i> Biaya Kuliah</a></li>
             <li <?php if($this->uri->segment(1) == 'master_dosen') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>master_dosen"><i class="fa fa-circle-o"></i> Dosen</a></li>
             <li <?php if($this->uri->segment(1) == 'ruang') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>ruang"><i class="fa fa-circle-o"></i> Ruangan</a></li>

@@ -113,6 +113,25 @@ class Nilai_perkuliahan_model extends CI_Model {
         }
   }
 
+
+  public function save_edit_ket_nilai($id_mahasiswa, $id_detail_kurikulum){  
+
+  $a = $this->db->query("SELECT id_kelas_mhs, MIN(nilai_d) FROM tb_kelas_mhs WHERE id_mahasiswa = '$id_mahasiswa' AND id_detail_kurikulum = '$id_detail_kurikulum'")->row();
+
+    $data = array(
+            'ket' => 'c',
+        );
+
+    if (!empty($data)) {
+            $this->db->where('id_kelas_mhs', $a->id_kelas_mhs)
+        ->update('tb_kelas_mhs', $data);
+
+          return true;
+        } else {
+            return null;
+        }
+  }
+
    
 
 
