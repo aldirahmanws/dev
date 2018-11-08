@@ -43,11 +43,7 @@ class Periode_model extends CI_Model {
      $query = $this->db->get();
      return $query->result();
     }
-  // public function data_periode(){
-  //   return $this->db
-  //   ->get('tb_periode')
-  //   ->result();
-  // }
+  
 
   public function edit_periode($id_periode){
     $data = array(
@@ -72,6 +68,17 @@ class Periode_model extends CI_Model {
             return null;
         }
   }
+
+   public function hapus_periode($id_periode){
+        $this->db->where('id_periode', $id_periode)
+          ->delete('tb_periode');
+
+    if ($this->db->affected_rows() > 0) {
+      return TRUE;
+      } else {
+        return FALSE;
+      }
+    }
     
 }
 

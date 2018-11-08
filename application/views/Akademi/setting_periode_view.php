@@ -27,8 +27,10 @@
                 <tbody>
 
                 <?php 
+                $alert = "'Anda yakin menghapus data ini ?'";
                 $no = 0;
                 foreach ($data_periode as $data) {
+
                   echo '
                   
                 <tr>
@@ -37,10 +39,12 @@
                   <td><a href="" data-toggle="modal" data-target="#modal_view'.$data->id_periode.'">'.$data->semester.'</a></td>
                   <td>'.$data->nama_prodi.'</td>
                   <td>'.$data->target_mhs_baru.'</td>
-                  <td>'.$data->tgl_awal_kul.'</td>
-                  <td>'.$data->tgl_akhir_kul.'</td>
+                  <td>'.date("d M Y", strtotime($data->tgl_awal_kul)).'</td>
+                  <td>'.date("d M Y", strtotime($data->tgl_akhir_kul)).'</td>
                   <td>
                   <a href="" data-toggle="modal" data-target="#modal_edit'.$data->id_periode.'" class="btn btn-warning btn-xs btn-flat" ><i class="glyphicon glyphicon-pencil"></i><span class="tooltiptext">Edit</span></a>
+
+                  <a href="'.base_url('setting_periode/hapus_periode/'.$data->id_periode).'" class="btn btn-danger btn-xs btn-flat" onclick="return confirm('.$alert.')"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus</span></a>
                 
                 ' ;
                 

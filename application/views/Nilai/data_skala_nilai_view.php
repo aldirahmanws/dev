@@ -70,8 +70,8 @@
                   <td>'.$data->nilai_indeks.'</td>
                   <td>'.$data->bobot_nilai_minimum.'</td>
                   <td>'.$data->bobot_nilai_maksimum.'</td>
-                  <td>'.$data->tanggal_mulai_efektif.'</td>
-                  <td>'.$data->tanggal_akhir_efektif.'</td>
+                  <td>'.date("d M Y", strtotime($data->tanggal_mulai_efektif)).'</td>
+                  <td>'.date("d M Y", strtotime($data->tanggal_akhir_efektif)).'</td>
                   <td>
                     <a href="'.base_url('nilai/detail_skala_nilai/'.$data->id_skala_nilai).'" class="btn btn-warning  btn-xs btn-flat"><i class="fa fa-pencil"></i><span class="tooltiptext">Edit</span></a>
 

@@ -22,11 +22,11 @@ class Dashboard_model extends CI_Model {
   }
 	public function dashboard_finance(){
     $belum_bayar = $this->db->select('count(*) as total')
-                ->where('status_bayar','Proses Pengecekan')
+                ->where('id_status','23')
                 ->get('tb_pendaftaran')
                 ->row();
 
-    $lunas = $this->db->query("SELECT COUNT(*) AS total FROM tb_pendaftaran WHERE status_bayar = 'Lunas' OR status_bayar = 'Aktif'")->row();
+    $lunas = $this->db->query("SELECT COUNT(*) AS total FROM tb_pendaftaran WHERE id_status = 20 OR id_status = 1")->row();
 
     return array(
       'belum_bayar' => $belum_bayar->total,
@@ -56,7 +56,7 @@ class Dashboard_model extends CI_Model {
                 ->row();
 
     $data_sgs = $this->db->select('count(*) as total')
-                ->where('status_bayar', 'Aktif')
+                ->where('id_status', 1)
                 ->where('sgs is NOT NULL')
                 ->get('tb_pendaftaran')
                 ->row();

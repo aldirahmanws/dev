@@ -38,7 +38,7 @@
                   <td>'.$data->nama_prodi.'</td>
                   <td>'.$data->nama_konsentrasi.'</td>
                   <td>'.$data->waktu.'</td>
-                  <td>'.$data->tgl_du.'</td>
+                  <td>'.date("d M Y", strtotime($data->tgl_du)).'</td>
                   <td>
                    <a href="'.base_url('mahasiswa/detail_mahasiswa/'.$data->id_mahasiswa).'" class="btn btn-primary btn-xs btn-flat" ><i class="fa fa-list"></i><span class="tooltiptext">Detail</span></a>
                   </td>

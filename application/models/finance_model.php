@@ -48,7 +48,6 @@ class Finance_model extends CI_Model {
    public function riwayat_pembayaran($id_mahasiswa){
     $this->db->select('*');
      $this->db->from('tb_pembayaran');
-
      $this->db->where('tb_pembayaran.id_mahasiswa', $id_mahasiswa);
      $query = $this->db->get();
      return $query->result();
@@ -74,11 +73,11 @@ class Finance_model extends CI_Model {
     }
   public function dashboard(){
     $belum_bayar = $this->db->select('count(*) as total')
-                ->where('status_bayar','Proses Pengecekan')
+                ->where('id_status','Proses Pengecekan')
                 ->get('tb_pendaftaran')
                 ->row();
 
-    $lunas = $this->db->query("SELECT COUNT(*) AS total FROM tb_pendaftaran WHERE status_bayar = 'Lunas' OR status_bayar = 'Aktif'")->row();
+    $lunas = $this->db->query("SELECT COUNT(*) AS total FROM tb_pendaftaran WHERE id_status = '20' OR id_status = '1'")->row();
 
     return array(
       'belum_bayar' => $belum_bayar->total,
@@ -88,7 +87,7 @@ class Finance_model extends CI_Model {
   }
 
 	public function data_mahasiswa(){
-		return $this->db->where('status_bayar' , 'Proses Pengecekan')
+		return $this->db->where('id_status' , 23)
 		->order_by('id_pendaftaran','ASC')
 		->get('tb_pendaftaran')
 		->result();
@@ -96,7 +95,7 @@ class Finance_model extends CI_Model {
  
 
   public function data_lunas(){
-    $query = $this->db->query("SELECT * FROM tb_pendaftaran WHERE status_bayar = 'Lunas' OR status_bayar = 'Aktif'")->result();
+    $query = $this->db->query("SELECT * FROM tb_pendaftaran WHERE id_status = '20' OR id_status = '1'")->result();
     return $query;
   }
 
@@ -104,7 +103,7 @@ class Finance_model extends CI_Model {
     $data = array(
        'id_pendaftaran'     => $id_pendaftaran,
        'id_du'            => $this->input->post('id_daftar_ulang', TRUE),
-        'status_bayar'  => 'Lunas',
+        'id_status'  => '20',
         'tanggal_konfirmasi'  => date('Y-m-d')
       );
 
@@ -120,7 +119,7 @@ class Finance_model extends CI_Model {
   public function gagal_konfirmasi($id_pendaftaran){
     $data = array(
        'id_pendaftaran'     => $id_pendaftaran,
-        'status_bayar'  => 'Belum bayar'
+        'id_status'  => '21'
       );
 
     $this->db->where('id_pendaftaran', $id_pendaftaran)

@@ -7,12 +7,14 @@ class Ledger extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('ledger_model');
+		$this->load->model('laporan_model');
 		ini_set('display_errors', 0);
 	}
 
 	public function index()
 	{
 		if ($this->session->userdata('logged_in') == TRUE) {
+			$data['getTahunAngkatan'] = $this->laporan_model->getTahunAngkatan();
 			$data['getProdi'] = $this->ledger_model->getProdi();
 			$data['main_view'] = 'Ledger/ledger_view';
 			$this->load->view('template', $data);
@@ -26,6 +28,7 @@ class Ledger extends CI_Controller {
 			$id_prodi = $this->input->get('id_prodi');
 			$kurikulum = $this->input->get('kurikulum');
 			$angkatan = $this->input->get('angkatan');
+			$data['getTahunAngkatan'] = $this->laporan_model->getTahunAngkatan();
 			$data['getProdi'] = $this->ledger_model->getProdi();
 			$data['matkul'] = $this->ledger_model->filter_matkul($angkatan, $id_prodi);
 			$data['mahasiswa'] = $this->ledger_model->filter_mahasiswa($angkatan, $id_prodi);

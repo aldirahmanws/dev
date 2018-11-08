@@ -72,7 +72,8 @@
                   <label for="email">Kode Pos</label>
                   <input type="text" name="kode_pos" class="form-control" id="kode_pos" placeholder="Input Email" required value="<?php echo $du->kode_pos; ?>">
                 </div>
-                <div class="form-group">
+                <?php if ($du->asal_pt == NULL OR $du->asal_pt == '') { ?>
+                  <div class="form-group">
                   <label for="preschool">Asal Sekolah</label>
                   <select id="id_sekolah" name="id_sekolah"class="form-control">
                   <option value="<?php echo $du->id_sekolah; ?>"><?php echo $du->nama_sekolah; ?></option>
@@ -86,16 +87,49 @@
 
                 </select>   
                 </div>
-                <div class="form-group">
-                  <label for="major">Jurusan Asal Sekolah</label>
+                 <div class="form-group">
+                  <label for="major">Jurusan Asal</label>
                 <select id="jurusan" name="jurusan" class="form-control" >
                   <option value="<?php echo $du->jurusan; ?>"><?php echo $du->jurusan; ?></option>
-                  <option value="ipa">IPA</option>
-                  <option value="ips">IPS</option>
-                  <option value="tkj">TKJ</option>
-                  <option value="rpl">RPL</option>
+                  <option value="IPA">IPA</option>
+                  <option value="IPS">IPS</option>
+                  <option value="Management">Management</option>
+                  <option value="Akuntansi">Akuntansi</option>
+                  <option value="Lainnya">Lainnya</option>
                 </select>                                     
                 </div>
+                <input type="hidden" name="asal_prodi" value="">
+                <input type="hidden" name="asal_pt" value="">
+                <?php } else { ?>
+                <div class="form-group">
+                  <label for="preschool">Asal Universitas</label>
+                  <select id="asal_pt" name="asal_pt"class="form-control">
+                  <option value="<?php echo $du->id_pt; ?>"><?php echo $du->nama_pt; ?></option>
+                   <?php 
+
+                  foreach($getUniversitas as $row)
+                  { 
+                    echo '<option value="'.$row->id_pt.'">'.$row->nama_pt.'</option>';
+                  }
+                  ?>
+
+                </select>   
+                </div>
+                 <div class="form-group">
+                  <label for="major">Jurusan Asal</label>
+                <select id="asal_prodi" name="asal_prodi" class="form-control" >
+                  <option value="<?php echo $du->asal_prodi; ?>"><?php echo $du->asal_prodi; ?></option>
+                  <option value="IPA">IPA</option>
+                  <option value="IPS">IPS</option>
+                  <option value="Management">Management</option>
+                  <option value="Akuntansi">Akuntansi</option>
+                  <option value="Lainnya">Lainnya</option>
+                </select>                                     
+                </div>
+                <input type="hidden" name="id_sekolah" value="">
+                <input type="hidden" name="jurusan" value="">
+              <?php } ?>
+               
                 <div class="form-group">
                   <label for="nik">NIK</label>
                   <input type="number" name="nik" class="form-control" id="nik" placeholder="Input NIK" required value="<?php echo $du->nik; ?>">
@@ -129,6 +163,7 @@
                 <br>
                 <br>
                 <div class="box-footer">
+                 
                 <button type="submit" class="btn btn-info pull-right">Ubah</button>
                 	</div>
                   

@@ -33,13 +33,13 @@
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <select name="angkatan">
                         <option value="">-- Semua --</option>
-                        <option value="2016">2016</option>
-                        <option value="2017">2017</option>
-                        <option value="2018">2018</option>
-                        <option value="2019">2019</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
+                        <?php 
+
+                            foreach($getTahunAngkatan as $row)
+                            { 
+                              echo '<option value="'.$row->tgl_du.'">'.$row->tgl_du.'</option>';
+                            }
+                            ?>
                       </select>
                     </td>
                     
@@ -102,7 +102,7 @@
                   <td>'.substr($data->tgl_du,0,4).'</td>
                   <td>'.$data->nama_prodi.'</td>
                   <td>'.$data->status_mhs.'</td>
-                  <td>'.$data->tanggal_keluar.'</td>
+                  <td>'.date("d M Y", strtotime($data->tanggal_keluar)).'</td>
                   <td>
 
                   <a  href="" data-toggle="modal" data-target="#modal_edit'.$data->id_mahasiswa.'" class="btn btn-success btn-xs btn-flat" ><i class="glyphicon glyphicon-pencil"></i><span class="tooltiptext">Ubah</span></a>

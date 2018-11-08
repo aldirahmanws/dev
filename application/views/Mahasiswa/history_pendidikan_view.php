@@ -15,7 +15,11 @@
        <?php if ($mahasiswa->id_jenis_pendaftaran == '2') { ?>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/transfer_nilai/<?php echo $mahasiswa->id_mahasiswa; ?>">Nilai Transfer</a>
         <?php } ?>
+        <?php if ($mahasiswa->asal_pt == 1 OR $mahasiswa->asal_pt == '') { ?>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/krs_mahasiswa/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>/<?php echo $mahasiswa->id_konsentrasi; ?>">KRS Mahasiswa</a>
+        <?php } else { ?>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/kelas_mhs/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>">KRS Mahasiswa</a>
+        <?php } ?> 
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/jadwal_mhs/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>">Jadwal Kuliah</a>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/history_nilai/<?php echo $mahasiswa->id_mahasiswa; ?>">History Nilai</a>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/aktivitas_perkuliahan/<?php echo $mahasiswa->id_mahasiswa; ?>">Aktivitas Perkuliahan</a>
@@ -60,6 +64,7 @@
             </div>
             <!-- /.box-body -->
           </div>
+          <?php echo $this->session->flashdata('message');?>
           <div class="">
             <?php 
                 if($this->session->userdata('level') == 5){ ?>
@@ -88,6 +93,7 @@
   </thead>
   <tbody>
     <?php 
+        $alert = "'Menghapus histori pendidikan berarti menghapus data mahasiswa. Anda yakin ?'";
         $no = 0;
         foreach($history as $data):
         ;
@@ -97,12 +103,15 @@
         <td style="text-align:center"><?php echo $data->nim;?></td>
         <td style="text-align:center"><?php echo $data->nama_pendaftaran;?></td>
         <td style="text-align:center"><?php echo $data->semester;?></td>
-        <td style="text-align:center"><?php echo $data->tgl_du;?></td>
-        <td style="text-align:center"><?php echo $data->nama_pt;?></td>
+        <td style="text-align:center"><?php echo date("d M Y", strtotime($data->tgl_du));?></td>
+        <td style="text-align:center">STIE Jakarta International College</td>
         <td style="text-align:center"><?php echo $data->nama_prodi;?></td >
         <?php if($this->session->userdata('level') != 5){?>
         <td style="text-align:center">
-                <button id="" type="button" class="btn btn-xs"   data-toggle="modal" data-target="#modal_detil"><i class="fa fa-pencil"></i></button>
+
+                <a href="" data-toggle="modal" data-target="#modal_detil<?php echo $data->id_pendidikan; ?>" class="btn btn-warning btn-xs btn-flat"><i class="fa fa-list"></i><span class="tooltiptext">Detail</span></a>
+
+                <a href="<?php echo base_url() ?>mahasiswa/hapus_pendidikan/<?php echo $data->id_mahasiswa; ?>" onclick="return confirm(<?php echo $alert ?>)" class="btn btn-danger btn-xs btn-flat"><i class="fa fa-trash"></i><span class="tooltiptext">Hapus</span></a>
                         </td> <?php }?>
     </tr>
 <?php endforeach; ?>
@@ -175,7 +184,7 @@
                         <label class=" col-xs-4" >Perguruan Tinggi</label>
                         <div class="col-xs-6">
                             <input type="text" name="perguruan_tinggis" class="form-control input-sm pull-left" id="perguruan_tinggis" placeholder="" required="" value="033082 - STIE Jakarta International College" readonly="">
-                            <input type="hidden" name="id_pt" class="form-control input-sm pull-left" id="id_pt" placeholder="" required="" value="033082" readonly="">
+                            <input type="hidden" name="id_pt" class="form-control input-sm pull-left" id="id_pt" placeholder="" required="" value="1" readonly="">
                         </div>
                     </div>
                     <div class="form-group">
@@ -227,9 +236,18 @@
                     <div class="form-group">
                         <label class=" col-xs-4" >Asal Perguruan Tinggi</label>
                         <div class="col-xs-6">
-                            <input type="text" name="asal_pt" class="form-control input-sm pull-left" id="asal_pt" placeholder="" required="" >
+                            <select name="asal_pt" class="form-control input-sm pull-left" required="">
+                        <option value=""> Pilih Perguruan Tinggi </option>
+                        <?php 
+
+                                        foreach($getUniversitas as $row)
+                                        { 
+                                          echo '<option value="'.$row->id_pt.'">'.$row->nama_pt.'</option>';
+                                        }
+                                    ?>
+                      </select>
+                  </div>
                         </div>
-                    </div>
                    <div class="form-group">
                         <label class=" col-xs-4" >Asal Program Studi</label>
                         <div class="col-xs-6">
@@ -237,6 +255,7 @@
                         </div>
                     </div>
                     <input type="hidden" name="id_mahasiswa" id="id_mahasiswa" class="text-input" size="10" style="width:70%" value="<?php echo $kodeunik_mhs; ?>" readonly>
+                    <input type="hidden" name="id_mahasiswa_ori" id="id_mahasiswa_ori" class="text-input" size="10" style="width:70%" value="<?php echo $mahasiswa->id_mahasiswa; ?>" readonly>
                     <input type="hidden" name="nama_mahasiswa" id="nama_mahasiswa" class="text-input" size="10" style="width:70%" value="<?php echo $mahasiswa->nama_mahasiswa; ?>" readonly>
                     <input type="hidden" name="id_waktu" id="id_waktu" class="text-input" size="10" style="width:70%" value="<?php echo $mahasiswa->id_waktu; ?>" readonly>
 <input type="hidden" name="id_du" id="id_du" class="text-input" size="10" style="width:70%" value="<?php echo $mahasiswa->id_du; ?>" readonly>
@@ -309,89 +328,110 @@
             </div>
         </div>
 
-        <div class="modal fade" id="modal_detil" >
+<?php 
+        foreach($history as $i):
+        ?>
+
+        <div class="modal fade" id="modal_detil<?php echo $i->id_pendidikan; ?>" >
             <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
                 <h3 class="modal-title" id="myModalLabel">History Pendidikan</h3>
             </div>
-            <?php echo form_open(); ?>
+            <?php echo form_open('mahasiswa/edit_pendidikan/'.$i->id_pendidikan.'/'.$i->nik.'/'.$i->id_mahasiswa); ?>
             <div class="form-horizontal">
                 <div class="modal-body">
 
                     <div class="form-group">
                         <label class="col-xs-4" >NIM</label>
                         <div class="col-xs-6">
-                            <input type="text" name="id_daftar_ulang" class="form-control input-sm pull-left" id="id_daftar_ulang" placeholder="" required="" >
+                            <input type="text" name="id_daftar_ulang" class="form-control input-sm pull-left" id="id_daftar_ulang" placeholder="" value="<?php echo $i->nim; ?>" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-xs-4" >Jenis Pendaftaran</label>
                         <div class="col-xs-6">
-                            <input type="text" name="id_daftar_ulang" class="form-control input-sm pull-left" id="id_daftar_ulang" placeholder="" required="" >
+                            <input type="text" name="id_daftar_ulang" class="form-control input-sm pull-left" id="id_daftar_ulang" placeholder="" value="<?php echo $i->nama_pendaftaran; ?>" readonly>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-xs-4" >Jalur Pendaftaran</label>
+                        <label class="col-xs-4" >Jenis Pendaftaran</label>
                         <div class="col-xs-6">
-                            <input type="text" name="id_daftar_ulang" class="form-control input-sm pull-left" id="id_daftar_ulang" placeholder="" required="" >
+                            <select name="id_jenis_pendaftaran" id="id_jenis_pendaftaran" class="form-control input-sm" required="">
+            <option value="<?php echo $i->id_jenis_pendaftaran; ?>"> <?php echo $i->nama_pendaftaran; ?> </option>
+            <option value="1">Peserta Didik Baru</option>
+            <option value="2">Pindahan</option>
+             <option value="3">Alih Jenjang</option>
+             <option value="4">Lintas Jalur</option>
+             <option value="5">Rekognisi Pembelajaran Lampau</option>
+             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-xs-4" >Tanggal Masuk</label>
                         <div class="col-xs-6">
-                            <input type="text" name="id_daftar_ulang" class="form-control input-sm pull-left" id="id_daftar_ulang" placeholder="" required="" >
+                            <input type="date" name="tgl_du" class="form-control input-sm pull-left" id="tgl_du" placeholder="" value="<?php echo $i->tgl_du; ?>" >
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-xs-4" >Pembiayaan Awal</label>
                         <div class="col-xs-6">
-                            <input type="text" name="id_daftar_ulang" class="form-control input-sm pull-left" id="id_daftar_ulang" placeholder="" required="" >
+                            <select name="id_pembiayaan_awal" id="id_pembiayaan_awal" class="form-control input-sm">
+                            <option value="<?php echo $i->id_pembiayaan_awal; ?>"> <?php echo $i->nama_pembiayaan; ?></option>
+                            <option value="1">Mandiri</option>
+                            <option value="2">Beasiswa Tidak Penuh</option>
+                             <option value="3">Beasiswa Penuh</option>
+                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class=" col-xs-4" >Perguruan Tinggi</label>
                         <div class="col-xs-6">
-                            <input type="text" name="id_daftar_ulang" class="form-control input-sm pull-left" id="id_daftar_ulang" placeholder="" required="" value="033082 - STIE Jakarta International College" readonly="">
+                            <input type="text" name="id_daftar_ulang" class="form-control input-sm pull-left" id="id_daftar_ulang" placeholder="" value="STIE Jakarta International College" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class=" col-xs-4" >Program Studi</label>
                         <div class="col-xs-6">
-                            <input type="text" name="id_daftar_ulang" class="form-control input-sm pull-left" id="id_daftar_ulang" placeholder="" required="" >
+                            <input type="text" name="id_daftar_ulang" class="form-control input-sm pull-left" id="id_daftar_ulang" placeholder="" value="<?php echo $i->nama_prodi; ?>" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class=" col-xs-4" >Periode Pendaftaran</label>
                         <div class="col-xs-6">
-                            <input type="text" name="id_daftar_ulang" class="form-control input-sm pull-left" id="id_daftar_ulang" placeholder="" required="" value="2018/2019 Ganjil" readonly="">
+                            <input type="text" name="id_daftar_ulang" class="form-control input-sm pull-left" id="id_daftar_ulang" placeholder="" required="" value="<?php echo $i->semester; ?>" readonly="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class=" col-xs-4" >Jumlah Sks di akui</label>
                         <div class="col-xs-6">
-                            <input type="text" name="id_daftar_ulang" class="form-control input-sm pull-left" id="id_daftar_ulang" placeholder="" value="" >
+                            <input type="text" name="id_daftar_ulang" class="form-control input-sm pull-left" id="id_daftar_ulang" placeholder="" value="<?php echo $i->jml_sks_diakui; ?>" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class=" col-xs-4" >Asal Perguruan Tinggi</label>
                         <div class="col-xs-6">
-                            <input type="text" name="id_daftar_ulang" class="form-control input-sm pull-left" id="id_daftar_ulang" placeholder="" value="" >
+                            <input type="text" name="id_daftar_ulang" class="form-control input-sm pull-left" id="id_daftar_ulang" placeholder="" value="<?php echo $i->nama_pt; ?>" readonly>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class=" col-xs-4" >Asal Program Studi</label>
                         <div class="col-xs-6">
-                            <input type="text" name="id_daftar_ulang" class="form-control input-sm pull-left" id="id_daftar_ulang" placeholder="" value="" >
+                            <input type="text" name="id_daftar_ulang" class="form-control input-sm pull-left" id="id_daftar_ulang" placeholder="" value="<?php echo $i->asal_prodi; ?>" readonly>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                    <button class="btn btn-primary btn-flat" id="myBtn"><i class="fa fa-save"></i> Update</button>
+                </div>
 
                 </div>
             <?php echo form_close();?>
+
             </div></div>
             </div>
         </div>
+        <?php endforeach;?>
         <div class="callout callout-info">
         <strong>Keterangan :</strong>
             <br />

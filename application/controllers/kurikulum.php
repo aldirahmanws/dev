@@ -170,7 +170,7 @@ class Kurikulum extends CI_Controller {
 		$prodi = $param;
 		$result = $this->kurikulum_model->get_prodi_periode($prodi);
 		$option = "";
-		$option .= '<option value="">Pilih Semester</option>';
+		$option .= '<option value="">Pilih Periode</option>';
 		foreach ($result as $data) {
 			$option .= "<option value='".$data->id_periode."'>".$data->semester."</option>";
 			

@@ -82,6 +82,9 @@
                     $dataea = $i->jumlah_biaya * $i->diskon / 100;
                     $iae = $i->jumlah_biaya - $dataea;
                     $iea = $i->jumlah_biaya - $dataea   - $i->potongan + $i->denda;
+                  } else {
+                    $iae = $i->jumlah_biaya;
+                    $iea = $i->jumlah_biaya - $dataea   - $i->potongan + $i->denda;
                   }
                   echo '
                   
@@ -90,11 +93,11 @@
                   <td>'.$i->tanggal_pembayaran.'</td>
                   <td>'.$i->jenis_biaya.'</td>
                   <td>'.$i->nama_biaya.'</td>
-                  <td>'.$iae.'</td>
-                  <td>'.$i->denda.'</td>
-                  <td>'.$i->potongan.'</td>
+                  <td style="text-align:right">'.number_format($iae, 2, ",", ".").'</td>
+                  <td style="text-align:right">'.number_format($i->denda, 2, ",", ".").'</td>
+                  <td style="text-align:right">'.number_format($i->potongan, 2, ",", ".").'</td>
                   <td>'.$i->keterangan.'</td>
-                  <td>'.$iea.'</td>
+                  <td style="text-align:right">'.number_format($iea, 2, ",", ".").'</td>
                   
                   
 
@@ -138,11 +141,11 @@
           <td><?= $i?></td>
           <td><?= $items['jp'] ?></td>
           <td><?= $items['pembayaran'] ?></td>
-          <td align="right"><?= number_format($items['harga'],0,',','.') ?></td>
-          <td align="right"><?= number_format($items['denda'],0,',','.') ?></td>
-          <td align="right"><?= number_format($items['potongan'],0,',','.') ?></td>
+          <td align="right"><?= number_format($items['harga'],2,',','.') ?></td>
+          <td align="right"><?= number_format($items['denda'],2,',','.') ?></td>
+          <td align="right"><?= number_format($items['potongan'],2,',','.') ?></td>
           <td><?= $items['keterangan'] ?></td>
-          <td align="right"><?= number_format($items['subtotal'],0,',','.') ?></td>
+          <td align="right"><?= number_format($items['subtotal'],2,',','.') ?></td>
         </tr>
         
         <?php endforeach; ?>
@@ -151,7 +154,7 @@
       <tfoot>
         <tr>
           <td align="right" colspan="5">Total </td>
-          <td align="right"><?= number_format($this->cart->total(),0,',','.'); ?></td>
+          <td align="right"><?= number_format($this->cart->total(),2,',','.'); ?></td>
         </tr>
       </tfoot>
 
@@ -244,11 +247,11 @@
           <td><?= $i?></td>
           <td><?= $items['jp'] ?></td>
           <td><?= $items['pembayaran'] ?></td>
-          <td align="right"><?= number_format($items['harga'],0,',','.') ?></td>
-          <td align="right"><?= number_format($items['denda'],0,',','.') ?></td>
-          <td align="right"><?= number_format($items['potongan'],0,',','.') ?></td>
+          <td align="right"><?= number_format($items['harga'],2,',','.') ?></td>
+          <td align="right"><?= number_format($items['denda'],2,',','.') ?></td>
+          <td align="right"><?= number_format($items['potongan'],2,',','.') ?></td>
           <td><?= $items['keterangan'] ?></td>
-          <td align="right"><?= number_format($items['subtotal'],0,',','.') ?></td>
+          <td align="right"><?= number_format($items['subtotal'],2,',','.') ?></td>
         </tr>
         
         <?php endforeach; ?>
@@ -269,7 +272,7 @@
             <table class="table">
               <tr>
                 <th style="width:50%">Subtotal:</th>
-                <td><?= number_format($this->cart->total(),0,',','.'); ?></td>
+                <td><?= number_format($this->cart->total(),2,',','.'); ?></td>
               </tr>
             </table>
           </div>

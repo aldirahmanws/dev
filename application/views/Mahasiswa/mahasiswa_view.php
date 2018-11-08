@@ -55,13 +55,13 @@
                     <td style="padding-right: 80px;">
                       <select name="angkatan">
                         <option value="">-- Semua --</option>
-                        <option value="2017">2017</option>
-                        <option value="2018">2018</option>
-                        <option value="2019">2019</option>
-                        <option value="2020">2020</option>
-                        <option value="2021">2021</option>
-                        <option value="2022">2022</option>
-                        <option value="2023">2023</option>
+                         <?php 
+
+                            foreach($getTahunAngkatan as $row)
+                            { 
+                              echo '<option value="'.$row->tgl_du.'">'.$row->tgl_du.'</option>';
+                            }
+                            ?>
                       </select>   
                     </td>                
                     <td style="padding-left: : 50px;">
@@ -113,7 +113,7 @@
                   <td>'.$data->jenis_kelamin.'</td>
                   <td>'.$data->agama.'</td>
                   <td>'.$data->tempat_lahir.'</td>
-                  <td>'.$data->tanggal_lahir.'</td>
+                  <td>'.date("d M Y", strtotime($data->tanggal_lahir)).'</td>
                   <td>'.$data->nama_prodi.'</td>
                   <td>'.$status.'</td>
                   <td>'.substr($data->tgl_du,0,4).'</td>

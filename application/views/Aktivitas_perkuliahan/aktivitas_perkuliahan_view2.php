@@ -83,7 +83,7 @@
 
     <?php if ($ipk <= 3.5) {
          $a = '7';
-    } elseif ($ipk < 3.76) {
+    } else if ($ipk <= 3.75) {
          $a = '6';
     } else {
          $a = '5';
@@ -260,13 +260,21 @@
             <td>: <input type="text" name="ipk_ak" id="ipk_ak" class="text-input" maxlength="16" size="30" style="width:40%" value="<?php echo $ipk2; ?>">    
               <?php if ($ipk2 <= 3.5) {
                      $a = '7';
-                } elseif ($ipk2 < 3.76) {
+                } else if ($ipk2 <= 3.75) {
                      $a = '6';
                 } else {
                      $a = '5';
                 } ?>
 
-             <input type="hidden" name="id_grade" id="id_grade" value="<?php echo $a; ?>">
+                <?php if ($this->input->get('semester_aktif') == 2 OR $this->input->get('semester_aktif') == 4 OR $this->input->get('semester_aktif') == 6) {
+                  $grade_aktif = $a;
+                } else {
+                  $grade_aktif = $this->input->get('id_grade');
+                }
+
+                ?>
+
+             <input type="hidden" name="id_grade" id="id_grade" value="<?php echo $grade_aktif; ?>">
                     </td>
         </tr>
         <tr>

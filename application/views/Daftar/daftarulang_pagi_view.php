@@ -14,14 +14,21 @@
                 <div class="form-group">
                   <label for="no">No. Registrasi</label>
                   <input type="text" name="id_du" class="form-control" id="id_du" placeholder=""  .input-sm value="<?php echo $du_pagi->id_du; ?>" readonly>
-                   <input type="hidden" name="id_mahasiswa" class="form-control" id="id_mahasiswa" placeholder=""  .input-sm value="<?php echo $kodeunik_mhs; ?>" readonly>
+                   <input type="hidden" name="id_mahasiswa" class="form-control" id="id_mahasiswa" placeholder=""  value="<?php echo $kodeunik_mhs; ?>" readonly>
+                   <input type="hidden" name="id_mahasiswa_ori" class="form-control" id="id_mahasiswa_ori" placeholder="" value="<?php echo $kodeunik_mhs; ?>" readonly>
                 </div>
              
                 
-                 
+                 <?php if ($du_pagi->id_pt != NULL OR $du_pagi->id_pt != '' OR $du_pagi->id_waktu == 2) { ?>
+                    <input type="hidden" name="id_hasil_tes" class="form-control" id="id_hasil_tes" placeholder=""  .input-sm value="" readonly>
+                 <?php } else { ?>
+
                   <input type="hidden" name="id_hasil_tes" class="form-control" id="id_hasil_tes" placeholder=""  .input-sm value="<?php echo $kodeunik; ?>" readonly>
 
-                  
+                  <?php } ?>
+
+                  <input type="hidden" name="id_waktu" id="id_waktu" value="<?php echo $du_pagi->id_waktu; ?>">
+                    
                 
                 <div class="form-group">
                   <label for="email">Nama Lengkap</label>
@@ -67,31 +74,85 @@
                   <label for="phone">Nomor HP</label>
                   <input type="number" name="no_hp" class="form-control" id="no_hp" placeholder="Masukkan nomor HP" required="">
                 </div>
-
-              </div>
-              <div class="col-md-6">
                 <div class="form-group">
                   <label for="email">Email</label>
                   <input type="email" name="email" class="form-control" id="email" placeholder="Input Email" value="<?php echo $du_pagi->email; ?>" required="" readonly>
                 </div>
-                 <div class="form-group">
-                  <label for="email">Kode Pos</label>
-                  <input type="text" name="kode_pos" class="form-control" id="kode_pos" placeholder="Masukan Kode Pos"  required="">
-                </div>
+                
+              </div>
+              <div class="col-md-6">
+
                 <div class="form-group">
+                  <label for="email">Kode Pos</label>
+                  <input type="text" name="kode_pos" class="form-control" id="kode_pos" placeholder="Masukan Kode Pos"  value="">
+                </div>
+                 <input type="hidden" name="id_jalur_pendaftaran" id="id_jalur_pendaftaran" value="6">
+                 <input type="hidden" name="id_pembiayaan_awal" id="id_pembiayaan_awal" value="1">
+                <?php if ($du_pagi->id_pt != NULL OR $du_pagi->id_pt != '') { ?>
+
+                  <input type="hidden" name="id_status" id="id_status" value="19">
+                  <input type="hidden" name="id_pt" id="id_pt" value="1">
+                <div class="form-group">
+                  <label for="preschool">Asal Universitas</label>
+                  <select id="asal_pt" name="asal_pt"class="form-control" required="" readonly>
+                  <option value="<?php echo $du_pagi->id_pt; ?>"><?php echo $du_pagi->nama_pt; ?>
+                  </select>
+                  <input type="hidden" name="id_sekolah" id="id_sekolah" value="">   
+                </div>
+                 <div class="form-group">
+                    <label>Asal Program Studi</label>
+                        
+                            <input type="text" name="asal_prodi" class="form-control " id="asal_prodi" placeholder="" required="" value="<?php echo $du_pagi->jurusan; ?>">
+                            <input type="hidden" name="jurusan" id="jurusan" value="">
+                        
+                    </div>
+
+                <div class="form-group">
+                        <label>Jumlah Sks di akui</label>
+                        
+                            <input type="text" name="jml_sks_diakui" class="form-control " id="jml_sks_diakui" placeholder="" value="" >
+                        
+                    </div>
+                     <div class="form-group">
+                        <label>Jenis Pendaftaran</label>         
+                            <select name="id_jenis_pendaftaran" id="id_jenis_pendaftaran" class="form-control" required="">
+            <option value=""> Pilih Jenis Pendaftaran </option>          
+            <option value="2">Pindahan</option>
+             <option value="3">Alih Jenjang</option>
+             <option value="4">Lintas Jalur</option>
+             <option value="5">Rekognisi Pembelajaran Lampau</option>
+             </select>
+                       
+                    </div>
+                <?php } else { ?>
+                  <input type="hidden" name="id_jenis_pendaftaran" id="id_jenis_pendaftaran" value="1">
+                  <input type="hidden" name="asal_pt" id="asal_pt" value="">
+                  <input type="hidden" name="asal_prodi" id="asal_prodi" value="">
+                  <?php if ($du_pagi->id_waktu == 2) { ?>
+                    <input type="hidden" name="id_status" id="id_status" value="19">
+                  <?php } else { ?>
+                    <input type="hidden" name="id_status" id="id_status" value="12">
+                  <?php } ?>
+                  
+                  <div class="form-group">
                   <label for="preschool">Asal Sekolah</label>
                   <select id="id_sekolah" name="id_sekolah"class="form-control" required="" readonly>
                   <option value="<?php echo $du_pagi->id_sekolah; ?>"><?php echo $du_pagi->nama_sekolah; ?>
-
+                  <input type="hidden" name="id_pt" id="id_pt" value="1">
                 </select>   
                 </div>
+
                 <div class="form-group">
-                  <label for="major">Jurusan Asal Sekolah</label>
-                <select id="jurusan" name="jurusan" class="form-control" required="" readonly>
+                  <label for="major">Jurusan Asal</label>
+                <select id="jurusan" name="jurusan" class="form-control" readonly>
                   <option value="<?php echo $du_pagi->jurusan; ?>"><?php echo $du_pagi->jurusan; ?></option>
                   
                 </select>                                     
                 </div>
+                <input type="hidden" name="jml_sks_diakui" class="form-control " id="jml_sks_diakui" placeholder="" value="" >
+                <?php } ?>
+                  
+                   
                 <div class="form-group">
                   <label for="nik">NIK</label>
                   <input type="number" name="nik" class="form-control" id="nik" placeholder="Masukkan NIK" required="">
@@ -102,7 +163,7 @@
                 </div>
                 <div class="form-group">
                   <label for="prodi">Program Studi</label>
-                  <select id="id_prodi" class="form-control" required="" name="id_prodi" ="" onchange="return get_concentrate(this.value)">
+                  <select id="id_prodi" class="form-control" required="" name="id_prodi" ="" onchange="return get_concentrate(this.value)" onclick="return get_prodi_periode(this.value)">
                     <option value="">Pilih Prodi</option>   
                     <?php 
 
@@ -116,15 +177,24 @@
                 <div class="form-group">
                   <label for="concentrate">Konsentrasi</label>
                   <select id="concentrate" name="concentrate" class="form-control" required="">
-                  <option value="">Select Program Study First</option>
+                  <option value=""> Pilih Prodi Dahulu </option>
                   </select>                                     
                 </div> 
+                <div class="form-group">
+                        <label >Periode Pendaftaran</label>
+                       
+                            <select name="id_periode" id="id_periode" class="form-control" required="">
+                        <option value=""> Pilih Prodi Dahulu </option>
+                       
+                      </select>
+                        
+                    </div>
                  <div class="form-group">
                   <label for="mother">NIM</label>
                   <input type="text" name="nim" class="form-control" id="nim" placeholder="Masukan NIM" value="" required="" onkeyup="checkAvailability()"><span id="user-availability-status"></span>  
                 </div>   
                 <input type="hidden" name="id_jt" class="form-control" value="">
-                <input type="hidden" name="id_transportasi="form-control" value="">
+                <input type="hidden" name="id_transportasi" value="">
                 <input type="hidden" name="nama_ayah" class="form-control" value="">
                  <input type="hidden" name="nama_ayah" class="form-control" value="">
                  <input type="hidden" name="nik_ayah" class="form-control" value="">
@@ -162,6 +232,7 @@
                  <input type="hidden" name="alat_transportasi" class="form-control" value="">
 
                  <input type="hidden" name="foto_mhs" class="form-control" value="">
+                 <input type="hidden" name="tgl_du" id="tgl_du" value="<?php echo  date('Y-m-d') ?>" >
 
                 <button type="submit" id="myBtn" class="btn btn-info pull-right">Daftar</button>
                   <?php echo form_close();?>
@@ -217,6 +288,19 @@
                     $("#user-availability-status").html(data);
                     },
                     error:function (){}
+                });
+            }
+            function get_prodi_periode(p) {
+                var id_prodi = p;
+
+                $.ajax({
+                    url: '<?php echo base_url(); ?>kurikulum/get_prodi_periode/'+id_prodi,
+                    data: 'id_prodi='+id_prodi,
+                    type: 'GET',
+                    dataType: 'html',
+                    success: function(msg) {
+                        $("#id_periode").html(msg);
+                    }
                 });
             }
             // function get_price(p) {

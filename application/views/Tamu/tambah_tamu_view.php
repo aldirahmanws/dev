@@ -42,8 +42,8 @@
                   <label for="waktu">Waktu</label>
                   <select id="waktu" name="waktu" class="form-control" ="" required="">
                     <option value="">Pilih Waktu Kuliah</option>
-                    <option value="Pagi">Pagi</option>
-                    <option value="Sore">Sore</option>
+                    <option value="1">Pagi</option>
+                    <option value="2">Sore</option>
 
                   </select>                                     
                   
@@ -56,9 +56,19 @@
                   <input type="email" name="email" class="form-control" id="email" placeholder="Input Email" required="">
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" >
+                  <label for="preschool">Universitas / Sekolah</label>
+                  <select id="pilih_asal" name="pilih_asal"class="form-control" required="" onchange="return get_asal(this.value);" onclick="return get_asal2(this.value);">
+                  <option value="">Pilih Universitas / Sekolah</option>
+                  <option value="1"> Sekolah </option>
+                  <option value="2"> Universitas </option>
+
+                </select>   
+                </div>
+
+                <div class="form-group" id="sekolah" style="display: none">
                   <label for="preschool">Asal Sekolah</label>
-                  <select id="id_sekolah" name="id_sekolah"class="form-control" required="">
+                  <select id="id_sekolah" name="id_sekolah" class="form-control select2" style="width: 100%">
                   <option value="">Pilih Sekolah</option>
                   <?php 
 
@@ -68,16 +78,35 @@
                   }
                   ?>
 
-                </select>   
+                </select>  
+                
                 </div>
+
+                <div class="form-group" id="universitas"  style="display: none">
+                  <label for="preschool">Asal Universitas</label>
+                  <select name="id_pt" id="id_pt" class="form-control select2" style="width: 100%;">
+                  <option value="">Pilih Universitas</option>
+                  <?php 
+
+                  foreach($getUniversitas as $row)
+                  { 
+                    echo '<option value="'.$row->id_pt.'">'.$row->nama_pt.'</option>';
+                  }
+                  ?>
+
+                </select>  
+                
+                </div>
+
                 <div class="form-group">
-                  <label for="major">Jurusan di Sekolah Sebelumnya</label>
+                  <label for="major">Jurusan di Sekolah / Universitas Sebelumnya</label>
                 <select id="jurusan" name="jurusan" class="form-control" required="">
                   <option value="">Pilih Jurusan</option>
-                  <option value="ipa">IPA</option>
-                  <option value="ips">IPS</option>
-                  <option value="tkj">TKJ</option>
-                  <option value="rpl">RPL</option>
+                  <option value="IPA">IPA</option>
+                  <option value="IPS">IPS</option>
+                  <option value="Management">Management</option>
+                  <option value="Akuntansi">Akuntansi</option>
+                  <option value="Lainnya">Lainya</option>
                 </select>                                     
                 </div>
                
@@ -101,10 +130,10 @@
                   <label for="major">Sumber Informasi</label>
                 <select id="sumber" name="sumber" class="form-control" ="" onchange="return get_student(this.value)" required="">
                   <option value="">Pilih Sumber</option>
-                  <option value="brosur">Brosur</option>
-                  <option value="iklan">Iklan</option>
-                  <option value="marketing">Marketing</option>
-                  <option value="student_get_student">Student get Student</option>
+                  <option value="1">Brosur</option>
+                  <option value="2">Iklan</option>
+                  <option value="3">Marketing</option>
+                  <option value="4">Student get Student</option>
                 </select>                                     
                 </div>
                 <div id="input_student" style="visibility: hidden;">
@@ -144,6 +173,8 @@
                 <?php 
                 $no = 0;
                 foreach ($mahasiswa as $data) {
+                  if ($data->id_status == 1 OR $data->id_status == 19) {
+                    
                   echo '
                   
                 <tr>
@@ -155,7 +186,7 @@
                   <td><p class="btn btn-default btn-sm" data-dismiss="modal" onclick="myFunction('.$data->nim.')">Pilih</p></td>
                 </tr>
                 ';
-                
+                }
               }
               ?>
                 </tbody>
@@ -190,10 +221,26 @@ function myFunction(name) {
     document.getElementById("student").value = name;
 }
 function get_student(param){
-if(param=="student_get_student")
+if(param=="4")
 document.getElementById("input_student").style.visibility = 'visible';
 else
 document.getElementById("input_student").style.visibility = 'hidden';
 }
+
+function get_asal(param){
+if(param=="1")
+document.getElementById("sekolah").style.display = null;
+else
+document.getElementById("sekolah").style.display = 'none';
+}
+
+function get_asal2(param){
+if(param=="2")
+document.getElementById("universitas").style.display = null;
+else
+document.getElementById("universitas").style.display = 'none';
+}
 </script>
+
+
        

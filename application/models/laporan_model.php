@@ -12,7 +12,9 @@ class Laporan_model extends CI_Model {
       $query = $this->db->select('*')
                 ->from('tb_pendaftaran')
                 ->join('tb_prodi','tb_prodi.id_prodi=tb_pendaftaran.id_prodi')
-                ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_pendaftaran.id_sekolah')
+                ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_pendaftaran.id_sekolah','left')
+                ->join('tb_pt','tb_pt.id_pt=tb_pendaftaran.id_pt','left')
+                ->join('tb_waktu','tb_waktu.id_waktu=tb_pendaftaran.id_waktu','left')
                 ->where('tanggal_pendaftaran >=', $tanggal_pendaftaran)
                 ->where('tanggal_pendaftaran <=', $tanggal_pendaftaran2)
                 ->order_by("tanggal_pendaftaran", "asc")
@@ -21,16 +23,19 @@ class Laporan_model extends CI_Model {
       $coo = $this->db->select('count(tb_pendaftaran.nama_pendaftar) as total')
                 ->from('tb_pendaftaran')
                 ->join('tb_prodi','tb_prodi.id_prodi=tb_pendaftaran.id_prodi')
-                ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_pendaftaran.id_sekolah')
+                ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_pendaftaran.id_sekolah','left')
+                ->join('tb_pt','tb_pt.id_pt=tb_pendaftaran.id_pt','left')
+                ->join('tb_waktu','tb_waktu.id_waktu=tb_pendaftaran.id_waktu','left')
                 ->where('tanggal_pendaftaran >=', $tanggal_pendaftaran)
                 ->where('tanggal_pendaftaran <=', $tanggal_pendaftaran2)
+                ->order_by("tanggal_pendaftaran", "asc")
                 ->get();
       $eee = $coo->row();
 
                 if ($query->num_rows() > 0)
                 { 
-                  $tanggal_pendaftaran = date("d-m-Y", strtotime($tanggal_pendaftaran));
-                  $tanggal_pendaftaran2 = date("d-m-Y", strtotime($tanggal_pendaftaran2));
+                  $tanggal_pendaftaran = date("d M Y", strtotime($tanggal_pendaftaran));
+                  $tanggal_pendaftaran2 = date("d M Y", strtotime($tanggal_pendaftaran2));
                   $no = 0;
                   $option = "";
                   $option .= '<section class="content" id="ea">
@@ -71,14 +76,19 @@ class Laporan_model extends CI_Model {
                 </thead>
                 <tbody>';
                   foreach ($row as $data) {
+                    if ($data->id_pt == NULL OR $data->id_pt == '') {
+                      $asal = $data->nama_sekolah;
+                    } else {
+                      $asal = $data->nama_pt;
+                    }
                     $option .= "
                     <tr>
                       <td>".++$no."</td>
                       <td>".$data->nama_pendaftar."</td>
-                      <td>".$data->nama_sekolah."</td>
+                      <td>".$asal."</td>
                       <td>".$data->nama_prodi."</td>
                       <td>".$data->waktu."</td>
-                      <td>".$data->tanggal_pendaftaran."</td>
+                      <td>".date("d M Y", strtotime($data->tanggal_pendaftaran))."</td>
                     </tr>";
                     
                   }
@@ -129,13 +139,9 @@ class Laporan_model extends CI_Model {
                 }
     }
     function laporan_mahasiswa($id_periode, $id_prodi){
-      $query = $this->db->select('tb_prodi.id_prodi, tb_mahasiswa.nama_mahasiswa, tb_mahasiswa.nim, tb_bio.tempat_lahir, tb_bio.tanggal_lahir, tb_ibu.nama_ibu, tb_agama.agama, tb_kependudukan.nik, tb_alamat.kecamatan, tb_alamat.kelurahan, tb_sekolah.nama_sekolah')
-                ->distinct()
-                ->from('tb_mahasiswa')
-                ->join('tb_kelas_mhs','tb_kelas_mhs.id_mahasiswa=tb_mahasiswa.id_mahasiswa', 'left')
-                ->join('tb_kp','tb_kp.id_kp=tb_kelas_mhs.id_kp', 'left')
-                ->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal', 'left')
-                ->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode')
+      $query = $this->db->select('tb_prodi.id_prodi, tb_mahasiswa.nama_mahasiswa, tb_mahasiswa.nim, tb_bio.tempat_lahir, tb_bio.tanggal_lahir, tb_ibu.nama_ibu, tb_agama.agama, tb_kependudukan.nik, tb_alamat.kecamatan, tb_alamat.kelurahan, tb_sekolah.nama_sekolah, tb_pt.nama_pt, tb_mahasiswa.id_sekolah')
+                ->join('tb_pendidikan', 'tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
+                ->join('tb_periode','tb_periode.id_periode=tb_pendidikan.id_periode')
                 ->join('tb_bio','tb_mahasiswa.id_mahasiswa=tb_bio.id_mahasiswa')
                 ->join('tb_agama','tb_agama.id_agama=tb_bio.id_agama')
                 ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
@@ -144,32 +150,34 @@ class Laporan_model extends CI_Model {
                 ->join('tb_ibu','tb_ibu.id_mahasiswa=tb_mahasiswa.id_mahasiswa', 'left' )
                 ->join('tb_kependudukan','tb_kependudukan.id_mahasiswa=tb_mahasiswa.id_mahasiswa', 'left' )
                 ->join('tb_alamat','tb_alamat.id_mahasiswa=tb_mahasiswa.id_mahasiswa', 'left' )
-                ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_mahasiswa.id_sekolah', 'left' )
-                ->where('tb_periode.semester' , $id_periode)
+                ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_mahasiswa.id_sekolah', 'left')
+                ->join('tb_pt','tb_pt.id_pt=tb_pendidikan.asal_pt','left')
+                ->like('tb_periode.semester' , $id_periode)
                 ->like('tb_prodi.id_prodi' , $id_prodi)
-                ->get();
+                ->where('tb_mahasiswa.id_status !=', 2)
+                ->get('tb_mahasiswa');
       $row = $query->result();
       $pp = $this->db->select('nama_prodi')
             ->where('id_prodi', $id_prodi)
             ->get('tb_prodi')
             ->row();
-      $coo = $this->db->select('count(distinct tb_mahasiswa.nama_mahasiswa) as total')
-                ->from('tb_mahasiswa')
-                ->join('tb_kelas_mhs','tb_kelas_mhs.id_mahasiswa=tb_mahasiswa.id_mahasiswa', 'left')
-                ->join('tb_kp','tb_kp.id_kp=tb_kelas_mhs.id_kp', 'left')
-                ->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal', 'left')
-                ->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode')
+      $coo = $this->db->select('count(tb_mahasiswa.nama_mahasiswa) as total')
+                ->join('tb_pendidikan', 'tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
+                ->join('tb_periode','tb_periode.id_periode=tb_pendidikan.id_periode')
                 ->join('tb_bio','tb_mahasiswa.id_mahasiswa=tb_bio.id_mahasiswa')
+                ->join('tb_agama','tb_agama.id_agama=tb_bio.id_agama')
                 ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
                 ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
                 ->join('tb_waktu','tb_waktu.id_waktu=tb_mahasiswa.id_waktu')
                 ->join('tb_ibu','tb_ibu.id_mahasiswa=tb_mahasiswa.id_mahasiswa', 'left' )
                 ->join('tb_kependudukan','tb_kependudukan.id_mahasiswa=tb_mahasiswa.id_mahasiswa', 'left' )
                 ->join('tb_alamat','tb_alamat.id_mahasiswa=tb_mahasiswa.id_mahasiswa', 'left' )
-                ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_mahasiswa.id_sekolah', 'left' )
-                ->where('tb_periode.semester' , $id_periode)
+                ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_mahasiswa.id_sekolah', 'left')
+                ->join('tb_pt','tb_pt.id_pt=tb_pendidikan.asal_pt','left')
+                ->like('tb_periode.semester' , $id_periode)
                 ->like('tb_prodi.id_prodi' , $id_prodi)
-                ->get();
+                ->where('tb_mahasiswa.id_status !=', 2)
+                ->get('tb_mahasiswa');
       $total = $coo->row();
 
                 if ($query->num_rows() > 0)
@@ -220,24 +228,29 @@ class Laporan_model extends CI_Model {
                   <th>NIK</th>
                   <th>Kelurahan</th>
                   <th>Kecamatan</th>
-                  <th>Asal SMTA</th>
+                  <th>Asal</th>
                 </tr>
                 </thead>
                 <tbody>';
                   foreach ($row as $data) {
+                    if ($data->id_sekolah == NULL OR $data->id_sekolah == '') {
+                      $asal = $data->nama_pt;
+                    } else {
+                      $asal = $data->nama_sekolah;
+                    }
                     $option .= "
                     <tr>
                       <td>".++$no."</td>
                       <td>".$data->id_prodi."</td>
                       <td>".$data->nim."</td>
                       <td>".$data->nama_mahasiswa."</td>
-                      <td>".$data->tempat_lahir.', '.$data->tanggal_lahir."</td>
+                      <td>".$data->tempat_lahir.', '.date("d M Y", strtotime($data->tanggal_lahir))."</td>
                       <td>".$data->nama_ibu."</td>
                       <td>".$data->agama."</td>
                       <td>".$data->nik."</td>
                       <td>".$data->kelurahan."</td>
                       <td>".$data->kecamatan."</td>
-                      <td>".$data->nama_sekolah."</td>
+                      <td>".$asal."</td>
                     </tr>"
                     ;
                     
@@ -1049,24 +1062,24 @@ class Laporan_model extends CI_Model {
                 }
     }
 
-    function laporan_buku_induk($angkatan, $id_prodi, $kelulusan){
-      $query = $this->db->select('tb_mahasiswa.nim, tb_mahasiswa.nama_mahasiswa, tb_bio.tempat_lahir, tb_bio.tanggal_lahir, tb_ibu.nama_ibu, tb_agama.agama, tb_bio.id_kelamin, tb_kependudukan.kewarganegaraan, tb_alamat.kecamatan, tb_alamat.kelurahan, tb_alamat.rt, tb_alamat.rw, tb_alamat.jalan, tb_bio.foto_mahasiswa, tb_sekolah.nama_sekolah, tb_alamat.alamat_mhs, tb_kontak.no_telepon, tb_kontak.no_hp, tb_mhs_add.tgl_du, tb_ld.no_seri_ijazah, tb_ld.tgl_sk_yudisium')
+    function laporan_buku_induk($angkatan, $id_prodi){
+      $query = $this->db->select('tb_mahasiswa.nim, tb_mahasiswa.nama_mahasiswa, tb_bio.tempat_lahir, tb_bio.tanggal_lahir, tb_ibu.nama_ibu, tb_agama.agama, tb_bio.id_kelamin, tb_kependudukan.kewarganegaraan, tb_alamat.kecamatan, tb_alamat.kelurahan, tb_alamat.rt, tb_alamat.rw, tb_alamat.jalan, tb_bio.foto_mahasiswa, tb_sekolah.nama_sekolah, tb_alamat.alamat_mhs, tb_kontak.no_telepon, tb_kontak.no_hp, tb_pendidikan.tgl_du, tb_ld.no_seri_ijazah, tb_ld.tgl_sk_yudisium, tb_pt.nama_pt, tb_pendidikan.asal_pt')
                 ->from('tb_ld')
                 ->join('tb_mahasiswa','tb_mahasiswa.id_mahasiswa=tb_ld.id_mahasiswa')
                 ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
                 ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
                 ->join('tb_bio','tb_mahasiswa.id_mahasiswa=tb_bio.id_mahasiswa')
                 ->join('tb_agama','tb_agama.id_agama=tb_bio.id_agama')
-                ->join('tb_mhs_add','tb_mhs_add.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
+                ->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
                 ->join('tb_ibu','tb_ibu.id_mahasiswa=tb_mahasiswa.id_mahasiswa' )
                 ->join('tb_kontak','tb_kontak.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
                 ->join('tb_kependudukan','tb_kependudukan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
                 ->join('tb_alamat','tb_alamat.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
                 ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_mahasiswa.id_sekolah', 'left' )
+                ->join('tb_pt','tb_pt.id_pt=tb_pendidikan.asal_pt', 'left' )
                 ->where('tb_ld.id_status', '11')
-                ->like('tb_mhs_add.tgl_du' , $angkatan)
+                ->like('tb_pendidikan.tgl_du' , $angkatan)
                 ->like('tb_prodi.id_prodi' , $id_prodi)
-                ->like('tb_ld.tgl_sk_yudisium' , $kelulusan)
                 ->get();
       $row = $query->result();
       $pp = $this->db->select('nama_prodi')
@@ -1080,15 +1093,15 @@ class Laporan_model extends CI_Model {
                 ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
                 ->join('tb_bio','tb_mahasiswa.id_mahasiswa=tb_bio.id_mahasiswa')
                 ->join('tb_agama','tb_agama.id_agama=tb_bio.id_agama')
-                ->join('tb_mhs_add','tb_mhs_add.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
-                ->join('tb_ibu','tb_ibu.id_mahasiswa=tb_mahasiswa.id_mahasiswa', 'left' )
-                ->join('tb_kependudukan','tb_kependudukan.id_mahasiswa=tb_mahasiswa.id_mahasiswa', 'left' )
-                ->join('tb_alamat','tb_alamat.id_mahasiswa=tb_mahasiswa.id_mahasiswa', 'left' )
+                ->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
+                ->join('tb_ibu','tb_ibu.id_mahasiswa=tb_mahasiswa.id_mahasiswa' )
+                ->join('tb_kontak','tb_kontak.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
+                ->join('tb_kependudukan','tb_kependudukan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
+                ->join('tb_alamat','tb_alamat.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
                 ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_mahasiswa.id_sekolah', 'left' )
                 ->where('tb_ld.id_status', '11')
-                ->like('tb_mhs_add.tgl_du' , $angkatan)
+                ->like('tb_pendidikan.tgl_du' , $angkatan)
                 ->like('tb_prodi.id_prodi' , $id_prodi)
-                ->like('tb_ld.tgl_sk_yudisium' , $kelulusan)
                 ->get();
       $total = $coo->row();
 
@@ -1150,6 +1163,11 @@ class Laporan_model extends CI_Model {
                 </thead>
                 <tbody>';
                   foreach ($row as $data) {
+                    if ($data->asal_pt == NULL OR $data->asal_pt == '') {
+                      $asal = $data->nama_sekolah;
+                    } else {
+                      $asal = $data->nama_pt;
+                    }
                     if ($data->kewarganegaraan == 'Indonesia' OR $data->kewarganegaraan == 'indonesia' OR $data->kewarganegaraan == 'indo' OR $data->kewarganegaraan == '') {
                       $warga = 'WNI'; 
                     } else {
@@ -1163,9 +1181,9 @@ class Laporan_model extends CI_Model {
                       <td rowspan="5" style="text-align:center; width:3%">'.$data->id_kelamin.'</td>
                       <td rowspan="5">'.$data->tempat_lahir.', '.$data->tanggal_lahir.'</td>
                       <td rowspan="3">'.$warga.'</td>
-                      <td>'.$data->nama_sekolah.'</td>
+                      <td>'.$asal.'</td>
                       
-                      <td rowspan="5" style="width:10%; text-align:center"><img id="output" width="120" height="160" src="'.base_url('uploads/'.$data->foto_mahasiswa).'" alt="Your Image" onerror="this.src="uploads/user.jpg"></td>
+                      <td rowspan="5" style="width:10%; text-align:center"><img id="output" width="120" height="160" src="'.base_url('uploads/'.$data->foto_mahasiswa).'" alt="Photo" onerror="this.src='.base_url('uploads/user.jpg').'"></td>
                     </tr>
                     <tr>
                      <td>'.substr($data->tgl_sk_yudisium,0,4).'</td>
@@ -1227,6 +1245,15 @@ class Laporan_model extends CI_Model {
         return $ea->result();
 
     }
+    function getTahunAngkatan()
+    {
+        $ea =  $this->db->select('DATE_FORMAT(tb_pendidikan.tgl_du, "%Y") as tgl_du')
+                ->distinct()
+                ->from('tb_pendidikan')
+                ->get();
+        return $ea->result();
+
+    }
     function getProdi()
     {
         $ea =  $this->db->select('tb_prodi.id_prodi, tb_prodi.nama_prodi')
@@ -1241,7 +1268,7 @@ class Laporan_model extends CI_Model {
       $this->db->select('DATE_FORMAT(tb_pendaftaran.tanggal_konfirmasi, "%Y") as tanggal_konfirmasi')->distinct();
       $this->db->from('tb_pendaftaran');
       $this->db->join('tb_mahasiswa','tb_mahasiswa.nim=tb_pendaftaran.sgs');
-      $this->db->where('sumber','student_get_student');
+      $this->db->where('id_sumber',4);
       $query = $this->db->get();
       return $query->result();
   }

@@ -81,7 +81,7 @@
             <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 class="modal-title" id="myModalLabel">Edit Barang</h3>
+                <h3 class="modal-title" id="myModalLabel">Konfirmasi Pembayaran</h3>
             </div>
             <?php echo form_open('finance/konfirmasi/'); ?>
             <div class="form-horizontal">
@@ -122,7 +122,7 @@
                     <div class="modal-body">
                                           
                             <input type="hidden" name="kode" id="textkode" value="">
-                            <div class="alert alert-warning"><p>Apakah Anda yakin mau memhapus barang ini?</p></div>
+                            <div class="alert alert-warning"><p>Apakah Anda yakin mau memhapus data ini?</p></div>
                                         
                     </div>
                     <div class="modal-footer">

@@ -34,6 +34,7 @@ class Tamu extends CI_Controller {
 	public function page_tambah_tamu(){
 		if($this->session->userdata('level') == 3 || $this->session->userdata('level') == 1){
 				$data['kodeunik'] = $this->tamu_model->buat_kode();
+				$data['getUniversitas'] = $this->tamu_model->getUniversitas();
 				$data['getProdi'] = $this->daftar_ulang_model->getProdi();
 				$data['getPreschool'] = $this->daftar_ulang_model->getPreschool();
 				$data['mahasiswa'] = $this->mahasiswa_model->data_mahasiswa();
@@ -52,6 +53,7 @@ class Tamu extends CI_Controller {
 			$id_du = $this->uri->segment(3);
 			$data['edit'] = $this->tamu_model->detail_tamu($id_du);
 			$data['getProdi'] = $this->daftar_ulang_model->getProdi();
+			$data['getUniversitas'] = $this->tamu_model->getUniversitas();
 			$data['mahasiswa'] = $this->mahasiswa_model->data_mahasiswa();
 			$data['getPreschool'] = $this->daftar_ulang_model->getPreschool();
 			$data['main_view'] = 'Tamu/detail_tamu_view';
@@ -77,8 +79,8 @@ class Tamu extends CI_Controller {
 	public function detail_out()
 	{
 		if($this->session->userdata('level') == 3 || $this->session->userdata('level') == 1){
-			$id_du = $this->uri->segment(3);
-			$data['edit'] = $this->tamu_model->detail_tamu($id_du);
+			$id_pendaftaran = $this->uri->segment(3);
+			$data['edit'] = $this->tamu_model->detail_tamu($id_pendaftaran);
 			$data['main_view'] = 'Tamu/detail_non_aktif_view';
 			$this->load->view('template', $data);
 		} else {
@@ -153,8 +155,8 @@ class Tamu extends CI_Controller {
 	  } 
 
 	  public function save_edit_tamu(){
-      $id_du = $this->uri->segment(3);
-          if ($this->tamu_model->save_edit_tamu($id_du) == TRUE) {
+      $id_pendaftaran = $this->uri->segment(3);
+          if ($this->tamu_model->save_edit_tamu($id_pendaftaran) == TRUE) {
             $this->session->set_flashdata('message','<div class="alert alert-success">Edit tamu berhasil </div>');
             redirect('tamu/data_tamu');
           } else {
@@ -176,11 +178,11 @@ class Tamu extends CI_Controller {
 		  public function save_f1(){
       	  $id_du = $this->uri->segment(3);
           if ($this->tamu_model->save_f1($id_du) == TRUE) {
-            $data['message'] = 'Tambah Follow Up 1 berhasil';
+            $this->session->set_flashdata('message','<div class="alert alert-success"> Follow Up Berhasil </div>');
             redirect('tamu/data_tamu');
           } else {
+          	$this->session->set_flashdata('message','<div class="alert alert-danger"> Follow Up Gaga l</div>');
             $data['main_view'] = 'Tamu/f1_view';
-            $data['message'] = 'Tamu/f1_view';
             redirect('tamu/detail_tamu_view');
         	
           }

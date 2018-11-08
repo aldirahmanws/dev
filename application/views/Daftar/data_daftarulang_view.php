@@ -29,7 +29,8 @@
                 <?php 
                
                 foreach ($du as $data) {
-                    if ($data->status_mhs == 'Nilai Kosong') {
+                  if ($data->asal_pt == NULL OR $data->asal_pt == '') {
+                    if ($data->id_status == 12) {
                        echo '
                   
                 <tr>
@@ -40,7 +41,7 @@
                   <td>'.$data->nama_prodi.'</td>
                   <td>'.$data->nama_konsentrasi.'</td>
                   <td>'.$data->waktu.'</td>
-                  <td>'.$data->tgl_du.'</td>
+                  <td>'.date("d M Y", strtotime($data->tgl_du)).'</td>
                   <td>'.$data->status_mhs.'</td>
                   <td>
                     
@@ -74,6 +75,7 @@
                   </td>
                 </tr>
                 ';
+              }
                 }
                 }
               

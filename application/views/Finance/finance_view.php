@@ -33,7 +33,7 @@
         <td><?php echo ++$no; ?></td>
         <td><?php echo $i->id_pendaftaran;?></td>
         <td><?php echo $i->nama_pendaftar;?></td>
-        <td><?php echo $i->status_bayar;?></td>
+        <td><?php echo $i->status_mhs;?></td>
         <td><a href="<?php echo base_url().'uploads/'.$i->bukti_transfer;?>" class="btn btn-info btn-sm" target="_blank">Lihat Bukti</a></td>
                 <td>
                   <a class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal_edit<?php echo $i->id_pendaftaran;?>"> Konfirmasi</a>

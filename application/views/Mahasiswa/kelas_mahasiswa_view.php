@@ -18,7 +18,11 @@
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/transfer_nilai/<?php echo $mahasiswa->id_mahasiswa; ?>">Nilai Transfer</a>
         <?php } ?>
 
+        <?php if ($mahasiswa->asal_pt == 1 OR $mahasiswa->asal_pt == '') { ?>
         <a class="btn btn-sm btn-warning btn-flat" href="<?php echo base_url();?>mahasiswa/krs_mahasiswa/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>/<?php echo $mahasiswa->id_konsentrasi; ?>">KRS Mahasiswa</a>
+        <?php } else { ?>
+        <a class="btn btn-sm btn-warning btn-flat" href="<?php echo base_url();?>mahasiswa/kelas_mhs/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>">KRS Mahasiswa</a>
+        <?php } ?> 
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/jadwal_mhs/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>">Jadwal Kuliah</a>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/history_nilai/<?php echo $mahasiswa->id_mahasiswa; ?>">History Nilai</a>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/aktivitas_perkuliahan/<?php echo $mahasiswa->id_mahasiswa; ?>">Aktivitas Perkuliahan</a>
@@ -38,7 +42,7 @@
           
             <div class="box-header">
               <h3 class="box-title">
-              Data KRS yang anda ambil semester <?php echo $this->uri->segment(5); ?></h3>
+              Data KRS yang anda ambil semester <?php echo $mahasiswa->semester_aktif; ?></h3>
 
             
             
@@ -61,7 +65,7 @@
                 $totalbobot = 0;
                 if ($mahasiswa->id_status == '1') {
                 foreach ($kelas as $i) {
-                  if ($i->semester_kurikulum == $mahasiswa->semester_aktif OR $i->ket == $mahasiswa->semester_aktif) {
+                  if ($i->id_periode == $periode->id_periode) {
 
                   $totalbobot += $i->bobot_matkul;
                   echo '
@@ -168,7 +172,7 @@
                 $totalbobot = 0;
                 if ($mahasiswa->id_status == '1') {
                 foreach ($kelas as $i) {
-                  if ($i->semester_kurikulum == $mahasiswa->semester_aktif OR $i->ket == $mahasiswa->semester_aktif) {
+                  if ($i->id_periode == $periode->id_periode) {
               
                   $totalbobot += $i->bobot_matkul;
                   echo '

@@ -22,9 +22,9 @@
                 <div class="form-group">
                   <label for="gender">Jenis Kelamin</label>
                   <select id="jk_pendaftar" name="jk_pendaftar" class="form-control" ="" required="">
-            <option value="<?php echo $edit->jk_pendaftar; ?>"><?php echo $edit->jk_pendaftar; ?></option>
-            <option value="laki-laki">Laki - laki</option>
-            <option value="perempuan">Perempuan</option>
+            <option value="<?php echo $edit->jk_pendaftar; ?>"><?php echo $edit->jenis_kelamin; ?></option>
+            <option value="L">Laki - laki</option>
+            <option value="P">Perempuan</option>
 
           </select>                                     
                   
@@ -41,10 +41,10 @@
                 </div>
                    <div class="form-group">
                   <label for="waktu">Waktu</label>
-                  <select id="waktu" name="waktu" class="form-control" ="" required="">
-                    <option value="<?php echo $edit->waktu; ?>"><?php echo $edit->waktu; ?></option>
-                    <option value="Pagi">Pagi</option>
-                    <option value="Sore">Sore</option>
+                  <select id="id_waktu" name="id_waktu" class="form-control" ="" required="">
+                    <option value="<?php echo $edit->id_waktu; ?>"><?php echo $edit->waktu; ?></option>
+                    <option value="1">Pagi</option>
+                    <option value="2">Sore</option>
 
                   </select>                                     
                   
@@ -58,8 +58,8 @@
                   <input type="email" name="email" class="form-control" id="email" placeholder="Input Email" required="" value="<?php echo $edit->email; ?>">
                 </div>
 
-
-                <div class="form-group">
+                <?php if ($edit->id_pt == NULL OR $edit->id_pt == '') { ?>
+                  <div class="form-group">
                   <label for="preschool">Asal Sekolah</label>
                   <select id="id_sekolah" name="id_sekolah"class="form-control" required="">
                   <option value="<?php echo $edit->id_sekolah; ?>"><?php echo $edit->nama_sekolah; ?></option>
@@ -83,6 +83,29 @@
                   <option value="rpl">RPL</option>
                 </select>                                     
                 </div>
+                <input type="hidden" name="id_pt" value="">
+                <?php } else { ?>
+                  <div class="form-group">
+                  <label for="preschool">Asal Universitas</label>
+                  <select id="id_pt" name="id_pt"class="form-control" required="">
+                  <option value="<?php echo $edit->id_pt; ?>"><?php echo $edit->nama_pt; ?></option>
+                  <?php 
+
+                  foreach($getUniversitas as $row)
+                  { 
+                    echo '<option value="'.$row->id_pt.'">'.$row->nama_pt.'</option>';
+                  }
+                  ?>
+
+                </select>   
+                </div>
+                  <div class="form-group">
+                  <label for="phone">Asal Prodi</label>
+                  <input type="text" name="jurusan" class="form-control" id="jurusan" placeholder="Input Phone Number" required="" value="<?php echo $edit->jurusan; ?>">
+                </div>
+                <input type="hidden" name="id_sekolah" value="">
+                <?php } ?>
+                
                
 
 
@@ -102,20 +125,20 @@
 
                 <div class="form-group">
                   <label for="major">Sumber Informasi</label>
-                <select id="sumber" name="sumber" class="form-control" ="" onchange="return get_student(this.value)">
-                  <option value="<?php echo $edit->sumber; ?>"><?php echo $edit->sumber; ?></option>
-                  <option value="brosur">Brosur</option>
-                  <option value="iklan">Iklan</option>
-                  <option value="marketing">Marketing</option>
-                  <option value="student_get_student">Student get Student</option>
+                <select id="id_sumber" name="id_sumber" class="form-control" ="" onchange="return get_student(this.value)">
+                  <option value="<?php echo $edit->id_sumber; ?>"><?php echo $edit->nama_sumber; ?></option>
+                  <option value="1">Brosur</option>
+                  <option value="2">Iklan</option>
+                  <option value="3">Marketing</option>
+                  <option value="4">Student get Student</option>
                 </select>                                     
                 </div>
-                <div id="input_student" style="visibility: hidden;">
+                <div id="input_student">
                 <label for="major">Student Get Student</label>
                 <div class="input-group" >
                
                 <!-- /btn-group -->
-                <input type="text" class="form-control" id="student" hidden="" value="<?php echo $edit->sgs; ?>" readonly>
+                <input type="text" class="form-control" id="student" name="sgs" value="<?php echo $edit->sgs; ?>" readonly>
                  <div class="input-group-btn">
                   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-default"><i class="fa fa-search"></i></button>
                 </div>
@@ -152,7 +175,7 @@
                 <tr>
                   <td id="nim">'.$data->nim.'
                   </td>
-                  <td>'.$data->nama_du.'</td>
+                  <td>'.$data->nama_mahasiswa.'</td>
                   <td>'.$data->nama_prodi.'</td>
                   <td>'.$data->waktu.'</td>
                   <td><p class="btn btn-default btn-sm" data-dismiss="modal" onclick="myFunction('.$data->nim.')">Pilih</p></td>
@@ -189,7 +212,7 @@
 </div>
 </div>
 <script>
-    if(document.getElementById("sumber").value=="student_get_student")
+    if(document.getElementById("sumber").value=="4")
         document.getElementById("input_student").style.visibility = 'visible';
         else
         document.getElementById("input_student").style.visibility = 'hidden';
@@ -197,7 +220,7 @@
         document.getElementById("student").value = name;
     }
     function get_student(param){
-        if(param=="student_get_student")
+        if(param=="4")
         document.getElementById("input_student").style.visibility = 'visible';
         else
         document.getElementById("input_student").style.visibility = 'hidden';

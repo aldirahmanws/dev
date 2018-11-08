@@ -87,15 +87,16 @@ class Daftar_ulang_model extends CI_Model {
 
   public function page_du_pagi($id_pendaftaran){
       return $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_pendaftaran.id_prodi')
-              ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_pendaftaran.id_sekolah')
+              ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_pendaftaran.id_sekolah','left')
+              ->join('tb_pt','tb_pt.id_pt=tb_pendaftaran.id_pt','left')
               ->where('id_pendaftaran', $id_pendaftaran)
               ->get('tb_pendaftaran')
               ->row();
   }
 
     public function page_du_sore($id_pendaftaran){
-      return $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_pendaftaran.id_prodi')
-              ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_pendaftaran.id_sekolah')
+      return $this->db->join('tb_sekolah','tb_sekolah.id_sekolah=tb_pendaftaran.id_sekolah','left')
+              ->join('tb_pt','tb_pt.id_pt=tb_pendaftaran.id_pt','left')
               ->where('id_pendaftaran', $id_pendaftaran)
               ->get('tb_pendaftaran')
               ->row();
@@ -104,13 +105,10 @@ class Daftar_ulang_model extends CI_Model {
   public function data_peserta_tes(){
     return $this->db->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
               ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
-              ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_mahasiswa.id_sekolah')
-              ->join('tb_alamat','tb_alamat.id_mahasiswa=tb_mahasiswa.id_mahasiswa')  
-              ->join('tb_bio','tb_bio.id_mahasiswa=tb_mahasiswa.id_mahasiswa') 
-              ->join('tb_kontak','tb_kontak.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
+              ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_mahasiswa.id_sekolah','left')
               ->join('tb_waktu','tb_waktu.id_waktu=tb_mahasiswa.id_waktu') 
               ->join('tb_status_mhs','tb_status_mhs.id_status=tb_mahasiswa.id_status')
-              ->join('tb_mhs_add','tb_mhs_add.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
+              ->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
               ->where('tb_mahasiswa.id_waktu', '1')
               ->where('tb_mahasiswa.semester_aktif', '1')
               ->get('tb_mahasiswa')
@@ -210,10 +208,11 @@ return array(
   }
 
   public function detail_du($id_mahasiswa){
-      return $this->db->select('*')
-              ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
+      return $this->db->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
               ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
-              ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_mahasiswa.id_sekolah')
+              ->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
+              ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_mahasiswa.id_sekolah','left')
+              ->join('tb_pt','tb_pt.id_pt=tb_pendidikan.asal_pt','left')
               ->join('tb_bio','tb_bio.id_mahasiswa=tb_mahasiswa.id_mahasiswa') 
               ->join('tb_alamat','tb_alamat.id_mahasiswa=tb_mahasiswa.id_mahasiswa') 
               ->join('tb_kontak','tb_kontak.id_mahasiswa=tb_mahasiswa.id_mahasiswa') 

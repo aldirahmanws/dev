@@ -96,6 +96,69 @@
                              </select></td>
                 </tr>
                 <tr>
+                    <td class="left_column"> Asal <font color="#FF0000">*</font></td>
+                    <td>:
+                        <select name="asal" id="asal" required="" onchange="return get_asal(this.value);">
+                            <option value="">Pilih Asal</option>
+                            <option value="1"> Sekolah </option>
+                            <option value="2"> Universitas </option>
+                            
+                             </select></td>
+                </tr>               
+                <tr style="display: none" id="sekolah">
+                    <td class="left_column"> Asal Sekolah <font color="#FF0000">*</font></td>
+                    <td>:
+                        <select name="id_sekolah" id="id_sekolah" >
+                            <option value="">Pilih Asal Sekolah</option>
+                            <?php 
+
+                  foreach($getPreschool as $row)
+                  { 
+                    echo '<option value="'.$row->id_sekolah.'">'.$row->nama_sekolah.'</option>';
+                  }
+                  ?>        
+                             </select></td>
+                </tr>
+                <tr style="display: none" id="asal_jurusan">
+                    <td class="left_column"> Asal Jurusan<font color="#FF0000">*</font></td>
+                    <td>:
+                        <select name="jurusan" id="jurusan"  >
+                            <option value="">Pilih Jurusan </option>
+                            <option value="IPA"> IPA </option>
+                            <option value="IPS"> IPS </option>
+                            <option value="Bahasa"> Bahasa </option>
+                            <option value="Lainnya"> Lainnya </option>
+                            
+                             </select></td>
+                </tr>
+                
+                <tr style="display: none" id="universitas">
+                    <td class="left_column"> Asal Universitas <font color="#FF0000">*</font></td>
+                    <td>:
+                        <select name="asal_pt" id="asal_pt" >
+                            <option value="">Pilih Universitas</option>
+                            <?php 
+
+                  foreach($getUniversitas as $row)
+                  { 
+                    echo '<option value="'.$row->id_pt.'">'.$row->nama_pt.'</option>';
+                  }
+                  ?>
+                            
+                             </select></td>
+                </tr>
+                <tr style="display: none" id="asal_prodii">
+                    <td class="left_column" width="15%"> Asal Prodi <font color="#FF0000">*</font></td>
+                    <td colspan="4">:  <input type="text" name="asal_prodi" id="asal_prodi" class="validate[required] text-input" size="50" style="width:20%" value="">                            
+                    </td>
+                </tr>
+                <tr style="display: none" id="sks_diakui">
+                    <td class="left_column" width="15%">Jumlah SKS Diakui <font color="#FF0000">*</font></td>
+                    <td colspan="4">:  <input type="number" name="jml_sks_diakui" id="jml_sks_diakui" class="validate[required] text-input" size="50" style="width:20%" value="">                            
+                    </td>
+                </tr>
+                </div>
+                <tr>
                     <td class="left_column" width="15%">Tanggal Pendaftaran <font color="#FF0000">*</font></td>
                     <td colspan="4">:  <input type="date" name="tgl_du" id="tgl_du" class="validate[required] text-input" maxlength="16" size="50" style="width:20%" required="">                            
                     </td>
@@ -112,6 +175,7 @@
                     <td class="left_column">Jenis Pendaftaran <font color="#FF0000">*</font></td>
                     <td>:
                         <select name="id_jenis_pendaftaran" id="id_jenis_pendaftaran" required="">
+                            <option value=""> Pilih Jenis Pendaftaran </option>
                             <option value="1">Peserta Didik Baru</option>
                             <option value="2">Pindahan</option>
                             <option value="3">Alih Jenjang</option>
@@ -546,6 +610,23 @@
           <!-- nav-tabs-custom -->
         </div>
 
+<script type="text/javascript">
+function get_asal(param){
+if(param=="1"){
+document.getElementById("sekolah").style.display = null;
+document.getElementById("asal_jurusan").style.display = null;
+document.getElementById("universitas").style.display = 'none';
+document.getElementById("asal_prodii").style.display = 'none';
+document.getElementById("sks_diakui").style.display = 'none';
+} else {
+document.getElementById("sekolah").style.display = 'none';
+document.getElementById("asal_jurusan").style.display = 'none';
+document.getElementById("universitas").style.display = null;
+document.getElementById("asal_prodii").style.display = null;
+document.getElementById("sks_diakui").style.display = null;
+}
+}  
+</script>
 
         <script>
             document.getElementById("myText").readOnly = true;
@@ -615,4 +696,6 @@ function undisableTxt() {
                     error:function (){}
                 });
             }
-</script>     <!-- /.col -->
+</script>  
+
+

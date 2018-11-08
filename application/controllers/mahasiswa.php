@@ -12,6 +12,7 @@ class Mahasiswa extends CI_Controller {
 		$this->load->model('kurikulum_model');
 		$this->load->model('user_model');
 		$this->load->model('kelas_perkuliahan_model');
+		$this->load->model('tamu_model');
 	}
 	 
 	public function index()
@@ -20,7 +21,6 @@ class Mahasiswa extends CI_Controller {
 		
 			if($this->session->userdata('level') == 5){
 				$id_mahasiswa = $this->session->userdata('id_mahasiswa');
-				$data['id_mahasiswa'] = $this->session->userdata('id_mahasiswa');
 				$data['id_mahasiswa'] = $this->session->userdata('id_mahasiswa');
 				$data['mahasiswa'] = $this->mahasiswa_model->detail_mahasiswa_dikti($id_mahasiswa);
 				$data['main_view'] = 'Mahasiswa/lihat_mahasiswa_dikti_view';
@@ -49,8 +49,9 @@ class Mahasiswa extends CI_Controller {
 	public function detail_mahasiswa()
 	{
 		if ($this->session->userdata('logged_in') == TRUE) {
-			$id_du = $this->uri->segment(3);
-			$data['du'] = $this->daftar_ulang_model->detail_du($id_du);
+			$id_mahasiswa = $this->uri->segment(3);
+			$data['du'] = $this->daftar_ulang_model->detail_du($id_mahasiswa);
+			$data['getUniversitas'] = $this->tamu_model->getUniversitas();
 			$data['getProdi'] = $this->daftar_ulang_model->getProdi();
 			$data['getPreschool'] = $this->daftar_ulang_model->getPreschool();
 			$data['main_view'] = 'Mahasiswa/detail_mahasiswa_view';
@@ -64,6 +65,7 @@ class Mahasiswa extends CI_Controller {
 	public function data_mahasiswa()
 	{
 		if ($this->session->userdata('logged_in') == TRUE) {
+			$data['getTahunAngkatan'] = $this->mahasiswa_model->getTahunAngkatan();
 			$data['mahasiswa'] = $this->mahasiswa_model->data_mahasiswa_dikti();
 			$data['drop_down_prodi'] = $this->konsentrasi_model->get_prodi();
 			$data['main_view'] = 'Mahasiswa/mahasiswa_view';
@@ -81,6 +83,7 @@ class Mahasiswa extends CI_Controller {
 			$id_agama=$this->input->get('id_agama');
 			$id_kelamin=$this->input->get('id_kelamin');
 			$angkatan=$this->input->get('angkatan');
+			$data['getTahunAngkatan'] = $this->mahasiswa_model->getTahunAngkatan();
 			$data['mahasiswa'] = $this->mahasiswa_model->filter_mahasiswa($id_prodi,$id_agama,$id_kelamin,$angkatan);
 			$data['main_view'] = 'Mahasiswa/mahasiswa_view';
 			$this->load->view('template', $data);
@@ -144,7 +147,7 @@ class Mahasiswa extends CI_Controller {
 				$semester_aktif = $this->uri->segment(5);
 			}
 			$data['mahasiswa'] = $this->mahasiswa_model->detail_krs_mahasiswa($id_mahasiswa);
-			$data['krs'] = $this->mahasiswa_model->data_krs_mhs($id_mahasiswa, $semester_aktif, $id_prodi);
+			$data['krs'] = $this->mahasiswa_model->data_krs_mhs($id_mahasiswa, $id_prodi, $semester_aktif);
 			//$data['periode2'] = $this->mahasiswa_model->getPer($id_prodi);
 			$data['periode'] = $this->mahasiswa_model->Periode_krs($id_prodi);
 			$data['main_view'] = 'Mahasiswa/krs_mahasiswa_view';
@@ -207,7 +210,8 @@ class Mahasiswa extends CI_Controller {
 	}
 
 	public function history_nilai()
-	{
+
+	{ini_set('display_errors', 0);
 		if ($this->session->userdata('logged_in') == TRUE) {
 			if($this->session->userdata('level') == 5){
 				$username = $this->session->userdata('username');
@@ -289,6 +293,9 @@ class Mahasiswa extends CI_Controller {
 	public function page_tambah_mahasiswa()
 	{
 		if ($this->session->userdata('logged_in') == TRUE) {
+			$data['getPreschool'] = $this->daftar_ulang_model->getPreschool();
+			$data['getUniversitas'] = $this->tamu_model->getUniversitas();
+			$data['getStatus'] = $this->mahasiswa_model->getStatus();
 			$data['kodeunik_mhs'] = $this->mahasiswa_model->buat_kode_mhs();
 			$data['getStatus'] = $this->mahasiswa_model->getStatus();
 			$data['getGrade'] = $this->mahasiswa_model->getGrade();
@@ -307,12 +314,13 @@ class Mahasiswa extends CI_Controller {
 				$username = $this->session->userdata('username');
 				$session = $this->mahasiswa_model->session_mahasiswa($username);
 				$id_mahasiswa = $session->id_mahasiswa;
-				$history = $id_mahasiswa;
+				$nik = $session->nik;
 			} else {
 				$id_mahasiswa = $this->uri->segment(3);
 				$nik = $this->uri->segment(4);
 			}
 			$data['kodeunik_mhs'] = $this->mahasiswa_model->buat_kode_mhs();
+			$data['getUniversitas'] = $this->tamu_model->getUniversitas();
 			$data['mahasiswa'] = $this->mahasiswa_model->detail_mahasiswa_dikti($id_mahasiswa);
 			$data['history'] = $this->mahasiswa_model->history_pendidikan($nik);
 			$data['getProdi'] = $this->daftar_ulang_model->getProdi();
@@ -330,7 +338,6 @@ class Mahasiswa extends CI_Controller {
 				$username = $this->session->userdata('username');
 				$session = $this->mahasiswa_model->session_mahasiswa($username);
 				$id_mahasiswa = $session->id_mahasiswa;
-				$history = $id_mahasiswa;
 			} else {
 				$id_mahasiswa = $this->uri->segment(3);
 			}
@@ -478,10 +485,11 @@ class Mahasiswa extends CI_Controller {
 			} 
 	}
 
-	public function save_edit_mahasiswa()
+	public function save_edit_mahasiswa($nim)
 	{
 		 $id_mahasiswa = $this->uri->segment(3);
-			if($this->mahasiswa_model->save_edit_mahasiswa($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_ayah($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_ibu($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_alamat($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_wali($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_kependudukan($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_bio($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_kontak($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_mhs_add($id_mahasiswa) == TRUE){
+		 $nim = $this->uri->segment(4);
+			if($this->mahasiswa_model->save_edit_user($nim) == TRUE && $this->mahasiswa_model->save_edit_mahasiswa($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_ayah($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_ibu($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_alamat($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_wali($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_kependudukan($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_bio($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_kontak($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_pendidikan($id_mahasiswa) == TRUE){
 				$nama_du = $this->input->post('nama_mahasiswa');
 				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Data '.$nama_du.' berhasil diedit </div>');
             	redirect('mahasiswa/data_mahasiswa');
@@ -532,11 +540,12 @@ class Mahasiswa extends CI_Controller {
 	} 
 
 	public function save_edit_foto_mahasiswa(){
+		$id_mahasiswa = $this->uri->segment(3);
 	    $config['upload_path'] = './uploads/';
 	    $config['allowed_types'] = 'jpg|png|jpeg';
 	    $this->load->library('upload', $config);
 	    if($this->upload->do_upload('foto_mahasiswa')){
-	      if($this->mahasiswa_model->save_edit_foto_mahasiswa($this->upload->data(), $this->uri->segment(3)) == TRUE){
+	      if($this->mahasiswa_model->save_edit_foto_mahasiswa($this->upload->data(), $id_mahasiswa) == TRUE){
 	        $this->session->set_flashdata('message', 'Upload Foto Berhasil');
 	            redirect('mahasiswa/detail_mahasiswa_dikti/'.$this->uri->segment(3));
 	      } else {
@@ -552,6 +561,7 @@ class Mahasiswa extends CI_Controller {
 
 	public function data_ld(){
 		if ($this->session->userdata('logged_in') == TRUE) {
+			$data['getTahunAngkatan'] = $this->mahasiswa_model->getTahunAngkatan();
 			$data['ld'] = $this->mahasiswa_model->data_ld();
 			$data['getProdi'] = $this->daftar_ulang_model->getProdi();
 			$data['main_view'] = 'LD/lulus_do_view';
@@ -599,6 +609,7 @@ class Mahasiswa extends CI_Controller {
 	public function filter_ld()
 	{
 			$data['getProdi'] = $this->daftar_ulang_model->getProdi();
+			$data['getTahunAngkatan'] = $this->mahasiswa_model->getTahunAngkatan();
 			$id_prodi=$this->input->get('id_prodi');
 			$id_status=$this->input->get('id_status');
 			$angkatan=$this->input->get('angkatan');
@@ -697,6 +708,28 @@ class Mahasiswa extends CI_Controller {
 			} else {
 			redirect('login');
 		}
+	}
+
+	public function hapus_pendidikan(){
+		$id_mahasiswa = $this->uri->segment(3);
+		if ($this->mahasiswa_model->hapus_mhs_bio($id_mahasiswa) == TRUE && $this->mahasiswa_model->hapus_mhs_alamat($id_mahasiswa) == TRUE && $this->mahasiswa_model->hapus_mhs_ayah($id_mahasiswa) == TRUE && $this->mahasiswa_model->hapus_mhs_ibu($id_mahasiswa) == TRUE && $this->mahasiswa_model->hapus_mhs_wali($id_mahasiswa) == TRUE && $this->mahasiswa_model->hapus_mhs_kependudukan($id_mahasiswa) == TRUE && $this->mahasiswa_model->hapus_mhs_kontak($id_mahasiswa) == TRUE && $this->mahasiswa_model->hapus_mhs_mahasiswa($id_mahasiswa) == TRUE && $this->mahasiswa_model->hapus_mhs_pendidikan($id_mahasiswa) == TRUE) {
+			$this->session->set_flashdata('message', '<div class="alert alert-success"> Hapus Histori Pendidikan Berhasil </div>');
+			redirect('mahasiswa/data_mahasiswa');
+		} else {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger"> Hapus Gagal </div>');
+			redirect('mahasiswa/data_mahasiswa');
+		}
+	}
+
+	public function edit_pendidikan()
+	{
+		$id_pendidikan = $this->uri->segment(3);
+		$nik = $this->uri->segment(4);
+		$id_mahasiswa = $this->uri->segment(5);
+			if($this->mahasiswa_model->edit_pendidikan($id_pendidikan) == TRUE){
+				$this->session->set_flashdata('message', '<div class="alert alert-success"> Edit Histoy Pendidikan Berhasil </div>');
+            	redirect('mahasiswa/history_pendidikan/'.$id_mahasiswa.'/'.$nik);
+			} 
 	}
 	
 	

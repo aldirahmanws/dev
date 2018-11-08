@@ -13,7 +13,7 @@
                 <tr>
                   <th>No</th>
                   <th>Nama</th>
-                  <th>Asal Sekolah</th>
+                  <th>Asal </th>
                   <th>Catatan</th>
                   <th>Aksi</th>
                 </tr>
@@ -23,13 +23,18 @@
                 <?php 
                 $no = 0;
                 foreach ($edit as $data) {
+                   if ($data->id_sekolah == NULL OR $data->id_sekolah == '') {
+                      $asal = $data->nama_pt;
+                    } else {
+                      $asal = $data->nama_sekolah;
+                    }
                   echo '
                   
                 <tr>
                   <td>'.++$no.'</td>
                   <td>'.$data->nama_pendaftar.'
                   </td>
-                   <td>'.$data->nama_sekolah.'</td>
+                   <td>'.$asal.'</td>
                   <td>'.$data->notes.'</td>
                   <td>
                       <a href="'.base_url('tamu/detail_out/'.$data->id_pendaftaran).'" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-list-alt"></i><span class="tooltiptext">Detail </span></a>

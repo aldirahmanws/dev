@@ -48,4 +48,15 @@ class Setting_periode extends CI_Controller {
             			redirect('setting_periode');
 					}
 		}
+
+	public function hapus_periode(){
+		$id_periode = $this->uri->segment(3);
+		if ($this->periode_model->hapus_periode($id_periode) == TRUE) {
+			$this->session->set_flashdata('message', '<div class="alert alert-success"> Hapus Periode Berhasil </div>');
+			redirect('setting_periode');
+		} else {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger"> Hapus Gagal </div>');
+			redirect('setting_periode');
+		}
+	}
 }

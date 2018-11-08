@@ -9,21 +9,31 @@ class Tamu_model extends CI_Model {
 		
 	}
 
+  public function getUniversitas(){
+    return $this->db->get('tb_pt')->result();
+  }
+
 	public function data_tamu(){
-		$this->db->select('*');
-		 $this->db->from('tb_pendaftaran');
-     $this->db->join('tb_sekolah','tb_sekolah.id_sekolah=tb_pendaftaran.id_sekolah');
-		 $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_pendaftaran.id_prodi');
-		 $query = $this->db->get();
-		 return $query->result();
+		return $this->db->join('tb_sekolah','tb_sekolah.id_sekolah=tb_pendaftaran.id_sekolah','left')
+              ->join('tb_pt','tb_pt.id_pt=tb_pendaftaran.id_pt','left')
+		          ->join('tb_prodi','tb_prodi.id_prodi=tb_pendaftaran.id_prodi')
+              ->join('tb_waktu','tb_waktu.id_waktu=tb_pendaftaran.id_waktu')
+              ->join('tb_sumber','tb_sumber.id_sumber=tb_pendaftaran.id_sumber')
+              ->join('tb_status_mhs','tb_status_mhs.id_status=tb_pendaftaran.id_status')
+              ->where('tb_pendaftaran.id_status !=', 1)
+              ->order_by('tb_pendaftaran.id_pendaftaran','DESC')
+		          ->get('tb_pendaftaran')
+		          ->result();
 	}
 
   public function data_tamu_out(){
     $this->db->select('*');
      $this->db->from('tb_pendaftaran');
-     $this->db->join('tb_sekolah','tb_sekolah.id_sekolah=tb_pendaftaran.id_sekolah');
+     $this->db->join('tb_sekolah','tb_sekolah.id_sekolah=tb_pendaftaran.id_sekolah','left');
+     $this->db->join('tb_pt','tb_pt.id_pt=tb_pendaftaran.id_pt','left');
      $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_pendaftaran.id_prodi');
-     $this->db->where('status_bayar','Non Aktif');
+     $this->db->where('id_status',2);
+     $this->db->order_by('tb_pendaftaran.id_pendaftaran', 'DESC');
      $query = $this->db->get();
      return $query->result();
   }
@@ -31,8 +41,9 @@ class Tamu_model extends CI_Model {
   public function data_sgs(){
     $this->db->select('*');
      $this->db->from('tb_pendaftaran');
-    $this->db->join('tb_mahasiswa','tb_mahasiswa.nim=tb_pendaftaran.sgs');
-$this->db->where('sumber','student_get_student');
+    $this->db->join('tb_mahasiswa','tb_mahasiswa.id_mahasiswa=tb_pendaftaran.sgs');
+    $this->db->where('id_sumber', 4);
+    $this->db->order_by('tb_mahasiswa.id_mahasiswa', 'DESC');
      $query = $this->db->get();
      return $query->result();
   }
@@ -44,15 +55,19 @@ $this->db->where('sumber','student_get_student');
   }
 
   public function detail_tamu($id_mahasiswa){
-    return $this->db->join('tb_sekolah','tb_sekolah.id_sekolah=tb_pendaftaran.id_sekolah')
+    return $this->db->join('tb_sekolah','tb_sekolah.id_sekolah=tb_pendaftaran.id_sekolah','left')
+            ->join('tb_pt','tb_pt.id_pt=tb_pendaftaran.id_pt','left')
+            ->join('tb_waktu','tb_waktu.id_waktu=tb_pendaftaran.id_waktu')
             ->join('tb_prodi','tb_prodi.id_prodi=tb_pendaftaran.id_prodi')
+            ->join('tb_sumber','tb_sumber.id_sumber=tb_pendaftaran.id_sumber')
+            ->join('tb_kelamin','tb_kelamin.id_kelamin=tb_pendaftaran.jk_pendaftar')
             ->where('id_pendaftaran', $id_mahasiswa)
             ->get('tb_pendaftaran')
             ->row();
   }
 
 	public function  buat_kode()   {
-          $this->db->SELECT('RIGHT(tb_pendaftaran.id_pendaftaran,3) as kode', FALSE);
+          $this->db->SELECT('RIGHT(tb_pendaftaran.id_pendaftaran,4) as kode', FALSE);
           $this->db->order_by('id_pendaftaran','DESC');    
           $this->db->limit(1);    
           $query = $this->db->get('tb_pendaftaran');      //cek dulu apakah ada sudah ada kode di tabel.    
@@ -65,27 +80,8 @@ $this->db->where('sumber','student_get_student');
            //jika kode belum ada      
            $kode = 1;    
           }
-          $kodemax = str_pad($kode, 3, "0", STR_PAD_LEFT); // angka 4 menunjukkan jumlah digit angka 0
+          $kodemax = str_pad($kode, 4, "0", STR_PAD_LEFT); // angka 4 menunjukkan jumlah digit angka 0
           $kodejadi = "TM".$kodemax;    // hasilnya ODJ-991-0001 dst.
-          return $kodejadi; 
-    }
-
-    public function  buat_kode_du()   {
-          $this->db->SELECT('RIGHT(tb_pendaftaran.id_mahasiswa,3) as kode', FALSE);
-          $this->db->order_by('id_mahasiswa','DESC');    
-          $this->db->limit(1);    
-          $query = $this->db->get('tb_pendaftaran');      //cek dulu apakah ada sudah ada kode di tabel.    
-          if($query->num_rows() <> 0){      
-           //jika kode ternyata sudah ada.      
-           $data = $query->row();      
-           $kode = intval($data->kode) + 1;    
-          }
-          else {      
-           //jika kode belum ada      
-           $kode = 1;    
-          }
-          $kodemax = str_pad($kode, 3, "0", STR_PAD_LEFT); // angka 4 menunjukkan jumlah digit angka 0
-          $kodejadi = "DU".$kodemax;    // hasilnya ODJ-991-0001 dst.
           return $kodejadi; 
     }
 
@@ -95,15 +91,16 @@ $this->db->where('sumber','student_get_student');
             'id_pendaftaran'      => $this->input->post('id_pendaftaran', TRUE),
             'nama_pendaftar'      => $this->input->post('nama_pendaftar', TRUE),
             'id_sekolah'      => $this->input->post('id_sekolah', TRUE),
+            'id_pt'      => $this->input->post('id_pt', TRUE),
             'jurusan'      => $this->input->post('jurusan', TRUE),
             'alamat'     => $this->input->post('alamat', TRUE),
             'email'     => $this->input->post('email', TRUE),
             'no_telp'     => $this->input->post('no_telp', TRUE),
             'tanggal_pendaftaran'     => date('Y-m-d'),
-            'status_bayar'     => 'Tamu',
-            'waktu'     => $this->input->post('waktu', TRUE),
+            'id_status'     => '22',
+            'id_waktu'     => $this->input->post('waktu', TRUE),
             'jk_pendaftar' => $this->input->post('jk_pendaftar', TRUE),
-            'sumber' => $this->input->post('sumber', TRUE),
+            'id_sumber' => $this->input->post('sumber', TRUE),
             'id_prodi' => $this->input->post('id_prodi', TRUE),
             'sgs' => $this->input->post('student')
             
@@ -135,7 +132,7 @@ $this->db->where('sumber','student_get_student');
   
   public function save_bukti_transfer($upload_bukti, $id_pendaftaran)
    {
-    $data = array('status_bayar'     => 'Proses Pengecekan',
+    $data = array('id_status'     => '23',
       'bukti_transfer' => $upload_bukti['file_name'] )
                   ;
     $this->db->where('id_pendaftaran', $id_pendaftaran)->update('tb_pendaftaran', $data);
@@ -148,7 +145,7 @@ $this->db->where('sumber','student_get_student');
 
   public function save_update_status2($id_pendaftaran){
     $data = array(
-       'status_bayar'     => 'Aktif'
+       'id_status'     => '1'
       );
 
     $this->db->where('id_du', $id_pendaftaran)
@@ -161,24 +158,25 @@ $this->db->where('sumber','student_get_student');
     }
   }
 
-  public function save_edit_tamu($no_du){
+  public function save_edit_tamu($id_pendaftaran){
     $data = array(
             'id_pendaftaran'      => $this->input->post('id_pendaftaran', TRUE),
             'nama_pendaftar'      => $this->input->post('nama_pendaftar', TRUE),
             'id_sekolah'      => $this->input->post('id_sekolah', TRUE),
+            'id_pt'      => $this->input->post('id_pt', TRUE),
             'jurusan'      => $this->input->post('jurusan', TRUE),
             'alamat'     => $this->input->post('alamat', TRUE),
             'email'     => $this->input->post('email', TRUE),
             'no_telp'     => $this->input->post('no_telp', TRUE),
-            'tanggal_pendaftaran'     => date('Y-m-d'),
-            'waktu'     => $this->input->post('waktu', TRUE),
+            'id_waktu'     => $this->input->post('id_waktu', TRUE),
             'jk_pendaftar' => $this->input->post('jk_pendaftar', TRUE),
-            'sumber' => $this->input->post('sumber', TRUE),
-            'id_prodi' => $this->input->post('id_prodi', TRUE)
+            'id_sumber' => $this->input->post('id_sumber', TRUE),
+            'id_prodi' => $this->input->post('id_prodi', TRUE),
+            'sgs' => $this->input->post('sgs', TRUE),
       );
 
     if (!empty($data)) {
-            $this->db->where('id_pendaftaran', $no_du)
+            $this->db->where('id_pendaftaran', $id_pendaftaran)
         ->update('tb_pendaftaran', $data);
 
           return true;
@@ -194,7 +192,7 @@ $this->db->where('sumber','student_get_student');
             'f2'      => $this->input->post('f2', TRUE),
             'f3'      => $this->input->post('f3', TRUE),
             'notes'      => $this->input->post('notes', TRUE),
-            'status_bayar'      => $this->input->post('status_bayar')
+            'id_status'      => $this->input->post('id_status')
       );
 
     if (!empty($data)) {

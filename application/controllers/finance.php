@@ -28,7 +28,7 @@ class Finance extends CI_Controller {
 		
 		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1){
 			$data['main_view'] = 'finance_view';
-		// $data['data']=$this->finance_model->data_mahasiswa();
+		 $data['data']=$this->finance_model->data_mahasiswa();
 		$this->load->view('template', $data);
 		} else {
 			redirect(base_url('login'));

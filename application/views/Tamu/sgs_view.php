@@ -24,7 +24,7 @@
                 <?php 
                 $no = 0;
                 foreach ($edit as $data) {
-                  if ($data->status_bayar == 'Aktif') {
+                  if ($data->id_status == 1) {
                     
                   
 

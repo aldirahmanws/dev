@@ -126,7 +126,9 @@ class User_model extends CI_Model {
 
      function dropdown_level()
     {
-        return $this->db->get('tb_jabatan')
+        return $this->db->where('id_level !=','5')
+                    ->where('id_level !=','2')
+                    ->get('tb_jabatan')
                     ->result();
 
     }

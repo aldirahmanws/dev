@@ -480,10 +480,6 @@
               
               <input type="hidden" name="prodi" id="prodikp" class="validate[required] text-input" maxlength="20" size="40" style="width:80%" required="" value="<?php echo $kp->id_prodi; ?>">
 
-              <input type="hidden" name="semester_aktif" id="semester_aktif" class="validate[required] text-input" maxlength="20" size="40" style="width:80%" >
-
-              <input type="hidden" name="semester_kurikulum" id="semester_kurikulum" class="validate[required] text-input" maxlength="20" size="40" style="width:80%" value="<?php echo $kp->semester_kurikulum; ?>">
-
             <input type="hidden" name="id_kp" id="id_kp2" class="validate[required] text-input" maxlength="20" size="40" style="width:80%" value="<?php echo $this->uri->segment(3); ?>">
 
             <input type="hidden" name="id_status" id="id_status" class="validate[required] text-input" maxlength="20" size="40" style="width:80%" >
@@ -541,11 +537,9 @@
     function ea(){
      var prodimhs = document.getElementById('prodimhs').value;
     var prodikp = document.getElementById('prodikp').value;
-     var semester_aktif = document.getElementById('semester_aktif').value;
-    var semester_kurikulum = document.getElementById('semester_kurikulum').value;
    
 
-    if (prodikp == prodimhs && semester_aktif == semester_kurikulum && hai() == true)
+    if (prodikp == prodimhs && hai() == true)
       {
          document.getElementById("myBtn").disabled = false;
       } else {
