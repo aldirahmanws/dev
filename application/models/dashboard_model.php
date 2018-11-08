@@ -9,13 +9,57 @@ class Dashboard_model extends CI_Model {
 	{
 		parent::__construct();
 	}
+  public function pie_chart(){
+    $a = $this->db->select('tb_prodi.nama_prodi, count(tb_prodi.id_prodi) as jumlah')
+                    ->join('tb_konsentrasi', 'tb_konsentrasi.id_konsentrasi = tb_mahasiswa.id_konsentrasi')
+                    ->join('tb_prodi', 'tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
+                    ->group_by('tb_prodi.nama_prodi')
+                    ->get('tb_mahasiswa')
+                    ->result();
+        
+        foreach ($a as $key) {
+            $b = '#'.dechex(rand(0x777777, 0xFFFFFF));
+            $arrayName[] = array('value' => $key->jumlah,
+                                'color' => $b,
+                                'label' => $key->nama_prodi);
+        }
+        $c = json_encode($arrayName);
+        return $c;
+  }
   public function dashboard_admin(){
     $jml_user = $this->db->select('count(*) as total')
                 ->get('tb_user')
                 ->row();
+    $data_mhs_aktif = $this->db->query("SELECT count(*) AS total FROM tb_mahasiswa where id_status = '1' OR id_status = '19' ")->row();
 
+    $data_prodi = $this->db->select('count(*) as total')
+                ->get('tb_prodi')
+                ->row();
+
+    $data_dosen = $this->db->select('count(*) as total')
+                ->get('tb_dosen')
+                ->row();
+
+    $data_mhs_akuntansi = $this->db->select('count(*) as total')
+                ->from('tb_konsentrasi')
+                ->join('tb_mahasiswa','tb_mahasiswa.id_konsentrasi=tb_konsentrasi.id_konsentrasi')
+                ->where('tb_konsentrasi.id_prodi', 'PR002')
+                ->get();
+    $data_mhs_akuntansi = $data_mhs_akuntansi->row();
+
+    $data_mhs_manajemen = $this->db->select('count(*) as total')
+                ->from('tb_konsentrasi')
+                ->join('tb_mahasiswa','tb_mahasiswa.id_konsentrasi=tb_konsentrasi.id_konsentrasi')
+                ->where('tb_konsentrasi.id_prodi', 'PR001')
+                ->get();
+    $data_mhs_manajemen = $data_mhs_manajemen->row();
 
     return array(
+      'data_mhs_aktif' => $data_mhs_aktif->total,
+      'data_prodi' => $data_prodi->total,
+      'data_dosen' => $data_dosen->total,
+      'data_mhs_akuntansi' => $data_mhs_akuntansi->total,
+      'data_mhs_manajemen' => $data_mhs_manajemen->total,
       'jml_user' => $jml_user->total
 
       );
@@ -134,7 +178,7 @@ class Dashboard_model extends CI_Model {
     }
   }
 	
-
+  
 }
 
 /* End of file dosen_model.php */

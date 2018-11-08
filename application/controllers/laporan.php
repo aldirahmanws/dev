@@ -18,7 +18,41 @@ class Laporan extends CI_Controller {
 			redirect('login');
 		}
 	}
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public function rasio_dosen_mhs(){
+		$data['getProdi'] = $this->db->get('tb_prodi')->result();
+		$data['getPeriode'] = $this->db->get('tb_periode')->result();
+		$data['main_view'] = 'Akademi/rasio_dosen_mhs_view';
+		$this->load->view('template', $data);
+	}
+	public function show_rasio(){
+		error_reporting(0);
+		$id_prodi = $this->input->post('id_prodi');
+		$id_periode = $this->input->post('id_periode');
+		$a = $this->laporan_model->rasio_dosen_mhs($id_prodi, $id_periode);
+		$option = "";
+		$option .= "<tr>
+					<td>1</td>
+					<td>".$id_prodi."</td>
+					<td>".$a['data']->nama_prodi."</td>
+					<td>".$a['data2']->semester."</td>
+					<td>".$a['dosen']."</td>
+					<td>".$a['mhs']."</td>
+					<td>".$a['rasio']."</td>
+					</tr>
+					";
+		echo $option;
+	}
+	public function get_semester($param = NULL) {
+		$id_prodi = $param;
+		$result = $this->db->where('id_prodi', $id_prodi)->get('tb_periode')->result();
+		$option = "";
+		foreach ($result as $data) {
+			$option .= "<option value='".$data->id_periode."' >".$data->semester."</option>";
+		}
+		echo $option;
 
+	}
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public function laporan_tamu(){
 		if ($this->session->userdata('logged_in') == TRUE) {

@@ -108,6 +108,15 @@
             <!-- /.box-body -->
           </div>
         </div>
+        <div class="col-md-3">
+          <div class="box">
+            <center>
+            <div id="canvas-holder">
+              <canvas id="chart-area" width="150" height="150"/>
+            </div>
+          </center>
+          </div>
+        </div>
 
 
       </div>
@@ -180,6 +189,11 @@
 
 <script>
   $(function () {
+    var pieData = <?= $pie ?>;
+    var pieData2 = <?= $pie ?>;
+    var ctx = document.getElementById("chart-area").getContext("2d");
+    var myPie = new Chart(ctx).Pie(pieData);
+
     var line = new Morris.Line({
       element: 'line-chart',
       resize: true,
@@ -195,4 +209,11 @@
     
   });
 </script>
+<script>
+
+      
+
+
+
+  </script>
 

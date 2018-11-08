@@ -124,6 +124,15 @@
             <a href="<?php echo base_url(); ?>mahasiswa/mahasiswa_data" class="small-box-footer">Lihat Data <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
+        <div class="col-md-3">
+          <div class="box">
+            <center>
+            <div id="canvas-holder">
+              <canvas id="chart-area" width="150" height="150"/>
+            </div>
+          </center>
+          </div>
+        </div>
       </div>
 
 
@@ -217,4 +226,16 @@
 
   });
 </script>
+<script>
+
+    var pieData = <?= $pie ?>;
+
+      window.onload = function(){
+        var ctx = document.getElementById("chart-area").getContext("2d");
+        window.myPie = new Chart(ctx).Pie(pieData);
+      };
+
+
+
+  </script>
 

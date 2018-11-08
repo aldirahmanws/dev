@@ -1307,6 +1307,47 @@ class Laporan_model extends CI_Model {
      $query = $this->db->get();
      return $query->result();
   }
+  public function rasio_dosen_mhs($id_prodi, $id_periode){
+    $a = $this->db->select('distinct(tb_kelas_dosen.id_dosen)')
+                        ->join('tb_dosen', 'tb_dosen.id_dosen=tb_kelas_dosen.id_dosen')
+                        ->join('tb_kp', 'tb_kp.id_kp=tb_kelas_dosen.id_kp')
+                        ->join('tb_jadwal', 'tb_jadwal.id_jadwal=tb_kp.id_jadwal')
+                        ->join('tb_periode', 'tb_periode.id_periode=tb_jadwal.id_periode')
+                        ->join('tb_konsentrasi', 'tb_konsentrasi.id_konsentrasi=tb_jadwal.id_konsentrasi')
+                        ->join('tb_prodi', 'tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
+                        ->where('tb_dosen.status', '1')
+                        ->where('tb_prodi.id_prodi', $id_prodi)
+                        ->where('tb_periode.id_periode', $id_periode)
+                        ->get('tb_kelas_dosen')
+                        ->num_rows();
+        $b = $this->db->select('distinct(tb_kelas_mhs.id_mahasiswa)')
+                        ->join('tb_kp', 'tb_kp.id_kp=tb_kelas_mhs.id_kp')
+                        ->join('tb_jadwal', 'tb_jadwal.id_jadwal=tb_kp.id_jadwal')
+                        ->join('tb_periode', 'tb_periode.id_periode=tb_jadwal.id_periode')
+                        ->join('tb_konsentrasi', 'tb_konsentrasi.id_konsentrasi=tb_jadwal.id_konsentrasi')
+                        ->join('tb_prodi', 'tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
+                        ->where('tb_prodi.id_prodi', $id_prodi)
+                        ->where('tb_periode.id_periode', $id_periode)
+                        ->get('tb_kelas_mhs')
+                        ->num_rows();
+        $aa = $this->db->where('id_prodi', $id_prodi)->get('tb_prodi')->row();
+        $bb = $this->db->where('id_periode', $id_periode)->get('tb_periode')->row();
+        $c = $b / $a;
+        $d = $a / $a;
+        if (is_nan($c)){
+          $c = 0;
+        }
+        if (is_nan($d)){
+          $d = 0;
+        }
+        return array(
+          'dosen' => $a,
+          'mhs' => $b,
+          'rasio' => $d.' : '.$c,
+          'data' => $aa,
+          'data2' => $bb
+        );
+  }
 }
 
 /* End of file prodi_model.php */

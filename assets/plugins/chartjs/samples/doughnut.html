@@ -1,18 +1,27 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Pie Chart</title>
-		<script src="<?php echo base_url(); ?>assets/plugins/chartjs/Chart.js"></script>
+		<title>Doughnut Chart</title>
+		<script src="../Chart.js"></script>
+		<style>
+			body{
+				padding: 0;
+				margin: 0;
+			}
+			#canvas-holder{
+				width:30%;
+			}
+		</style>
 	</head>
 	<body>
 		<div id="canvas-holder">
-			<canvas id="chart-area" width="300" height="300"/>
+			<canvas id="chart-area" width="500" height="500"/>
 		</div>
 
 
 	<script>
 
-		var pieData = [
+		var doughnutData = [
 				{
 					value: 300,
 					color:"#F7464A",
@@ -48,7 +57,7 @@
 
 			window.onload = function(){
 				var ctx = document.getElementById("chart-area").getContext("2d");
-				window.myPie = new Chart(ctx).Pie(pieData);
+				window.myDoughnut = new Chart(ctx).Doughnut(doughnutData, {responsive : true});
 			};
 
 
