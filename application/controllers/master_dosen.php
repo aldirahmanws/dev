@@ -190,6 +190,153 @@ class Master_dosen extends CI_Controller {
 		}
 	} 
 
+	public function aktivitas_mengajar(){
+		if ($this->session->userdata('logged_in') == TRUE) {
+		if($this->session->userdata('level') == 2){
+				$username = $this->session->userdata('username');
+				$session = $this->dosen_model->detail_dosen($username);
+				$id_dosen = $session->id_dosen;
+			} else {
+		$id_dosen = $this->uri->segment(3);
+		}
+		$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
+		$data['am'] = $this->dosen_model->aktivitas_mengajar($id_dosen);
+		$data['main_view'] = 'Dosen/aktivitas_mengajar_view';
+		$this->load->view('template', $data);
+		} else {
+			redirect('login');
+		}
+	}
+
+	public function jabatan_fungsional(){
+		if ($this->session->userdata('logged_in') == TRUE) {
+		if($this->session->userdata('level') == 2){
+				$username = $this->session->userdata('username');
+				$session = $this->dosen_model->detail_dosen($username);
+				$id_dosen = $session->id_dosen;
+			} else {
+		$id_dosen = $this->uri->segment(3);
+		}
+		$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
+		$data['jabatan'] = $this->dosen_model->jabatan_fungsional($id_dosen);
+		$data['main_view'] = 'Dosen/jabatan_fungsional_view';
+		$this->load->view('template', $data);
+		} else {
+			redirect('login');
+		}
+	}
+
+	public function tambah_jabatan_fungsional()
+	{
+		$id_dosen = $this->uri->segment(3);
+			if($this->dosen_model->tambah_jabatan_fungsional($id_dosen) == TRUE){
+				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Tambah jabatan fungsional berhasil </div>');
+            	redirect('master_dosen/jabatan_fungsional/'.$id_dosen);
+			} else{
+				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Tambah jabatan fungsional gagal </div>');
+            	rredirect('master_dosen/jabatan_fungsional/'.$id_dosen);
+			} 
+	} 
+
+	public function hapus_jabatan_fungsional()
+	{
+		$id_dosen = $this->uri->segment(4);
+		$id_jabatan_fungsional = $this->uri->segment(3);
+			if($this->dosen_model->hapus_jabatan_fungsional($id_jabatan_fungsional) == TRUE){
+				$this->session->set_flashdata('message', '<div class="alert alert-success"> Hapus Jabatan Berhasil </div>');
+            	redirect('master_dosen/jabatan_fungsional/'.$id_dosen);
+			} else{
+				$this->session->set_flashdata('message', '<div class="alert alert-danger">Hapus Jabatan Gagal </div>');
+            	redirect('master_dosen/jabatan_fungsional/'.$id_dosen);
+			} 
+	} 
+
+	public function pendidikan(){
+		if ($this->session->userdata('logged_in') == TRUE) {
+		if($this->session->userdata('level') == 2){
+				$username = $this->session->userdata('username');
+				$session = $this->dosen_model->detail_dosen($username);
+				$id_dosen = $session->id_dosen;
+			} else {
+		$id_dosen = $this->uri->segment(3);
+		}
+		$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
+		$data['pendidikan'] = $this->dosen_model->pendidikan($id_dosen);
+		$data['main_view'] = 'Dosen/pendidikan_dosen_view';
+		$this->load->view('template', $data);
+		} else {
+			redirect('login');
+		}
+	}
+
+	public function tambah_pendidikan()
+	{
+		$id_dosen = $this->uri->segment(3);
+			if($this->dosen_model->tambah_pendidikan($id_dosen) == TRUE){
+				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Tambah pendidikan berhasil </div>');
+            	redirect('master_dosen/pendidikan/'.$id_dosen);
+			} else{
+				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Tambah pendidikan fungsional gagal </div>');
+            	rredirect('master_dosen/pendidikan/'.$id_dosen);
+			} 
+	} 
+
+	public function hapus_pendidikan()
+	{
+		$id_dosen = $this->uri->segment(4);
+		$id_pd = $this->uri->segment(3);
+			if($this->dosen_model->hapus_pendidikan($id_pd) == TRUE){
+				$this->session->set_flashdata('message', '<div class="alert alert-success"> Hapus Pendidikan Berhasil </div>');
+            	redirect('master_dosen/pendidikan/'.$id_dosen);
+			} else{
+				$this->session->set_flashdata('message', '<div class="alert alert-danger">Hapus Pendidikan Gagal </div>');
+            	redirect('master_dosen/pendidikan/'.$id_dosen);
+			} 
+	} 
+
+	public function pelatihan(){
+		if ($this->session->userdata('logged_in') == TRUE) {
+		if($this->session->userdata('level') == 2){
+				$username = $this->session->userdata('username');
+				$session = $this->dosen_model->detail_dosen($username);
+				$id_dosen = $session->id_dosen;
+			} else {
+		$id_dosen = $this->uri->segment(3);
+		}
+		$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
+		$data['pelatihan'] = $this->dosen_model->pelatihan($id_dosen);
+		$data['main_view'] = 'Dosen/pelatihan_dosen_view';
+		$this->load->view('template', $data);
+		} else {
+			redirect('login');
+		}
+	}
+
+	public function tambah_pelatihan()
+	{
+		$id_dosen = $this->uri->segment(3);
+			if($this->dosen_model->tambah_pelatihan($id_dosen) == TRUE){
+				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Tambah pelatihan berhasil </div>');
+            	redirect('master_dosen/pelatihan/'.$id_dosen);
+			} else{
+				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Tambah pelatihan fungsional gagal </div>');
+            	rredirect('master_dosen/pelatihan/'.$id_dosen);
+			} 
+	} 
+
+	public function hapus_pelatihan()
+	{
+		$id_dosen = $this->uri->segment(4);
+		$id_pelatihan = $this->uri->segment(3);
+			if($this->dosen_model->hapus_pelatihan($id_pelatihan) == TRUE){
+				$this->session->set_flashdata('message', '<div class="alert alert-success"> Hapus Pelatihan Berhasil </div>');
+            	redirect('master_dosen/pelatihan/'.$id_dosen);
+			} else{
+				$this->session->set_flashdata('message', '<div class="alert alert-danger">Hapus Pelatihan Gagal </div>');
+            	redirect('master_dosen/pelatihan/'.$id_dosen);
+			} 
+	}
+
 
 }
 
