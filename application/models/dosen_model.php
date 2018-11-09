@@ -279,6 +279,137 @@ class Dosen_model extends CI_Model {
      return $query->result();
   }
 
+  public function aktivitas_mengajar($id_dosen){
+    return $this->db->join('tb_kp','tb_kp.id_kp=tb_kelas_dosen.id_kp')
+              ->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal')
+              ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
+              ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
+              ->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode')
+              ->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_jadwal.id_konsentrasi')
+              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi')
+              ->where('tb_kelas_dosen.id_dosen', $id_dosen)
+              ->get('tb_kelas_dosen')
+              ->result();
+  }
+
+   public function jabatan_fungsional($id_dosen){
+    return $this->db->where('tb_jabatan_fungsional.id_dosen', $id_dosen)
+              ->get('tb_jabatan_fungsional')
+              ->result();
+  }
+
+  public function tambah_jabatan_fungsional($id_dosen)
+    {
+        $data = array(
+            'id_dosen'        => $id_dosen,
+            'nama_jabatan'        => $this->input->post('nama_jabatan'),
+            'sk_jabatan'         => $this->input->post('sk_jabatan'),
+            'tmt_jabatan'       => $this->input->post('tmt_jabatan')
+
+        );
+    
+        $this->db->insert('tb_jabatan_fungsional', $data);
+
+        if($this->db->affected_rows() > 0){
+            
+                return true;
+        } else {
+            return false;
+            
+        }
+    }
+
+    public function hapus_jabatan_fungsional($id_jabatan_fungsional){
+        $this->db->where('id_jf', $id_jabatan_fungsional)
+          ->delete('tb_jabatan_fungsional');
+
+    if ($this->db->affected_rows() > 0) {
+      return TRUE;
+      } else {
+        return FALSE;
+      }
+    }
+
+    public function pendidikan($id_dosen){
+    return $this->db->where('id_dosen', $id_dosen)
+              ->get('tb_pendidikan_dosen')
+              ->result();
+  }
+
+  public function tambah_pendidikan($id_dosen)
+    {
+        $data = array(
+            'id_dosen'        => $id_dosen,
+            'bidang_studi'        => $this->input->post('bidang_studi'),
+            'jenjang'         => $this->input->post('jenjang'),
+            'gelar'       => $this->input->post('gelar'),
+            'perguruan_tinggi'       => $this->input->post('perguruan_tinggi'),
+            'fakultas'       => $this->input->post('fakultas'),
+            'tahun_lulus'       => $this->input->post('tahun_lulus'),
+
+        );
+    
+        $this->db->insert('tb_pendidikan_dosen', $data);
+
+        if($this->db->affected_rows() > 0){
+            
+                return true;
+        } else {
+            return false;
+            
+        }
+    }
+
+    public function hapus_pendidikan($id_pd){
+        $this->db->where('id_pd', $id_pd)
+          ->delete('tb_pendidikan_dosen');
+
+    if ($this->db->affected_rows() > 0) {
+      return TRUE;
+      } else {
+        return FALSE;
+      }
+    }
+
+    public function pelatihan($id_dosen){
+    return $this->db->where('id_dosen', $id_dosen)
+              ->get('tb_pelatihan_dosen')
+              ->result();
+  }
+
+  public function tambah_pelatihan($id_dosen)
+    {
+        $data = array(
+            'id_dosen'        => $id_dosen,
+            'nama_pelatihan'        => $this->input->post('nama_pelatihan'),
+            'jenis_pelatihan'         => $this->input->post('jenis_pelatihan'),
+            'lokasi_pelatihan'       => $this->input->post('lokasi_pelatihan'),
+            'tgl_awal_pelatihan'       => $this->input->post('tgl_awal_pelatihan'),
+            'tgl_akhir_pelatihan'       => $this->input->post('tgl_akhir_pelatihan'),
+        );
+    
+        $this->db->insert('tb_pelatihan_dosen', $data);
+
+        if($this->db->affected_rows() > 0){
+            
+                return true;
+        } else {
+            return false;
+            
+        }
+    }
+
+    public function hapus_pelatihan($id_pelatihan){
+        $this->db->where('id_pelatihan', $id_pelatihan)
+          ->delete('tb_pelatihan_dosen');
+
+    if ($this->db->affected_rows() > 0) {
+      return TRUE;
+      } else {
+        return FALSE;
+      }
+    }
+
 	
 
 }
