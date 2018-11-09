@@ -4,7 +4,7 @@
           <?php echo $this->session->flashdata('message');?>
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">DATA RUANG KELAS</h3>
+              <h3 class="box-title">DATA RUANG</h3>
             </div>
 
             
@@ -106,7 +106,7 @@
             <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                <h3 class="modal-title" id="myModalLabel">Detail Ruangan</h3>
+                <h3 class="modal-title" id="myModalLabel">Detail Ruang</h3>
             </div>
                 <div class="modal-body">
 
@@ -145,7 +145,7 @@
             <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                <h3 class="modal-title" id="myModalLabel">Edit Ruangan</h3>
+                <h3 class="modal-title" id="myModalLabel">Edit Ruang</h3>
             </div>
                 <div class="modal-body">
 

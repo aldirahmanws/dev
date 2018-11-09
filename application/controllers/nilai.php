@@ -8,6 +8,7 @@ class Nilai extends CI_Controller {
 		parent::__construct();
 		$this->load->model('nilai_model');
 		$this->load->model('daftar_ulang_model');
+		ini_set('display_errors', 0);
 	}
 
 	public function index()

@@ -8,6 +8,7 @@ class Pendaftaran extends CI_Controller {
 		parent::__construct();
 		$this->load->model('pendaftaran_model');
     $this->load->model('daftar_ulang_model');
+    ini_set('display_errors', 0);
 	}
 
   public function data_pra_pendaftar()

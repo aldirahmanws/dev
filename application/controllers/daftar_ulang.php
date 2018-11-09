@@ -11,6 +11,7 @@ class daftar_ulang extends CI_Controller {
 		$this->load->model('mahasiswa_model');
 		$this->load->model('user_model');
 		$this->load->model('finance_model');
+		ini_set('display_errors', 0);
 	}
 
 	public function page_du_pagi()

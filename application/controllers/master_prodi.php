@@ -7,6 +7,7 @@ class Master_prodi extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('prodi_model');
+		ini_set('display_errors', 0);
 	}
 
 		public function index()

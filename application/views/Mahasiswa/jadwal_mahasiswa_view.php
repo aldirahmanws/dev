@@ -77,7 +77,7 @@
                 $no = 0;
                 $id_kp = '';
                 foreach ($senin as $i) {
-                  if ($i->id_periode == $periode->id_periode) {
+                 
                   
                             
                   echo '
@@ -89,7 +89,7 @@
                   <td style="width:30%">'.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).'</td>
                   <td style="width:15%">'.$i->nama_kelas.' / '.$i->nama_ruang.'</td>
                 ' ;
-              }
+              
                 }   
               
             ?>
@@ -120,7 +120,7 @@
                 $no = 0;
                 $id_kp = '';
                 foreach ($selasa as $i) {
-                  if ($i->id_periode == $periode->id_periode) {
+                  
                             
                   echo '
                   
@@ -131,7 +131,7 @@
                   <td style="width:30%">'.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).'</td>
                   <td style="width:15%">'.$i->nama_kelas.' / '.$i->nama_ruang.'</td>
                 ' ;
-                  }
+                  
                 }    
               
             ?>
@@ -162,7 +162,7 @@
                 $no = 0;
                 $id_kp = '';
                 foreach ($rabu as $i) {
-                  if ($i->id_periode == $periode->id_periode) {
+                 
                             
                   echo '
                   
@@ -173,7 +173,7 @@
                   <td style="width:30%">'.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).'</td>
                   <td style="width:15%">'.$i->nama_kelas.' / '.$i->nama_ruang.'</td>
                 ' ;
-                  }
+                  
                 }   
               
             ?>
@@ -204,7 +204,7 @@
                 $no = 0;
                 $id_kp = '';
                 foreach ($kamis as $i) {
-                  if ($i->id_periode == $periode->id_periode) {
+                 
                             
                   echo '
                   
@@ -215,7 +215,7 @@
                   <td style="width:30%">'.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).'</td>
                   <td style="width:15%">'.$i->nama_kelas.' / '.$i->nama_ruang.'</td>
                 ' ;
-                  }
+                  
                 }   
               
             ?>
@@ -246,7 +246,7 @@
                 $no = 0;
                 $id_kp = '';
                 foreach ($jumat as $i) {
-                  if ($i->id_periode == $periode->id_periode) {
+                 
                             
                   echo '
                   
@@ -257,7 +257,7 @@
                   <td style="width:30%">'.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).'</td>
                   <td style="width:15%">'.$i->nama_kelas.' / '.$i->nama_ruang.'</td>
                 ' ;
-                 }
+                 
                 }   
               
             ?>

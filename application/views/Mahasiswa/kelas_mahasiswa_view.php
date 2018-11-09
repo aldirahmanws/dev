@@ -65,7 +65,6 @@
                 $totalbobot = 0;
                 if ($mahasiswa->id_status == '1') {
                 foreach ($kelas as $i) {
-                  if ($i->id_periode == $periode->id_periode) {
 
                   $totalbobot += $i->bobot_matkul;
                   echo '
@@ -84,7 +83,7 @@
                   <td></td>
                 </tr>
                 ' ;
-              }
+              
             }
           } 
             ?>

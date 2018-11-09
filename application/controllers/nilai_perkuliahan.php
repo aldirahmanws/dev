@@ -11,6 +11,7 @@ class Nilai_perkuliahan extends CI_Controller {
 		$this->load->model('finance_model');
 		$this->load->model('nilai_perkuliahan_model');
 		$this->load->model('dosen_model');
+		ini_set('display_errors', 0);
 	}
 
 

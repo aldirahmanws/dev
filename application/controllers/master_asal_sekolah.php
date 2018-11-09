@@ -7,6 +7,7 @@ class Master_asal_sekolah extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('asal_sekolah_model');
+		ini_set('display_errors', 0);
 	}
 
 	public function index()

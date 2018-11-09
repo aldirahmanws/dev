@@ -9,6 +9,7 @@ class Informasi extends CI_Controller {
 		$this->load->model('informasi_model');
 		$this->load->model('dosen_model');
 		$this->load->model('mahasiswa_model');
+		ini_set('display_errors', 0);
 	}
 
 	public function index(){

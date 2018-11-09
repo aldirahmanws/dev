@@ -8,6 +8,7 @@ class Kurikulum extends CI_Controller {
 		parent::__construct();
 		$this->load->model('daftar_ulang_model');
 		$this->load->model('kurikulum_model');
+		ini_set('display_errors', 0);
 	}
 
 	public function index()

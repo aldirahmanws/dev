@@ -9,6 +9,7 @@ class Kelas_perkuliahan extends CI_Controller {
 		$this->load->model('kelas_perkuliahan_model');
 		$this->load->model('daftar_ulang_model');
 		$this->load->model('finance_model');
+		ini_set('display_errors', 0);
 	}
 
 	public function filter_kp()

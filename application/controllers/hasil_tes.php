@@ -7,6 +7,7 @@ class Hasil_tes extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('daftar_ulang_model');
+		ini_set('display_errors', 0);
 	}
 
 	public function page_input_nilai()

@@ -86,8 +86,8 @@
         <td><?php echo $data->nama_pelatihan;?></td>
         <td><?php echo $data->jenis_pelatihan;?></td>
         <td><?php echo $data->lokasi_pelatihan;?></td>
-        <td><?php echo $data->tgl_awal_pelatihan;?></td>
-        <td><?php echo $data->tgl_akhir_pelatihan;?></td>
+        <td><?php echo date("d M Y", strtotime($data->tgl_awal_pelatihan));?></td>
+        <td><?php echo date("d M Y", strtotime($data->tgl_akhir_pelatihan));?></td>
         <td>
         <a href="<?php echo base_url(); ?>master_dosen/hapus_pelatihan/<?php echo $data->id_pelatihan; ?>/<?php echo $dosen->id_dosen; ?>" class="btn btn-danger btn-xs btn-flat" onclick="return confirm(<?php echo $alert; ?>)"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus</span></a>
       </td>
@@ -138,9 +138,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-xs-4" >Tanggal Akhir</label>
+                        <label class="col-xs-4" >Tanggal Akhir <font color="#FF0000">*</font></label>
                         <div class="col-xs-6">
-                            <input type="date" name="tgl_akhir_pelatihan" class="form-control input-sm pull-left" id="tgl_akhir_pelatihan" placeholder="" value="">
+                            <input type="date" name="tgl_akhir_pelatihan" class="form-control input-sm pull-left" id="tgl_akhir_pelatihan" placeholder="" value="" required="">
                         </div>
                     </div>
                     

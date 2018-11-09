@@ -7,6 +7,7 @@ class Landing extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('calendar_model');
+		ini_set('display_errors', 0);
 	}
 
 	public function index()

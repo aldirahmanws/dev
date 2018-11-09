@@ -74,7 +74,7 @@
             <div class="icon">
               <i class="fa fa-newspaper-o"></i>
             </div>
-            <a href="<?php echo base_url(); ?>tamu" class="small-box-footer">Lihat Data <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?php echo base_url(); ?>tamu/data_tamu" class="small-box-footer">Lihat Data <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

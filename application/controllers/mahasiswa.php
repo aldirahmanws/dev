@@ -13,6 +13,7 @@ class Mahasiswa extends CI_Controller {
 		$this->load->model('user_model');
 		$this->load->model('kelas_perkuliahan_model');
 		$this->load->model('tamu_model');
+		ini_set('display_errors', 0);
 	}
 	 
 	public function index()

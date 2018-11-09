@@ -9,6 +9,7 @@ class Tamu extends CI_Controller {
 		$this->load->model('tamu_model');
 		$this->load->model('daftar_ulang_model');
 		$this->load->model('mahasiswa_model');
+		ini_set('display_errors', 0);
 	}
 
 	public function index(){

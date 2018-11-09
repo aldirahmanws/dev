@@ -42,7 +42,7 @@
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="<?php echo base_url(); ?>finance/index" class="small-box-footer">Lihat Data <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?php echo base_url(); ?>mahasiswa/data_mahasiswa" class="small-box-footer">Lihat Data <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -57,7 +57,7 @@
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="<?php echo base_url(); ?>finance/data_lunas" class="small-box-footer">Lihat Data<i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?php echo base_url(); ?>master_prodi" class="small-box-footer">Lihat Data<i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -72,7 +72,7 @@
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="<?php echo base_url(); ?>finance/data_lunas" class="small-box-footer">Lihat Data<i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?php echo base_url(); ?>master_dosen" class="small-box-footer">Lihat Data<i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -87,7 +87,7 @@
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="<?php echo base_url(); ?>finance/data_lunas" class="small-box-footer">Lihat Data<i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?php echo base_url(); ?>mahasiswa/data_mahasiswa" class="small-box-footer">Lihat Data<i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <div class="col-lg-3 col-xs-6">
@@ -101,7 +101,7 @@
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="<?php echo base_url(); ?>finance/data_lunas" class="small-box-footer">Lihat Data<i class="fa fa-arrow-circle-right"></i></a>
+            <a href="<?php echo base_url(); ?>admin" class="small-box-footer">Lihat Data<i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <div class="col-md-6">

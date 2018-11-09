@@ -9,6 +9,7 @@ class Jadwal extends CI_Controller {
 		$this->load->model('jadwal_model');
 		$this->load->model('daftar_ulang_model');
 		$this->load->model('ruang_model');
+		ini_set('display_errors', 0);
 	}
 
 	public function index()

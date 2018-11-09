@@ -9,10 +9,11 @@ class Dashboard extends CI_Controller {
 		$this->load->model('dashboard_model');
         $this->load->model('dosen_model');
         $this->load->model('mahasiswa_model');
+        ini_set('display_errors', 0);
 	}
     public function pie_chart(){
         
-
+        $this->load->view('pie_chart');
     }
 	public function index()
 	{

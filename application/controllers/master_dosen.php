@@ -9,6 +9,7 @@ class Master_dosen extends CI_Controller {
 		$this->load->model('dosen_model');
 		$this->load->model('nilai_perkuliahan_model');
 		$this->load->model('user_model');
+		ini_set('display_errors', 0);
 	}
 
 	public function index()

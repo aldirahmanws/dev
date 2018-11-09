@@ -41,16 +41,16 @@ class Dashboard_model extends CI_Model {
                 ->row();
 
     $data_mhs_akuntansi = $this->db->select('count(*) as total')
-                ->from('tb_konsentrasi')
-                ->join('tb_mahasiswa','tb_mahasiswa.id_konsentrasi=tb_konsentrasi.id_konsentrasi')
-                ->where('tb_konsentrasi.id_prodi', 'PR002')
+                ->from('tb_mahasiswa')
+                ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
+                ->where('tb_konsentrasi.id_prodi', '62201')
                 ->get();
     $data_mhs_akuntansi = $data_mhs_akuntansi->row();
 
     $data_mhs_manajemen = $this->db->select('count(*) as total')
-                ->from('tb_konsentrasi')
-                ->join('tb_mahasiswa','tb_mahasiswa.id_konsentrasi=tb_konsentrasi.id_konsentrasi')
-                ->where('tb_konsentrasi.id_prodi', 'PR001')
+                ->from('tb_mahasiswa')
+                ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
+                ->where('tb_konsentrasi.id_prodi', '61201')
                 ->get();
     $data_mhs_manajemen = $data_mhs_manajemen->row();
 
@@ -104,10 +104,7 @@ class Dashboard_model extends CI_Model {
                 ->where('sgs is NOT NULL')
                 ->get('tb_pendaftaran')
                 ->row();
-    $data_mhs = $this->db->select('count(*) as total')
-                ->where('id_status', 1)
-                ->get('tb_mahasiswa')
-                ->row();
+     $data_mhs = $this->db->query("SELECT count(*) AS total FROM tb_mahasiswa where id_status = '1' OR id_status = '19' ")->row();
 
     return array(
       'data_tamu' => $data_tamu->total,
@@ -129,16 +126,16 @@ class Dashboard_model extends CI_Model {
                 ->row();
 
     $data_mhs_akuntansi = $this->db->select('count(*) as total')
-                ->from('tb_konsentrasi')
-                ->join('tb_mahasiswa','tb_mahasiswa.id_konsentrasi=tb_konsentrasi.id_konsentrasi')
-                ->where('tb_konsentrasi.id_prodi', 'PR002')
+                ->from('tb_mahasiswa')
+                ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
+                ->where('tb_konsentrasi.id_prodi', '62201')
                 ->get();
     $data_mhs_akuntansi = $data_mhs_akuntansi->row();
 
     $data_mhs_manajemen = $this->db->select('count(*) as total')
-                ->from('tb_konsentrasi')
-                ->join('tb_mahasiswa','tb_mahasiswa.id_konsentrasi=tb_konsentrasi.id_konsentrasi')
-                ->where('tb_konsentrasi.id_prodi', 'PR001')
+                ->from('tb_mahasiswa')
+                ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
+                ->where('tb_konsentrasi.id_prodi', '61201')
                 ->get();
     $data_mhs_manajemen = $data_mhs_manajemen->row();
 

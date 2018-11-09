@@ -7,6 +7,7 @@ class Universitas extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('universitas_model');
+		ini_set('display_errors', 0);
 	}
 
 	public function index()

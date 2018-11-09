@@ -8,6 +8,7 @@ class Master_konsentrasi extends CI_Controller {
 		parent::__construct();
 		$this->load->model('prodi_model');
 		$this->load->model('konsentrasi_model');
+		ini_set('display_errors', 0);
 	}
 
 	public function index(){
