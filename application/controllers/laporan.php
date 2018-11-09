@@ -76,6 +76,7 @@ class Laporan extends CI_Controller {
   		if ($this->session->userdata('logged_in') == TRUE) {
 		$data['main_view'] = 'Laporan/laporan_mahasiswa_view';
 		$data['getPeriode'] = $this->laporan_model->getPeriode();
+		$data['getAngkatan'] = $this->laporan_model->getTahunAngkatan();
 		$data['getProdi'] = $this->laporan_model->getProdi();
 		$this->load->view('template', $data);
 		} else {
@@ -86,7 +87,9 @@ class Laporan extends CI_Controller {
 		if ($this->session->userdata('logged_in') == TRUE) {
     $id_periode = $this->input->get('id_periode');
     $id_prodi = $this->input->get('id_prodi');
-    $this->laporan_model->laporan_mahasiswa($id_periode, $id_prodi);
+    $filter = $this->input->get('filter');
+    $tgl_du = $this->input->get('tgl_du');
+    $this->laporan_model->laporan_mahasiswa($id_periode, $id_prodi, $filter, $tgl_du);
     } else {
 			redirect('login');
 		}	

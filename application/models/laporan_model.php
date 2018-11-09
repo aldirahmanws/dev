@@ -138,7 +138,16 @@ class Laporan_model extends CI_Model {
                 
                 }
     }
-    function laporan_mahasiswa($id_periode, $id_prodi){
+    function laporan_mahasiswa($id_periode, $id_prodi, $filter, $tgl_du){      
+      if($filter == 'angkatan'){
+        $a = 'tb_pendidikan.tgl_du';
+        $b = $tgl_du;
+        $c = 'Angkatan';
+      } else {
+        $a = 'tb_periode.semester';
+        $b = $id_periode;
+        $c = 'Periode';
+      }
       $query = $this->db->select('tb_prodi.id_prodi, tb_mahasiswa.nama_mahasiswa, tb_mahasiswa.nim, tb_bio.tempat_lahir, tb_bio.tanggal_lahir, tb_ibu.nama_ibu, tb_agama.agama, tb_kependudukan.nik, tb_alamat.kecamatan, tb_alamat.kelurahan, tb_sekolah.nama_sekolah, tb_pt.nama_pt, tb_mahasiswa.id_sekolah')
                 ->join('tb_pendidikan', 'tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
                 ->join('tb_periode','tb_periode.id_periode=tb_pendidikan.id_periode')
@@ -152,7 +161,7 @@ class Laporan_model extends CI_Model {
                 ->join('tb_alamat','tb_alamat.id_mahasiswa=tb_mahasiswa.id_mahasiswa', 'left' )
                 ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_mahasiswa.id_sekolah', 'left')
                 ->join('tb_pt','tb_pt.id_pt=tb_pendidikan.asal_pt','left')
-                ->like('tb_periode.semester' , $id_periode)
+                ->like($a , $b)
                 ->like('tb_prodi.id_prodi' , $id_prodi)
                 ->where('tb_mahasiswa.id_status !=', 2)
                 ->get('tb_mahasiswa');
@@ -202,8 +211,8 @@ class Laporan_model extends CI_Model {
                 <td>: Jalan Perunggu No 53-54 10640</td>
               </tr>
               <tr>
-                <td width="120px">Periode</td>
-                <td width="300px">: '.$id_periode.'</td>
+                <td width="120px">'.$c.'</td>
+                <td width="300px">: '.$b.'</td>
                 <td width="120px">Program Studi</td>
                 <td>: '.$cc.'</td>
               </tr>
@@ -268,7 +277,7 @@ class Laporan_model extends CI_Model {
       <!-- /.row -->
     </section>';
                   echo $option;
-
+                  $this->db->reconnect();
                 } else{
                 echo '<span class="label label-success"> Tidak Ada Data.</span>';
                 
