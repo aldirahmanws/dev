@@ -7,10 +7,10 @@
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/jadwal_dosen/<?php echo $dosen->id_dosen; ?>">Jadwal</a>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/nilai_dosen/<?php echo $dosen->id_dosen; ?>">Input Nilai</a>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/aktivitas_mengajar/<?php echo $dosen->id_dosen; ?>">Aktivitas Mengajar</a>
-         <a class="btn btn-sm btn-warning btn-flat" href="<?php echo base_url();?>master_dosen/jabatan_fungsional/<?php echo $dosen->id_dosen; ?>">Jabatan Fungsional</a>
+         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/jabatan_fungsional/<?php echo $dosen->id_dosen; ?>">Jabatan Fungsional</a>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/pendidikan/<?php echo $dosen->id_dosen; ?>">Pendidikan</a>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/pelatihan/<?php echo $dosen->id_dosen; ?>">Pelatihan</a>
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/sertifikasi/<?php echo $dosen->id_dosen; ?>">Sertifikasi</a>
+        <a class="btn btn-sm btn-warning btn-flat" href="<?php echo base_url();?>master_dosen/sertifikasi/<?php echo $dosen->id_dosen; ?>">Sertifikasi</a>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/penelitian/<?php echo $dosen->id_dosen; ?>">Penelitian</a>
         
          <br/><br/>  
@@ -55,7 +55,7 @@
             <!-- /.box-body -->
           </div>
           <?php echo $this->session->flashdata('message');?>
-           <a class="btn btn-primary btn-flat btn-sm pull-right"  data-toggle="modal" data-target="#modal_tambah"><i class="fa fa-plus"></i> Tambah Jabatan</a><br><br><br>
+           <a class="btn btn-primary btn-flat btn-sm pull-right"  data-toggle="modal" data-target="#modal_tambah"><i class="fa fa-plus"></i> Tambah Sertifikasi</a><br><br><br>
             
           
 
@@ -66,9 +66,11 @@
   <thead>
   <tr>
     <th style="width:5%" style="text-align:center">No.</th>
-    <th style="text-align:center">Jabatan</th>
-    <th style="text-align:center">SK Jabatan</th>
-    <th style="text-align:center">TMT Jabatan</th>
+    <th style="text-align:center">No. Peserta</th>
+    <th style="text-align:center">Bidang Studi</th>
+    <th style="text-align:center">Jenis Sertifikasi</th>
+    <th style="text-align:center">Tahun Sertifikasi</th>
+    <th style="text-align:center">No. SK</th>
     <th style="text-align:center; width: 5px">Aksi</th>
   </tr>
   </thead>
@@ -76,16 +78,18 @@
     <?php 
         $alert = "'Apakah anda yakin menghapus data ini ?'";
         $no = 0;
-        foreach($jabatan as $data):
+        foreach($sertifikasi as $data):
         ;
       ?>
       <tr>
       <td><?php echo ++$no;?></td>
-        <td style="text-align:center"><?php echo $data->nama_jabatan;?></td>
-        <td style="text-align:center"><?php echo $data->sk_jabatan;?></td>
-        <td style="text-align:center"><?php echo $data->tmt_jabatan;?></td>
+        <td><?php echo $data->no_peserta;?></td>
+        <td><?php echo $data->bidang_studi;?></td>
+        <td><?php echo $data->jenis_sertifikasi;?></td>
+        <td><?php echo $data->tahun_sertifikasi;?></td>
+        <td><?php echo $data->no_sk_sertifikasi;?></td>
         <td>
-        <a href="<?php echo base_url(); ?>master_dosen/hapus_jabatan_fungsional/<?php echo $data->id_jf; ?>/<?php echo $dosen->id_dosen; ?>" class="btn btn-danger btn-xs btn-flat" onclick="return confirm(<?php echo $alert; ?>)"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus</span></a>
+        <a href="<?php echo base_url(); ?>master_dosen/hapus_sertifikasi/<?php echo $data->id_sertifikasi; ?>/<?php echo $dosen->id_dosen; ?>" class="btn btn-danger btn-xs btn-flat" onclick="return confirm(<?php echo $alert; ?>)"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus</span></a>
       </td>
     </tr>
 <?php endforeach; ?>
@@ -103,28 +107,40 @@
             <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                <h3 class="modal-title" id="myModalLabel">Tambah Jabatan Fungsional</h3>
+                <h3 class="modal-title" id="myModalLabel">Tambah Sertifikasi</h3>
             </div>
-            <?php echo form_open('master_dosen/tambah_jabatan_fungsional/'.$dosen->id_dosen); ?>
+            <?php echo form_open('master_dosen/tambah_sertifikasi/'.$dosen->id_dosen); ?>
             <div class="form-horizontal">
                 <div class="modal-body">
 
                     <div class="form-group">
-                        <label class="col-xs-4" >Nama Jabatan</label>
+                        <label class="col-xs-4" >No. Peserta <font color="#FF0000">*</font></label>
                         <div class="col-xs-6">
-                            <input type="text" name="nama_jabatan" class="form-control input-sm pull-left" id="nama_jabatan" placeholder="" value="" required="">
+                            <input type="text" name="no_peserta" class="form-control input-sm pull-left" id="no_peserta" placeholder="" value="" required="">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-xs-4" >SK Jabatan</label>
+                        <label class="col-xs-4" >Bidang Studi </label>
                         <div class="col-xs-6">
-                            <input type="text" name="sk_jabatan" class="form-control input-sm pull-left" id="nama_jabatan" placeholder="" value="">
+                            <input type="text" name="bidang_studi" class="form-control input-sm pull-left" id="bidang_studi" placeholder="" value="">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-xs-4" >TMT Jabatan</label>
+                        <label class="col-xs-4" >Jenis Sertifikasi</label>
                         <div class="col-xs-6">
-                            <input type="text" name="tmt_jabatan" class="form-control input-sm pull-left" id="tmt_jabatan" placeholder="" value="">
+                            <input type="text" name="jenis_sertifikasi" class="form-control input-sm pull-left" id="jenis_sertifikasi" placeholder="" value="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-4" >Tahun Sertifikasi <font color="#FF0000">*</font></label>
+                        <div class="col-xs-6">
+                            <input type="number" name="tahun_sertifikasi" class="form-control input-sm pull-left" id="tahun_sertifikasi" placeholder="" value="" required="">
+                        </div>
+                    </div>
+                     <div class="form-group">
+                        <label class="col-xs-4" >No. SK Sertifikasi</label>
+                        <div class="col-xs-6">
+                            <input type="text" name="no_sk_sertifikasi" class="form-control input-sm pull-left" id="no_sk_sertifikasi" placeholder="" value="">
                         </div>
                     </div>
                     

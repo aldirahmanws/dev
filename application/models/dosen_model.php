@@ -77,6 +77,7 @@ class Dosen_model extends CI_Model {
             'no_hp'      		=> $this->input->post('no_telepon'),
             'nip'     	=> $this->input->post('nip'),
             'tgl_lahir'       => $this->input->post('tanggal_lahir'),
+            'tpt_lahir_dosen'       => $this->input->post('tempat_lahir'),
             'status'       => '1',
             'email'       => $this->input->post('email'),
             'jenis_dosen'       => $this->input->post('jenis_dosen'),
@@ -113,6 +114,7 @@ class Dosen_model extends CI_Model {
             'no_hp'         => $this->input->post('no_telepon'),
             'nip'       => $this->input->post('nip'),
             'tgl_lahir'       => $this->input->post('tanggal_lahir'),
+            'tpt_lahir_dosen'       => $this->input->post('tempat_lahir'),
             'status'       => '1',
             'email'       => $this->input->post('email'),
             'jenis_dosen'       => $this->input->post('jenis_dosen'),
@@ -268,12 +270,15 @@ class Dosen_model extends CI_Model {
    $this->db->select('*');
      $this->db->from('tb_kp');
      $this->db->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal');
+     $this->db->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode');
      $this->db->join('tb_ruang','tb_ruang.id_ruang=tb_jadwal.id_ruang');
      $this->db->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_jadwal.id_konsentrasi');
      $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi');
      $this->db->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum');
      $this->db->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul');
      $this->db->join('tb_kelas_dosen','tb_kelas_dosen.id_kp=tb_kp.id_kp','left');
+     $this->db->where('tb_periode.tgl_awal_kul <=', date('Y-m-d'));
+     $this->db->where('tb_periode.tgl_akhir_kul >=', date('Y-m-d'));
      $this->db->where('tb_kelas_dosen.id_dosen', $id_dosen);
      $query = $this->db->get();
      return $query->result();
@@ -402,6 +407,85 @@ class Dosen_model extends CI_Model {
     public function hapus_pelatihan($id_pelatihan){
         $this->db->where('id_pelatihan', $id_pelatihan)
           ->delete('tb_pelatihan_dosen');
+
+    if ($this->db->affected_rows() > 0) {
+      return TRUE;
+      } else {
+        return FALSE;
+      }
+    }
+
+    public function sertifikasi($id_dosen){
+    return $this->db->where('id_dosen', $id_dosen)
+              ->get('tb_sertifikasi_dosen')
+              ->result();
+  }
+
+  public function tambah_sertifikasi($id_dosen)
+    {
+        $data = array(
+            'id_dosen'        => $id_dosen,
+            'no_peserta'        => $this->input->post('no_peserta'),
+            'bidang_studi'         => $this->input->post('bidang_studi'),
+            'jenis_sertifikasi'       => $this->input->post('jenis_sertifikasi'),
+            'tahun_sertifikasi'       => $this->input->post('tahun_sertifikasi'),
+            'no_sk_sertifikasi'       => $this->input->post('no_sk_sertifikasi'),
+        );
+    
+        $this->db->insert('tb_sertifikasi_dosen', $data);
+
+        if($this->db->affected_rows() > 0){
+            
+                return true;
+        } else {
+            return false;
+            
+        }
+    }
+
+    public function hapus_sertifikasi($id_sertifikasi){
+        $this->db->where('id_sertifikasi', $id_sertifikasi)
+          ->delete('tb_sertifikasi_dosen');
+
+    if ($this->db->affected_rows() > 0) {
+      return TRUE;
+      } else {
+        return FALSE;
+      }
+    }
+
+    public function penelitian($id_dosen){
+    return $this->db->where('id_dosen', $id_dosen)
+              ->get('tb_penelitian_dosen')
+              ->result();
+  }
+
+  public function tambah_penelitian($id_dosen)
+    {
+        $data = array(
+            'id_dosen'        => $id_dosen,
+            'judul_penelitian'        => $this->input->post('judul_penelitian'),
+            'bidang_ilmu'         => $this->input->post('bidang_ilmu'),
+            'lembaga'       => $this->input->post('lembaga'),
+            'tahun_penelitian'       => $this->input->post('tahun_penelitian'),
+            'sumber_dana'       => $this->input->post('sumber_dana'),
+            'total_dana'       => $this->input->post('total_dana'),
+        );
+    
+        $this->db->insert('tb_penelitian_dosen', $data);
+
+        if($this->db->affected_rows() > 0){
+            
+                return true;
+        } else {
+            return false;
+            
+        }
+    }
+
+    public function hapus_penelitian($id_penelitian){
+        $this->db->where('id_penelitian', $id_penelitian)
+          ->delete('tb_penelitian_dosen');
 
     if ($this->db->affected_rows() > 0) {
       return TRUE;

@@ -15,20 +15,20 @@
                         <input type="text" name="id_dosen" class="form-control" id="id_dosen" value="<?= $kodedosen; ?>" readonly>
                       </div>
                       <div class="form-group">
-                        <label for="text">Nama Dosen</label>
+                        <label for="text">Nama Dosen <font color="#FF0000">*</font></label>
                         <input type="text" name="nama_dosen" class="form-control" id="nama_dosen" required="">
                          
                       </div>
                       <div class="form-group">
                         <label for="number">NIDN / NUP/ NIDK</label>
-                        <input type="text" name="nidn" class="form-control" id="nidn" >
+                        <input type="text" name="nidn" class="form-control" id="nidn" value="">
                       </div>
                       <div class="form-group">
                         <label for="text">NIP</label>
-                        <input type="number" name="nip" class="form-control" id="nip">
+                        <input type="number" name="nip" class="form-control" id="nip" value="">
                       </div>
                       <div class="form-group">
-                        <label for="text">Jenis Kelamin</label>
+                        <label for="text">Jenis Kelamin <font color="#FF0000">*</font></label>
                         <select id="jenis_kelamin" name="jenis_kelamin" class="form-control" required="">
                             <option value="">Pilih Kelamin</option>
                             <option value="L">Laki-laki</option>
@@ -52,26 +52,26 @@
                     <div class="col-lg-6">
                       <div class="form-group">
                         <label for="text">Tempat Lahir</label>
-                        <input type="text" name="tempat_lahir" class="form-control" id="keterangan" >
+                        <input type="text" name="tempat_lahir" class="form-control" id="tempat_lahir" value="">
                       </div>
                        <div class="form-group">
-                        <label for="text">Tanggal Lahir</label>
-                        <input type="date" name="tanggal_lahir" class="form-control" id="tanggal_lahir" >
+                        <label for="text">Tanggal Lahir <font color="#FF0000">*</font></label>
+                        <input type="date" name="tanggal_lahir" class="form-control" id="tanggal_lahir" required=" value">
                       </div>
                        <div class="form-group">
                         <label for="text">Alamat</label>
-                        <input type="text" name="alamat" class="form-control" id="alamat" placeholder="Masukkan Keterangan">
+                        <input type="text" name="alamat" class="form-control" id="alamat" value="">
                       </div>
                        <div class="form-group">
-                        <label for="text">Email</label>
-                        <input type="email" name="email" class="form-control" id="email" placeholder="Masukkan Keterangan">
+                        <label for="text">Email <font color="#FF0000">*</font></label>
+                        <input type="email" name="email" class="form-control" id="email" required="">
                       </div>
                        <div class="form-group">
                         <label for="text">No. Telepon</label>
-                        <input type="text" name="no_telepon" class="form-control" id="no_telepon" placeholder="Masukkan Keterangan">
+                        <input type="text" name="no_telepon" class="form-control" id="no_telepon" value="">
                       </div>
                        <div class="form-group">
-                        <label for="text">Jenis Dosen</label>
+                        <label for="text">Jenis Dosen <font color="#FF0000">*</font></label>
                         <select id="jenis_dosen" name="jenis_dosen" class="form-control" required="">
                              <option value="1">Tetap</option>
                               <option value="2">Tidak Tetap</option>

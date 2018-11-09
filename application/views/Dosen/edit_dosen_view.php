@@ -44,6 +44,10 @@
                               <option value="6">Konghucu</option>
                           </select> 
                       </div>
+                      <div class="form-group">
+                        <label for="text">Tempat Lahir</label>
+                        <input type="text" name="tempat_lahir" class="form-control" id="tempat_lahir" value="<?php echo $dosen->tpt_lahir_dosen; ?>">
+                      </div>
                        
                     </div>
                     <div class="col-lg-6">
@@ -73,6 +77,8 @@
                           </select> 
                       </div>
                       <div class="form-group">
+                        <br>
+                        <br>
                       <button type="submit" class="btn btn-primary btn-flat pull-right"><i class="fa fa-save"></i> Update</button>
                       </div>
                   <?php echo form_close();?>

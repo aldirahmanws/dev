@@ -337,6 +337,92 @@ class Master_dosen extends CI_Controller {
 			} 
 	}
 
+	public function sertifikasi(){
+		if ($this->session->userdata('logged_in') == TRUE) {
+		if($this->session->userdata('level') == 2){
+				$username = $this->session->userdata('username');
+				$session = $this->dosen_model->detail_dosen($username);
+				$id_dosen = $session->id_dosen;
+			} else {
+		$id_dosen = $this->uri->segment(3);
+		}
+		$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
+		$data['sertifikasi'] = $this->dosen_model->sertifikasi($id_dosen);
+		$data['main_view'] = 'Dosen/sertifikasi_dosen_view';
+		$this->load->view('template', $data);
+		} else {
+			redirect('login');
+		}
+	}
+
+	public function tambah_sertifikasi()
+	{
+		$id_dosen = $this->uri->segment(3);
+			if($this->dosen_model->tambah_sertifikasi($id_dosen) == TRUE){
+				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Tambah sertifikasi berhasil </div>');
+            	redirect('master_dosen/sertifikasi/'.$id_dosen);
+			} else{
+				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Tambah sertifikasi gagal </div>');
+            	rredirect('master_dosen/sertifikasi/'.$id_dosen);
+			} 
+	} 
+
+	public function hapus_sertifikasi()
+	{
+		$id_dosen = $this->uri->segment(4);
+		$id_sertifikasi = $this->uri->segment(3);
+			if($this->dosen_model->hapus_sertifikasi($id_sertifikasi) == TRUE){
+				$this->session->set_flashdata('message', '<div class="alert alert-success"> Hapus Sertifikasi Berhasil </div>');
+            	redirect('master_dosen/sertifikasi/'.$id_dosen);
+			} else{
+				$this->session->set_flashdata('message', '<div class="alert alert-danger">Hapus Sertifikasi Gagal </div>');
+            	redirect('master_dosen/sertifikasi/'.$id_dosen);
+			} 
+	}
+
+	public function penelitian(){
+		if ($this->session->userdata('logged_in') == TRUE) {
+		if($this->session->userdata('level') == 2){
+				$username = $this->session->userdata('username');
+				$session = $this->dosen_model->detail_dosen($username);
+				$id_dosen = $session->id_dosen;
+			} else {
+		$id_dosen = $this->uri->segment(3);
+		}
+		$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
+		$data['penelitian'] = $this->dosen_model->penelitian($id_dosen);
+		$data['main_view'] = 'Dosen/penelitian_dosen_view';
+		$this->load->view('template', $data);
+		} else {
+			redirect('login');
+		}
+	}
+
+	public function tambah_penelitian()
+	{
+		$id_dosen = $this->uri->segment(3);
+			if($this->dosen_model->tambah_penelitian($id_dosen) == TRUE){
+				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Tambah penelitian berhasil </div>');
+            	redirect('master_dosen/penelitian/'.$id_dosen);
+			} else{
+				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Tambah penelitian gagal </div>');
+            	rredirect('master_dosen/penelitian/'.$id_dosen);
+			} 
+	} 
+
+	public function hapus_penelitian()
+	{
+		$id_dosen = $this->uri->segment(4);
+		$id_penelitian = $this->uri->segment(3);
+			if($this->dosen_model->hapus_penelitian($id_penelitian) == TRUE){
+				$this->session->set_flashdata('message', '<div class="alert alert-success"> Hapus Penelitian Berhasil </div>');
+            	redirect('master_dosen/penelitian/'.$id_dosen);
+			} else{
+				$this->session->set_flashdata('message', '<div class="alert alert-danger">Hapus Penelitian Gagal </div>');
+            	redirect('master_dosen/penelitian/'.$id_dosen);
+			} 
+	}
+
 
 }
 
