@@ -108,19 +108,19 @@
         <tr>
             <td class="left_column">Jumlah SKS</td>
             <td>: 
-            <input type="text" name="jumlah_sks" id="jumlah_sks" class="text-input" maxlength="3" size="2" readonly style="width:10%; background-color:#E0E0E0" value="0">            <font color="#999999"><em> ( sks Jumlah bobot mata kuliah wajib + sks Jumlah bobot mata kuliah pilihan)</em></font>
+            <input type="text" name="jumlah_sks" id="jumlah_sks" class="text-input" readonly style="width:10%; background-color:#E0E0E0" value="0">            <font color="#999999"><em> ( sks Jumlah bobot mata kuliah wajib + sks Jumlah bobot mata kuliah pilihan)</em></font>
             </td>
         </tr>
         <tr>
             <td class="left_column">Jumlah Bobot Mata Kuliah Wajib (sks)</td>
             <td>: 
-            <input type="text" name="bobot_matkul_wajib" id="bobot_matkul_wajib" class="text-input" maxlength="3" size="2" style="width:10%" value="0" onkeyup="sum();">  
+            <input type="text" name="bobot_matkul_wajib" id="bobot_matkul_wajib" class="text-input" style="width:10%" value="0" onkeyup="sum();">  
             </td>
         </tr>
         <tr>
             <td class="left_column">Jumlah Bobot Mata Kuliah Pilihan (sks)</td>
             <td>: 
-            <input type="text" name="bobot_matkul_pilihan" id="bobot_matkul_pilihan" class="text-input" maxlength="3" size="2"  style="width:10%" value="0" onkeyup="sum();">         
+            <input type="text" name="bobot_matkul_pilihan" id="bobot_matkul_pilihan" class="text-input"   style="width:10%" value="0" onkeyup="sum();">         
             </td>
         </tr>
                   <tr>

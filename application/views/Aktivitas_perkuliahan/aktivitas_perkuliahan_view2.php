@@ -266,10 +266,10 @@
                      $a = '5';
                 } ?>
 
-                <?php if ($this->input->get('semester_aktif') == 2 OR $this->input->get('semester_aktif') == 4 OR $this->input->get('semester_aktif') == 6) {
-                  $grade_aktif = $a;
+                <?php if ($this->input->get('semester_aktif') == 1 OR $this->input->get('semester_aktif') == 3 OR $this->input->get('semester_aktif') == 5 OR $this->input->get('semester_aktif') == 7 AND $this->input->get('asal_pt') != 1 OR $this->input->get('asal_pt') != '' OR $this->input->get('asal_pt') != NULL) {
+                 $grade_aktif = $this->input->get('id_grade');
                 } else {
-                  $grade_aktif = $this->input->get('id_grade');
+                   $grade_aktif = $a;
                 }
 
                 ?>

@@ -615,7 +615,7 @@ class Mahasiswa extends CI_Controller {
 			$id_status=$this->input->get('id_status');
 			$angkatan=$this->input->get('angkatan');
 			$data['ld'] = $this->mahasiswa_model->filter_ld($id_prodi,$id_status,$angkatan);
-			$data['main_view'] = 'Ld/lulus_do_view';
+			$data['main_view'] = 'LD/lulus_do_view';
 			$this->load->view('template', $data);
 	}
 	function random_password() 

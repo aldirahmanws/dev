@@ -96,9 +96,9 @@
                              </select></td>
                 </tr>
                 <tr>
-                    <td class="left_column"> Asal <font color="#FF0000">*</font></td>
+                    <td class="left_column"> Asal </td>
                     <td>:
-                        <select name="asal" id="asal" required="" onchange="return get_asal(this.value);">
+                        <select name="asal" id="asal" onchange="return get_asal(this.value);">
                             <option value="">Pilih Asal</option>
                             <option value="1"> Sekolah </option>
                             <option value="2"> Universitas </option>
@@ -106,7 +106,7 @@
                              </select></td>
                 </tr>               
                 <tr style="display: none" id="sekolah">
-                    <td class="left_column"> Asal Sekolah <font color="#FF0000">*</font></td>
+                    <td class="left_column"> Asal Sekolah </td>
                     <td>:
                         <select name="id_sekolah" id="id_sekolah" >
                             <option value="">Pilih Asal Sekolah</option>
@@ -120,7 +120,7 @@
                              </select></td>
                 </tr>
                 <tr style="display: none" id="asal_jurusan">
-                    <td class="left_column"> Asal Jurusan<font color="#FF0000">*</font></td>
+                    <td class="left_column"> Asal Jurusan</td>
                     <td>:
                         <select name="jurusan" id="jurusan"  >
                             <option value="">Pilih Jurusan </option>
@@ -133,7 +133,7 @@
                 </tr>
                 
                 <tr style="display: none" id="universitas">
-                    <td class="left_column"> Asal Universitas <font color="#FF0000">*</font></td>
+                    <td class="left_column"> Asal Universitas</td>
                     <td>:
                         <select name="asal_pt" id="asal_pt" >
                             <option value="">Pilih Universitas</option>

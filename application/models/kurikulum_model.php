@@ -155,7 +155,6 @@ class Kurikulum_model extends CI_Model {
 
   public function edit_kurikulum($id_kurikulum){
     $data = array(
-            'id_kurikulum'         => $this->input->post('id_kurikulum'),
             'nama_kurikulum'      => $this->input->post('nama_kurikulum'),
             'id_prodi'                 => $this->input->post('id_prodi'),
             'id_periode'                 => $this->input->post('id_periode'),

@@ -42,13 +42,13 @@
         <tr>
             <td class="left_column">Jumlah Bobot Mata Kuliah Wajib (sks)</td>
             <td>: 
-            <input type="text" name="bobot_matkul_wajib" id="bobot_matkul_wajib" class="text-input" maxlength="2" size="2" style="width:10%" value="<?php echo $kurikulum->bobot_matkul_wajib; ?>" onkeyup="sum();">  
+            <input type="text" name="bobot_matkul_wajib" id="bobot_matkul_wajib" class="text-input" style="width:10%" value="<?php echo $kurikulum->bobot_matkul_wajib; ?>" onkeyup="sum();">  
             </td>
         </tr>
         <tr>
             <td class="left_column">Jumlah Bobot Mata Kuliah Pilihan (sks)</td>
             <td>: 
-            <input type="text" name="bobot_matkul_pilihan" id="bobot_matkul_pilihan" class="text-input" maxlength="2" size="2"  style="width:10%" value="<?php echo $kurikulum->bobot_matkul_pilihan; ?>" onkeyup="sum();">         
+            <input type="text" name="bobot_matkul_pilihan" id="bobot_matkul_pilihan" class="text-input"  style="width:10%" value="<?php echo $kurikulum->bobot_matkul_pilihan; ?>" onkeyup="sum();">         
             </td>
         </tr>
                   <tr>
