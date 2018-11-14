@@ -10,6 +10,7 @@
             <!-- /.box-header -->
             <div class="box-body">
               <a class="btn btn-primary btn-sm btn-flat" href="<?php echo base_url(); ?>master_dosen/page_tambah_dosen"><i class="fa fa-plus"></i> Tambah</a> <br> <br>
+              <div class="table-responsive">
               <table id="example1" class="table table-striped table-condensed table-hover" style="text-transform: uppercase;">
                 <thead>
                 <tr>
@@ -56,6 +57,7 @@
               ?>
                 </tbody>
               </table>
+              </div>
             </div>
             <!-- /.box-body -->
           </div>

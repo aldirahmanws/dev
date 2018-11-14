@@ -137,7 +137,7 @@
                     <div class="form-group">
                         <label class="col-xs-4" >Tahun Penelitian <font color="#FF0000">*</font></label>
                         <div class="col-xs-6">
-                            <input type="number" name="tahun_penelitian" class="form-control input-sm pull-left" id="tahun_penelitian" placeholder="" value="" required="">
+                            <input type="text" name="tahun_penelitian" class="form-control input-sm pull-left" id="tahun_penelitian" placeholder="" value="" required="">
                         </div>
                     </div>
                      <div class="form-group">

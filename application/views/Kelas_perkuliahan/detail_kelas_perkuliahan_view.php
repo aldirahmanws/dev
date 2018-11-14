@@ -93,7 +93,7 @@
           <div class="box box-primary">
             <!-- /.box-header -->
             <div class="box-body">
-              <table class="table table-bordered table-striped">
+              <table class="table2 table-bordered table-striped">
                 <thead>
                 <tr>
                     <th  rowspan="2" style="text-align:center">No</th>
@@ -181,7 +181,7 @@
           <div class="box box-primary">
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example1" class="table table-bordered table-striped">
+              <table id="example1" class="table2 table-bordered table-striped">
                 <thead>
                 <tr>
                     <th>No</th>
@@ -211,9 +211,9 @@
                   <td>'.$data->nama_prodi.'</td>
                   <td>'.substr($data->tgl_du,0,4).'</td>
                   <td>
-                        <a href="'.base_url('kelas_perkuliahan/hapus_kelas_mhs/'.$data->id_kelas_mhs.'/'.$data->id_kp).'" class="btn btn-danger  btn-sm" onclick="return confirm('.$alert.')"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus</span></a>
+                        <a href="'.base_url('kelas_perkuliahan/hapus_kelas_mhs/'.$data->id_kelas_mhs.'/'.$data->id_kp).'" class="btn btn-danger btn-xs btn-fla" onclick="return confirm('.$alert.')"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus</span></a>
 
-                         <a href="'.base_url('mahasiswa/lihat_mahasiswa_dikti/'.$data->id_mahasiswa).'" class="btn btn-warning btn-sm"><i class="fa fa-list"></i><span class="tooltiptext">Detail</span></a>
+                         <a href="'.base_url('mahasiswa/lihat_mahasiswa_dikti/'.$data->id_mahasiswa).'" class="btn btn-warning btn-xs btn-fla"><i class="fa fa-list"></i><span class="tooltiptext">Detail</span></a>
                   </td>
 
                 ' ;

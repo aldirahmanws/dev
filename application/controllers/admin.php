@@ -38,7 +38,15 @@ class Admin extends CI_Controller {
             	redirect('admin');
 			} 
 	} 
-	public function calendar(){
-        
-    }
+
+	public function hapus_user(){
+		$username = $this->uri->segment(3);
+		if ($this->user_model->hapus_user($username) == TRUE) {
+			$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Hapus User Berhasil </div>');
+			redirect('admin');
+		} else {
+			$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Hapus User Gagal </div>');
+			redirect('admin');
+		}
+	}
 }

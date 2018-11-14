@@ -34,6 +34,8 @@
                    
             <!-- /.box-header -->
             <div class="box-body">
+
+              <div class="table-responsive">
                <table id="example3" class="table2 table-bordered table-striped">
                 
                 <thead>
@@ -95,6 +97,7 @@
         
                 </tbody>
               </table>
+              </div>
 
             </div>
             <!-- /.box-body -->

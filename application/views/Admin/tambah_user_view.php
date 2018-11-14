@@ -15,9 +15,7 @@
                 <thead>
                 <tr>
                   <th width="20px">No</th>
-                  <!-- <th>Nama</th> -->
                   <th>Username</th>
-                  <!-- <th>Password</th> -->
                   <th>Jabatan</th>
                   <th width="20px">Aksi</th>
                 </tr>

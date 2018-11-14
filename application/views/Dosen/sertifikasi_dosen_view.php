@@ -114,9 +114,9 @@
                 <div class="modal-body">
 
                     <div class="form-group">
-                        <label class="col-xs-4" >No. Peserta <font color="#FF0000">*</font></label>
+                        <label class="col-xs-4" >No. Peserta </label>
                         <div class="col-xs-6">
-                            <input type="text" name="no_peserta" class="form-control input-sm pull-left" id="no_peserta" placeholder="" value="" required="">
+                            <input type="text" name="no_peserta" class="form-control input-sm pull-left" id="no_peserta" placeholder="" value="">
                         </div>
                     </div>
                     <div class="form-group">
@@ -132,9 +132,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-xs-4" >Tahun Sertifikasi <font color="#FF0000">*</font></label>
+                        <label class="col-xs-4" >Tahun Sertifikasi</label>
                         <div class="col-xs-6">
-                            <input type="number" name="tahun_sertifikasi" class="form-control input-sm pull-left" id="tahun_sertifikasi" placeholder="" value="" required="">
+                            <input type="number" name="tahun_sertifikasi" class="form-control input-sm pull-left" id="tahun_sertifikasi" placeholder="" value="">
                         </div>
                     </div>
                      <div class="form-group">

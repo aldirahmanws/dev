@@ -15,6 +15,7 @@ class Dosen_model extends CI_Model {
               ->join('tb_status_dosen','tb_status_dosen.id_status_dosen=tb_dosen.jenis_dosen')
               ->join('tb_agama','tb_agama.id_agama=tb_dosen.id_agama')
               ->join('tb_kelamin','tb_kelamin.id_kelamin=tb_dosen.id_kelamin')
+              ->order_by('tb_dosen.nama_dosen')
               ->get('tb_dosen')
               ->result();
 	}

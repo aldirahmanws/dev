@@ -83,12 +83,11 @@
                   <th>NIM</th>
                   <th>L/P</th>
                   <th>Agama</th>
-                  <th>Tpt. Lahir </th>
                   <th>Tgl. Lahir </th>
                   <th>Program Studi</th>
                   <th>Status</th>
                   <th>Angkatan</th>
-                  <th>Aksi</th>
+                  <th style="width: 10%">Aksi</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -112,7 +111,6 @@
                   <td>'.$data->nim.'</td>
                   <td>'.$data->jenis_kelamin.'</td>
                   <td>'.$data->agama.'</td>
-                  <td>'.$data->tempat_lahir.'</td>
                   <td>'.date("d M Y", strtotime($data->tanggal_lahir)).'</td>
                   <td>'.$data->nama_prodi.'</td>
                   <td>'.$status.'</td>

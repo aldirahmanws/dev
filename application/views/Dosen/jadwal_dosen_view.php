@@ -62,6 +62,7 @@
               <h3 class="box-title">Senin</h3>       
             <!-- /.box-header -->
             <div class="box-body">
+              <div class="table-responsive">
               <table  class="table table-bordered table-striped" style="text-transform: uppercase;">
                 <thead>
                 <tr>
@@ -95,7 +96,7 @@
             ?>
                 </tbody>
               </table>
-
+                </div>
             </div>
             <!-- /.box-body -->
           </div>
@@ -104,6 +105,7 @@
               <h3 class="box-title">Selasa</h3>       
             <!-- /.box-header -->
             <div class="box-body">
+              <div class="table-responsive">
                <table  class="table table-bordered table-striped" style="text-transform: uppercase;">
                 <thead>
                 <tr>
@@ -137,7 +139,7 @@
             ?>
                 </tbody>
               </table>
-
+</div>
             </div>
             <!-- /.box-body -->
           </div>
@@ -146,6 +148,8 @@
               <h3 class="box-title">Rabu</h3>       
             <!-- /.box-header -->
             <div class="box-body">
+
+              <div class="table-responsive">
                <table  class="table table-bordered table-striped" style="text-transform: uppercase;">
                 <thead>
                 <tr>
@@ -179,6 +183,7 @@
             ?>
                 </tbody>
               </table>
+              </div>
 
             </div>
             <!-- /.box-body -->
@@ -188,6 +193,8 @@
               <h3 class="box-title">Kamis</h3>       
             <!-- /.box-header -->
             <div class="box-body">
+
+              <div class="table-responsive">
               <table  class="table table-bordered table-striped" style="text-transform: uppercase;">
                 <thead>
                 <tr>
@@ -221,6 +228,7 @@
             ?>
                 </tbody>
               </table>
+              </div>
 
             </div>
             <!-- /.box-body -->
@@ -230,6 +238,8 @@
               <h3 class="box-title">Jumat</h3>       
             <!-- /.box-header -->
             <div class="box-body">
+
+              <div class="table-responsive">
                <table  class="table table-bordered table-striped" style="text-transform: uppercase;">
                 <thead>
                 <tr>
@@ -263,6 +273,7 @@
             ?>
                 </tbody>
               </table>
+              </div>
 
             </div>
             <!-- /.box-body -->

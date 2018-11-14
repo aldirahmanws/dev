@@ -4,7 +4,7 @@
           <?php echo $this->session->flashdata('message');?>
           <div class="box">
             <div class="box-header with-border">
-              <h3 class="box-title">KEPUASAN</h3>
+              <h3 class="box-title">TINGKAT KEPUASAN MAHASISWA</h3>
             </div>
 
             
@@ -23,7 +23,7 @@
                 <th>Mata Kuliah</th>
                 <th width="1%">Jumlah Pertanyaan</th>
                 <th width="1%">Jumlah Mahasiswa</th>
-                <th width="1%">Hasil</th>
+                <th>Tingkat Kepuasan</th>
                 <th width="10%">Aksi</th>
               </tr>
               </thead>
@@ -42,7 +42,7 @@
                     <td><?php echo $data->nama_matkul;?></td>
                     <td><?php echo $data->jml_pertanyaan;?></td>
                     <td><?php echo $data->jml_mahasiswa;?></td>
-                    <td><?php echo round((($data->total_nilai_5 + $data->total_nilai_4 + $data->total_nilai_3 + $data->total_nilai_2 + $data->total_nilai_1) / $data->jml_pertanyaan / $data->jml_mahasiswa), 1 ) ;?></td>
+                    <td><?php echo round(((($data->total_nilai_5 * 5) + ($data->total_nilai_4 * 4) + ($data->total_nilai_3 * 3) + ($data->total_nilai_2 * 2) + ($data->total_nilai_1 * 1)) / $data->jml_pertanyaan) / $data->jml_mahasiswa, 1 ) ;?></td>
 
                     <td>
                       <input type="hidden" id="data_prodi<?= $data->id_kepuasan ?>" value="<?= $data->id_prodi ?>">
@@ -57,7 +57,7 @@
                       <input type="hidden" id="data_total_nilai_2<?= $data->id_kepuasan ?>" value="<?= $data->total_nilai_2 ?>">
                       <input type="hidden" id="data_total_nilai_1<?= $data->id_kepuasan ?>" value="<?= $data->total_nilai_1 ?>">
                       <a onclick="show_modal('<?= $data->id_kepuasan; ?>')"  class="btn btn-warning btn-xs btn-flat glyphicon glyphicon-pencil"><span class="tooltiptext">Edit</span></a>
-                    <a href="<?= base_url('Master/delete_kepuasan/'.$data->id_kepuasan); ?>" onclick="return confirm(<?= $alert; ?>)" class="btn btn-danger btn-xs btn-flat glyphicon glyphicon-trash" ><span class="tooltiptext">Hapus</span></a>
+                    <a href="<?= base_url('kepuasan/delete_kepuasan/'.$data->id_kepuasan); ?>" onclick="return confirm(<?= $alert; ?>)" class="btn btn-danger btn-xs btn-flat glyphicon glyphicon-trash" ><span class="tooltiptext">Hapus</span></a>
 
                     </td>
                     
@@ -89,7 +89,7 @@
                 <div class="form-group ">
                     <label for="name" class="col-md-3 control-label">Prodi</label>
                     <div class="col-md-7 col-sm-12 required">
-                        <select class="select2" style="width: 100%" name="id_prodi" onchange="get_semester(this.value)">
+                        <select class="select2" style="width: 100%" name="id_prodi" onchange="get_semester(this.value)" required="">
                           <option value=""> Pilih Prodi</option>
                           <?php 
                             foreach($get_prodi as $row)
@@ -105,7 +105,7 @@
                 <div class="form-group ">
                     <label for="name" class="col-md-3 control-label">Periode</label>
                     <div class="col-md-7 col-sm-12 required">
-                        <select class="select2" style="width: 100%" name="id_periode" id="id_periode">
+                        <select class="select2" style="width: 100%" name="id_periode" id="id_periode" required="">
                           <option value=""> Pilih Periode</option>
                         </select>
 
@@ -115,7 +115,7 @@
                 <div class="form-group ">
                     <label for="name" class="col-md-3 control-label">Dosen</label>
                     <div class="col-md-7 col-sm-12 required">
-                        <select class="select2" style="width: 100%" name="id_dosen">
+                        <select class="select2" style="width: 100%" name="id_dosen" required="">
                           <option value=""> Pilih Dosen </option>
                           <?php 
                             foreach($get_dosen as $row)
@@ -131,7 +131,7 @@
                 <div class="form-group ">
                     <label for="name" class="col-md-3 control-label">Mata kuliah</label>
                     <div class="col-md-7 col-sm-12 required">
-                        <select class="select2" style="width: 100%" name="kode_matkul">
+                        <select class="select2" style="width: 100%" name="kode_matkul" required="">
                           <option value=""> Pilih Mata kuliah </option>
                           <?php 
                             foreach($get_matkul as $row)
@@ -147,43 +147,43 @@
                 <div class="form-group ">
                     <label for="name" class="col-md-3 control-label">Jumlah Pertanyaan</label>
                     <div class="col-md-7 col-sm-12 required">
-                        <input type="number" name="jml_pertanyaan" class="form-control">
+                        <input type="number" name="jml_pertanyaan" class="form-control" required="">
                     </div>
                 </div>
                 <div class="form-group ">
-                    <label for="name" class="col-md-3 control-label">Jumlah Pertanyaan</label>
+                    <label for="name" class="col-md-3 control-label">Jumlah Mahasiswa</label>
                     <div class="col-md-7 col-sm-12 required">
-                        <input type="number" name="jml_mahasiswa" class="form-control">
+                        <input type="number" name="jml_mahasiswa" class="form-control" required="">
                     </div>
                 </div>
                 <div class="form-group ">
                     <label for="name" class="col-md-3 control-label">Total Nilai 5</label>
                     <div class="col-md-7 col-sm-12 required">
-                        <input type="number" name="total_nilai_5" class="form-control">
+                        <input type="number" name="total_nilai_5" class="form-control" value="0">
                     </div>
                 </div>
                 <div class="form-group ">
                     <label for="name" class="col-md-3 control-label">Total Nilai 4</label>
                     <div class="col-md-7 col-sm-12 required">
-                        <input type="number" name="total_nilai_4" class="form-control">
+                        <input type="number" name="total_nilai_4" class="form-control" value="0">
                     </div>
                 </div>
                 <div class="form-group ">
                     <label for="name" class="col-md-3 control-label">Total Nilai 3</label>
                     <div class="col-md-7 col-sm-12 required">
-                        <input type="number" name="total_nilai_3" class="form-control">
+                        <input type="number" name="total_nilai_3" class="form-control" value="0">
                     </div>
                 </div>
                 <div class="form-group ">
                     <label for="name" class="col-md-3 control-label">Total Nilai 2</label>
                     <div class="col-md-7 col-sm-12 required">
-                        <input type="number" name="total_nilai_2" class="form-control">
+                        <input type="number" name="total_nilai_2" class="form-control" value="0">
                     </div>
                 </div>
                 <div class="form-group ">
                     <label for="name" class="col-md-3 control-label">Total Nilai 1</label>
                     <div class="col-md-7 col-sm-12 required">
-                        <input type="number" name="total_nilai_1" class="form-control">
+                        <input type="number" name="total_nilai_1" class="form-control" value="0">
                     </div>
                 </div>
                 <!-- Manufacturer -->
@@ -277,7 +277,7 @@
                     </div>
                 </div>
                 <div class="form-group ">
-                    <label for="name" class="col-md-3 control-label">Jumlah Pertanyaan</label>
+                    <label for="name" class="col-md-3 control-label">Jumlah Mahasiswa</label>
                     <div class="col-md-7 col-sm-12 required">
                         <input type="number" name="jml_mahasiswa" class="form-control" id="jml_mahasiswa">
                     </div>

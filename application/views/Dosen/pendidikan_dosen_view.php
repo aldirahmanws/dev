@@ -118,7 +118,7 @@
                     <div class="form-group">
                         <label class="col-xs-4" >Bidang Studi</label>
                         <div class="col-xs-6">
-                            <input type="text" name="bidang_studi" class="form-control input-sm pull-left" id="bidang_studi" placeholder="" value="" required="">
+                            <input type="text" name="bidang_studi" class="form-control input-sm pull-left" id="bidang_studi" placeholder="" value="">
                         </div>
                     </div>
                     <div class="form-group">

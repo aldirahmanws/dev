@@ -196,6 +196,17 @@ class User_model extends CI_Model {
         }
 
     }
+
+    public function hapus_user($username){
+        $this->db->where('username', $username)
+          ->delete('tb_user');
+
+    if ($this->db->affected_rows() > 0) {
+      return TRUE;
+      } else {
+        return FALSE;
+      }
+    }
 	
 
 }
