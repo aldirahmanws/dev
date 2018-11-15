@@ -15,7 +15,7 @@
                 <tr>
                   <th>NIM</th>
                   <th>Nama</th>
-                  <th>Asal Sekolah</th>
+                  <th>No. Tes</th>
                   <th>Nama Prodi</th>
                   <th>Nama Konsentrasi</th>
                   <th>Waktu</th>
@@ -29,7 +29,7 @@
                 <?php 
                
                 foreach ($du as $data) {
-                  if ($data->asal_pt == NULL OR $data->asal_pt == '') {
+                  if ($data->asal_pt == NULL OR $data->asal_pt == '' OR $data->asal_pt == ' ') {
                     if ($data->id_status == 12) {
                        echo '
                   
@@ -37,7 +37,7 @@
                   <td>'.$data->nim.'</td>
                   <td>'.$data->nama_mahasiswa.'
                   </td>
-                  <td>'.$data->nama_sekolah.'</td>
+                  <td>'.$data->id_hasil_tes.'</td>
                   <td>'.$data->nama_prodi.'</td>
                   <td>'.$data->nama_konsentrasi.'</td>
                   <td>'.$data->waktu.'</td>
@@ -63,7 +63,7 @@
                   <td>'.$data->nim.'</td>
                   <td>'.$data->nama_mahasiswa.'
                   </td>
-                  <td>'.$data->nama_sekolah.'</td>
+                  <td>'.$data->id_hasil_tes.'</td>
                   <td>'.$data->nama_prodi.'</td>
                   <td>'.$data->nama_konsentrasi.'</td>
                   <td>'.$data->waktu.'</td>

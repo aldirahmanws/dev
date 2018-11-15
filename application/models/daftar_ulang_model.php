@@ -111,6 +111,9 @@ class Daftar_ulang_model extends CI_Model {
               ->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
               ->where('tb_mahasiswa.id_waktu', '1')
               ->where('tb_mahasiswa.semester_aktif', '1')
+              ->where('tb_mahasiswa.id_hasil_tes !=', '')
+              ->where('tb_mahasiswa.id_hasil_tes !=', NULL)
+              ->where('tb_mahasiswa.id_hasil_tes !=', ' ')
               ->get('tb_mahasiswa')
               ->result();
   }
@@ -169,7 +172,7 @@ class Daftar_ulang_model extends CI_Model {
   public function detail_nilai($id_mahasiswa){
       return $this->db->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
               ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
-              ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_mahasiswa.id_sekolah')
+              ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_mahasiswa.id_sekolah','left')
               ->join('tb_hasil_tes','tb_hasil_tes.id_hasil_tes=tb_mahasiswa.id_hasil_tes')  
               ->join('tb_alamat','tb_alamat.id_mahasiswa=tb_mahasiswa.id_mahasiswa')  
               ->join('tb_bio','tb_bio.id_mahasiswa=tb_mahasiswa.id_mahasiswa') 
@@ -181,7 +184,7 @@ class Daftar_ulang_model extends CI_Model {
   }
 
    public function get_hasil_tes($id_mahasiswa){
-      return $this->db->join('tb_sekolah','tb_sekolah.id_sekolah=tb_mahasiswa.id_sekolah')
+      return $this->db->join('tb_sekolah','tb_sekolah.id_sekolah=tb_mahasiswa.id_sekolah','left')
               ->join('tb_bio','tb_bio.id_mahasiswa=tb_mahasiswa.id_mahasiswa') 
               ->join('tb_alamat','tb_alamat.id_mahasiswa=tb_mahasiswa.id_mahasiswa')  
               ->join('tb_hasil_tes','tb_hasil_tes.id_hasil_tes=tb_mahasiswa.id_hasil_tes')

@@ -100,7 +100,9 @@
                 $id_detail_kurikulum = '';
                 if ($mahasiswa->id_status != '1') {
                 foreach ($krs as $i) {
-                  if ($i->nama_konsentrasi == 'Semua' OR $i->id_konsentrasi == $mahasiswa->id_konsentrasi) {
+                  if ($i->nama_konsentrasi == 'Semua' OR $i->id_konsentrasi == $mahasiswa->id_konsentrasi) { if ($i->id_waktu == $mahasiswa->id_waktu) {
+                    
+                  
                        
                   $total_mahasiswa = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs WHERE id_kp = '$i->id_kp'")->row();
                   if(date('Y-m-d') > $i->tgl_mulai AND date('Y-m-d') < $i->tgl_akhir){
@@ -125,6 +127,7 @@
                     <td colspan="6"> Waktu mengisi KRS '.$i->nama_matkul.' sudah berakhir. Segera hubungi akademik!</td>
                   </tr>
                 ';
+              }
               } }
             }
           } else {

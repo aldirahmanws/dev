@@ -51,7 +51,7 @@
                       
                </form>
                <br>
-
+               <div class="table-responsive">
               <table id="example3" class="table2 table-hover table-striped table-condensed" style="text-transform: uppercase;">
                 <a class="btn btn-primary btn-sm btn-flat" href="" data-toggle="modal" data-target="#modal_tambah"><i class="fa fa-plus"></i> Tambah Kelas</a> <br> <br>
                 <thead>
@@ -61,7 +61,7 @@
                   <th>Kode MK</th>
                   <th>Nama MK</th>
                   <th>Nama Kelas</th>
-                  <th style="width: 15px;">SKS</th>
+                  <th>Periode</th>
                   <th>Nama Dosen</th>
                   <th>Waktu</th>
                   <th>Jumlah Mahasiswa</th>
@@ -92,7 +92,7 @@
                   <td><a href="'.base_url('kelas_perkuliahan/detail_kelas/'.$data->id_kp).'">'.$data->id_matkul.'</a></td>
                   <td>'.$data->nama_matkul.'</td>
                   <td>'.$data->nama_kelas.'</td>
-                  <td>'.$data->bobot_matkul.'</td>
+                  <td>'.$data->semester.'</td>
                   <td>'.$a.'</td>
                   <td>'.$data->waktu.'</td>
                   <td>'.$total_mahasiswa->total.'</td>
@@ -110,6 +110,7 @@
         
                 </tbody>
               </table>
+              </div>
             </div>
             
             <!-- /.box-body -->

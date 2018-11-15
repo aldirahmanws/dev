@@ -66,11 +66,11 @@ class Master_asal_sekolah extends CI_Controller {
 
 			public function hapus_asal_sekolah($id_sekolah){
 		if ($this->asal_sekolah_model->hapus_asal_sekolah($id_sekolah) == TRUE) {
-			$this->session->set_flashdata('message', 'Hapus Konsentrasi Berhasil');
+			$this->session->set_flashdata('message', '<div class="alert alert-success"> Sekolah berhasil ditambah </div>');
 			redirect('master_asal_sekolah');
 		} else {
-			$this->session->set_flashdata('message', 'Hapus Konsentrasi Berhasil');
-			redirect('master_konsentrasi');
+			$this->session->set_flashdata('message', '<div class="alert alert-danger"> Sekolah gagal ditambah </div>');
+			redirect('master_asal_sekolah');
 		}
 	}
 }

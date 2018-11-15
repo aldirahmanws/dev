@@ -256,14 +256,14 @@
               <?php $gradee = $this->db->select('id_grade AS wow')
                     ->where('grade_awal <=', $ipk2)
                     ->where('grade_akhir >=', $ipk2)
-                    ->where('ket', $this->input->get('semester_aktif'))
+                    ->like('ket', $this->input->get('semester_aktif'))
                     ->where('tgl_awal_grade <=', date('Y-m-d'))
                     ->where('tgl_akhir_grade >=', date('Y-m-d'))
                     ->get('tb_grade')
                     ->row();
               ?>
 
-                <?php if ($this->input->get('semester_aktif') == 1 OR $this->input->get('semester_aktif') == 3 OR $this->input->get('semester_aktif') == 5 OR $this->input->get('semester_aktif') == 7 AND $this->input->get('asal_pt') != 1 OR $this->input->get('asal_pt') != '' OR $this->input->get('asal_pt') != NULL OR $this->input->get('asal_pt') != ' ') {
+                <?php if ($this->input->get('semester_aktif') == 1 OR $this->input->get('semester_aktif') == 3 OR $this->input->get('semester_aktif') == 5 OR $this->input->get('semester_aktif') == 7 AND $this->input->get('asal_pt') != 1 AND $this->input->get('asal_pt') != '' AND $this->input->get('asal_pt') != NULL AND $this->input->get('asal_pt') != ' ') {
                  $grade_aktif = $this->input->get('id_grade');
                 } else {
                    $grade_aktif = $gradee->wow;
@@ -271,7 +271,7 @@
 
                 ?>
 
-             <input type="hidden" name="id_grade" id="id_grade" value="<?php echo $grade_aktif; ?>">
+             <input type="text" name="id_grade" id="id_grade" value="<?php echo $grade_aktif; ?>">
                     </td>
         </tr>
         <tr>
