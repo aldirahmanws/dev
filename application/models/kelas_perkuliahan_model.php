@@ -31,6 +31,7 @@ class Kelas_perkuliahan_model extends CI_Model {
               ->join('tb_hari','tb_hari.id_hari=tb_jadwal.id_hari')
               ->join('tb_kurikulum','tb_kurikulum.id_kurikulum=tb_detail_kurikulum.id_kurikulum')
               ->join('tb_ruang','tb_ruang.id_ruang=tb_jadwal.id_ruang')
+              ->join('tb_waktu','tb_waktu.id_waktu=tb_jadwal.id_waktu')
               ->like('tb_matkul.nama_matkul',$nama)
               ->get('tb_jadwal')
               ->result();
@@ -43,6 +44,7 @@ class Kelas_perkuliahan_model extends CI_Model {
 		 $this->db->from('tb_kp');
 		 $this->db->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal');
      $this->db->join('tb_ruang','tb_ruang.id_ruang=tb_jadwal.id_ruang');
+     $this->db->join('tb_waktu','tb_waktu.id_waktu=tb_jadwal.id_waktu');
      $this->db->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_jadwal.id_konsentrasi');
      $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi');
      $this->db->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum');

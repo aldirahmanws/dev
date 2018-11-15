@@ -63,8 +63,9 @@
                   <th>Nama Kelas</th>
                   <th style="width: 15px;">SKS</th>
                   <th>Nama Dosen</th>
+                  <th>Waktu</th>
                   <th>Jumlah Mahasiswa</th>
-                  <th>Aksi</th>
+                  <th width="6%">Aksi</th>
                 </tr>
                  
                 </thead>
@@ -93,6 +94,7 @@
                   <td>'.$data->nama_kelas.'</td>
                   <td>'.$data->bobot_matkul.'</td>
                   <td>'.$a.'</td>
+                  <td>'.$data->waktu.'</td>
                   <td>'.$total_mahasiswa->total.'</td>
                   <td>
                        <a href="'.base_url('kelas_perkuliahan/detail_kp/'.$data->id_kp).'" class="btn btn-warning  btn-xs btn-flat"><i class="glyphicon glyphicon-pencil"></i><span class="tooltiptext">Edit Kelas </span></a>

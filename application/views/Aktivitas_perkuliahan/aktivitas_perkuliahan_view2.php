@@ -81,15 +81,6 @@
 
     <input type="hidden" name="ipk" id="ipk" value="<?php $ipk2 = round($ipk, 2);echo $ipk2; ?>"> 
 
-    <?php if ($ipk <= 3) {
-         $a = '8';
-    } else if ($ipk <= 3.5) {
-         $a = '7';
-    } else if ($ipk <= 3.75) {
-         $a = '6';
-    } else {
-         $a = '5';
-    } ?>
 
      
 
@@ -260,20 +251,22 @@
             </td>
             <td class="left_column" width="15%">IPK</td>
             <td>: <input type="text" name="ipk_ak" id="ipk_ak" class="text-input" maxlength="16" size="30" style="width:40%" value="<?php echo $ipk2; ?>">    
-              <?php if ($ipk2 <= 3) {
-                       $a = '8';
-                  } else if ($ipk2 <= 3.5) {
-                       $a = '7';
-                  } else if ($ipk2 <= 3.75) {
-                       $a = '6';
-                  } else {
-                       $a = '5';
-                  } ?>
+             
 
-                <?php if ($this->input->get('semester_aktif') == 1 OR $this->input->get('semester_aktif') == 3 OR $this->input->get('semester_aktif') == 5 OR $this->input->get('semester_aktif') == 7 AND $this->input->get('asal_pt') != 1 OR $this->input->get('asal_pt') != '' OR $this->input->get('asal_pt') != NULL) {
+              <?php $gradee = $this->db->select('id_grade AS wow')
+                    ->where('grade_awal <=', $ipk2)
+                    ->where('grade_akhir >=', $ipk2)
+                    ->where('ket', $this->input->get('semester_aktif'))
+                    ->where('tgl_awal_grade <=', date('Y-m-d'))
+                    ->where('tgl_akhir_grade >=', date('Y-m-d'))
+                    ->get('tb_grade')
+                    ->row();
+              ?>
+
+                <?php if ($this->input->get('semester_aktif') == 1 OR $this->input->get('semester_aktif') == 3 OR $this->input->get('semester_aktif') == 5 OR $this->input->get('semester_aktif') == 7 AND $this->input->get('asal_pt') != 1 OR $this->input->get('asal_pt') != '' OR $this->input->get('asal_pt') != NULL OR $this->input->get('asal_pt') != ' ') {
                  $grade_aktif = $this->input->get('id_grade');
                 } else {
-                   $grade_aktif = $a;
+                   $grade_aktif = $gradee->wow;
                 }
 
                 ?>

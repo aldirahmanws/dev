@@ -222,7 +222,7 @@ class Kelas_perkuliahan extends CI_Controller {
 			if(count($result) > 0){
 				foreach ($result as $row) 
 					$result_array[] = array(
-						'label' => $row->nama_prodi.' - '.$row->hari.' - ('.substr($row->jam_awal,0,-3).'-'.substr($row->jam_akhir,0,-3).') - '.$row->nama_matkul,
+						'label' => $row->nama_prodi.' - '.$row->waktu.' - '.$row->hari.' - ('.substr($row->jam_awal,0,-3).'-'.substr($row->jam_akhir,0,-3).') - '.$row->nama_matkul,
 						'ruang' => $row->nama_ruang,
 						'prodi' => $row->nama_prodi,
 						'konsentrasi' => $row->nama_konsentrasi,
