@@ -50,13 +50,13 @@ class Master_biaya_sekolah extends CI_Controller {
 		}
 	}
 
-	public function hapus_konsentrasi($id_konsentrasi){
-		if ($this->konsentrasi_model->hapus_konsentrasi($id_konsentrasi) == TRUE) {
-			$this->session->set_flashdata('message', 'Hapus Konsentrasi Berhasil');
-			redirect('master_konsentrasi');
+	public function hapus_biaya($id_biaya){
+		if ($this->biaya_sekolah_model->hapus_biaya($id_biaya) == TRUE) {
+			$this->session->set_flashdata('message', '<div class="alert alert-success"> Hapus Biaya Berhasil</div>');
+			redirect('master_biaya_sekolah');
 		} else {
-			$this->session->set_flashdata('message', 'Hapus Konsentrasi Berhasil');
-			redirect('master_konsentrasi');
+			$this->session->set_flashdata('message', '<div class="alert alert-danger">Hapus Biaya Gagal </div>');
+			redirect('master_biaya_sekolah');
 		}
 	}
 

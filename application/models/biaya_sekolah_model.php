@@ -94,9 +94,9 @@ class Biaya_sekolah_model extends CI_Model {
 
     }
 
-    public function hapus_konsentrasi($id_sekolah){
-        $this->db->where('id_sekolah', $id_sekolah)
-          ->delete('tb_sekolah');
+    public function hapus_biaya($id_biaya){
+        $this->db->where('id_biaya', $id_biaya)
+          ->delete('tb_biaya');
 
     if ($this->db->affected_rows() > 0) {
       return TRUE;
