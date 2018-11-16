@@ -75,9 +75,9 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '192.168.12.138',
+	'hostname' => 'localhost',
 	'username' => 'root',
-	'password' => 'pass',
+	'password' => '',
 	'database' => 'db_akademi',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

@@ -183,7 +183,7 @@
                   <td>'.$data->nama_mahasiswa.'</td>
                   <td>'.$data->nama_prodi.'</td>
                   <td>'.$data->waktu.'</td>
-                  <td><p class="btn btn-default btn-sm" data-dismiss="modal" onclick="myFunction('.$data->nim.')">Pilih</p></td>
+                  <td><button type="button" class="btn btn-default btn-sm" data-dismiss="modal" onclick="myFunction(this.value)" value="'.$data->nim.'">Pilih</button></td>
                 </tr>
                 ';
                 }
@@ -219,6 +219,7 @@
 <script>
 function myFunction(name) {
     document.getElementById("student").value = name;
+
 }
 function get_student(param){
 if(param=="4")

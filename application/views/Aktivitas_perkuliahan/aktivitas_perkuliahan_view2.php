@@ -271,7 +271,7 @@
 
                 ?>
 
-             <input type="text" name="id_grade" id="id_grade" value="<?php echo $grade_aktif; ?>">
+             <input type="hidden" name="id_grade" id="id_grade" value="<?php echo $grade_aktif; ?>">
                     </td>
         </tr>
         <tr>

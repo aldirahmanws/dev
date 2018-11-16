@@ -86,6 +86,7 @@
                 <thead>
                 <tr>
                   <th>No</th>
+                  <th>Prodi</th>
                   <th>Kode Matkul</th>
                   <th>Nama Matkul</th>
                   <th>SKS</th>
@@ -100,7 +101,7 @@
                 $id_detail_kurikulum = '';
                 if ($mahasiswa->id_status != '1') {
                 foreach ($krs as $i) {
-                  if ($i->nama_konsentrasi == 'Semua' OR $i->id_konsentrasi == $mahasiswa->id_konsentrasi) { if ($i->id_waktu == $mahasiswa->id_waktu) {
+                  if ($i->nama_konsentrasi == 'Semua' OR $i->id_konsentrasi == $mahasiswa->id_konsentrasi AND $periode->id_periode == $i->id_periode) { if ($i->waktu == $mahasiswa->waktu) {
                     
                   
                        
@@ -113,6 +114,7 @@
                   
                 <tr>
                   <td>'.++$no.'</td>
+                  <td>'.$i->nama_prodi.'</td>
                   <td>'.$i->id_matkul.'</td>
                   <td>'.$i->nama_matkul.'</td>
                   <td>'.$i->bobot_matkul.'</td>

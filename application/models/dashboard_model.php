@@ -102,6 +102,7 @@ class Dashboard_model extends CI_Model {
     $data_sgs = $this->db->select('count(*) as total')
                 ->where('id_status', 1)
                 ->where('sgs is NOT NULL')
+                ->where('sgs !=',' ')
                 ->get('tb_pendaftaran')
                 ->row();
      $data_mhs = $this->db->query("SELECT count(*) AS total FROM tb_mahasiswa where id_status = '1' OR id_status = '19' ")->row();
@@ -151,7 +152,12 @@ class Dashboard_model extends CI_Model {
 
   public function dashboard_dosen($id_dosen){
     $data_kelas = $this->db->select('count(*) as total')
-                ->where('id_dosen', $id_dosen)
+                ->join('tb_kp', 'tb_kp.id_kp=tb_kelas_dosen.id_kp')
+                ->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal')
+                ->join('tb_periode', 'tb_periode.id_periode=tb_jadwal.id_periode')
+                ->where('tb_kelas_dosen.id_dosen', $id_dosen)
+                ->where('tb_periode.tgl_awal_kul <=', date('Y-m-d'))
+                ->where('tb_periode.tgl_akhir_kul >=', date('Y-m-d'))
                 ->get('tb_kelas_dosen')
                 ->row();
      return array(

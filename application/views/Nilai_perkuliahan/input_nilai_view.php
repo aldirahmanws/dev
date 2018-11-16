@@ -22,33 +22,33 @@
              </td>
         </tr> 
         <tr>
-            <td class="left_column">Absensi </td>
+            <td class="left_column">Absensi (20%)</td>
             <td>: <input type="text" name="absensi" id="absensi" class="validate[required] text-input" size="50" style="width:5%" maxlength="5" required="" value="<?php echo $dnilai->absensi; ?>"  onkeyup="sum(); get_skala()">
              </td>
         </tr> 
          <tr>
-            <td class="left_column">Nilai Tugas & Latihan</td>
+            <td class="left_column">Nilai Tugas & Latihan (10%)</td>
             <td>: <input type="text" name="nilai_tugas" id="nilai_tugas" class="validate[required] text-input" size="50" style="width:5%" maxlength="5" required="" value="<?php echo $dnilai->nilai_tugas; ?>" onkeyup="sum(); get_skala()">
              </td>
         </tr> 
         <tr>
-            <td class="left_column">Penyajian Paper</td>
+            <td class="left_column">Penyajian Paper (10%)</td>
             <td>: <input type="text" name="nilai_paper" id="nilai_paper" class="validate[required] text-input" size="50" style="width:5%" maxlength="5" required="" value="<?php echo $dnilai->nilai_paper; ?>" onkeyup="sum(); get_skala()">
              </td>
         </tr> 
          <tr>
-            <td class="left_column">Nilai UTS </td>
+            <td class="left_column">Nilai UTS (20%)</td>
             <td>: <input type="text" name="nilai_uts" id="nilai_uts" class="validate[required] text-input" size="50" style="width:5%" maxlength="5" required="" value="<?php echo $dnilai->nilai_uts; ?>" onkeyup="sum(); get_skala()">
              </td>
         </tr> 
          <tr>
-            <td class="left_column">Nilai UAS </td>
+            <td class="left_column">Nilai UAS (40%)</td>
             <td>: <input type="text" name="nilai_uas" id="nilai_uas" class="validate[required] text-input" size="50" style="width:5%" maxlength="5" required="" value="<?php echo $dnilai->nilai_uas; ?>" onkeyup="sum(); get_skala()">
              </td>
         </tr> 
         <tr>
             <td class="left_column">Nilai Akhir</td>
-            <td>: <input type="text"  name="nilai" id="nilai" class="validate[required] text-input" size="50" style="width:5%;" maxlength="5" required="" value="<?php echo $dnilai->nilai_d; ?>" onkeyup="return get_skala(this.value)">  <input type="hidden" name="id_skala_nilai" id="ee" value="">
+            <td>: <input type="text"  name="nilai" id="nilai" class="validate[required] text-input" size="50" style="width:5%;background-color: #E0E0E0" maxlength="5" required="" value="<?php echo $dnilai->nilai_d; ?>" onkeyup="return get_skala(this.value)">  <input type="hidden" name="id_skala_nilai" id="ee" value="">
               <input type="hidden" name="id_kp" id="kp" value="<?php echo $dnilai->id_kp; ?>">
                <input type="hidden" name="id_prodi" id="id_prodi" value="<?php echo $dnilai->id_prodi; ?>">
                

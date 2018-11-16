@@ -16,7 +16,6 @@ class Kelas_perkuliahan_model extends CI_Model {
      $this->db->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul');
      $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_matkul.id_prodi');
      $this->db->join('tb_periode','tb_periode.id_periode=tb_kurikulum.id_periode');
-     $this->db->where('tgl_awal_kul <= ', date('Y-m-d'));
      $this->db->like('tb_matkul.nama_matkul',$nama);
      $query = $this->db->get();
      return $query->result();
@@ -32,6 +31,8 @@ class Kelas_perkuliahan_model extends CI_Model {
               ->join('tb_kurikulum','tb_kurikulum.id_kurikulum=tb_detail_kurikulum.id_kurikulum')
               ->join('tb_ruang','tb_ruang.id_ruang=tb_jadwal.id_ruang')
               ->join('tb_waktu','tb_waktu.id_waktu=tb_jadwal.id_waktu')
+              ->where('tgl_awal_kul <= ', date('Y-m-d'))
+              ->where('tgl_akhir_kul >= ', date('Y-m-d'))
               ->like('tb_matkul.nama_matkul',$nama)
               ->get('tb_jadwal')
               ->result();
@@ -296,8 +297,8 @@ class Kelas_perkuliahan_model extends CI_Model {
   }
 
 
-    public function hapus_kelas_dosen($id_detail_kurikulum){
-        $this->db->where('id_kp', $id_detail_kurikulum)
+    public function hapus_kelas_dosen($id_kp){
+        $this->db->where('id_kp', $id_kp)
           ->delete('tb_kelas_dosen');
 
     if ($this->db->affected_rows() > 0) {
@@ -307,8 +308,8 @@ class Kelas_perkuliahan_model extends CI_Model {
       }
     }
 
-     public function hapus_kelas_mhs($id_detail_kurikulum){
-        $this->db->where('id_kelas_mhs', $id_detail_kurikulum)
+     public function hapus_kelas_mhs($id_kelas_mhs){
+        $this->db->where('id_kelas_mhs', $id_kelas_mhs)
           ->delete('tb_kelas_mhs');
 
     if ($this->db->affected_rows() > 0) {
@@ -331,7 +332,7 @@ class Kelas_perkuliahan_model extends CI_Model {
       );
     }
 
-    public function edit_kelas_dosen($id_detail_kurikulum){
+    public function edit_kelas_dosen($id_kp){
     $data = array(
             'id_kp'        => $this->input->post('id_kp'),
             'id_dosen'        => $this->input->post('id_dosen'),
@@ -341,7 +342,7 @@ class Kelas_perkuliahan_model extends CI_Model {
       );
 
     if (!empty($data)) {
-            $this->db->where('id_kelas_dosen', $id_detail_kurikulum)
+            $this->db->where('id_kp', $id_kp)
         ->update('tb_kelas_dosen', $data);
 
           return true;

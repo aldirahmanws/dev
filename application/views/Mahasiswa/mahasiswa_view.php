@@ -82,7 +82,7 @@
                   <th>Nama</th>
                   <th>NIM</th>
                   <th>L/P</th>
-                  <th>Agama</th>
+                  <th>Waktu</th>
                   <th>Tgl. Lahir </th>
                   <th>Program Studi</th>
                   <th>Status</th>
@@ -110,7 +110,7 @@
                   <td><a href="'.base_url('mahasiswa/lihat_mahasiswa_dikti/'.$data->id_mahasiswa).'")>'.$data->nama_mahasiswa.'</a></td>
                   <td>'.$data->nim.'</td>
                   <td>'.$data->jenis_kelamin.'</td>
-                  <td>'.$data->agama.'</td>
+                  <td>'.$data->waktu.'</td>
                   <td>'.date("d M Y", strtotime($data->tanggal_lahir)).'</td>
                   <td>'.$data->nama_prodi.'</td>
                   <td>'.$status.'</td>

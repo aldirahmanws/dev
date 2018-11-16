@@ -150,10 +150,9 @@ class Kelas_perkuliahan extends CI_Controller {
 	}
 
 	public function edit_kelas_dosen(){
-			$id_kelas_dosen = $this->input->post('id_kelas_dosen');
-			$id_kp = $this->input->post('id_kp');
+			$id_kp = $this->uri->segment(3);
 
-					if ($this->kelas_perkuliahan_model->edit_kelas_dosen($id_kelas_dosen) == TRUE  && $this->kelas_perkuliahan_model->edit_id_dosen($id_kp)) {
+					if ($this->kelas_perkuliahan_model->edit_kelas_dosen($id_kp) == TRUE) {
 						$this->session->set_flashdata('message', '<div class="alert alert-success"> Edit dosen berhasil </div>');
             			$id_kp = $this->input->post('id_kp');
             			redirect('kelas_perkuliahan/detail_kelas/'.$id_kp);

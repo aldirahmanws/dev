@@ -287,7 +287,7 @@ class Laporan_model extends CI_Model {
       $query = $this->db->select('*')
                 ->from('tb_hasil_tes')
                 ->join('tb_mahasiswa','tb_mahasiswa.id_hasil_tes=tb_hasil_tes.id_hasil_tes')
-                ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_mahasiswa.id_sekolah')
+                ->join('tb_sekolah','tb_sekolah.id_sekolah=tb_mahasiswa.id_sekolah','left')
                 ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
                 ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
                 ->join('tb_status_mhs','tb_status_mhs.id_status=tb_mahasiswa.id_status')
@@ -722,7 +722,7 @@ class Laporan_model extends CI_Model {
                 ->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode')
                 ->join('tb_mahasiswa','tb_mahasiswa.id_mahasiswa=tb_kelas_mhs.id_mahasiswa')
                 ->join('tb_bio','tb_mahasiswa.id_mahasiswa=tb_bio.id_mahasiswa')
-                ->join('tb_mhs_add','tb_mhs_add.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
+                ->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
                 ->join('tb_konsentrasi','tb_mahasiswa.id_konsentrasi=tb_konsentrasi.id_konsentrasi')
                 ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
                 ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
@@ -736,13 +736,13 @@ class Laporan_model extends CI_Model {
             ->get('tb_matkul')
             ->row();
       $coo = $this->db->select('count(distinct tb_kelas_mhs.id_mahasiswa) as total')
-                ->from('tb_kelas_mhs')
+               ->from('tb_kelas_mhs')
                 ->join('tb_kp','tb_kp.id_kp=tb_kelas_mhs.id_kp')
                 ->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal')
                 ->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode')
                 ->join('tb_mahasiswa','tb_mahasiswa.id_mahasiswa=tb_kelas_mhs.id_mahasiswa')
                 ->join('tb_bio','tb_mahasiswa.id_mahasiswa=tb_bio.id_mahasiswa')
-                ->join('tb_mhs_add','tb_mhs_add.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
+                ->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
                 ->join('tb_konsentrasi','tb_mahasiswa.id_konsentrasi=tb_konsentrasi.id_konsentrasi')
                 ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
                 ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
@@ -1322,8 +1322,8 @@ class Laporan_model extends CI_Model {
                         ->join('tb_kp', 'tb_kp.id_kp=tb_kelas_dosen.id_kp')
                         ->join('tb_jadwal', 'tb_jadwal.id_jadwal=tb_kp.id_jadwal')
                         ->join('tb_periode', 'tb_periode.id_periode=tb_jadwal.id_periode')
-                        ->join('tb_konsentrasi', 'tb_konsentrasi.id_konsentrasi=tb_jadwal.id_konsentrasi')
-                        ->join('tb_prodi', 'tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
+                        ->join('tb_konsentrasi_kelas', 'tb_konsentrasi_kelas.id_konsentrasi=tb_jadwal.id_konsentrasi')
+                        ->join('tb_prodi', 'tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi')
                         ->where('tb_dosen.status', '1')
                         ->where('tb_prodi.id_prodi', $id_prodi)
                         ->where('tb_periode.id_periode', $id_periode)
@@ -1333,8 +1333,8 @@ class Laporan_model extends CI_Model {
                         ->join('tb_kp', 'tb_kp.id_kp=tb_kelas_mhs.id_kp')
                         ->join('tb_jadwal', 'tb_jadwal.id_jadwal=tb_kp.id_jadwal')
                         ->join('tb_periode', 'tb_periode.id_periode=tb_jadwal.id_periode')
-                        ->join('tb_konsentrasi', 'tb_konsentrasi.id_konsentrasi=tb_jadwal.id_konsentrasi')
-                        ->join('tb_prodi', 'tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
+                        ->join('tb_konsentrasi_kelas', 'tb_konsentrasi_kelas.id_konsentrasi=tb_jadwal.id_konsentrasi')
+                        ->join('tb_prodi', 'tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi')
                         ->where('tb_prodi.id_prodi', $id_prodi)
                         ->where('tb_periode.id_periode', $id_periode)
                         ->get('tb_kelas_mhs')
@@ -1342,6 +1342,7 @@ class Laporan_model extends CI_Model {
         $aa = $this->db->where('id_prodi', $id_prodi)->get('tb_prodi')->row();
         $bb = $this->db->where('id_periode', $id_periode)->get('tb_periode')->row();
         $c = $b / $a;
+        $c = round($c, 2);
         $d = $a / $a;
         if (is_nan($c)){
           $c = 0;

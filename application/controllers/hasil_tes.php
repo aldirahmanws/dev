@@ -50,8 +50,8 @@ class Hasil_tes extends CI_Controller {
 	 public function print_hasil_tes(){
 	 	if ($this->session->userdata('logged_in') == TRUE) {
         
-        $id_du = $this->uri->segment(3);
-        $edit = $this->daftar_ulang_model->get_hasil_tes($id_du);
+        $id_mahasiswa = $this->uri->segment(3);
+        $edit = $this->daftar_ulang_model->get_hasil_tes($id_mahasiswa);
         $cek = $edit->grade;
         $data['biaya'] = $this->daftar_ulang_model->get_biaya($cek);
         $data['edit'] = $edit;
