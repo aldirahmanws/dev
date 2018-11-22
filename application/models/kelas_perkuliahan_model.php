@@ -51,8 +51,7 @@ class Kelas_perkuliahan_model extends CI_Model {
      $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi');
      $this->db->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum');
      $this->db->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul');
-     $this->db->where('tgl_awal_kul <=', date('Y-m-d'));
-     $this->db->where('tgl_akhir_kul >=', date('Y-m-d'));
+     $this->db->order_by('tb_jadwal.id_jadwal','ASC');
 		 $query = $this->db->get();
 		 return $query->result();
 	}

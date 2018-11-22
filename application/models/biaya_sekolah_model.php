@@ -52,7 +52,7 @@ class Biaya_sekolah_model extends CI_Model {
   }
 
 	public function  buat_kode()   {
-          $this->db->SELECT('RIGHT(tb_biaya.id_biaya,3) as kode', FALSE);
+          $this->db->SELECT('RIGHT(tb_biaya.id_biaya,5) as kode', FALSE);
           $this->db->order_by('id_biaya','DESC');    
           $this->db->limit(1);    
           $query = $this->db->get('tb_biaya');      //cek dulu apakah ada sudah ada kode di tabel.    
@@ -65,7 +65,7 @@ class Biaya_sekolah_model extends CI_Model {
            //jika kode belum ada      
            $kode = 1;    
           }
-          $kodemax = str_pad($kode, 3, "0", STR_PAD_LEFT); // angka 4 menunjukkan jumlah digit angka 0
+          $kodemax = str_pad($kode, 5, "0", STR_PAD_LEFT); // angka 4 menunjukkan jumlah digit angka 0
           $kodejadi = "BS".$kodemax;    // hasilnya ODJ-9921-0001 dst.
           return $kodejadi; 
     }

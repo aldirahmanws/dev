@@ -18,8 +18,8 @@ class Jadwal_model extends CI_Model {
               ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
               ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
               ->join('tb_ruang','tb_ruang.id_ruang=tb_jadwal.id_ruang')
-              ->where('tgl_awal_kul <=', date('Y-m-d'))
-              ->where('tgl_akhir_kul >=', date('Y-m-d'))
+              //->where('tgl_awal_kul <=', date('Y-m-d'))
+              //->where('tgl_akhir_kul >=', date('Y-m-d'))
               ->get('tb_jadwal')
               ->result();
 	}
