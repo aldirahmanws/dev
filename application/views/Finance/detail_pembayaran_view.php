@@ -1,6 +1,7 @@
       <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
       <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
       <script src="//code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+      <?php echo $this->session->flashdata('message');?>
 <div class="box box-info">
             
             <div class="box-body">
@@ -41,7 +42,7 @@
           <input type="hidden" name="id_mahasiswa" id="id_mahasiswa" value="<?php echo $data->id_mahasiswa ?>"> 
     <section class="content">
       <div class="row">
-        <?php echo $this->session->flashdata('message');?>
+        
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">Riwayat Pembayaran</h3>

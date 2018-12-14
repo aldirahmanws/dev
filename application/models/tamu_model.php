@@ -88,7 +88,7 @@ class Tamu_model extends CI_Model {
     public function save_tamu()
     {
         $data = array(
-            'id_pendaftaran'      => $this->input->post('id_pendaftaran', TRUE),
+            'id_pendaftaran'      => $this->buat_kode(),
             'nama_pendaftar'      => $this->input->post('nama_pendaftar', TRUE),
             'id_sekolah'      => $this->input->post('id_sekolah', TRUE),
             'id_pt'      => $this->input->post('id_pt', TRUE),

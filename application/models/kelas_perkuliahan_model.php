@@ -21,21 +21,65 @@ class Kelas_perkuliahan_model extends CI_Model {
      return $query->result();
   }
 
-  public function autocomplete_jadwal($nama){
-    return $this->db->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode')
-              ->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_jadwal.id_konsentrasi')
-              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi')
+  public function jadwal_kp($id_detail_kurikulum, $id_waktu){
+     return $this->db->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode')
+              ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_jadwal.id_konsentrasi')
+              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
               ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
               ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
               ->join('tb_hari','tb_hari.id_hari=tb_jadwal.id_hari')
               ->join('tb_kurikulum','tb_kurikulum.id_kurikulum=tb_detail_kurikulum.id_kurikulum')
               ->join('tb_ruang','tb_ruang.id_ruang=tb_jadwal.id_ruang')
               ->join('tb_waktu','tb_waktu.id_waktu=tb_jadwal.id_waktu')
+              ->where('tb_jadwal.id_detail_kurikulum', $id_detail_kurikulum)
+              ->where('tb_jadwal.id_waktu', $id_waktu)
               ->where('tgl_awal_kul <= ', date('Y-m-d'))
               ->where('tgl_akhir_kul >= ', date('Y-m-d'))
-              ->like('tb_matkul.nama_matkul',$nama)
               ->get('tb_jadwal')
               ->result();
+  }
+
+  public function jadwal_jadi($id_kp){
+     return $this->db->join('tb_hari','tb_hari.id_hari=tb_jadwal.id_hari')
+              ->join('tb_ruang','tb_ruang.id_ruang=tb_jadwal.id_ruang')
+              ->join('tb_waktu','tb_waktu.id_waktu=tb_jadwal.id_waktu')
+              ->where('tb_jadwal.id_kp', $id_kp)
+              ->get('tb_jadwal')
+              ->result();
+  }
+
+
+
+  public function autocomplete_jadwal($nama){
+               $c = $this->db->select('tb_jadwal.id_detail_kurikulum')
+                  ->distinct()
+                  ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
+                  ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
+                  ->like('tb_matkul.nama_matkul',$nama)
+                  ->get('tb_jadwal')
+                  ->result();
+
+      
+              foreach ($c as $b) {
+      $a = $this->db->select('tb_periode.id_periode, tb_periode.semester, tb_prodi.nama_prodi, tb_konsentrasi.id_konsentrasi, tb_konsentrasi.nama_konsentrasi, tb_matkul.nama_matkul, tb_detail_kurikulum.id_detail_kurikulum, tb_kurikulum.nama_kurikulum, tb_matkul.bobot_matkul, tb_detail_kurikulum.wajib')
+              ->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode')
+              ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_jadwal.id_konsentrasi')
+              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
+              ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
+              ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
+              ->join('tb_hari','tb_hari.id_hari=tb_jadwal.id_hari')
+              ->join('tb_kurikulum','tb_kurikulum.id_kurikulum=tb_detail_kurikulum.id_kurikulum')
+              ->join('tb_ruang','tb_ruang.id_ruang=tb_jadwal.id_ruang')
+              ->where('tb_jadwal.id_detail_kurikulum', $b->id_detail_kurikulum)
+              ->where('tb_periode.tgl_awal_kul <= ', date('Y-m-d'))
+              ->where('tb_periode.tgl_akhir_kul >= ', date('Y-m-d'))
+              ->get('tb_jadwal')
+              ->row();
+           
+            $row[] = $a;
+              }
+         
+        return $row;
   }
 
 
@@ -43,38 +87,35 @@ class Kelas_perkuliahan_model extends CI_Model {
 
 		$this->db->select('*');
 		 $this->db->from('tb_kp');
-		 $this->db->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal');
-     $this->db->join('tb_ruang','tb_ruang.id_ruang=tb_jadwal.id_ruang');
-     $this->db->join('tb_waktu','tb_waktu.id_waktu=tb_jadwal.id_waktu');
-     $this->db->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode');
-     $this->db->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_jadwal.id_konsentrasi');
-     $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi');
-     $this->db->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum');
+     $this->db->join('tb_waktu','tb_waktu.id_waktu=tb_kp.id_waktu');
+     $this->db->join('tb_periode','tb_periode.id_periode=tb_kp.id_periode');
+     $this->db->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_kp.id_konsentrasi');
+     $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi');
+     $this->db->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kp.id_detail_kurikulum');
      $this->db->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul');
-     $this->db->order_by('tb_jadwal.id_jadwal','ASC');
+     $this->db->where('tb_periode.tgl_awal_kul <=', date('Y-m-d'));
+     $this->db->where('tb_periode.tgl_akhir_kul >=', date('Y-m-d'));
+     $this->db->order_by('id_kp', 'desc');
 		 $query = $this->db->get();
 		 return $query->result();
 	}
 
   public function get_concentrate2($data){
-      return $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi')
+      return $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
               ->where('tb_prodi.id_prodi',$data)
-              ->get('tb_konsentrasi_kelas')
+              ->get('tb_konsentrasi')
               ->result();
   }
 
   public function filter_kp($id_prodi, $id_periode){
-    $this->db->select('*');
+   $this->db->select('*');
      $this->db->from('tb_kp');
-     $this->db->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal');
-     $this->db->join('tb_ruang','tb_ruang.id_ruang=tb_jadwal.id_ruang');
-     $this->db->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_jadwal.id_konsentrasi');
-     $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi');
-     $this->db->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum');
+     $this->db->join('tb_waktu','tb_waktu.id_waktu=tb_kp.id_waktu');
+     $this->db->join('tb_periode','tb_periode.id_periode=tb_kp.id_periode');
+     $this->db->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_kp.id_konsentrasi');
+     $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi');
+     $this->db->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kp.id_detail_kurikulum');
      $this->db->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul');
-     $this->db->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode');
-     $this->db->where('tgl_awal_kul <=', date('Y-m-d'));
-     $this->db->where('tgl_akhir_kul >=', date('Y-m-d'));
      $this->db->like('tb_prodi.id_prodi',$id_prodi);
      $this->db->like('tb_periode.id_periode',$id_periode);
      $query = $this->db->get();
@@ -86,8 +127,7 @@ class Kelas_perkuliahan_model extends CI_Model {
      $this->db->from('tb_kelas_dosen');
      $this->db->join('tb_dosen','tb_dosen.id_dosen=tb_kelas_dosen.id_dosen');
      $this->db->join('tb_kp','tb_kp.id_kp=tb_kelas_dosen.id_kp');
-     $this->db->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal');
-     $this->db->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum');
+     $this->db->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kp.id_detail_kurikulum');
      $this->db->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul');
      $this->db->where('tb_kelas_dosen.id_kp', $id_dosen);
      $query = $this->db->get();
@@ -100,8 +140,8 @@ class Kelas_perkuliahan_model extends CI_Model {
      $this->db->join('tb_mahasiswa','tb_mahasiswa.id_mahasiswa=tb_kelas_mhs.id_mahasiswa');
      $this->db->join('tb_bio','tb_bio.id_mahasiswa=tb_kelas_mhs.id_mahasiswa');
      $this->db->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa');
-     $this->db->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_mahasiswa.id_konsentrasi');
-     $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi');
+     $this->db->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi');
+     $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi');
      $this->db->join('tb_kelamin','tb_kelamin.id_kelamin=tb_bio.id_kelamin');
      $this->db->where('tb_kelas_mhs.id_kp', $id_dosen);
      $query = $this->db->get();
@@ -109,13 +149,11 @@ class Kelas_perkuliahan_model extends CI_Model {
   }
 
   public function detail_kp($id_kp){
-      return $this->db->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal')
-              ->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_jadwal.id_konsentrasi')
-              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi')
-              ->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode')
-              ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
+      return $this->db->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_kp.id_konsentrasi')
+              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
+              ->join('tb_periode','tb_periode.id_periode=tb_kp.id_periode')
+              ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kp.id_detail_kurikulum')
               ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
-              ->join('tb_hari','tb_hari.id_hari=tb_jadwal.id_hari')
               ->join('tb_kelas_dosen','tb_kelas_dosen.id_kp=tb_kp.id_kp','left')
               ->join('tb_dosen','tb_dosen.id_dosen=tb_kelas_dosen.id_dosen','left')
               ->where('tb_kp.id_kp', $id_kp)
@@ -137,8 +175,8 @@ class Kelas_perkuliahan_model extends CI_Model {
      $this->db->from('tb_mahasiswa');
      $this->db->join('tb_bio','tb_bio.id_mahasiswa=tb_mahasiswa.id_mahasiswa');
      $this->db->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa');
-     $this->db->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_mahasiswa.id_konsentrasi');
-     $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi');
+     $this->db->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi');
+     $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi');
      $this->db->like('tb_mahasiswa.nama_mahasiswa', $nama);
      $query = $this->db->get();
      return $query->result();
@@ -148,8 +186,8 @@ class Kelas_perkuliahan_model extends CI_Model {
     $this->db->select('*');
      $this->db->from('tb_kp');
      $this->db->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal');
-     $this->db->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_jadwal.id_konsentrasi');
-     $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi');
+     $this->db->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_jadwal.id_konsentrasi');
+     $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi');
      $this->db->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum');
      $this->db->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul');
      $this->db->where('tb_kp.tgl_mulai <=', date('Y-m-d'));
@@ -163,8 +201,8 @@ class Kelas_perkuliahan_model extends CI_Model {
     $this->db->select('*');
      $this->db->from('tb_kp');
      $this->db->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal');
-     $this->db->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_jadwal.id_konsentrasi');
-     $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi');
+     $this->db->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_jadwal.id_konsentrasi');
+     $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi');
      $this->db->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum');
      $this->db->join('tb_kurikulum','tb_kurikulum.id_kurikulum=tb_detail_kurikulum.id_kurikulum');
      $this->db->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul');
@@ -179,8 +217,8 @@ class Kelas_perkuliahan_model extends CI_Model {
      $this->db->join('tb_mahasiswa','tb_mahasiswa.id_mahasiswa=tb_kelas_mhs.id_mahasiswa');
      $this->db->join('tb_bio','tb_bio.id_mahasiswa=tb_mahasiswa.id_mahasiswa');
      $this->db->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa');
-     $this->db->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_mahasiswa.id_konsentrasi');
-     $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi');
+     $this->db->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi');
+     $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi');
      $this->db->join('tb_kelamin','tb_kelamin.id_kelamin=tb_bio.id_kelamin');
      $this->db->where('tb_kelas_mhs.id_kelas_mhs', $nama);
      $query = $this->db->get();
@@ -226,8 +264,11 @@ class Kelas_perkuliahan_model extends CI_Model {
   public function save_kp()
     {
         $data = array(
-            'id_jadwal'       => $this->input->post('id_jadwal'),
             'nama_kelas'      	=> $this->input->post('nama_kelas'),
+            'id_waktu'          => $this->input->post('id_waktu'),
+            'id_detail_kurikulum'          => $this->input->post('id_detail_kurikulum'),
+            'id_periode'          => $this->input->post('id_periode'),
+            'id_konsentrasi'          => $this->input->post('id_konsentrasi'),
             'bahasan'          => $this->input->post('bahasan'),
             'tgl_mulai'          => $this->input->post('tgl_mulai'),
             'tgl_akhir'          => $this->input->post('tgl_akhir')
@@ -269,6 +310,17 @@ class Kelas_perkuliahan_model extends CI_Model {
     public function hapus_kp($id_kp){
         $this->db->where('id_kp', $id_kp)
           ->delete('tb_kp');
+
+    if ($this->db->affected_rows() > 0) {
+      return TRUE;
+      } else {
+        return FALSE;
+      }
+    }
+
+    public function hapus_kelas_mhs_by_kp($id_kp){
+        $this->db->where('id_kp', $id_kp)
+          ->delete('tb_kelas_mhs');
 
     if ($this->db->affected_rows() > 0) {
       return TRUE;
@@ -440,6 +492,51 @@ class Kelas_perkuliahan_model extends CI_Model {
     $this->db->query("UPDATE tb_aktivitas_perkuliahan SET id_status = '1' WHERE id_mahasiswa = '$id_mahasiswa' AND id_periode = '$id_periode'");
 
           return true;
+  }
+
+   public function update_kp_jadwal($id, $id_kp){
+    $data = array(
+            'id_kp'       => $id_kp,
+        );
+
+    if (!empty($data)) {
+            $this->db->where('id_jadwal', $id)
+        ->update('tb_jadwal', $data);
+
+          return true;
+        } else {
+            return null;
+        }
+  }
+
+  public function hapus_kp_jadwal($id_jadwal){
+    $data = array(
+            'id_kp'       => '',
+        );
+
+    if (!empty($data)) {
+            $this->db->where('id_jadwal', $id_jadwal)
+        ->update('tb_jadwal', $data);
+
+          return true;
+        } else {
+            return null;
+        }
+  }
+
+  public function hapus_jadwal_by_kp($id_kp){
+    $data = array(
+            'id_kp'       => '',
+        );
+
+    if (!empty($data)) {
+            $this->db->where('id_kp', $id_kp)
+        ->update('tb_jadwal', $data);
+
+          return true;
+        } else {
+            return null;
+        }
   }
 
 }

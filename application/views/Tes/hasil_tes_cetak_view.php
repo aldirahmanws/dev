@@ -91,7 +91,7 @@ function lI1IllI111IlI1I1llll1lIIl()
 
 
 <P class="p0 ft0">Jakarta, <?php echo date('d M Y') ?></P>
-<P class="p1 ft0">Nomor : <?php echo $edit->id_mahasiswa; ?> /Mkt/Ekst/ I /17</P>
+<P class="p1 ft0">Nomor : <?php echo $edit->no_surat_tes; ?></P>
 <P class="p2 ft0">Perihal : Pemberitahuan Hasil Tes</P>
 <P class="p3 ft0">Kepada Yth,</P>
 <P class="p2 ft1"><SPAN class="ft0">Sdr </SPAN><?php echo $edit->nama_mahasiswa; ?></P>

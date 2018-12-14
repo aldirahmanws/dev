@@ -1,7 +1,5 @@
-         <?php 
-                if($this->session->userdata('level') == 2){ ?>
-        
-           <?php } else { ?>
+ <?php echo $this->session->flashdata('message');?>
+ <?php if ($this->session->userdata('level') != 2) { ?>
        <a class="btn btn-sm btn-default btn-flat" href="<?php echo base_url(); ?>master_dosen"><i class="fa fa-angle-left"></i> Back</a>
          <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/detail_dosen/<?php echo $dosen->id_dosen; ?>">Profil</a>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/jadwal_dosen/<?php echo $dosen->id_dosen; ?>">Jadwal</a>
@@ -14,9 +12,7 @@
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/penelitian/<?php echo $dosen->id_dosen; ?>">Penelitian</a>
         
          <br/><br/>  
-           <?php }
-
-           ?>
+           <?php } ?>
         <div class="box box-info">
             
             <!-- /.box-header -->
@@ -54,7 +50,7 @@
             </div>
             <!-- /.box-body -->
           </div>
-          <?php echo $this->session->flashdata('message');?>
+         
            <a class="btn btn-primary btn-flat btn-sm pull-right"  data-toggle="modal" data-target="#modal_tambah"><i class="fa fa-plus"></i> Tambah Sertifikasi</a><br><br><br>
             
           

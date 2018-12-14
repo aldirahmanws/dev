@@ -1,3 +1,4 @@
+        <?php echo $this->session->flashdata('message');?>
          <?php 
                 if($this->session->userdata('level') == 5){ ?>
        <!--  <a class="btn btn-sm btn-primary" href="<?php echo base_url();?>mahasiswa">Detail Mahasiswa</a>
@@ -15,7 +16,7 @@
        <?php if ($mahasiswa->id_jenis_pendaftaran == '2') { ?>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/transfer_nilai/<?php echo $mahasiswa->id_mahasiswa; ?>">Nilai Transfer</a>
         <?php } ?>
-        <?php if ($mahasiswa->asal_pt == 1 OR $mahasiswa->asal_pt == '' OR $mahasiswa->asal_pt = ' ') { ?>
+        <?php if ($mahasiswa->asal_pt == 1 OR $mahasiswa->asal_pt == '' OR $mahasiswa->asal_pt == ' ') { ?>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/krs_mahasiswa/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>/<?php echo $mahasiswa->id_konsentrasi; ?>">KRS Mahasiswa</a>
         <?php } else { ?>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/kelas_mhs/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>">KRS Mahasiswa</a>
@@ -64,7 +65,7 @@
             </div>
             <!-- /.box-body -->
           </div>
-          <?php echo $this->session->flashdata('message');?>
+          
           <div class="">
             <?php 
                 if($this->session->userdata('level') == 5){ ?>
@@ -356,15 +357,20 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-xs-4" >Jenis Pendaftaran</label>
+                        <label class="col-xs-4" >Jalur Pendaftaran</label>
                         <div class="col-xs-6">
-                            <select name="id_jenis_pendaftaran" id="id_jenis_pendaftaran" class="form-control input-sm" required="">
-            <option value="<?php echo $i->id_jenis_pendaftaran; ?>"> <?php echo $i->nama_pendaftaran; ?> </option>
-            <option value="1">Peserta Didik Baru</option>
-            <option value="2">Pindahan</option>
-             <option value="3">Alih Jenjang</option>
-             <option value="4">Lintas Jalur</option>
-             <option value="5">Rekognisi Pembelajaran Lampau</option>
+                            <select name="id_jalur_pendaftaran" id="id_jalur_pendaftaran" class="form-control input-sm" required="">
+            <option value="<?php echo $i->id_jalur_pendaftaran; ?>"> <?php echo $i->nama_jalur; ?> </option>
+            <option value="1">SBMPTN</option>
+            <option value="2">SNMPTN</option>
+             <option value="3">PMDK</option>
+             <option value="4">Prestasi</option>
+             <option value="5">Seleksi Jalur PTN</option>
+             <option value="6">Seleksi Jalur PTS</option>
+              <option value="7">Ujian Masuk Bersama PTN (UMB-PT)</option>
+               <option value="8">Ujian Masuk Bersama PTS (UMB-PTS)</option>
+                <option value="9">Program Internasional</option>
+                 <option value="10">Program Kerjasama Perusahaan/Institusi/Pemerintah</option>
              </select>
                         </div>
                     </div>

@@ -40,26 +40,13 @@ class Dashboard_model extends CI_Model {
                 ->get('tb_dosen')
                 ->row();
 
-    $data_mhs_akuntansi = $this->db->select('count(*) as total')
-                ->from('tb_mahasiswa')
-                ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
-                ->where('tb_konsentrasi.id_prodi', '62201')
-                ->get();
-    $data_mhs_akuntansi = $data_mhs_akuntansi->row();
-
-    $data_mhs_manajemen = $this->db->select('count(*) as total')
-                ->from('tb_mahasiswa')
-                ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
-                ->where('tb_konsentrasi.id_prodi', '61201')
-                ->get();
-    $data_mhs_manajemen = $data_mhs_manajemen->row();
+    $data_mhs = $this->db->query("SELECT count(*) AS total FROM tb_mahasiswa")->row();
 
     return array(
       'data_mhs_aktif' => $data_mhs_aktif->total,
       'data_prodi' => $data_prodi->total,
       'data_dosen' => $data_dosen->total,
-      'data_mhs_akuntansi' => $data_mhs_akuntansi->total,
-      'data_mhs_manajemen' => $data_mhs_manajemen->total,
+      'data_mhs' => $data_mhs->total,
       'jml_user' => $jml_user->total
 
       );
@@ -79,14 +66,23 @@ class Dashboard_model extends CI_Model {
       );
   }
   public function dashboard_marketing_data(){
-    $yes = $this->db->query('SELECT distinct(DATE_FORMAT(tanggal_pendaftaran,"%Y-%m")) as tanggal_pendaftaran FROM `tb_pendaftaran`  order by tanggal_pendaftaran desc LIMIT 3');
+    $yes = $this->db->query('SELECT distinct(DATE_FORMAT(tanggal_pendaftaran,"%Y-%m")) as tanggal_pendaftaran FROM `tb_pendaftaran` order by tanggal_pendaftaran desc LIMIT 3');
     return $yes->result();
     
         
   }
   public function dashboard_marketing_data2(){
-    $yes = $this->db->query('SELECT distinct(DATE_FORMAT(tanggal_pendaftaran,"%Y")) as tanggal_pendaftaran FROM `tb_pendaftaran`  order by tanggal_pendaftaran desc LIMIT 3');
+    $yes = $this->db->query('SELECT distinct(DATE_FORMAT(tgl_du,"%Y-%m")) as tgl_du FROM `tb_mahasiswa` JOIN tb_pendidikan ON tb_pendidikan.id_mahasiswa = tb_mahasiswa.id_mahasiswa  order by tgl_du desc LIMIT 3');
     return $yes->result();
+              
+        
+  } 
+
+  public function dashboard_semester_ipk($id_mahasiswa){
+    return $this->db->where('id_mahasiswa', $id_mahasiswa)
+                    ->order_by('semester_ak', 'asc')
+                    ->get('tb_aktivitas_perkuliahan')
+                    ->result();
               
         
   }  
@@ -126,26 +122,13 @@ class Dashboard_model extends CI_Model {
                 ->get('tb_dosen')
                 ->row();
 
-    $data_mhs_akuntansi = $this->db->select('count(*) as total')
-                ->from('tb_mahasiswa')
-                ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
-                ->where('tb_konsentrasi.id_prodi', '62201')
-                ->get();
-    $data_mhs_akuntansi = $data_mhs_akuntansi->row();
-
-    $data_mhs_manajemen = $this->db->select('count(*) as total')
-                ->from('tb_mahasiswa')
-                ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
-                ->where('tb_konsentrasi.id_prodi', '61201')
-                ->get();
-    $data_mhs_manajemen = $data_mhs_manajemen->row();
+   $data_mhs = $this->db->query("SELECT count(*) AS total FROM tb_mahasiswa")->row();
 
     return array(
       'data_mhs_aktif' => $data_mhs_aktif->total,
       'data_prodi' => $data_prodi->total,
       'data_dosen' => $data_dosen->total,
-      'data_mhs_akuntansi' => $data_mhs_akuntansi->total,
-      'data_mhs_manajemen' => $data_mhs_manajemen->total
+      'data_mhs' => $data_mhs->total,
 
       );
   }
@@ -153,8 +136,7 @@ class Dashboard_model extends CI_Model {
   public function dashboard_dosen($id_dosen){
     $data_kelas = $this->db->select('count(*) as total')
                 ->join('tb_kp', 'tb_kp.id_kp=tb_kelas_dosen.id_kp')
-                ->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal')
-                ->join('tb_periode', 'tb_periode.id_periode=tb_jadwal.id_periode')
+                ->join('tb_periode', 'tb_periode.id_periode=tb_kp.id_periode')
                 ->where('tb_kelas_dosen.id_dosen', $id_dosen)
                 ->where('tb_periode.tgl_awal_kul <=', date('Y-m-d'))
                 ->where('tb_periode.tgl_akhir_kul >=', date('Y-m-d'))

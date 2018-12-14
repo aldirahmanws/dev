@@ -8,6 +8,9 @@ class Universitas extends CI_Controller {
 		parent::__construct();
 		$this->load->model('universitas_model');
 		ini_set('display_errors', 0);
+		if ($this->session->userdata('level') == 4 OR $this->session->userdata('level') == 5 OR $this->session->userdata('level') == 2) {
+			redirect('login');
+		}
 	}
 
 	public function index()
@@ -25,10 +28,17 @@ class Universitas extends CI_Controller {
 	{
 			if($this->universitas_model->save_universitas() == TRUE){
 				$nama_du = $this->input->post('nama_pt');
-				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Data universitas '.$nama_du.' berhasil ditambahkan </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data berhasil disimpan</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
+
             	redirect('universitas');
 			} else{
-				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Data universitas '.$nama_du.' gagal ditambahkan </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-ban"></i> Data gagal disimpan</p>
+              </div>');
             	redirect('universitas');
 			} 
 	} 
@@ -39,7 +49,10 @@ class Universitas extends CI_Controller {
 		 $id_pt = $this->input->post('id_pt');
 			if($this->universitas_model->edit_universitas($id_pt) == TRUE){
 				$nama_pt = $this->input->post('nama_pt');
-				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Data universitas '.$nama_pt.' berhasil diubah </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data berhasil diubah</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('universitas');
 			} else{
 				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Gagal </div>');
@@ -50,7 +63,10 @@ class Universitas extends CI_Controller {
 	public function hapus_universitas(){
 		$id_pt = $this->uri->segment(3);
 		if ($this->universitas_model->hapus_universitas($id_pt) == TRUE) {
-			$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Hapus Universitas Berhasil </div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data berhasil dihapus</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 			redirect('universitas');
 		} else {
 			$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Hapus Universitas Gagal </div>');

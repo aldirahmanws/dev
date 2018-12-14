@@ -1,9 +1,10 @@
+<?php echo $this->session->flashdata('message');?>
 <section class="content">
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header with-border">
-              <?php echo $this->session->flashdata('message');?>
+              
               <h3 class="box-title">ASAL SEKOLAH</h3>
             </div>
             <!-- /.box-header -->

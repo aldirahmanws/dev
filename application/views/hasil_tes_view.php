@@ -81,6 +81,12 @@
                
                 <div class="form-group">
                   <div class="col-md-3">
+                  <label for="inputEmail3" class="control-label pull-left">No. Surat<br><br></label>
+                </div>
+                  <div class="col-md-12">
+                    <input type="text" id="no_surat_tes" name="no_surat_tes" class="form-control input-sm"  placeholder="Masukan Nomor Surat" required=""><br>
+                  </div> 
+                  <div class="col-md-3">
                   <label for="inputEmail3" class="control-label pull-left">Jawaban Benar</label>
                 </div>
                   <div class="col-md-2">
@@ -93,7 +99,7 @@
                     <input type="text" id="bing" name="bing" class="form-control input-sm"  placeholder="BIG" onkeyup="sum(); sum2();" required="">
                   </div> 
                   <div class="col-md-2">
-                  <button  class=" btn pull-left input-sm ">Input Nilai</button></div>
+                  <button  class=" btn pull-left input-sm ">Input</button></div>
                 </div>
                   
 
@@ -210,48 +216,30 @@
             var result = parseInt(mtk) + parseInt(psikotes) + parseInt(bing);
             var nilai = result / 9 * 10;
             var pembulatan = nilai.toFixed(1);
-            var grade = ""
-            if (nilai <= 75){
-              grade = "Non-Beasiswa"
-            } else if(nilai <= 79.9){
-              grade = "Ranking 3"
-            } else if(nilai <= 89.9){
-              grade = "Ranking 2"
-            } else {
-              grade ="Ranking 1"
-            }
+            
             if (!isNaN(result)) {
             document.getElementById('total_jawaban').value = result;
             document.getElementById('nilai').value = pembulatan;
-            document.getElementById("grade").value = grade;
 
             }
           }
         </script>
 
-         <script type="text/javascript">
-            
-            function sum2() {
-            var mtk = document.getElementById('mtk').value;
-            var bing = document.getElementById('bing').value;
-            var psikotes = document.getElementById('psikotes').value;
-            var result = parseInt(mtk) + parseInt(psikotes) + parseInt(bing);
-            var nilai = result / 9 * 10;
-            var pembulatan = nilai.toFixed(1);
-            var id_grade = ""
-            if (nilai <= 75){
-              id_grade = "4"
-            } else if(nilai <= 79.9){
-              id_grade = "3"
-            } else if(nilai <= 89.9){
-              id_grade = "2"
-            } else {
-              id_grade = "1"
+        <script type="text/javascript">
+            function sum2(p) {
+                var nilai = document.getElementById('nilai').value;
+
+                $.ajax({
+                    url: '<?php echo base_url(); ?>hasil_tes/get_skala/',
+                    data: 'nilai='+nilai,
+                    type: 'POST',
+                    dataType: 'html',
+                    success: function(data) {
+                        document.getElementById('id_grade').value = data;
+                    },
+                    error:function (){}
+                });
             }
-            if (!isNaN(result)) {
-            document.getElementById("id_grade").value = id_grade;
-            }
-          }
-        </script>
+</script>
         
 

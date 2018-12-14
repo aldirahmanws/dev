@@ -143,6 +143,7 @@ class Kurikulum_model extends CI_Model {
 
   public function get_prodi_periode2($data){
       return $this->db->where('tb_periode.id_prodi',$data)
+              ->order_by('semester','ASC')
               ->get('tb_periode')
               ->result();
   }

@@ -7,11 +7,33 @@ class Calendar extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('calendar_model');
+		$this->load->model('mahasiswa_model');
+		$this->load->model('dosen_model');
 		ini_set('display_errors', 0);
+		if ($this->session->userdata('logged_in') != TRUE) {
+			redirect('login');
+		}
 	}
 
 	public function index()
 	{
+		if ($this->session->userdata('level') == 5) {
+				$username = $this->session->userdata('username');
+				$session = $this->mahasiswa_model->session_mahasiswa($username);
+				$id_prodi = $session->id_prodi;
+				$semester_aktif = $session->semester_aktif;
+				$id_mahasiswa = $session->id_mahasiswa;
+				$data['mahasiswa'] = $this->mahasiswa_model->detail_krs_mahasiswa($id_mahasiswa);
+		} elseif ($this->session->userdata('level') == 2) {
+			$username = $this->session->userdata('username');
+				$session = $this->dosen_model->detail_dosen($username);
+				$id_dosen = $session->id_dosen;
+				$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
+				$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
+		} else {
+
+		}
+
 		$var1 = $this->calendar_model->data();
 		foreach ($var1 as $key) {
 			$key->waktu_start = date('h:i a', strtotime($key->start));
@@ -67,14 +89,30 @@ class Calendar extends CI_Controller {
 		$this->load->view('template', $data);
 	}
 	function master_calendar(){
+		if ($this->session->userdata('level') != 5) {
+		if ($this->session->userdata('level') == 2) {
+			$username = $this->session->userdata('username');
+				$session = $this->dosen_model->detail_dosen($username);
+				$id_dosen = $session->id_dosen;
+				$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
+				$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
+		} else {
+			
+		}
 		$data['calendar'] = $this->calendar_model->data();
 		$data['main_view'] = 'Calendar/master_calendar';
 		$this->load->view('template', $data);
+		} else {
+			redirect('login');
+		}
 	}
 	public function edit_calendar(){
 			$title = $this->input->post('title');
 					if ($this->calendar_model->edit_calendar() == TRUE) {
-						$this->session->set_flashdata('message', '<div class="alert alert-success"> Edit '.$title.' berhasil . </div>');
+						$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data '.$title.' berhasil diubah</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             			redirect('calendar/master_calendar');
 					} else {
 						$this->session->set_flashdata('message', '<div class="alert alert-danger"> Edit '.$title.' gagal . </div>');
@@ -84,7 +122,10 @@ class Calendar extends CI_Controller {
 	public function tambah_calendar(){
 		$title = $this->input->post('title');
 		if($this->calendar_model->tambah_calendar() == TRUE){
-			$this->session->set_flashdata('message', '<div class="alert alert-success"> Tambah '.$title.' berhasil . </div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data '.$title.' berhasil ditambah</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             redirect('calendar/master_calendar');
         } else {
         	$this->session->set_flashdata('message', '<div class="alert alert-danger"> Tambah '.$title.' gagal . </div>');
@@ -93,7 +134,10 @@ class Calendar extends CI_Controller {
 	}
 	public function hapus_calendar($id){
 		if ($this->calendar_model->hapus_calendar($id) == TRUE) {
-			$this->session->set_flashdata('message', '<div class="alert alert-success">Hapus Kalender Berhasil</div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data kalender berhasil dihapus</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 			redirect('calendar/master_calendar');
 		} else {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger">Hapus gagal</div>');

@@ -72,6 +72,8 @@
              else 
              echo '';
             ?>
+
+            
              
 
               
@@ -83,7 +85,7 @@
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab_1" data-toggle="tab">Dosen Pengajar</a></li>
               <li><a href="#tab_2" data-toggle="tab">Mahasiswa KRS / Peserta Kelas</a></li>
-              <!--<li><a href="#tab_3" data-toggle="tab">Tab 3</a></li> -->
+              <li><a href="#tab_3" data-toggle="tab">Jadwal</a></li>
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="tab_1">
@@ -198,7 +200,7 @@
                   <?php 
                     $no = 0;
                     $alert = "'Apakah anda yakin menghapus data ini ?'";
-                    //
+                    
                 foreach ($mhs as $data) {
                   if($ab >= $kp->tanggal_mulai && $ab <= $kp->tgl_akhir) {
                   echo '
@@ -211,7 +213,7 @@
                   <td>'.$data->nama_prodi.'</td>
                   <td>'.substr($data->tgl_du,0,4).'</td>
                   <td>
-                        <a href="'.base_url('kelas_perkuliahan/hapus_kelas_mhs/'.$data->id_kelas_mhs.'/'.$data->id_kp).'" class="btn btn-danger btn-xs btn-fla" onclick="return confirm('.$alert.')"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus</span></a>
+                        <a href="'.base_url('kelas_perkuliahan/hapus_kelas_mhs/'.$data->id_kelas_mhs.'/'.$data->id_kp.'/'.$kp->id_detail_kurikulum.'/'.$data->id_waktu).'" class="btn btn-danger btn-xs btn-fla" onclick="return confirm('.$alert.')"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus</span></a>
 
                          <a href="'.base_url('mahasiswa/lihat_mahasiswa_dikti/'.$data->id_mahasiswa).'" class="btn btn-warning btn-xs btn-fla"><i class="fa fa-list"></i><span class="tooltiptext">Detail</span></a>
                   </td>
@@ -249,28 +251,68 @@
           <!-- /.box -->
         </div>
 
+
+
+
         <!-- /.col -->
       
       <!-- /.row -->
     </section>
               </div>
 
-               
-              <!-- /.tab-pane -->
-              <!--<div class="tab-pane" id="tab_3">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic typesetting,
-                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
-                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
-                like Aldus PageMaker including versions of Lorem Ipsum.
-              </div> 
-              <!-- /.tab-pane -->
+               <div class="tab-pane" id="tab_3">
+                <section class="content">
+      <div class="row">
+        <?php if (date('Y-m-d') <= $kp->tgl_akhir AND date('Y-m-d') >= $kp->tgl_mulai) { ?>
+        
+        <a class="btn btn-primary btn-sm btn-flat"  data-toggle="modal" style="margin-right: 10px"data-target="#modal_tambah_jadwal"><i class="fa fa-plus"></i> Tambah Jadwal</a><br><br>
+      <?php } ?>
+          <div class="box box-primary">
+
+
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table2 table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Hari</th>
+                  <th>Waktu</th>
+                  <th>Sesi</th>
+                  <th>Ruang</th>
+                  <th width="10%">Aksi</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <?php 
+                $no = 0;
+                $alert = "'Apakah anda yakin menghapus data ini ?'";
+                foreach ($jadwal_jadi as $data) {
+                   
+                     
+                  echo '
+                  
+                <tr>
+                  <td id="id_jadwal">'.$data->hari.'</td>
+                  <td>'.substr($data->jam_awal,0,-3).' - '.substr($data->jam_akhir,0,-3).'</td>
+                  <td>'.$data->waktu.'</td>
+                  <td>'.$data->nama_ruang.'</td>
+                  <td> <a href="'.base_url('kelas_perkuliahan/hapus_kp_jadwal/'.$data->id_jadwal.'/'.$data->id_kp.'/'.$data->id_detail_kurikulum.'/'.$data->id_waktu).'" class="btn btn-danger btn-xs btn-fla" onclick="return confirm('.$alert.')"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus</span></a>
+                  </td>
+                </tr>
+                ';
+                }
+              ?>
+                </tbody>
+              </table>
             </div>
-            <!-- /.tab-content -->
+            <!-- /.box-body -->
           </div>
-           <div class="callout callout-info">
+          <!-- /.box -->
+        </div>
+              
+          </div>
+          <div class="callout callout-info">
         
             <strong>Keterangan :</strong>
       <br />
@@ -287,6 +329,8 @@
 </div>
 
 
+
+
 <div class="modal fade" id="modal_tambah" >
             <div class="modal-dialog">
             <div class="modal-content">
@@ -297,7 +341,7 @@
                 <div class="modal-body">
 
                     <div class="form-group">
-                      <?php echo form_open('kelas_perkuliahan/simpan_kelas_dosen'); ?>
+                      <?php echo form_open('kelas_perkuliahan/simpan_kelas_dosen/'.$kp->id_kp.'/'.$kp->id_detail_kurikulum.'/'.$kp->id_waktu); ?>
                       <table class="table">
                          <tr>
             <td class="left_column">Nama Dosen <font color="#FF0000">*</font></td>
@@ -390,7 +434,7 @@
                 <div class="modal-body">
 
                     <div class="form-group">
-                      <?php echo form_open('kelas_perkuliahan/edit_kelas_dosen/'.$i->id_kp); ?>
+                      <?php echo form_open('kelas_perkuliahan/edit_kelas_dosen/'.$kp->id_kp.'/'.$kp->id_detail_kurikulum.'/'.$kp->id_waktu); ?>
                       <table class="table">
                          <tr>
             <td class="left_column">Nama Dosen <font color="#FF0000">*</font></td>
@@ -469,7 +513,7 @@
                 <div class="modal-body">
 
                     <div class="form-group">
-                      <?php echo form_open('kelas_perkuliahan/simpan_kelas_mhs'); ?>
+                      <?php echo form_open('kelas_perkuliahan/simpan_kelas_mhs/'.$this->uri->segment(3).'/'.$kp->id_detail_kurikulum.'/'.$kp->id_waktu); ?>
                       <table class="table">
                          <tr>
             <td class="left_column">Nama Mahasiswa <font color="#FF0000">*</font></td>
@@ -566,5 +610,66 @@
                 });
               }
 </script>
+
+<?php echo form_open('kelas_perkuliahan/update_kp_jadwal/'.$this->uri->segment(3).'/'.$kp->id_detail_kurikulum.'/'.$kp->id_waktu); ?>
+
+  <div class="modal fade" id="modal_tambah_jadwal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Data Jadwal</h4>
+              </div>
+              <div class="modal-body">
+                <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>Hari</th>
+                  <th>Waktu</th>
+                  <th>Sesi</th>
+                  <th>Ruang</th>
+                  <th>Aksi</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <?php 
+                $no = 0;
+                foreach ($jadwal as $data) {
+                    if ($data->id_kp == '' OR $data->id_kp == ' ' OR $data->id_kp == NULL) {
+                     
+                  echo '
+                  
+                <tr>
+                  <td id="id_jadwal">'.$data->hari.'</td>
+                  <td>'.substr($data->jam_awal,0,-3).' - '.substr($data->jam_akhir,0,-3).'</td>
+                  <td>'.$data->waktu.'</td>
+                  <td>'.$data->nama_ruang.'</td>
+                  <td> <input type="checkbox" name="id[]" value="'.$data->id_jadwal.'"></td>
+                </tr>
+                ';
+              }
+                }
+              ?>
+                </tbody>
+              </table>
+            </div>
+              </div>
+              <div class="modal-footer">
+                
+                <input type="submit" value="Simpan" onclick="return confirm('Anda yakin ?')" class="btn btn-danger btn-flat btn-sm pull-right" style="padding-right: 10px;"> 
+<?php echo form_close()?>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+
+        
+
+
 
  

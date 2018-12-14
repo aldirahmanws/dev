@@ -13,7 +13,7 @@ class Ledger extends CI_Controller {
 
 	public function index()
 	{
-		if ($this->session->userdata('logged_in') == TRUE) {
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1) {
 			$data['getTahunAngkatan'] = $this->laporan_model->getTahunAngkatan();
 			$data['getProdi'] = $this->ledger_model->getProdi();
 			$data['main_view'] = 'Ledger/ledger_view';

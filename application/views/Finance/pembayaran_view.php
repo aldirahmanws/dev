@@ -27,8 +27,7 @@
                   </div>
                 </div>
               </div>
-              <!-- /.box-body --
-              <!-- /.box-footer -->
+              
 
             </form>
            

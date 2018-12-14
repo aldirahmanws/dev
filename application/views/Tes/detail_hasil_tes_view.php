@@ -1,6 +1,7 @@
 <form  method="post" action="<?php echo base_url(); ?>hasil_tes/save_edit_hasil_tes/<?php echo $edit->id_hasil_tes; ?>" enctype="multipart/form-data">
-<div class="row"> 
   <?php echo $this->session->flashdata('message');?>
+<div class="row"> 
+  
   <div class="col-md-12">
 
   <div class="box box-primary">

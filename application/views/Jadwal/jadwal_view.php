@@ -1,8 +1,8 @@
-      
+      <?php echo $this->session->flashdata('message');?>
       <section class="content">
       <div class="row">
         <div class="col-xs-12">
-          <?php echo $this->session->flashdata('message');?>
+          
           <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">JADWAL PERKULIAHAN</h3>
@@ -20,6 +20,7 @@
                 <tr>
                   <th>No</th>
                   <th>Prodi</th>
+                  <th>Konsentrasi</th>
                   <th>Mata Kuliah</th>
                   <th>Hari</th>
                   <th>Waktu</th>
@@ -40,7 +41,7 @@
                 <tr>
                   <td>'.++$no.'</td>
                   <td>'.$data->nama_prodi.'</td>
-
+                  <td>'.$data->nama_konsentrasi.'</td>
                   <td><a href="" data-toggle="modal" data-target="#modal_lihat'.$data->id_jadwal.'">'.$data->nama_matkul.'</a></td>
                   <td>'.$data->hari.'</td>
                   <td>'.substr($data->jam_awal,0,-3).' - '.substr($data->jam_akhir,0,-3).'</td>
@@ -113,7 +114,7 @@
        
          <tr>
           <td class="left_column">Hari</td>
-            <td>: <select name="id_hari" id="id_hari" class="validate[required]" required="" onchange="hai();" style="width: 100px" >
+            <td>: <select name="id_hari" id="id_hari" class="validate[required]" required="" style="width: 100px" >
         <option value=""> Pilih Hari </option>
         <option value="1"> Senin </option>
         <option value="2"> Selasa </option>
@@ -126,11 +127,11 @@
         </tr>
          <tr>
           <td class="left_column">Jam Awal</td>
-            <td>: <input type="time" name="jam_awal" id="jam_awal" class="text-input" maxlength="80" size="80" style="width:100px" onchange="hai();"></td>
+            <td>: <input type="time" name="jam_awal" id="jam_awal" class="text-input" maxlength="80" size="80" style="width:100px"></td>
         </tr>
         <tr>
           <td class="left_column">Jam Akhir</td>
-            <td>: <input type="time" name="jam_akhir" id="jam_akhir" class="text-input" maxlength="80" size="80" style="width:100px" onchange="hai();"></td>
+            <td>: <input type="time" name="jam_akhir" id="jam_akhir" class="text-input" maxlength="80" size="80" style="width:100px"></td>
         </tr>
         <tr>
           <td class="left_column">Sesi</td>
@@ -141,7 +142,7 @@
         </tr>
          <tr>
           <td class="left_column">Ruang</td>
-            <td>: <select name="ruang" id="ruang" class="validate[required]" required="" onchange="hai();" style="width: 100px" >
+            <td>: <select name="ruang" id="ruang" class="validate[required]" required="" style="width: 100px" >
         <option value=""> Pilih Ruang </option>
         <?php 
 
@@ -295,20 +296,7 @@
                 });
             }
 </script>
-<script type="text/javascript">
-  function hai(){
-   $.ajax({
-                    url: '<?php echo base_url(); ?>jadwal/cek_duplikat/',
-                    data: 'id_kp='+$("#id_kp").val()+'&jam_awal='+$("#jam_awal").val()+'&jam_akhir='+$("#jam_akhir").val()+'&id_hari='+$("#id_hari").val(),
-                    type: 'POST',
-                    dataType: 'html',
-                    success:function(data){
-                    $("#user-availability-status").html(data);
-                    },
-                    error:function (){}
-                });
-              }
-</script>
+
 
 
 

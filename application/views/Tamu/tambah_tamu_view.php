@@ -1,5 +1,6 @@
+<?php echo $this->session->flashdata('message');?>
 <div class="row"> 
-  <?php echo $this->session->flashdata('message');?>
+  
   <?php echo form_open('tamu/save_tamu'); ?>
   <div class="col-md-12">
 
@@ -10,10 +11,6 @@
     <div class="col-md-6">
             <!-- /.box-header -->
             <!-- form start -->
-                <div class="form-group">
-                  <label for="no">No. Tamu</label>
-                  <input type="text" name="id_pendaftaran" class="form-control" id="id_pendaftaran" placeholder=""  .input-sm value="<?php echo $kodeunik; ?>" readonly required>
-                </div>
                 <div class="form-group">
                   <label for="email">Nama Lengkap</label>
                   <input type="text" name="nama_pendaftar" class="form-control" id="nama_pendaftar" placeholder="Input Full Name" required="">
@@ -136,7 +133,7 @@
                   <option value="4">Student get Student</option>
                 </select>                                     
                 </div>
-                <div id="input_student" style="visibility: hidden;">
+                <div id="input_student" style="display: none">
                 <label for="major">Student Get Student</label>
                 <div class="input-group" >
                
@@ -223,9 +220,9 @@ function myFunction(name) {
 }
 function get_student(param){
 if(param=="4")
-document.getElementById("input_student").style.visibility = 'visible';
+document.getElementById("input_student").style.display = null;
 else
-document.getElementById("input_student").style.visibility = 'hidden';
+document.getElementById("input_student").style.display = 'none';
 }
 
 function get_asal(param){

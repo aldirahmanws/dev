@@ -1,6 +1,7 @@
 <form  method="post" action="<?php echo base_url(); ?>tamu/save_edit_tamu/<?php echo $edit->id_pendaftaran; ?>" enctype="multipart/form-data">
+  <?php echo $this->session->flashdata('message');?>
 <div class="row"> 
-	<?php echo $this->session->flashdata('message');?>
+	
 
 	<div class="col-md-12">
 

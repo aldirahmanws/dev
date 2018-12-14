@@ -1,9 +1,6 @@
-           <?php 
-                if($this->session->userdata('level') == 2){ ?>
-       
-        
-           <?php } else { ?>
-
+   
+<?php echo $this->session->flashdata('message');?>
+<?php if ($this->session->userdata('level') != 2) { ?>
           <a class="btn btn-sm btn-default btn-flat" href="<?php echo base_url(); ?>master_dosen"><i class="fa fa-angle-left"></i> Back</a>
          <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/detail_dosen/<?php echo $dosen->id_dosen; ?>">Profil</a>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/jadwal_dosen/<?php echo $dosen->id_dosen; ?>">Jadwal</a>
@@ -15,10 +12,8 @@
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/sertifikasi/<?php echo $dosen->id_dosen; ?>">Sertifikasi</a>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/penelitian/<?php echo $dosen->id_dosen; ?>">Penelitian</a>
          <br/><br/> 
-           <?php }
-
-           ?>
-      <?php echo $this->session->flashdata('message');?>
+          <?php } ?>
+      
        
             
             <!-- /.box-header -->
@@ -41,13 +36,15 @@
                 <thead>
                 <tr>
                   <th rowspan="2" style="text-align: center;width: 2%">No</th>
-                  <th rowspan="2" style="text-align: center;width: 5%">Prodi</th>
-                  <th rowspan="2" style="text-align: center;width: 20%">Kode MK</th>
-                  <th rowspan="2" style="text-align: center;width: 40%">Nama MK</th>
-                  <th rowspan="2" style="text-align: center;width: 10%">Nama Kelas</th>
-                  <th rowspan="2" style="text-align: center;width: 10%">Bobot (SKS)</th>
-                  <th rowspan="2" style="text-align: center;width: 10%">Total Mahasiswa</th>
-                  <th colspan="5" style="text-align: center;width: 15%">Data Terisi</th>
+                  <th rowspan="2" style="text-align: center;">Prodi</th>
+                  <th rowspan="2" style="text-align: center;">Konsentrasi</th>
+                  <th rowspan="2" style="text-align: center;">Kode MK</th>
+                  <th rowspan="2" style="text-align: center;">Nama MK</th>
+                  <th rowspan="2" style="text-align: center;">Kelas</th>
+                  <th rowspan="2" style="text-align: center;">Waktu</th>
+                  <th rowspan="2" style="text-align: center;">Bobot (SKS)</th>
+                  <th rowspan="2" style="text-align: center;">Total Mahasiswa</th>
+                  <th colspan="5" style="text-align: center;">Data Terisi</th>
                 </tr>
                 <tr>
                   <th style="text-align: center;width: 3%">Absensi</th>
@@ -77,9 +74,11 @@
                 <tr>
                   <td>'.++$no.'</td>
                   <td>'.$data->nama_prodi.'</td>
+                  <td>'.$data->nama_konsentrasi.'</td>
                   <td><a href="'.base_url('nilai_perkuliahan/detail_nilai/'.$data->id_kp.'/'.$dosen->id_dosen).'">'.$data->id_matkul.'</a></td>
                   <td>'.$data->nama_matkul.'</td>
                   <td>'.$data->nama_kelas.'</td>
+                  <td>'.$data->waktu.'</td>
                   <td>'.$data->bobot_matkul.'</td>
                   <td>'.$total_mahasiswa->total.'</td>
                   <td>'.$absensi->total.'</td>

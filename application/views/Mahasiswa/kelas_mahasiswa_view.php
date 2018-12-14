@@ -1,3 +1,4 @@
+           <?php echo $this->session->flashdata('message');?>
            <?php 
                 if($this->session->userdata('level') == 5){ ?>
         <!-- <a class="btn btn-sm btn-primary" href="<?php echo base_url();?>mahasiswa">Detail Mahasiswa</a>
@@ -18,7 +19,7 @@
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/transfer_nilai/<?php echo $mahasiswa->id_mahasiswa; ?>">Nilai Transfer</a>
         <?php } ?>
 
-        <?php if ($mahasiswa->asal_pt == 1 OR $mahasiswa->asal_pt == '' OR $mahasiswa->asal_pt = ' ') { ?>
+        <?php if ($mahasiswa->asal_pt == 1 OR $mahasiswa->asal_pt == '' OR $mahasiswa->asal_pt == ' ') { ?>
         <a class="btn btn-sm btn-warning btn-flat" href="<?php echo base_url();?>mahasiswa/krs_mahasiswa/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>/<?php echo $mahasiswa->id_konsentrasi; ?>">KRS Mahasiswa</a>
         <?php } else { ?>
         <a class="btn btn-sm btn-warning btn-flat" href="<?php echo base_url();?>mahasiswa/kelas_mhs/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>">KRS Mahasiswa</a>
@@ -32,7 +33,7 @@
            <?php }           ?>
       
           
-          <?php echo $this->session->flashdata('message');?>
+          
         <div class="box">
         <section class="content" >
           
@@ -48,14 +49,15 @@
             
             <!-- /.box-header -->
             <div class="box-body">
-              <table class="table table-bordered table-striped">
+              <p class="btn btn-warning pull-right btn-flat" onclick="print1()"> Cetak </p> <br><br><br>
+              <table class="table2 table-bordered table-striped">
                 <thead>
                 <tr>
                   <th style="width: 5%; text-align: center;">No</th>
                   <th style="width: 15%; text-align: center;">Kode Matkul</th>
-                  <th style="width: 45%; text-align: center;">Mata Kuliah</th>
+                  <th style="width: 35%; text-align: center;">Mata Kuliah</th>
                   <th style="width: 5%; text-align: center;">Beban Kredit</th>
-                  <th style="width: 25%; text-align: center;">Nama Dosen</th>
+                  <th style="width: 35%; text-align: center;">Nama Dosen</th>
                 </tr>
                 </thead>
                 <tbody> 
@@ -154,14 +156,14 @@
             
             <!-- /.box-header -->
             <div class="box-body">
-              <table class="table table-bordered table-striped">
+              <table class="table2 table-bordered table-striped">
                 <thead>
                 <tr>
                   <th style="width: 5%; text-align: center;">No</th>
                   <th style="width: 15%; text-align: center;">Kode Matkul</th>
-                  <th style="width: 45%; text-align: center;">Mata Kuliah</th>
+                  <th style="width: 35%; text-align: center;">Mata Kuliah</th>
                   <th style="width: 5%; text-align: center;">Beban Kredit</th>
-                  <th style="width: 25%; text-align: center;">Nama Dosen</th>
+                  <th style="width: 35%; text-align: center;">Nama Dosen</th>
                 </tr>
                 </thead>
                 <tbody> 
@@ -177,7 +179,7 @@
                   echo '
                 <tr>
                   <td style="text-align:center">'.++$no.'</td>
-                  <td style="text-align:center">'.$i->kode_matkul.'</td>
+                  <td style="text-align:center">'.$i->id_matkul.'</td>
                   <td>'.$i->nama_matkul.'</td>
                   <td style="text-align:center">'.$i->bobot_matkul.'</td>
                   <td>'.$i->nama_dosen.'</td>
@@ -230,7 +232,7 @@
       <!-- /.row -->
     </section>
 
-    <p class="btn btn-primary" onclick="print1()"> Cetak </p>
+   
     
    
     </div>

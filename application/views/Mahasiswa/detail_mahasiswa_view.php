@@ -1,4 +1,5 @@
 <form  method="post" action="<?php echo base_url(); ?>daftar_ulang/save_edit_du/<?php echo $du->id_mahasiswa; ?>" enctype="multipart/form-data">
+  <?php echo $this->session->flashdata('message');?>
 <div class="row"> 
     <div class="col-md-12">
         <div>
@@ -8,7 +9,7 @@
             <div class="panel-body">
               <div class="row">
                 <div class="col-lg-6">
-                  <?php echo $this->session->flashdata('message');?>
+                  
                 
                 <div class="form-group">
                   <label for="no">NIM</label>

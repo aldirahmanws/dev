@@ -1,5 +1,6 @@
+  <?php echo $this->session->flashdata('message');?>
 <div class="row"> 
-	<?php echo $this->session->flashdata('message');?>
+
 	<?php echo form_open('daftar_ulang/daftar_ulang'); ?>
 	<div class="col-md-12">
 

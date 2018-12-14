@@ -8,7 +8,7 @@
             <div class="panel-body">
               <div class="row">
                 <div class="col-lg-6">
-                  <?php echo $this->session->flashdata('message');?>
+                 
                   <?php echo form_open('master_dosen/edit_dosen/'.$dosen->id_dosen); ?>
                       <div class="form-group">
                         <label for="text">Nama Dosen</label>

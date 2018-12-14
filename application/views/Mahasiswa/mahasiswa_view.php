@@ -1,7 +1,8 @@
+<?php echo $this->session->flashdata('message');?>
 <section class="content">
       <div class="row">
         <div class="col-xs-12">
-          <?php echo $this->session->flashdata('message');?>
+          
           <div class="box">
             <div class="box-header with-border">
               
@@ -9,6 +10,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+              <div class="table-responsive">
               <table width="100%">
                 <tbody>
                   <form method="get" action="<?php echo base_url("mahasiswa/filter_mahasiswa/")?>">
@@ -71,20 +73,23 @@
                   </tr>
                 </tbody>
               </table>
+              </div>
                  
                </form>
                  <hr>   
+                 <div class="table-responsive">
               <table id="example1" class="table table-hover table-striped table-condensed" style="text-transform: uppercase;">
                  <a href="<?php echo base_url(); ?>mahasiswa/page_tambah_mahasiswa" class="btn btn-primary btn-sm btn-flat" ><i class="fa fa-plus"></i> Tambah</a> <br> <br>
                 <thead>
                 <tr>
                   <th>No</th>
+                  <th>ID MHS</th>
                   <th>Nama</th>
                   <th>NIM</th>
                   <th>L/P</th>
                   <th>Waktu</th>
-                  <th>Tgl. Lahir </th>
-                  <th>Program Studi</th>
+                  <th>Prodi</th>
+                  <th>Konsentrasi</th>
                   <th>Status</th>
                   <th>Angkatan</th>
                   <th style="width: 10%">Aksi</th>
@@ -107,12 +112,13 @@
                   echo '
                 <tr>
                   <td>'.++$no.'</td>
+                  <td>'.$data->id_mahasiswa.'</td>
                   <td><a href="'.base_url('mahasiswa/lihat_mahasiswa_dikti/'.$data->id_mahasiswa).'")>'.$data->nama_mahasiswa.'</a></td>
                   <td>'.$data->nim.'</td>
                   <td>'.$data->jenis_kelamin.'</td>
                   <td>'.$data->waktu.'</td>
-                  <td>'.date("d M Y", strtotime($data->tanggal_lahir)).'</td>
                   <td>'.$data->nama_prodi.'</td>
+                  <td>'.$data->nama_konsentrasi.'</td>
                   <td>'.$status.'</td>
                   <td>'.substr($data->tgl_du,0,4).'</td>
                   <td>
@@ -132,6 +138,7 @@
               ?>
                 </tbody>
               </table>
+              </div>
             </div>
             <!-- /.box-body -->
           </div>

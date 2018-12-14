@@ -1,3 +1,4 @@
+           <?php echo $this->session->flashdata('message');?>
            <?php 
                 if($this->session->userdata('level') == 5){ ?>
         <!-- <a class="btn btn-sm btn-primary" href="<?php echo base_url();?>mahasiswa">Detail Mahasiswa</a>
@@ -15,7 +16,7 @@
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/transfer_nilai/<?php echo $mahasiswa->id_mahasiswa; ?>">Nilai Transfer</a>
         <?php } ?>
 
-       <?php if ($mahasiswa->asal_pt == 1 OR $mahasiswa->asal_pt == '' OR $mahasiswa->asal_pt = ' ') { ?>
+       <?php if ($mahasiswa->asal_pt == 1 OR $mahasiswa->asal_pt == '' OR $mahasiswa->asal_pt == ' ') { ?>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/krs_mahasiswa/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>/<?php echo $mahasiswa->id_konsentrasi; ?>">KRS Mahasiswa</a>
         <?php } else { ?>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/kelas_mhs/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>">KRS Mahasiswa</a>
@@ -66,7 +67,7 @@
             </div>
             <!-- /.box-body -->
           </div>
-          <?php echo $this->session->flashdata('message');?>
+          
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
             <li class="active"><a href="#tab_0" data-toggle="tab">Profil</a></li>
@@ -76,6 +77,7 @@
               <?php 
                 if($this->session->userdata('level') == 5){ ?>
                 <li><a href="#tab_5" data-toggle="tab">Ganti Password</a></li> 
+                <li class="pull-right"><button class="btn btn-sm btn-warning btn-flat"><a href="<?php echo base_url();?>mahasiswa/detail_mhs_dikti/<?php echo $mahasiswa->id_mahasiswa; ?>" class="text-muted"  style="color:white;"><i class="fa fa-pencil"></i> Edit</a></button></li>
                 <?php } else { ?>
                     <li class="pull-right"><button class="btn btn-sm btn-warning btn-flat"><a href="<?php echo base_url();?>mahasiswa/detail_mahasiswa_dikti/<?php echo $mahasiswa->id_mahasiswa; ?>" class="text-muted"  style="color:white;"><i class="fa fa-pencil"></i> Edit</a></button></li>
                 <?php } ?>

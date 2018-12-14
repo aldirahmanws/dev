@@ -2,8 +2,7 @@
                 if($this->session->userdata('level') == 5){ ?>
       
         
-           <?php } else {
-           $id_mahasiswa = $mahasiswa->id_mahasiswa;?>
+           <?php } else { ?>
         <a class="btn btn-sm btn-default btn-flat" href="<?php echo base_url(); ?>mahasiswa/data_mahasiswa"><i class="fa fa-angle-left"></i> Back</a>
          <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/lihat_mahasiswa_dikti/<?php echo $mahasiswa->id_mahasiswa; ?>">Detail Mahasiswa</a>
        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/history_pendidikan/<?php echo $mahasiswa->id_mahasiswa; ?>/<?php echo $mahasiswa->nik; ?>">History Pendidikan</a>
@@ -11,7 +10,7 @@
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/transfer_nilai/<?php echo $mahasiswa->id_mahasiswa; ?>">Nilai Transfer</a>
         <?php } ?>
 
-        <?php if ($mahasiswa->asal_pt == 1 OR $mahasiswa->asal_pt == '' OR $mahasiswa->asal_pt = ' ') { ?>
+        <?php if ($mahasiswa->asal_pt == 1 OR $mahasiswa->asal_pt == '' OR $mahasiswa->asal_pt == ' ') { ?>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/krs_mahasiswa/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>/<?php echo $mahasiswa->id_konsentrasi; ?>">KRS Mahasiswa</a>
         <?php } else { ?>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/kelas_mhs/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>">KRS Mahasiswa</a>
@@ -61,6 +60,7 @@
               <h3 class="box-title">Senin</h3>       
             <!-- /.box-header -->
             <div class="box-body">
+              <div class="table-responsive">
               <table  class="table table-bordered table-striped" style="text-transform: uppercase;">
                 <thead>
                 <tr>
@@ -75,9 +75,8 @@
                     
                   <?php 
                 $no = 0;
-                $id_kp = '';
                 foreach ($senin as $i) {
-                 
+                 if ($periode->id_periode == $i->id_periode AND $i->id_waktu == $mahasiswa->id_waktu) {
                   
                             
                   echo '
@@ -91,10 +90,11 @@
                 ' ;
               
                 }   
-              
+              }
             ?>
                 </tbody>
               </table>
+              </div>
 
             </div>
             <!-- /.box-body -->
@@ -104,6 +104,7 @@
               <h3 class="box-title">Selasa</h3>       
             <!-- /.box-header -->
             <div class="box-body">
+              <div class="table-responsive">
               <table class="table table-bordered table-striped" style="text-transform: uppercase;">
                 <thead>
                  <tr>
@@ -118,9 +119,8 @@
                     
                   <?php 
                 $no = 0;
-                $id_kp = '';
                 foreach ($selasa as $i) {
-                  
+                  if ($periode->id_periode == $i->id_periode AND $i->id_waktu == $mahasiswa->id_waktu) {
                             
                   echo '
                   
@@ -133,11 +133,11 @@
                 ' ;
                   
                 }    
-              
+              }
             ?>
                 </tbody>
               </table>
-
+            </div>
             </div>
             <!-- /.box-body -->
           </div>
@@ -146,7 +146,9 @@
               <h3 class="box-title">Rabu</h3>       
             <!-- /.box-header -->
             <div class="box-body">
+              <div class="table-responsive">
               <table class="table table-bordered table-striped" style="text-transform: uppercase;">
+                
                 <thead>
                  <tr>
                   <th  style="width:5%">No</th>
@@ -160,9 +162,8 @@
                     
                   <?php 
                 $no = 0;
-                $id_kp = '';
                 foreach ($rabu as $i) {
-                 
+                 if ($periode->id_periode == $i->id_periode AND $i->id_waktu == $mahasiswa->id_waktu) {
                             
                   echo '
                   
@@ -175,11 +176,11 @@
                 ' ;
                   
                 }   
-              
+              }
             ?>
                 </tbody>
               </table>
-
+            </div>
             </div>
             <!-- /.box-body -->
           </div>
@@ -188,6 +189,7 @@
               <h3 class="box-title">Kamis</h3>       
             <!-- /.box-header -->
             <div class="box-body">
+              <div class="table-responsive">
               <table class="table table-bordered table-striped" style="text-transform: uppercase;">
                 <thead>
                  <tr>
@@ -202,9 +204,8 @@
                     
                   <?php 
                 $no = 0;
-                $id_kp = '';
                 foreach ($kamis as $i) {
-                 
+                 if ($periode->id_periode == $i->id_periode AND $i->id_waktu == $mahasiswa->id_waktu) {
                             
                   echo '
                   
@@ -217,11 +218,11 @@
                 ' ;
                   
                 }   
-              
+              }
             ?>
                 </tbody>
               </table>
-
+              </div>
             </div>
             <!-- /.box-body -->
           </div>
@@ -230,6 +231,7 @@
               <h3 class="box-title">Jumat</h3>       
             <!-- /.box-header -->
             <div class="box-body">
+              <div class="table-responsive">
               <table class="table table-bordered table-striped" style="text-transform: uppercase;">
                 <thead>
                  <tr>
@@ -246,7 +248,7 @@
                 $no = 0;
                 $id_kp = '';
                 foreach ($jumat as $i) {
-                 
+                 if ($periode->id_periode == $i->id_periode AND $i->id_waktu == $mahasiswa->id_waktu) {
                             
                   echo '
                   
@@ -259,11 +261,11 @@
                 ' ;
                  
                 }   
-              
+              }
             ?>
                 </tbody>
               </table>
-
+            </div>
             </div>
             <!-- /.box-body -->
           </div>

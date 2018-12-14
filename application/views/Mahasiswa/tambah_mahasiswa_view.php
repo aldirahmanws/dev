@@ -76,7 +76,7 @@
                 </tr>
                 <tr>
                     <td class="left_column" width="15%" >Nama Prodi <font color="#FF0000">*</font></td>
-                    <td>: <select name="id_prodi" id="id_prodi" onchange="return get_concentrate(this.value);" onblur="return get_prodi_periode(this.value);" required="">
+                    <td>: <select name="id_prodi" id="id_prodi" onchange="return get_concentrate(this.value), get_dosen_pa(this.value);" onblur="return get_prodi_periode(this.value);" required="">
                             <option value="">Pilih Prodi</option>  
                              <?php 
 
@@ -93,7 +93,10 @@
                         <select name="concentrate" id="concentrate" required="" >
                             <option value="">Pilih Prodi Dahulu</option>
                             
-                             </select></td>
+                             </select>
+                             <input type="hidden" name="dosen_pa" id="dosen_pa" value="">
+
+                         </td>
                 </tr>
                 <tr>
                     <td class="left_column"> Asal </td>
@@ -664,6 +667,21 @@ function undisableTxt() {
                     dataType: 'html',
                     success: function(msg) {
                         $("#id_grade").html(msg);
+
+                    }
+                });
+            }
+
+    function get_dosen_pa(p) {
+                var id_prodi = p;
+
+                $.ajax({
+                    url: '<?php echo base_url(); ?>daftar_ulang/get_dosen_pa/'+id_prodi,
+                    data: 'id_prodi='+id_prodi,
+                    type: 'GET',
+                    dataType: 'html',
+                    success: function(msg) {
+                        document.getElementById("dosen_pa").value = msg;
 
                     }
                 });

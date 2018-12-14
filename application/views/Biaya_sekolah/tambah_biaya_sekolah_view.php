@@ -1,3 +1,4 @@
+<?php echo $this->session->flashdata('message');?>
 <div class="row"> 
     <div class="col-md-12">
         <div>
@@ -7,7 +8,7 @@
             <div class="panel-body">
               <div class="row">
                 <div class="col-lg-12">
-                  <?php echo $this->session->flashdata('message');?>
+                  
                   <?php echo form_open('master_biaya_sekolah/save_biaya_sekolah'); ?>
                       <div class="form-group">
                         <label for="email">Id Biaya</label>

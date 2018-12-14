@@ -26,8 +26,16 @@ class Dosen_model extends CI_Model {
               ->join('tb_agama','tb_agama.id_agama=tb_dosen.id_agama')
               ->join('tb_kelamin','tb_kelamin.id_kelamin=tb_dosen.id_kelamin')
               ->join('tb_user','tb_user.username=tb_dosen.id_dosen')
-              ->where('id_dosen', $id_dosen)
+              ->where('tb_dosen.id_dosen', $id_dosen)
               ->get('tb_dosen')
+              ->row();
+  }
+
+  public function detail_dosen2($id_dosen){
+    return $this->db->select('tb_dosen.id_dosen')
+              ->join('tb_dosen','tb_dosen.id_dosen=tb_prodi.id_dosen')
+              ->where('tb_prodi.id_dosen', $id_dosen)
+              ->get('tb_prodi')
               ->row();
   }
 
@@ -73,7 +81,7 @@ class Dosen_model extends CI_Model {
 	 public function save_dosen()
     {
         $data = array(
-            'id_dosen'        => $this->input->post('id_dosen'),
+            'id_dosen'        => $this->buat_kode_dosen(),
             'nama_dosen'        => $this->input->post('nama_dosen'),
             'no_hp'      		=> $this->input->post('no_telepon'),
             'nip'     	=> $this->input->post('nip'),
@@ -99,14 +107,6 @@ class Dosen_model extends CI_Model {
             
         }
     }
-
-     /*public function  buat_kode_dosen()   {
-          $this->db->select("MAX(id_dosen)+1 AS id");
-          $this->db->from("tb_dosen");
-          $query = $this->db->get();
-
-          return $query->row()->id;
-    }  */
 
     public function edit_dosen($id_dosen){
     $data = array(
@@ -156,38 +156,42 @@ class Dosen_model extends CI_Model {
               ->join('tb_agama','tb_agama.id_agama=tb_dosen.id_agama')
               ->join('tb_kelamin','tb_kelamin.id_kelamin=tb_dosen.id_kelamin')
               ->join('tb_kp','tb_kp.id_kp=tb_kelas_dosen.id_kp')
-              ->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal')
+              ->join('tb_jadwal','tb_jadwal.id_kp=tb_kp.id_kp')
               ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
               ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
-              ->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode')
+              ->join('tb_periode','tb_periode.id_periode=tb_kp.id_periode')
               ->join('tb_ruang','tb_ruang.id_ruang=tb_jadwal.id_ruang')
-              ->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_jadwal.id_konsentrasi')
-              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi')
+              ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_kp.id_konsentrasi')
+              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
+              ->join('tb_waktu','tb_waktu.id_waktu=tb_kp.id_waktu')
               ->where('tb_kelas_dosen.id_dosen', $id_dosen)
               ->where('tb_jadwal.id_hari', '1')
               ->where('tb_periode.tgl_awal_kul <=', date('Y-m-d'))
               ->where('tb_periode.tgl_akhir_kul >=', date('Y-m-d'))
+              ->order_by('tb_jadwal.jam_awal','ASC')
               ->get('tb_kelas_dosen')
               ->result();
   }
 
   public function jadwal_dosen_selasa($id_dosen){
-    return $this->db->join('tb_dosen','tb_dosen.id_dosen=tb_kelas_dosen.id_dosen')
+   return $this->db->join('tb_dosen','tb_dosen.id_dosen=tb_kelas_dosen.id_dosen')
               ->join('tb_status_dosen','tb_status_dosen.id_status_dosen=tb_dosen.jenis_dosen')
               ->join('tb_agama','tb_agama.id_agama=tb_dosen.id_agama')
               ->join('tb_kelamin','tb_kelamin.id_kelamin=tb_dosen.id_kelamin')
               ->join('tb_kp','tb_kp.id_kp=tb_kelas_dosen.id_kp')
-              ->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal')
+              ->join('tb_jadwal','tb_jadwal.id_kp=tb_kp.id_kp')
               ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
               ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
-              ->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode')
+              ->join('tb_periode','tb_periode.id_periode=tb_kp.id_periode')
               ->join('tb_ruang','tb_ruang.id_ruang=tb_jadwal.id_ruang')
-              ->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_jadwal.id_konsentrasi')
-              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi')
+              ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_kp.id_konsentrasi')
+              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
+              ->join('tb_waktu','tb_waktu.id_waktu=tb_kp.id_waktu')
               ->where('tb_kelas_dosen.id_dosen', $id_dosen)
               ->where('tb_jadwal.id_hari', '2')
               ->where('tb_periode.tgl_awal_kul <=', date('Y-m-d'))
               ->where('tb_periode.tgl_akhir_kul >=', date('Y-m-d'))
+              ->order_by('tb_jadwal.jam_awal','ASC')
               ->get('tb_kelas_dosen')
               ->result();
   }
@@ -198,17 +202,19 @@ class Dosen_model extends CI_Model {
               ->join('tb_agama','tb_agama.id_agama=tb_dosen.id_agama')
               ->join('tb_kelamin','tb_kelamin.id_kelamin=tb_dosen.id_kelamin')
               ->join('tb_kp','tb_kp.id_kp=tb_kelas_dosen.id_kp')
-              ->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal')
+              ->join('tb_jadwal','tb_jadwal.id_kp=tb_kp.id_kp')
               ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
               ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
-              ->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode')
+              ->join('tb_periode','tb_periode.id_periode=tb_kp.id_periode')
               ->join('tb_ruang','tb_ruang.id_ruang=tb_jadwal.id_ruang')
-              ->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_jadwal.id_konsentrasi')
-              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi')
+              ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_kp.id_konsentrasi')
+              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
+              ->join('tb_waktu','tb_waktu.id_waktu=tb_kp.id_waktu')
               ->where('tb_kelas_dosen.id_dosen', $id_dosen)
               ->where('tb_jadwal.id_hari', '3')
               ->where('tb_periode.tgl_awal_kul <=', date('Y-m-d'))
               ->where('tb_periode.tgl_akhir_kul >=', date('Y-m-d'))
+              ->order_by('tb_jadwal.jam_awal','ASC')
               ->get('tb_kelas_dosen')
               ->result();
   }
@@ -219,17 +225,19 @@ class Dosen_model extends CI_Model {
               ->join('tb_agama','tb_agama.id_agama=tb_dosen.id_agama')
               ->join('tb_kelamin','tb_kelamin.id_kelamin=tb_dosen.id_kelamin')
               ->join('tb_kp','tb_kp.id_kp=tb_kelas_dosen.id_kp')
-              ->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal')
+              ->join('tb_jadwal','tb_jadwal.id_kp=tb_kp.id_kp')
               ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
               ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
-              ->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode')
+              ->join('tb_periode','tb_periode.id_periode=tb_kp.id_periode')
               ->join('tb_ruang','tb_ruang.id_ruang=tb_jadwal.id_ruang')
-              ->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_jadwal.id_konsentrasi')
-              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi')
+              ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_kp.id_konsentrasi')
+              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
+              ->join('tb_waktu','tb_waktu.id_waktu=tb_kp.id_waktu')
               ->where('tb_kelas_dosen.id_dosen', $id_dosen)
               ->where('tb_jadwal.id_hari', '4')
               ->where('tb_periode.tgl_awal_kul <=', date('Y-m-d'))
               ->where('tb_periode.tgl_akhir_kul >=', date('Y-m-d'))
+              ->order_by('tb_jadwal.jam_awal','ASC')
               ->get('tb_kelas_dosen')
               ->result();
   }
@@ -240,17 +248,19 @@ class Dosen_model extends CI_Model {
               ->join('tb_agama','tb_agama.id_agama=tb_dosen.id_agama')
               ->join('tb_kelamin','tb_kelamin.id_kelamin=tb_dosen.id_kelamin')
               ->join('tb_kp','tb_kp.id_kp=tb_kelas_dosen.id_kp')
-              ->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal')
+              ->join('tb_jadwal','tb_jadwal.id_kp=tb_kp.id_kp')
               ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
               ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
-              ->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode')
+              ->join('tb_periode','tb_periode.id_periode=tb_kp.id_periode')
               ->join('tb_ruang','tb_ruang.id_ruang=tb_jadwal.id_ruang')
-              ->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_jadwal.id_konsentrasi')
-              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi')
+              ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_kp.id_konsentrasi')
+              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
+              ->join('tb_waktu','tb_waktu.id_waktu=tb_kp.id_waktu')
               ->where('tb_kelas_dosen.id_dosen', $id_dosen)
               ->where('tb_jadwal.id_hari', '5')
               ->where('tb_periode.tgl_awal_kul <=', date('Y-m-d'))
               ->where('tb_periode.tgl_akhir_kul >=', date('Y-m-d'))
+              ->order_by('tb_jadwal.jam_awal','ASC')
               ->get('tb_kelas_dosen')
               ->result();
   }
@@ -269,15 +279,14 @@ class Dosen_model extends CI_Model {
     public function data_kp($id_dosen){
 
    $this->db->select('*');
-     $this->db->from('tb_kp');
-     $this->db->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal');
-     $this->db->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode');
-     $this->db->join('tb_ruang','tb_ruang.id_ruang=tb_jadwal.id_ruang');
-     $this->db->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_jadwal.id_konsentrasi');
-     $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi');
-     $this->db->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum');
+     $this->db->from('tb_kelas_dosen');
+     $this->db->join('tb_kp','tb_kp.id_kp=tb_kelas_dosen.id_kp');
+     $this->db->join('tb_periode','tb_periode.id_periode=tb_kp.id_periode');
+     $this->db->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_kp.id_konsentrasi');
+     $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi');
+     $this->db->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kp.id_detail_kurikulum');
      $this->db->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul');
-     $this->db->join('tb_kelas_dosen','tb_kelas_dosen.id_kp=tb_kp.id_kp','left');
+     $this->db->join('tb_waktu','tb_waktu.id_waktu=tb_kp.id_waktu');
      $this->db->where('tb_periode.tgl_awal_kul <=', date('Y-m-d'));
      $this->db->where('tb_periode.tgl_akhir_kul >=', date('Y-m-d'));
      $this->db->where('tb_kelas_dosen.id_dosen', $id_dosen);
@@ -287,13 +296,15 @@ class Dosen_model extends CI_Model {
 
   public function aktivitas_mengajar($id_dosen){
     return $this->db->join('tb_kp','tb_kp.id_kp=tb_kelas_dosen.id_kp')
-              ->join('tb_jadwal','tb_jadwal.id_jadwal=tb_kp.id_jadwal')
-              ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
+              ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kp.id_detail_kurikulum')
               ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
-              ->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode')
-              ->join('tb_konsentrasi_kelas','tb_konsentrasi_kelas.id_konsentrasi=tb_jadwal.id_konsentrasi')
-              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi_kelas.id_prodi')
+              ->join('tb_periode','tb_periode.id_periode=tb_kp.id_periode')
+              ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_kp.id_konsentrasi')
+              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
+              ->join('tb_waktu','tb_waktu.id_waktu=tb_kp.id_waktu')
               ->where('tb_kelas_dosen.id_dosen', $id_dosen)
+              ->order_by('tb_periode.semester','ASC')
+              ->order_by('tb_matkul.nama_matkul','ASC')
               ->get('tb_kelas_dosen')
               ->result();
   }

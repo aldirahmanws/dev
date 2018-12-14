@@ -10,11 +10,14 @@ class Master_dosen extends CI_Controller {
 		$this->load->model('nilai_perkuliahan_model');
 		$this->load->model('user_model');
 		ini_set('display_errors', 0);
+		if ($this->session->userdata('level') == 3 OR $this->session->userdata('level') == 4 OR $this->session->userdata('level') == 5) {
+			redirect('login');
+		}
 	}
 
 	public function index()
 	{
-		if ($this->session->userdata('logged_in') == TRUE) {
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1) {
 		$data['main_view'] = 'Dosen/master_dosen_view';
 		$data['dosen'] = $this->dosen_model->data_dosen();
 		$this->load->view('template', $data);
@@ -24,7 +27,7 @@ class Master_dosen extends CI_Controller {
 	}
 
 	public function page_tambah_dosen(){
-		if ($this->session->userdata('logged_in') == TRUE) {
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1) {
 		$data['kodedosen'] = $this->dosen_model->buat_kode_dosen();
 		$data['main_view'] = 'Dosen/tambah_dosen_view';
 		$this->load->view('template', $data);
@@ -69,25 +72,25 @@ class Master_dosen extends CI_Controller {
 
 	public function save_dosen()
 	{
+		$nim = $this->dosen_model->buat_kode_dosen();
 			if($this->dosen_model->save_dosen() == TRUE){
 				$pass = $this->random_password();
-				$nim = $this->input->post('id_dosen');
 				$this->user_model->signup_dosen($nim, $pass);
 				$this->load->library('email');
 						$config = array(
 							'protocol' => 'smtp',
 							'smtp_host' 	=> 'ssl://smtp.googlemail.com',
 							'smtp_port' 	=> 465,
-							'smtp_user' 	=> 'bayukrisnaovo@gmail.com',
-							'smtp_pass' 	=> 'pacnut12',
+							'smtp_user' 	=> 'jic.itservices@gmail.com',
+							'smtp_pass' 	=> 'm0nash01',
 							'mailtype'		=> 'html',
 							'wordwrap'	=> TRUE
 						);
 						$this->email->initialize($config);
 						$this->email->set_newline("\r\n");
-						$this->email->from('bayukrisnaovo@gmail.com','Panitia PSB');
+						$this->email->from('jic.itservices@gmail.com','Do not reply to this email (Akun Login Dosen)');
 						$this->email->to($this->input->post('email'));
-						$this->email->subject('STIE Jakarta International College');
+						$this->email->subject('Username dan Password untuk login ke Sistem Informasi Akademik');
 						$this->email->message('
 							<h2> Akun Login Dosen!</h2>
 							<br> Username : '.$nim.'
@@ -95,7 +98,10 @@ class Master_dosen extends CI_Controller {
 							Terimakasih');
 						
 						if($this->email->send()){
-								$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Data dosen berhasil ditambah </div>');
+								$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data dosen berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 				            	redirect('master_dosen');
 						}
 			} else{
@@ -123,11 +129,17 @@ class Master_dosen extends CI_Controller {
 			if($this->dosen_model->edit_dosen($id_dosen) == TRUE  && $this->dosen_model->edit_username($id_dosen) == TRUE){
 				if ($this->session->userdata('level') == 2) {
 					$dosen = $this->input->post('id_dosen');
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Data  berhasil diubah </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data dosen berhasil ubah </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('master_dosen/detail_dosen/'.$id_dosen);
 				} else {
 					$dosen = $this->input->post('id_dosen');
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Data  berhasil diubah </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data dosen berhasil ubah </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('master_dosen');
 				}
 				
@@ -146,6 +158,7 @@ class Master_dosen extends CI_Controller {
 			} else {
 		$id_dosen = $this->uri->segment(3);
 		}
+		$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
 		$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
 		$data['senin'] = $this->dosen_model->jadwal_dosen_senin($id_dosen);
 		$data['selasa'] = $this->dosen_model->jadwal_dosen_selasa($id_dosen);
@@ -164,7 +177,10 @@ class Master_dosen extends CI_Controller {
 	{
 		$id_dosen = $this->uri->segment(3);
 			if($this->dosen_model->hapus_dosen($id_dosen) == TRUE){
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Hapus Dosen Berhasil </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data dosen berhasil dihapus </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('master_dosen');
 			} else{
 				$this->session->set_flashdata('message', '<div class="alert alert-danger">Hapus Dosen Gagal </div>');
@@ -182,6 +198,7 @@ class Master_dosen extends CI_Controller {
 			} else {
 		$id_dosen = $this->uri->segment(3);
 		}
+		$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
 		$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
 		$data['nilai'] = $this->dosen_model->data_kp($id_dosen);
 		$data['main_view'] = 'Dosen/nilai_dosen_view';
@@ -200,6 +217,7 @@ class Master_dosen extends CI_Controller {
 			} else {
 		$id_dosen = $this->uri->segment(3);
 		}
+		$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
 		$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
 		$data['am'] = $this->dosen_model->aktivitas_mengajar($id_dosen);
 		$data['main_view'] = 'Dosen/aktivitas_mengajar_view';
@@ -218,6 +236,7 @@ class Master_dosen extends CI_Controller {
 			} else {
 		$id_dosen = $this->uri->segment(3);
 		}
+		$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
 		$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
 		$data['jabatan'] = $this->dosen_model->jabatan_fungsional($id_dosen);
 		$data['main_view'] = 'Dosen/jabatan_fungsional_view';
@@ -231,7 +250,10 @@ class Master_dosen extends CI_Controller {
 	{
 		$id_dosen = $this->uri->segment(3);
 			if($this->dosen_model->tambah_jabatan_fungsional($id_dosen) == TRUE){
-				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Tambah jabatan fungsional berhasil </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data jabatan berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('master_dosen/jabatan_fungsional/'.$id_dosen);
 			} else{
 				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Tambah jabatan fungsional gagal </div>');
@@ -244,7 +266,10 @@ class Master_dosen extends CI_Controller {
 		$id_dosen = $this->uri->segment(4);
 		$id_jabatan_fungsional = $this->uri->segment(3);
 			if($this->dosen_model->hapus_jabatan_fungsional($id_jabatan_fungsional) == TRUE){
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Hapus Jabatan Berhasil </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data jabatan berhasil dihapus </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('master_dosen/jabatan_fungsional/'.$id_dosen);
 			} else{
 				$this->session->set_flashdata('message', '<div class="alert alert-danger">Hapus Jabatan Gagal </div>');
@@ -261,6 +286,7 @@ class Master_dosen extends CI_Controller {
 			} else {
 		$id_dosen = $this->uri->segment(3);
 		}
+		$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
 		$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
 		$data['pendidikan'] = $this->dosen_model->pendidikan($id_dosen);
 		$data['main_view'] = 'Dosen/pendidikan_dosen_view';
@@ -274,7 +300,10 @@ class Master_dosen extends CI_Controller {
 	{
 		$id_dosen = $this->uri->segment(3);
 			if($this->dosen_model->tambah_pendidikan($id_dosen) == TRUE){
-				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Tambah pendidikan berhasil </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data pendidikan berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('master_dosen/pendidikan/'.$id_dosen);
 			} else{
 				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Tambah pendidikan fungsional gagal </div>');
@@ -287,7 +316,10 @@ class Master_dosen extends CI_Controller {
 		$id_dosen = $this->uri->segment(4);
 		$id_pd = $this->uri->segment(3);
 			if($this->dosen_model->hapus_pendidikan($id_pd) == TRUE){
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Hapus Pendidikan Berhasil </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data pendidikan berhasil dihapus </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('master_dosen/pendidikan/'.$id_dosen);
 			} else{
 				$this->session->set_flashdata('message', '<div class="alert alert-danger">Hapus Pendidikan Gagal </div>');
@@ -304,6 +336,7 @@ class Master_dosen extends CI_Controller {
 			} else {
 		$id_dosen = $this->uri->segment(3);
 		}
+		$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
 		$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
 		$data['pelatihan'] = $this->dosen_model->pelatihan($id_dosen);
 		$data['main_view'] = 'Dosen/pelatihan_dosen_view';
@@ -317,7 +350,10 @@ class Master_dosen extends CI_Controller {
 	{
 		$id_dosen = $this->uri->segment(3);
 			if($this->dosen_model->tambah_pelatihan($id_dosen) == TRUE){
-				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Tambah pelatihan berhasil </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data pelatihan berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('master_dosen/pelatihan/'.$id_dosen);
 			} else{
 				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Tambah pelatihan fungsional gagal </div>');
@@ -330,7 +366,10 @@ class Master_dosen extends CI_Controller {
 		$id_dosen = $this->uri->segment(4);
 		$id_pelatihan = $this->uri->segment(3);
 			if($this->dosen_model->hapus_pelatihan($id_pelatihan) == TRUE){
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Hapus Pelatihan Berhasil </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data pelatihan berhasil dihapus </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('master_dosen/pelatihan/'.$id_dosen);
 			} else{
 				$this->session->set_flashdata('message', '<div class="alert alert-danger">Hapus Pelatihan Gagal </div>');
@@ -347,6 +386,7 @@ class Master_dosen extends CI_Controller {
 			} else {
 		$id_dosen = $this->uri->segment(3);
 		}
+		$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
 		$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
 		$data['sertifikasi'] = $this->dosen_model->sertifikasi($id_dosen);
 		$data['main_view'] = 'Dosen/sertifikasi_dosen_view';
@@ -360,7 +400,10 @@ class Master_dosen extends CI_Controller {
 	{
 		$id_dosen = $this->uri->segment(3);
 			if($this->dosen_model->tambah_sertifikasi($id_dosen) == TRUE){
-				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Tambah sertifikasi berhasil </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data sertifikasi berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('master_dosen/sertifikasi/'.$id_dosen);
 			} else{
 				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Tambah sertifikasi gagal </div>');
@@ -373,7 +416,10 @@ class Master_dosen extends CI_Controller {
 		$id_dosen = $this->uri->segment(4);
 		$id_sertifikasi = $this->uri->segment(3);
 			if($this->dosen_model->hapus_sertifikasi($id_sertifikasi) == TRUE){
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Hapus Sertifikasi Berhasil </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data sertifikasi berhasil dihapus </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('master_dosen/sertifikasi/'.$id_dosen);
 			} else{
 				$this->session->set_flashdata('message', '<div class="alert alert-danger">Hapus Sertifikasi Gagal </div>');
@@ -390,6 +436,7 @@ class Master_dosen extends CI_Controller {
 			} else {
 		$id_dosen = $this->uri->segment(3);
 		}
+		$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
 		$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
 		$data['penelitian'] = $this->dosen_model->penelitian($id_dosen);
 		$data['main_view'] = 'Dosen/penelitian_dosen_view';
@@ -403,7 +450,10 @@ class Master_dosen extends CI_Controller {
 	{
 		$id_dosen = $this->uri->segment(3);
 			if($this->dosen_model->tambah_penelitian($id_dosen) == TRUE){
-				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Tambah penelitian berhasil </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data penelitian berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('master_dosen/penelitian/'.$id_dosen);
 			} else{
 				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Tambah penelitian gagal </div>');
@@ -416,7 +466,10 @@ class Master_dosen extends CI_Controller {
 		$id_dosen = $this->uri->segment(4);
 		$id_penelitian = $this->uri->segment(3);
 			if($this->dosen_model->hapus_penelitian($id_penelitian) == TRUE){
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Hapus Penelitian Berhasil </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data penelitian berhasil dihapus </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('master_dosen/penelitian/'.$id_dosen);
 			} else{
 				$this->session->set_flashdata('message', '<div class="alert alert-danger">Hapus Penelitian Gagal </div>');

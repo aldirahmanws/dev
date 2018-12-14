@@ -55,10 +55,16 @@ class Profile extends CI_Controller {
                 if($this->upload->do_upload('foto')){
                   if($this->user_model->save_foto($this->upload->data(), $username) == TRUE){
                     if ($this->session->userdata('level') == 2) {
-                         $this->session->set_flashdata('message', '<div class="alert alert-success"> Profil Berhasil diganti </div>');
+                         $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data profil berhasil diubah </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
                          redirect('index');
                     } else {
-                         $this->session->set_flashdata('message', '<div class="alert alert-success"> Profil Berhasil diganti </div>');
+                         $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data profil berhasil diubah </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
                         redirect('profile'); 
                     }
                     
@@ -86,7 +92,10 @@ class Profile extends CI_Controller {
         } else if(!empty($_FILES['foto']['name'])){
             if($this->upload->do_upload('foto')){
               if($this->user_model->save_foto($this->upload->data(), $this->session->userdata('username')) == TRUE){
-                $this->session->set_flashdata('message', '<div class="alert alert-success"> Foto berhasil diganti </div>');
+                $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Foto profil berhasil diubah </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
                     redirect('profile');
               } else {
                 $this->session->set_flashdata('message', '<div class="alert alert-danger"> Foto gagal diganti </div>');

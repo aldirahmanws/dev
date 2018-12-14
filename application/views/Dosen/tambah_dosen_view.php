@@ -10,10 +10,7 @@
                 <div class="col-lg-6">
                   <?php echo $this->session->flashdata('message');?>
                   <?php echo form_open('master_dosen/save_dosen'); ?>
-                    <div class="form-group">
-                        <label for="number">KODE DOSEN</label>
-                        <input type="text" name="id_dosen" class="form-control" id="id_dosen" value="<?= $kodedosen; ?>" readonly>
-                      </div>
+                   
                       <div class="form-group">
                         <label for="text">Nama Dosen <font color="#FF0000">*</font></label>
                         <input type="text" name="nama_dosen" class="form-control" id="nama_dosen" required="">
@@ -47,6 +44,13 @@
                               <option value="6">Konghucu</option>
                           </select> 
                       </div>
+                      <div class="form-group">
+                        <label for="text">Jenis Dosen <font color="#FF0000">*</font></label>
+                        <select id="jenis_dosen" name="jenis_dosen" class="form-control" required="">
+                             <option value="1">Tetap</option>
+                              <option value="2">Tidak Tetap</option>
+                          </select> 
+                      </div>
                        
                     </div>
                     <div class="col-lg-6">
@@ -70,13 +74,8 @@
                         <label for="text">No. Telepon</label>
                         <input type="text" name="no_telepon" class="form-control" id="no_telepon" value="">
                       </div>
-                       <div class="form-group">
-                        <label for="text">Jenis Dosen <font color="#FF0000">*</font></label>
-                        <select id="jenis_dosen" name="jenis_dosen" class="form-control" required="">
-                             <option value="1">Tetap</option>
-                              <option value="2">Tidak Tetap</option>
-                          </select> 
-                      </div>
+                       <br>
+                       <br>
                       <button type="submit" class="btn btn-info pull-right">Simpan</button>
                       
                   <?php echo form_close();?>

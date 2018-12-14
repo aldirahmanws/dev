@@ -8,6 +8,9 @@ class Master_prodi extends CI_Controller {
 		parent::__construct();
 		$this->load->model('prodi_model');
 		ini_set('display_errors', 0);
+		if ($this->session->userdata('level') == 4 OR $this->session->userdata('level') == 5 OR $this->session->userdata('level') == 2) {
+			redirect('login');
+		}
 	}
 
 		public function index()
@@ -32,26 +35,23 @@ class Master_prodi extends CI_Controller {
 
 	public function save_prodi()
 	{
-		//set rule di setiap form input
-		$this->form_validation->set_rules('id_prodi', 'Id prodi', 'trim|required');		
-		$this->form_validation->set_rules('nama_prodi', 'Nama prodi', 'trim|required');	
-		$this->form_validation->set_rules('ketua_prodi', 'Ketua Prodi', 'trim|required');
-		
-		if ($this->form_validation->run() == TRUE){
 			if($this->prodi_model->save_prodi() == TRUE){
 				$prodi = $this->input->post('nama_prodi');
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Data '.$prodi.' berhasil ditambahkan </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data '.$prodi.' berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('master_prodi');
 			} 
-			} else{
-				$this->session->set_flashdata('message', '<div class="alert alert-danger"> '.validation_errors().' </div>');
-            	redirect('master_prodi/page_tambah_prodi');
-		}
+			
 	}
 
 	public function hapus_prodi($id_prodi){
 		if ($this->prodi_model->hapus_prodi($id_prodi) == TRUE) {
-			$this->session->set_flashdata('notif', '<div class="alert alert-success"> Hapus prodi berhasil </div>');
+			$this->session->set_flashdata('notif', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data prodi berhasil dihapus </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 			redirect('master_prodi');
 		} else {
 			$this->session->set_flashdata('notif', 'Hapus Program Studi Berhasil');
@@ -74,28 +74,18 @@ class Master_prodi extends CI_Controller {
 
 	public function save_edit_prodi(){
 			$id_prodi = $this->uri->segment(3);
-
-			if ($this->input->post('submit')) {
-				$this->form_validation->set_rules('id_prodi', 'Id prodi', 'trim|required');		
-				$this->form_validation->set_rules('nama_prodi', 'Nama prodi', 'trim|required');	
-				$this->form_validation->set_rules('ketua_prodi', 'Ketua Prodi', 'trim|required');
-
-				if ($this->form_validation->run() == TRUE) {
 					if ($this->prodi_model->save_edit_prodi($id_prodi) == TRUE) {
-						$this->session->set_flashdata('message', '<div class="alert alert-success"> Data Prodi berhasil diubah </div>');
+						$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data prodi berhasil ubah </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 						redirect('master_prodi');
 					} else {
 						$data['main_view'] = 'Prodi/master_prodi_view';
 						$this->session->set_flashdata('message', '<div class="alert alert-danger"> Data Prodi gagal diubah </div>');
 						redirect('master_prodi/edit_prodi');
 					}
-				} else {
-					$data['main_view'] = 'Prodi/edit_prodi_view';
-					$this->session->set_flashdata('message', '<div class="alert alert-danger"> Data Prodi gagal diubah </div>');
-					$this->load->view('template', $data);
-				}
 			}
-		}
 
 
 	

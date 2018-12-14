@@ -1,10 +1,10 @@
 <script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.js'?>"></script>
 
-
+<?php echo $this->session->flashdata('message');?>
     <!-- Page Heading -->
         <div class="row">
         <div class="col-xs-12">
-          <?php echo $this->session->flashdata('message');?>
+          
           <div class="box">
             <div class="box-header">
               <h3 class="box-title">Data Transfer Masuk</h3>

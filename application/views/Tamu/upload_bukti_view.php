@@ -1,4 +1,5 @@
 <form  method="post" runat="server" action="<?php echo base_url(); ?>tamu/save_bukti_transfer/<?php echo $edit->id_pendaftaran; ?>" enctype="multipart/form-data">
+  <?php echo $this->session->flashdata('message');?>
 <div class="row"> 
     <div class="col-md-12">
         <div>
@@ -8,7 +9,7 @@
             <div class="panel-body">
               <div class="row">
                 <div class="col-lg-12">
-                  <?php echo $this->session->flashdata('message');?>
+                  
                        <div class="form-group">
                             <label>Foto </label> (format JPG, PNG, PDF)<br>
                             <img id="output"/>

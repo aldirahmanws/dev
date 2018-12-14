@@ -13,7 +13,7 @@ class Kurikulum extends CI_Controller {
 
 	public function index()
 	{
-		if ($this->session->userdata('logged_in') == TRUE) {
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1) {
 			$data['getProdi'] = $this->daftar_ulang_model->getProdi();
 			$data['getPeriode'] = $this->daftar_ulang_model->getPeriode();
 			$data['kurikulum'] = $this->kurikulum_model->data_kurikulum();
@@ -29,7 +29,10 @@ class Kurikulum extends CI_Controller {
 	{
 			if($this->kurikulum_model->simpan_kurikulum() == TRUE){
 				$prodi = $this->input->post('nama_kurikulum');
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Data '.$prodi.' berhasil ditambahkan</div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data '.$prodi.' berhasil ditambahkan</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('kurikulum');
 			
 			} else{
@@ -42,7 +45,10 @@ class Kurikulum extends CI_Controller {
 	{
 		$id_kurikulum = $this->uri->segment(3);
 			if($this->kurikulum_model->simpan_detail_kurikulum() == TRUE){
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Mata kuliah berhasil ditambahkan </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data mata kuliah berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 				$data = $this->input->post('id_kurikulum');
             	redirect('kurikulum/detail_kurikulum/'.$data);
 			
@@ -54,7 +60,7 @@ class Kurikulum extends CI_Controller {
 
 	public function detail_kurikulum()
 	{
-		if ($this->session->userdata('logged_in') == TRUE) {
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1) {
 			$id_kurikulum = $this->uri->segment(3);
 			$data['kurikulum'] = $this->kurikulum_model->detail_kurikulum($id_kurikulum);
 			$detail_dk = $this->uri->segment(3);
@@ -65,14 +71,13 @@ class Kurikulum extends CI_Controller {
 			$data['main_view'] = 'Kurikulum/detail_kurikulum_view';
 			$this->load->view('template', $data);
 			} else{
-				$this->session->set_flashdata('message', '<div class="alert alert-danger"> '.validation_errors().' </div>');
-            	redirect('kurikulum');
+            	redirect('login');
 		}
 	}
 
 	public function detail_kurikulum2()
 	{
-		if ($this->session->userdata('logged_in') == TRUE) {
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1) {
 			$id_kurikulum = $this->uri->segment(3);
 			$data['kurikulum'] = $this->kurikulum_model->detail_kurikulum($id_kurikulum);
 			$data['getPeriode'] = $this->daftar_ulang_model->getPeriode();
@@ -80,21 +85,19 @@ class Kurikulum extends CI_Controller {
 			$data['main_view'] = 'Kurikulum/edit_kurikulum_view';
 			$this->load->view('template', $data);
 			} else{
-				$this->session->set_flashdata('message', '<div class="alert alert-danger"> '.validation_errors().' </div>');
-            	redirect('kurikulum');
+            	redirect('login');
 		}
 	}
 
 	public function detail_matkul_kurikulum()
 	{
-		if ($this->session->userdata('logged_in') == TRUE) {
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1) {
 			$detail_dk = $this->uri->segment(3);
 			$data['kurikulum'] = $this->kurikulum_model->detail_matkul($detail_dk);
 			$data['main_view'] = 'Kurikulum/edit_detail_kurikulum_view';
 			$this->load->view('template', $data);
 			} else{
-				$this->session->set_flashdata('message', '<div class="alert alert-danger"> '.validation_errors().' </div>');
-            	redirect('kurikulum');
+            	redirect('login');
 		}
 	}
 
@@ -123,7 +126,10 @@ class Kurikulum extends CI_Controller {
 	public function hapus_kurikulum(){
 		$id_kurikulum = $this->uri->segment(3);
 		if ($this->kurikulum_model->hapus_kurikulum($id_kurikulum) == TRUE && $this->kurikulum_model->hapus_detail_kurikulum($id_kurikulum) == TRUE) {
-			$this->session->set_flashdata('message', '<div class="alert alert-success"> Hapus Kurikulum berhasil </div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data kurikulum berhasil dihapus </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 			redirect('kurikulum');
 		} else {
 			$this->session->set_flashdata('message', 'Hapus kurikulum Berhasil');
@@ -135,7 +141,10 @@ class Kurikulum extends CI_Controller {
 		$id_detail_kurikulum = $this->uri->segment(3);
 		$id_kurikulum = $this->uri->segment(4);
 		if ($this->kurikulum_model->hapus_matkul_kurikulum($id_detail_kurikulum) == TRUE) {
-			$this->session->set_flashdata('message', '<div class="alert alert-success"> Hapus Mata Kuliah berhasil </div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data mata kuliah berhasil dihapus </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('kurikulum/detail_kurikulum/'.$id_kurikulum);
 		} else {
 			$this->session->set_flashdata('message', 'Hapus Mata Kuliah Berhasil');
@@ -146,7 +155,10 @@ class Kurikulum extends CI_Controller {
 	public function edit_kurikulum(){
 			$id_kurikulum = $this->uri->segment(3);
 					if ($this->kurikulum_model->edit_kurikulum($id_kurikulum) == TRUE) {
-						$this->session->set_flashdata('message', '<div class="alert alert-success"> Edit Kurikulum berhasil </div>');
+						$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data kurikulum berhasil diubah</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             			redirect('kurikulum');
 					} else {
 						$this->session->set_flashdata('message', '<div class="alert alert-danger"> Edit Kurikulum Gagal </div>');
@@ -157,7 +169,10 @@ class Kurikulum extends CI_Controller {
 	public function edit_detail_kurikulum(){
 			$id_detail_kurikulum = $this->uri->segment(3);
 					if ($this->kurikulum_model->edit_detail_kurikulum($id_detail_kurikulum) == TRUE) {
-						$this->session->set_flashdata('message', '<div class="alert alert-success"> Edit Mata Kuliah berhasil </div>');
+						$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data mata kuliah berhasil diubah</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             			$data = $this->input->post('id_kurikulum');
             			redirect('kurikulum/detail_kurikulum/'.$data);
 					} else {
@@ -192,7 +207,10 @@ class Kurikulum extends CI_Controller {
 			foreach ($_POST['id'] as $id) {
 				$this->kurikulum_model->delete($id);
 			}
-			$this->session->set_flashdata('message', '<div class="alert alert-success"> Hapus Mata Kuliah Berhasil </div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data mata kuliah terpilih berhasil dihapus</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 			redirect('kurikulum/detail_kurikulum/'.$id_kurikulum);
 		}
 
@@ -211,7 +229,10 @@ class Kurikulum extends CI_Controller {
 	{
 		$id_kurikulum = $this->input->post('id_kurikulum');
 			if($this->kurikulum_model->simpan_salin_matkul() == TRUE){
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Mata Kuliah berhasil disalin </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data mata kuliah berhasil disalin</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('kurikulum/detail_kurikulum/'.$id_kurikulum);
 			} 
 	}

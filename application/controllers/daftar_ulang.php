@@ -11,12 +11,12 @@ class daftar_ulang extends CI_Controller {
 		$this->load->model('mahasiswa_model');
 		$this->load->model('user_model');
 		$this->load->model('finance_model');
-		//ini_set('display_errors', 0);
+		ini_set('display_errors', 0);
 	}
 
 	public function page_du_pagi()
 	{
-		if ($this->session->userdata('logged_in') == TRUE) {
+		if ($this->session->userdata('logged_in') == TRUE  && $this->session->userdata('level') != 5) {
 			$id_pendaftaran = $this->uri->segment(3);
 			$data['du_pagi'] = $this->daftar_ulang_model->page_du_pagi($id_pendaftaran);
 			$data['kodeunik'] = $this->daftar_ulang_model->buat_kode();
@@ -32,11 +32,11 @@ class daftar_ulang extends CI_Controller {
 	}
 	public function save_mahasiswa_pagi()
 	{
-			if($this->mahasiswa_model->save_mahasiswa_pagi() == TRUE && $this->mahasiswa_model->save_ayah() == TRUE  && $this->mahasiswa_model->save_ibu() == TRUE && $this->mahasiswa_model->save_alamat() == TRUE && $this->mahasiswa_model->save_wali() == TRUE && $this->mahasiswa_model->save_kependudukan() == TRUE && $this->mahasiswa_model->save_bio() == TRUE && $this->mahasiswa_model->save_kontak() == TRUE && $this->mahasiswa_model->simpan_pendidikan() == TRUE)
+			if($this->mahasiswa_model->save_ayah() == TRUE  && $this->mahasiswa_model->save_ibu() == TRUE && $this->mahasiswa_model->save_alamat() == TRUE && $this->mahasiswa_model->save_wali() == TRUE && $this->mahasiswa_model->save_kependudukan() == TRUE && $this->mahasiswa_model->save_bio() == TRUE && $this->mahasiswa_model->save_kontak() == TRUE && $this->mahasiswa_model->simpan_pendidikan() == TRUE && $this->mahasiswa_model->save_mahasiswa_pagi() == TRUE)
 				$id_du = $this->input->post('id_du');
 				$this->tamu_model->save_update_status2($id_du);
-				$pass = $this->random_password();
 				$nim = $this->input->post('nim');
+				$pass = $this->random_password();
 				$this->user_model->signup_mahasiswa($nim, $pass);
 				$cc = $this->finance_model->buat_kode();
 				$id_mahasiswa = $this->input->post('id_mahasiswa');
@@ -66,7 +66,10 @@ class daftar_ulang extends CI_Controller {
 						if($this->email->send()){
 							if ($this->input->post('id_jenis_pendaftaran') != 1 OR $this->input->post('id_waktu') == 2) {
 								$nama_du = $this->input->post('nama_mahasiswa');
-							$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Data '.$nama_du.' berhasil didaftarkan. </div>');
+							$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data '.$nama_du.' berhasil ditambahkan</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 			            	redirect('mahasiswa/mahasiswa_data');
 							} else {
 								$nama_du = $this->input->post('nama_mahasiswa');
@@ -83,7 +86,7 @@ class daftar_ulang extends CI_Controller {
 
 	public function data_peserta_tes()
 	{
-		if ($this->session->userdata('logged_in') == TRUE) {
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') != 5 && $this->session->userdata('level') != 4 && $this->session->userdata('level') != 2 && $this->session->userdata('level') != 6) {
 		if($this->session->userdata('level') == 3 || $this->session->userdata('level') == 1){
 			$data['du'] = $this->daftar_ulang_model->data_peserta_tes();
 			$data['main_view'] = 'Daftar/data_daftarulang_view';
@@ -141,6 +144,14 @@ class daftar_ulang extends CI_Controller {
 
 	}
 
+	public function get_dosen_pa($param = NULL) {
+		$prodi = $param;
+		$result = $this->daftar_ulang_model->get_dosen_pa($prodi);
+		$option = $result->id_dosen;
+		echo $option;
+
+	}
+
 	public function get_grade($param = NULL) {
 		// $layanan =$this->input->post('layanan');
 		$semester_aktif = $param;
@@ -164,7 +175,10 @@ class daftar_ulang extends CI_Controller {
 		 $id_mahasiswa = $this->uri->segment(3);
 			if($this->mahasiswa_model->save_edit_mahasiswa_du($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_bio($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_alamat($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_kependudukan($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_kontak($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_ibu($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_pendidikan_du($id_mahasiswa) == TRUE){
 				$nama_du = $this->input->post('nama_mahasiswa');
-				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Data '.$nama_du.' berhasil didaftarkan. </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data '.$nama_du.' berhasil diubah</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('mahasiswa/mahasiswa_data');
 			} else{
 				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Gagal </div>');

@@ -9,6 +9,9 @@ class Nilai extends CI_Controller {
 		$this->load->model('nilai_model');
 		$this->load->model('daftar_ulang_model');
 		ini_set('display_errors', 0);
+		if ($this->session->userdata('level') == 4 OR $this->session->userdata('level') == 5 OR $this->session->userdata('level') == 2 OR $this->session->userdata('level') == 3) {
+			redirect('login');
+		}
 	}
 
 	public function index()
@@ -65,7 +68,10 @@ class Nilai extends CI_Controller {
 	{
 			if($this->nilai_model->save_skala_nilai() == TRUE){
 				$nama_du = $this->input->post('nama_prodi');
-				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Data skala nilai '.$nama_du.' berhasil ditambahkan. </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data skala nilai berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('nilai');
 			} else{
 				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Data  '.$nama_pendaftar.' Sudah Ada </div>');
@@ -89,7 +95,10 @@ class Nilai extends CI_Controller {
 		 $id_skala_nilai = $this->uri->segment(3);
 			if($this->nilai_model->save_edit_skala_nilai($id_skala_nilai) == TRUE){
 				$nama_du = $this->input->post('nama_prodi');
-				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Data skala nilai'.$nama_du.' berhasil diubah. </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data skala nilai berhasil diubah </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('nilai');
 			} else{
 				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Gagal </div>');
@@ -99,7 +108,10 @@ class Nilai extends CI_Controller {
 
 	public function hapus_skala_nilai($id_skala_nilai){
 		if ($this->nilai_model->hapus_skala_nilai($id_skala_nilai) == TRUE) {
-			$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Hapus Skala Nilai Berhasil </div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data skala nilai berhasil dihapus </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 			redirect('nilai');
 		} else {
 			$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Hapus Skala Nilai Gagal </div>');

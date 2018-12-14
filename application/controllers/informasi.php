@@ -26,7 +26,10 @@ class Informasi extends CI_Controller {
 	public function simpan_informasi()
 	{
 			if($this->informasi_model->simpan_informasi() == TRUE){
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Data informasi berhasil ditambah </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data informasi berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('informasi');
 			} else{
 				$this->session->set_flashdata('message', '<div class="alert alert-danger"> Data informasi gagal ditambah </div>');
@@ -37,7 +40,10 @@ class Informasi extends CI_Controller {
 	public function simpan_informasi2()
 	{
 			if($this->informasi_model->simpan_informasi() == TRUE){
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Data informasi berhasil ditambah </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data informasi berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('informasi/saring_level/'.$this->session->userdata('level'));
 			} else{
 				$this->session->set_flashdata('message', '<div class="alert alert-danger"> Data informasi gagal ditambah </div>');
@@ -48,7 +54,10 @@ class Informasi extends CI_Controller {
 	public function hapus_informasi(){
 		$id_informasi = $this->uri->segment(3);
 		if ($this->informasi_model->hapus_informasi($id_informasi) == TRUE) {
-			$this->session->set_flashdata('message', '<div class="alert alert-success"> Data informasi berhasil dihapus </div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data informasi berhasil dihapus </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 			if ($this->session->userdata('level') != 1 AND $this->session->userdata('level') != 1) {
 							redirect('informasi/saring_level/'.$this->session->userdata('level'));
 						} else {
@@ -64,7 +73,10 @@ class Informasi extends CI_Controller {
 	public function edit_informasi(){
 			$id_informasi = $this->input->post('id_info');
 					if ($this->informasi_model->edit_informasi($id_informasi) == TRUE) {
-						$this->session->set_flashdata('message', '<div class="alert alert-success"> Data informasi berhasil diedit </div>');
+						$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data informasi berhasil diubah</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 						if ($this->session->userdata('level') != 1 AND $this->session->userdata('level') != 1) {
 							redirect('informasi/saring_level/'.$this->session->userdata('level'));
 						} else {

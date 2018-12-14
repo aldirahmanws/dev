@@ -109,7 +109,10 @@ class Finance extends CI_Controller {
 			if($this->finance_model->simpan_pembayaran() == TRUE){
 				$this->cart->destroy();
 				$ea = $this->uri->segment(3);
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Pembayaran Sudah Tersimpan </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data pembayaran berhasil disimpan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect(base_url('finance/detail_pembayaran/'.$ea));
 			} 
 		} else {
@@ -230,7 +233,10 @@ class Finance extends CI_Controller {
 			$id_pendaftaran = $this->input->post('id_pendaftaran');
 				if ($this->input->post('reg') == 'No Registrasi Tersedia'){
 					if ($this->finance_model->save_konfirmasi($id_pendaftaran) == TRUE) {
-						$this->session->set_flashdata('message', '<div class="alert alert-success"> konfirmasi Berhasil </div>');
+						$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Konfirmasi pembayaran berhasil </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 						redirect('finance/data_registrasi');
 					} else  {
 						$this->session->set_flashdata('message', '<div class="alert alert-danger"> Konfirmasi Gagal </div>');
@@ -247,7 +253,10 @@ class Finance extends CI_Controller {
 		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1){
 			$id_pendaftaran = $this->uri->segment(3);
 				if ($this->finance_model->gagal_konfirmasi($id_pendaftaran) == TRUE) {
-						$this->session->set_flashdata('message', '<div class="alert alert-success"> Data tidak valid '.$id_pendaftaran.'</div>');
+						$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Konfirmasi pembayaran berhasil ditolak </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 						redirect('finance');
 					} else {
 						$this->session->set_flashdata('message', '<div class="alert alert-danger"> Konfirmasi Gagal </div>');

@@ -2,30 +2,16 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
          <div class="col-md-12">
-          <div class="info-box bg-aqua" <?php if($informasi == null){
-            echo 'style="display: none"';
-          }
-          ?>>
-            <span class="info-box-icon"><i class="glyphicon glyphicon-info-sign"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text"> <b> <i>NEW INFO ! </i></b></span>
-              <span class="info-box-number"><?php foreach ($informasi as $data) { echo $data->judul_info; ?>
-                
-              </span>
-
-              <div class="progress">
-                <div class="progress-bar" style="width: 100%"></div>
-              </div>
-              <span class="progress-description">
-                    <a href="" style="color: white" data-toggle="modal" data-target="#modal_view<?php echo $data->id_info; ?>"> <?php echo substr($data->deskripsi_info,0,100); ?> ... </a>
-                    <a class="pull-right" style="color: white" href="<?php echo base_url(); ?>informasi" ><u><i> Read More</i></u> </a>
-                  </span>
+          <?php if ($informasi != NULL) { ?>
+          
+            <div class="alert alert-dismissible alert-info">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-info"></i> <?php foreach ($informasi as $data) { echo $data->judul_info; ?></h4>
              
+                <?php echo substr($data->deskripsi_info,0,100); ?> ... <a class="pull-right" style="color: white" href="" data-toggle="modal" data-target="#modal_view<?php echo $data->id_info; ?>"><u><i> Read More</i></u> </a>
                 <?php } ?>
-
-            </div>
-        </div>
+              </div>
+            <?php } ?>
       </div>
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->

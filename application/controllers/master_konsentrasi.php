@@ -9,6 +9,9 @@ class Master_konsentrasi extends CI_Controller {
 		$this->load->model('prodi_model');
 		$this->load->model('konsentrasi_model');
 		ini_set('display_errors', 0);
+		if ($this->session->userdata('level') == 4 OR $this->session->userdata('level') == 5 OR $this->session->userdata('level') == 2) {
+			redirect('login');
+		}
 	}
 
 	public function index(){
@@ -43,7 +46,10 @@ class Master_konsentrasi extends CI_Controller {
 		if ($this->form_validation->run() == TRUE){
 			if($this->konsentrasi_model->save_konsentrasi() == TRUE && $this->konsentrasi_model->save_konsentrasi2() == TRUE){
 				$username = $this->input->post('nama_konsentrasi');
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Data '.$username.' berhasil ditambahkan </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data konsentrasi berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('master_konsentrasi');
 			} 
 			} else{
@@ -55,7 +61,10 @@ class Master_konsentrasi extends CI_Controller {
 	public function hapus_konsentrasi(){
 		$id_konsentrasi = $this->uri->segment(3);
 		if ($this->konsentrasi_model->hapus_konsentrasi($id_konsentrasi) == TRUE && $this->konsentrasi_model->hapus_konsentrasi2($id_konsentrasi)) {
-			$this->session->set_flashdata('message', '<div class="alert alert-success"> Data konsentrasi berhasil dihapus </div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data konsentrasi berhasil dihapus </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 			redirect('master_konsentrasi');
 		} else {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger"> Data konsentrasi gagal dihapus </div>');
@@ -81,7 +90,10 @@ class Master_konsentrasi extends CI_Controller {
 			$id_konsentrasi = $this->uri->segment(3);
 					if ($this->konsentrasi_model->save_edit_konsentrasi($id_konsentrasi) == TRUE && $this->konsentrasi_model->save_edit_konsentrasi2($id_konsentrasi) == TRUE) {
 						$username = $this->input->post('nama_konsentrasi');
-						$this->session->set_flashdata('message', '<div class="alert alert-success"> Data '.$username.' berhasil diedit </div>');
+						$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data konsentrasi berhasil diubah </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 						redirect('master_konsentrasi');
 					} else {
 						$data['main_view'] = 'Prodi/master_konsentrasi_view';

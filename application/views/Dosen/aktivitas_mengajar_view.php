@@ -1,13 +1,6 @@
-         <?php 
-                if($this->session->userdata('level') == 5){ ?>
-        <!-- <a class="btn btn-sm btn-primary" href="<?php echo base_url();?>mahasiswa">Detail Mahasiswa</a>
-        <a class="btn btn-sm btn-info" href="<?php echo base_url();?>mahasiswa/history_pendidikan">History Pendidikan</a>
-        <a class="btn btn-sm btn-primary" href="<?php echo base_url();?>mahasiswa/krs_mahasiswa">KRS Mahasiswa</a>
-        <a class="btn btn-sm btn-info" href="<?php echo base_url();?>mahasiswa/history_nilai">History Nilai</a>
-        <a class="btn btn-sm btn-primary" href="<?php echo base_url();?>mahasiswa/aktivitas_perkuliahan">Aktivitas Perkuliahan</a>
-        <a class="btn btn-sm btn-info" href="<?php echo base_url();?>mahasiswa/prestasi">Prestasi</a> -->
-        
-           <?php } else { ?>
+     <?php echo $this->session->flashdata('message');?>
+     <?php if ($this->session->userdata('level') != 2) { ?>
+     
       <a class="btn btn-sm btn-default btn-flat" href="<?php echo base_url(); ?>master_dosen"><i class="fa fa-angle-left"></i> Back</a>
          <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/detail_dosen/<?php echo $dosen->id_dosen; ?>">Profil</a>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/jadwal_dosen/<?php echo $dosen->id_dosen; ?>">Jadwal</a>
@@ -20,9 +13,8 @@
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/penelitian/<?php echo $dosen->id_dosen; ?>">Penelitian</a>
         
          <br/><br/>  
-           <?php }
-
-           ?>
+       <?php } ?>
+           
         <div class="box box-info">
             
             <!-- /.box-header -->
@@ -62,7 +54,7 @@
           </div>
           <div class="">
             
-          <?php echo $this->session->flashdata('message');?>
+          
 
 <div class="box box-info">
   <div class="box-body">
@@ -75,6 +67,7 @@
     <th style="text-align:center" rowspan="2">Prodi</th>
     <th style="text-align:center" rowspan="2">Mata Kuliah</th>
     <th style="text-align:center" rowspan="2">Kelas</th>
+    <th style="text-align:center" rowspan="2">Waktu</th>
     <th style="text-align:center" colspan="2">Pertemuan</th>
   </tr>
   <tr>
@@ -94,6 +87,7 @@
         <td style="text-align:center"><?php echo $data->nama_prodi;?></td>
         <td style="text-align:center"><?php echo $data->nama_matkul;?></td>
         <td style="text-align:center"><?php echo $data->nama_kelas;?></td>
+        <td style="text-align:center"><?php echo $data->waktu;?></td>
         <td style="text-align:center"><?php echo $data->rencana;?></td>
         <td style="text-align:center"><?php echo $data->realisasi;?></td >
     </tr>

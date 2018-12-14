@@ -1,10 +1,10 @@
 
-
+<?php echo $this->session->flashdata('message');?>
     <section class="content">
 
       <div class="row">
         <div class="col-xs-12">
-          <?php echo $this->session->flashdata('message');?>
+          
           <div class="box">
 
             <div class="box-header with-border">
@@ -61,6 +61,7 @@
                   <th rowspan="2" style="text-align: center;width: 20%">Kode MK</th>
                   <th rowspan="2" style="text-align: center;width: 40%">Nama MK</th>
                   <th rowspan="2" style="text-align: center;width: 10%">Nama Kelas</th>
+                  <th rowspan="2" style="text-align: center;width: 10%">Waktu</th>
                   <th rowspan="2" style="text-align: center;width: 10%">Bobot (SKS)</th>
                   <th rowspan="2" style="text-align: center;width: 10%">Total Mahasiswa</th>
                   <th colspan="6" style="text-align: center;width: 15%">Data Terisi</th>
@@ -98,6 +99,7 @@
                   <td><a href="'.base_url('nilai_perkuliahan/detail_nilai/'.$data->id_kp).'">'.$data->id_matkul.'</a></td>
                   <td>'.$data->nama_matkul.'</td>
                   <td>'.$data->nama_kelas.'</td>
+                  <td>'.$data->waktu.'</td>
                   <td>'.$data->bobot_matkul.'</td>
                   <td>'.$total_mahasiswa->total.'</td>
                   <td>'.$absensi->total.'</td>
@@ -133,7 +135,7 @@
                 var id_prodi = p;
 
                 $.ajax({
-                    url: '<?php echo base_url(); ?>kurikulum/get_prodi_periode/'+id_prodi,
+                    url: '<?php echo base_url(); ?>mahasiswa/get_prodi_periode2/'+id_prodi,
                     data: 'id_prodi='+id_prodi,
                     type: 'GET',
                     dataType: 'html',

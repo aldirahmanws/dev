@@ -1,8 +1,9 @@
       <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+      <?php echo $this->session->flashdata('message');?>
       <section class="content">
       <div class="row">
         <div class="col-xs-12">
-          <?php echo $this->session->flashdata('message');?>
+          
           <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">DATA MATA KULIAH</h3>

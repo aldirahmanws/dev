@@ -10,6 +10,9 @@ class Tamu extends CI_Controller {
 		$this->load->model('daftar_ulang_model');
 		$this->load->model('mahasiswa_model');
 		ini_set('display_errors', 0);
+		if ($this->session->userdata('level') == 4 OR $this->session->userdata('level') == 5 OR $this->session->userdata('level') == 2) {
+			redirect('login');
+		}
 	}
 
 	public function index(){
@@ -95,7 +98,10 @@ class Tamu extends CI_Controller {
 		if($this->session->userdata('level') == 3 || $this->session->userdata('level') == 1){
 			if($this->tamu_model->save_tamu() == TRUE){
 				$nama_pendaftar = $this->input->post('nama_pendaftar');
-				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Data '.$nama_pendaftar.' berhasil didaftarkan. </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data '.$nama_pendaftar.' berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('tamu/data_tamu');
 			} else{
 				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Username/password sudah ada. </div>');
@@ -110,7 +116,10 @@ class Tamu extends CI_Controller {
 	public function hapus_tamu($id_tamu){
 		if($this->session->userdata('level') == 3 || $this->session->userdata('level') == 1){
 			if ($this->tamu_model->hapus_tamu($id_tamu) == TRUE) {
-				$this->session->set_flashdata('message','<div class="alert alert-success">Hapus tamu berhasil </div>');
+				$this->session->set_flashdata('message','<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data tamu berhasil dihapus </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 				redirect('tamu/data_tamu');
 			} else {
 				$this->session->set_flashdata('message', 'Hapus Tamu Gagal');
@@ -143,7 +152,10 @@ class Tamu extends CI_Controller {
 
 	    if($this->upload->do_upload('bukti_transfer')){
 	      if($this->tamu_model->save_bukti_transfer($this->upload->data(), $this->uri->segment(3)) == TRUE){
-	        $this->session->set_flashdata('message','<div class="alert alert-success">Upload bukti berhasil </div>');
+	        $this->session->set_flashdata('message','<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Bukti transfer berhasil diunggah </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 	            redirect('tamu/data_tamu');
 	      } else {
 	        $this->session->set_flashdata('message','<div class="alert alert-success">Hapus tamu berhasil </div>');
@@ -158,7 +170,10 @@ class Tamu extends CI_Controller {
 	  public function save_edit_tamu(){
       $id_pendaftaran = $this->uri->segment(3);
           if ($this->tamu_model->save_edit_tamu($id_pendaftaran) == TRUE) {
-            $this->session->set_flashdata('message','<div class="alert alert-success">Edit tamu berhasil </div>');
+            $this->session->set_flashdata('message','<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data tamu berhasil diubah </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             redirect('tamu/data_tamu');
           } else {
             $data['main_view'] = 'Tamu/detail_tamu_view';
@@ -179,7 +194,10 @@ class Tamu extends CI_Controller {
 		  public function save_f1(){
       	  $id_du = $this->uri->segment(3);
           if ($this->tamu_model->save_f1($id_du) == TRUE) {
-            $this->session->set_flashdata('message','<div class="alert alert-success"> Follow Up Berhasil </div>');
+            $this->session->set_flashdata('message','<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Follow Up berhasil </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             redirect('tamu/data_tamu');
           } else {
           	$this->session->set_flashdata('message','<div class="alert alert-danger"> Follow Up Gaga l</div>');

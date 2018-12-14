@@ -1,7 +1,5 @@
-           <?php 
-                if($this->session->userdata('level') == 2){ ?>
-        
-           <?php } else { ?>
+          <?php echo $this->session->flashdata('message');?>
+          <?php if ($this->session->userdata('level') != 2) { ?>
          <a class="btn btn-sm btn-default btn-flat" href="<?php echo base_url(); ?>master_dosen"><i class="fa fa-angle-left"></i> Back</a>
          <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/detail_dosen/<?php echo $dosen->id_dosen; ?>">Profil</a>
         <a class="btn btn-sm btn-warning btn-flat" href="<?php echo base_url();?>master_dosen/jadwal_dosen/<?php echo $dosen->id_dosen; ?>">Jadwal</a>
@@ -14,10 +12,8 @@
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/penelitian/<?php echo $dosen->id_dosen; ?>">Penelitian</a>
         
          <br/><br/> 
-           <?php }
-
-           ?>
-      <?php echo $this->session->flashdata('message');?>
+          <?php } ?>
+      
       <?php if($this->session->userdata('level') == 1 &&  $this->session->userdata('level') == 6) {?>
         <div class="box box-info">
             
@@ -88,7 +84,7 @@
                   <td style="width:10%">'.$i->nama_prodi.'</td>
                   <td style="width:50%"><a href="'.base_url('nilai_perkuliahan/detail_nilai/'.$i->id_kp.'/'.$dosen->id_dosen).'"/>'.$i->nama_matkul.'</td>
                   <td style="width:10%">'.$i->semester_kurikulum.'</td>
-                  <td style="width:30%">'.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).'</td>
+                  <td style="width:30%">'.$i->waktu.' ('.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).')</td>
                   <td style="width:15%">'.$i->nama_kelas.' / '.$i->nama_ruang.'</td>
                 ' ;
                 }   
@@ -131,7 +127,7 @@
                   <td style="width:10%">'.$i->nama_prodi.'</td>
                   <td style="width:50%"><a href="'.base_url('nilai_perkuliahan/detail_nilai/'.$i->id_kp.'/'.$dosen->id_dosen).'"/>'.$i->nama_matkul.'</td>
                   <td style="width:10%">'.$i->semester_kurikulum.'</td>
-                  <td style="width:30%">'.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).'</td>
+                  <td style="width:30%">'.$i->waktu.' ('.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).')</td>
                   <td style="width:15%">'.$i->nama_kelas.' / '.$i->nama_ruang.'</td>
                 ' ;
                 }   
@@ -175,7 +171,7 @@
                   <td style="width:10%">'.$i->nama_prodi.'</td>
                   <td style="width:50%"><a href="'.base_url('nilai_perkuliahan/detail_nilai/'.$i->id_kp.'/'.$dosen->id_dosen).'"/>'.$i->nama_matkul.'</td>
                   <td style="width:10%">'.$i->semester_kurikulum.'</td>
-                  <td style="width:30%">'.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).'</td>
+                   <td style="width:30%">'.$i->waktu.' ('.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).')</td>
                   <td style="width:15%">'.$i->nama_kelas.' / '.$i->nama_ruang.'</td>
                 ' ;
                 }   
@@ -220,7 +216,7 @@
                   <td style="width:10%">'.$i->nama_prodi.'</td>
                   <td style="width:50%"><a href="'.base_url('nilai_perkuliahan/detail_nilai/'.$i->id_kp.'/'.$dosen->id_dosen).'"/>'.$i->nama_matkul.'</td>
                   <td style="width:10%">'.$i->semester_kurikulum.'</td>
-                  <td style="width:30%">'.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).'</td>
+                   <td style="width:30%">'.$i->waktu.' ('.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).')</td>
                   <td style="width:15%">'.$i->nama_kelas.' / '.$i->nama_ruang.'</td>
                 ' ;
                 }   
@@ -265,7 +261,7 @@
                   <td style="width:10%">'.$i->nama_prodi.'</td>
                   <td style="width:50%"><a href="'.base_url('nilai_perkuliahan/detail_nilai/'.$i->id_kp.'/'.$dosen->id_dosen).'"/>'.$i->nama_matkul.'</td>
                   <td style="width:10%">'.$i->semester_kurikulum.'</td>
-                  <td style="width:30%">'.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).'</td>
+                   <td style="width:30%">'.$i->waktu.' ('.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).')</td>
                   <td style="width:15%">'.$i->nama_kelas.' / '.$i->nama_ruang.'</td>
                 ' ;
                 }   

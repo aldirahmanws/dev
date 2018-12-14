@@ -2,33 +2,16 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-md-12">
-          <div class="info-box bg-aqua" 
-          <?php if($informasi == null){
-            echo 'style="display: none"';
-          }
-          ?>
-          >
-            <span class="info-box-icon"><i class="glyphicon glyphicon-info-sign"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text"> <b> <i>NEW INFO ! </i></b></span>
-              <span class="info-box-number"><?php foreach ($informasi as $data) { echo $data->judul_info; ?>
-                
-              </span>
-
-              <div class="progress">
-                <div class="progress-bar" style="width: 100%"></div>
-              </div>
-              <span class="progress-description">
-                <a href="" style="color: white" data-toggle="modal" data-target="#modal_view<?php echo $data->id_info; ?>"> 
-                    <?php echo substr($data->deskripsi_info,0,100); ?> ... </a>
-                    <a class="pull-right" style="color: white" href="<?php echo base_url(); ?>informasi" ><u><i> Read More</i></u> </a>
-                  </span>
+          <?php if ($informasi != NULL) { ?>
+          
+            <div class="alert alert-dismissible alert-info">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-info"></i> <?php foreach ($informasi as $data) { echo $data->judul_info; ?></h4>
              
+                <?php echo substr($data->deskripsi_info,0,100); ?> ... <a class="pull-right" style="color: white" href="" data-toggle="modal" data-target="#modal_view<?php echo $data->id_info; ?>"><u><i> Read More</i></u> </a>
                 <?php } ?>
-
-            </div>
-        </div>
+              </div>
+            <?php } ?>
       </div>
 
         <div class="col-lg-3 col-xs-6">
@@ -80,15 +63,16 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3><?php echo $dashboard['data_mhs_akuntansi']; ?> / <?php echo $dashboard['data_mhs_manajemen']; ?><sup style="font-size: 20px"></sup></h3>
+              <h3><?php echo $dashboard['data_mhs']; ?><sup style="font-size: 20px"></sup></h3>
 
-              <p>Akuntansi / Manajemen</p>
+              <p>Total Mahasiswa</p>
             </div>
             <div class="icon">
-              <i class="ion ion-pie-graph"></i>
+              <i class="fa fa-users"></i>
             </div>
             <a href="<?php echo base_url(); ?>mahasiswa/data_mahasiswa" class="small-box-footer">Lihat Data<i class="fa fa-arrow-circle-right"></i></a>
           </div>
+
         </div>
 
         <div class="col-md-6">
@@ -114,6 +98,7 @@
             <div id="canvas-holder">
               <canvas id="chart-area" width="150" height="150"/>
             </div>
+            <p><b>Rasio Mahasiswa Per Prodi</b></p>
           </center>
           </div>
         </div>

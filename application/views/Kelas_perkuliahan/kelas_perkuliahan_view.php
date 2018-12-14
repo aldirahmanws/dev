@@ -1,10 +1,10 @@
 
-
+<?php echo $this->session->flashdata('message');?>
     <section class="content">
 
       <div class="row">
         <div class="col-xs-12">
-          <?php echo $this->session->flashdata('message');?>
+          
           <div class="box">
 
             <div class="box-header with-border">
@@ -57,8 +57,11 @@
                 <thead>
                 <tr>
                   <th>No</th>
-                  <th>ID JADWAL</th>
+                  <th>ID KP</th>
+                  <th>ID DK</th>
+                  <th>Wajib</th>
                   <th>Prodi</th>
+                  <th>Kosentrasi</th>
                   <th>Kode MK</th>
                   <th>Nama MK</th>
                   <th>Nama Kelas</th>
@@ -82,25 +85,30 @@
 
                   $nama_dosen = $this->db->query("SELECT nama_dosen AS abc FROM tb_kelas_dosen RIGHT JOIN tb_kp ON tb_kp.id_kp = tb_kelas_dosen.id_kp left JOIN tb_dosen ON tb_dosen.id_dosen = tb_kelas_dosen.id_dosen WHERE tb_kp.id_kp = '$data->id_kp'")->row();
                   if ($nama_dosen->abc == null) {
-                    $a = '<a href="'.base_url('kelas_perkuliahan/detail_kelas/'.$data->id_kp).'"><p style="color:red;"><b>Belum diisi </b></p></a>';
+                    $a = '<a href="'.base_url('kelas_perkuliahan/detail_kelas/'.$data->id_kp.'/'.$data->id_detail_kurikulum.'/'.$data->id_waktu).'"><p style="color:red;"><b>Belum diisi </b></p></a>';
                   } else {
                     $a = $nama_dosen->abc;
                   }
                   echo '                  
                 <tr>
                   <td>'.++$no.'</td>
-                  <td>'.$data->id_jadwal.'</td>
+                  <td>'.$data->id_kp.'</td>
+                  <td>'.$data->id_detail_kurikulum.'</td>
+                  <td>'.$data->wajib.'</td>
                   <td>'.$data->nama_prodi.'</td>
-                  <td><a href="'.base_url('kelas_perkuliahan/detail_kelas/'.$data->id_kp).'">'.$data->id_matkul.'</a></td>
+                  <td>'.$data->nama_konsentrasi.'</td>
+                  <td><a href="'.base_url('kelas_perkuliahan/detail_kelas/'.$data->id_kp.'/'.$data->id_detail_kurikulum.'/'.$data->id_waktu).'">'.$data->id_matkul.'</a></td>
                   <td>'.$data->nama_matkul.'</td>
                   <td>'.$data->nama_kelas.'</td>
                   <td>'.$data->semester.'</td>
                   <td>'.$a.'</td>
                   <td>'.$data->waktu.'</td>
-                  <td>'.$total_mahasiswa->total.'</td>
-                  <td>
+                  <td>'.$total_mahasiswa->total.'</td>';?>
+                  
+                  <td> <?php if (date('Y-m-d') >= $data->tgl_mulai AND date('Y-m-d') <= $data->tgl_akhir) { ?>
+                  <?= '
                        <a href="'.base_url('kelas_perkuliahan/detail_kp/'.$data->id_kp).'" class="btn btn-warning  btn-xs btn-flat"><i class="glyphicon glyphicon-pencil"></i><span class="tooltiptext">Edit Kelas </span></a>
-                        <a href="'.base_url('kelas_perkuliahan/hapus_kp/'.$data->id_kp).'" class="btn btn-danger btn-xs btn-flat" onclick="return confirm('.$alert.')"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus Kelas</span></a>
+                        <a href="'.base_url('kelas_perkuliahan/hapus_kp/'.$data->id_kp).'" class="btn btn-danger btn-xs btn-flat" onclick="return confirm('.$alert.')"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus Kelas</span></a> ';?><?php } ?> <?= '
                     
                   </td>
                   </tr>
@@ -137,32 +145,35 @@
                       <?php echo form_open('kelas_perkuliahan/save_kp'); ?>
                       <table class="table" style="text-transform: uppercase;">
         <tr>
-          <td class="left_column">Masukan Jadwal <font color="#FF0000">*</font>
+          <td class="left_column">Masukan Mata Kuliah <font color="#FF0000">*</font>
             </td>
           <td colspan="9">: 
       <input type="text" name="jadwal" id="jadwal" class="validate[required] text-input"  size="5" style="width: 90%;" required="" placeholder="Masukan mata kuliah yang sudah terjadwal">
-      <input type="hidden" name="id_jadwal" id="id_jadwal" class="validate[required] text-input"  size="5" style="width: 90%;"></td>
         </tr> 
         <tr>
-          <td class="left_column">Ruangan <font color="#FF0000">*</font>
+          <td class="left_column">Periode <font color="#FF0000">*</font>
             </td>
           <td colspan="9">: 
-      <input type="text" name="ruang" id="ruang" class="validate[required] text-input"  size="5" style="width: 40%; background-color:#E0E0E0"  readonly=""> </td>
-        </tr> 
-        <tr>
-          <td class="left_column">Program Studi <font color="#FF0000">*</font>
-            </td>
-          <td colspan="9">: 
-      <input type="text" name="prodi" id="prodi" class="validate[required] text-input"  size="5" style="width: 40%; background-color:#E0E0E0" readonly="" >
-      </td>
+      <input type="text" name="semester" id="semester" class="validate[required] text-input"  size="5" style="width: 40%; background-color:#E0E0E0"  readonly="">
+      <input type="hidden" name="id_periode" id="id_periode" class="validate[required] text-input"  size="5" style="width: 40%; background-color:#E0E0E0"  readonly=""> </td>
         </tr> 
         <tr>
           <td class="left_column">Konsentrasi <font color="#FF0000">*</font>
             </td>
           <td colspan="9">: 
-      <input type="text" name="konsentrasi" id="konsentrasi" class="validate[required] text-input"  size="5" style="width: 40%; background-color:#E0E0E0" readonly="" >
+      <input type="text" name="nama_konsentrasi" id="nama_konsentrasi" class="validate[required] text-input"  size="5" style="width: 40%; background-color:#E0E0E0" readonly="" >
+      <input type="hidden" name="id_konsentrasi" id="id_konsentrasi" class="validate[required] text-input"  size="5" style="width: 40%; background-color:#E0E0E0" readonly="" >
+      <input type="hidden" name="id_detail_kurikulum" id="id_detail_kurikulum" class="validate[required] text-input"  size="5" style="width: 40%; background-color:#E0E0E0" readonly="" >
       </td>
         </tr> 
+        <tr>
+          <td class="left_column">Waktu</td>
+            <td>: <select name="id_waktu" id="id_waktu" class="validate[required]" required="" style="width: 100px" >
+        <option value=""> Pilih Waktu </option>
+        <option value="1"> Pagi </option>
+        <option value="2"> Sore </option>
+      </select>    </td>
+        </tr>
         <tr>
           <td class="left_column">Nama Kelas <font color="#FF0000">*</font>
             </td>
@@ -172,15 +183,7 @@
         <tr>
           <td class="left_column">Bahasan</td>
             <td colspan="9">: 
-      <textarea wrap="soft" name="bahasan" id="bahasan" class="text-input" rows="5" cols="50" maxlength="200"></textarea></td>
-        </tr>
-        <tr>
-            <td class="left_column">Jenis Evaluasi</td>
-            <td>: 
-            <input type="text" name="jenis_evaluasi" id="jenis_evaluasi" class="text-input" size="2"  style="width:40%" >         
-            </td>
-            <input type="hidden" name="id_kp" id="id_kp" class="text-input" maxlength="3" size="2"  style="width:10%" value="<?php echo $this->uri->segment(3); ?>"> 
-            
+      <textarea wrap="soft" name="bahasan" id="bahasan" class="text-input" rows="5" cols="50"></textarea></td>
         </tr>
         <tr>
          <td class="left_column">Tanggal Mulai Efektif</td>
@@ -218,10 +221,12 @@
       minLength:1,
       select: function(event, ui){
         $('#jadwal').val(ui.item.label);
-        $('#id_jadwal').val(ui.item.id);
-        $('#ruang').val(ui.item.ruang);
-        $('#prodi').val(ui.item.prodi);
-        $('#konsentrasi').val(ui.item.konsentrasi);
+        $('#id_detail_kurikulum').val(ui.item.id_detail_kurikulum);
+        $('#id_konsentrasi').val(ui.item.id_konsentrasi);
+        $('#id_periode').val(ui.item.id_periode);
+        $('#semester').val(ui.item.semester);
+        $('#nama_konsentrasi').val(ui.item.nama_konsentrasi);
+        console.log(ui);
       }
     });    
   });
@@ -232,7 +237,7 @@
                 var id_prodi = p;
 
                 $.ajax({
-                    url: '<?php echo base_url(); ?>kurikulum/get_prodi_periode/'+id_prodi,
+                    url: '<?php echo base_url(); ?>mahasiswa/get_prodi_periode2/'+id_prodi,
                     data: 'id_prodi='+id_prodi,
                     type: 'GET',
                     dataType: 'html',
@@ -242,5 +247,3 @@
                 });
             }
 </script>
-
-  

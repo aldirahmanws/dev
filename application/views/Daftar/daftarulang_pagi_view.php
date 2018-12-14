@@ -163,7 +163,7 @@
                 </div>
                 <div class="form-group">
                   <label for="prodi">Program Studi</label>
-                  <select id="id_prodi" class="form-control" required="" name="id_prodi" ="" onchange="return get_concentrate(this.value)" onclick="return get_prodi_periode(this.value)">
+                  <select id="id_prodi" class="form-control" required="" name="id_prodi" ="" onchange="return get_concentrate(this.value), get_dosen_pa(this.value)" onclick="return get_prodi_periode(this.value)">
                     <option value="">Pilih Prodi</option>   
                     <?php 
 
@@ -178,7 +178,8 @@
                   <label for="concentrate">Konsentrasi</label>
                   <select id="concentrate" name="concentrate" class="form-control" required="">
                   <option value=""> Pilih Prodi Dahulu </option>
-                  </select>                                     
+                  </select> 
+                   <input type="hidden" name="dosen_pa" id="dosen_pa" value="">                                  
                 </div> 
                 <div class="form-group">
                         <label >Periode Pendaftaran</label>
@@ -274,6 +275,20 @@
                     dataType: 'html',
                     success: function(msg) {
                         $("#concentrate").html(msg);
+
+                    }
+                });
+            }
+            function get_dosen_pa(p) {
+                var id_prodi = p;
+
+                $.ajax({
+                    url: '<?php echo base_url(); ?>daftar_ulang/get_dosen_pa/'+id_prodi,
+                    data: 'id_prodi='+id_prodi,
+                    type: 'GET',
+                    dataType: 'html',
+                    success: function(msg) {
+                        document.getElementById("dosen_pa").value = msg;
 
                     }
                 });

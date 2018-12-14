@@ -10,7 +10,8 @@ class Prodi_model extends CI_Model {
 	}
 
 	public function data_prodi(){
-		return $this->db->order_by('id_prodi','ASC')
+		return $this->db->join('tb_dosen','tb_dosen.id_dosen=tb_prodi.id_dosen')
+    ->order_by('id_prodi','ASC')
 		->get('tb_prodi')
 		->result();
 	}
@@ -20,7 +21,7 @@ class Prodi_model extends CI_Model {
         $data = array(
             'id_prodi'        => $this->input->post('id_prodi'),
             'nama_prodi'      	=> $this->input->post('nama_prodi'),
-            'ketua_prodi'      		=> $this->input->post('ketua_prodi')
+            'id_dosen'      		=> $this->input->post('id_dosen')
             
         );
     
@@ -68,7 +69,8 @@ class Prodi_model extends CI_Model {
     }
 
     public function get_prodi_by_id($id_prodi){
-      return $this->db->where('id_prodi', $id_prodi)
+      return $this->db->join('tb_dosen','tb_dosen.id_dosen=tb_prodi.id_dosen')
+              ->where('id_prodi', $id_prodi)
               ->get('tb_prodi')
               ->row();
   }
@@ -77,7 +79,7 @@ class Prodi_model extends CI_Model {
     $data = array(
         'id_prodi'        => $this->input->post('id_prodi'),
         'nama_prodi'      => $this->input->post('nama_prodi'),
-        'ketua_prodi'     => $this->input->post('ketua_prodi')
+        'id_dosen'     => $this->input->post('id_dosen')
       );
 
     if (!empty($data)) {

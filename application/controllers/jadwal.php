@@ -14,7 +14,7 @@ class Jadwal extends CI_Controller {
 
 	public function index()
 	{
-		if ($this->session->userdata('logged_in') == TRUE) {
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1) {
 			$data['jadwal'] = $this->jadwal_model->data_jadwal();
 			$data['getProdi'] = $this->daftar_ulang_model->getProdi();
 			$data['getRuang'] = $this->ruang_model->getRuang();
@@ -27,7 +27,7 @@ class Jadwal extends CI_Controller {
 
 	public function detail_jadwal()
 	{
-		if ($this->session->userdata('logged_in') == TRUE) {
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1) {
 			$id_jadwal = $this->uri->segment(3);
 			$data['getRuang'] = $this->ruang_model->getRuang();
 			$data['jadwal'] = $this->jadwal_model->detail_jadwal($id_jadwal);
@@ -61,7 +61,10 @@ class Jadwal extends CI_Controller {
 	public function simpan_jadwal()
 	{
 			if($this->jadwal_model->simpan_jadwal() == TRUE){
-				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Jadwal berhasil ditambahkan </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data jadwal berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('jadwal');
 			} else{
 				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Jadwal gagal ditambahkan </div>');
@@ -73,7 +76,10 @@ class Jadwal extends CI_Controller {
 	{
 		$id_jadwal = $this->uri->segment(3);
 			if($this->jadwal_model->edit_jadwal($id_jadwal) == TRUE){
-				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Jadwal berhasil diubah </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data jadwal berhasil diubah </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('jadwal');
 			} else{
 				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Jadwal gagal diubah </div>');
@@ -85,7 +91,10 @@ class Jadwal extends CI_Controller {
 		if ($this->session->userdata('logged_in') == TRUE) {
 		$id_jadwal = $this->uri->segment(3);
 		if ($this->jadwal_model->hapus_jadwal($id_jadwal) == TRUE) {
-			$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Jadwal berhasil dihapus </div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data jadwal berhasil dihapus</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 			redirect('jadwal');
 		} else {
 			$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Jadwal gagal ditambahkan </div>');
@@ -98,7 +107,7 @@ class Jadwal extends CI_Controller {
 
 	public function jadwal_mhs()
 	{
-		if ($this->session->userdata('logged_in') == TRUE) {
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1) {
 			$id_mahasiswa = $this->uri->segment(3);
 			$data['jadwal'] = $this->jadwal_model->jadwal_mhs($id_mahasiswa);
 			$data['mahasiswa'] = $this->mahasiswa_model->detail_krs_mahasiswa($id_mahasiswa);

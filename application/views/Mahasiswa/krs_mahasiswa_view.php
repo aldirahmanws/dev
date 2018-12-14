@@ -1,3 +1,4 @@
+           <?php echo $this->session->flashdata('message');?>
            <?php 
                 if($this->session->userdata('level') == 5){ 
                   $id_mahasiswa = $mahasiswa->id_mahasiswa; $semester_aktif = $mahasiswa->semester_aktif?>
@@ -19,7 +20,7 @@
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/transfer_nilai/<?php echo $mahasiswa->id_mahasiswa; ?>">Nilai Transfer</a>
         <?php } ?>
 
-       <?php if ($mahasiswa->asal_pt == 1 OR $mahasiswa->asal_pt == '' OR $mahasiswa->asal_pt = ' ') { ?>
+       <?php if ($mahasiswa->asal_pt == 1 OR $mahasiswa->asal_pt == '' OR $mahasiswa->asal_pt == ' ') { ?>
         <a class="btn btn-sm btn-warning btn-flat" href="<?php echo base_url();?>mahasiswa/krs_mahasiswa/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>/<?php echo $mahasiswa->id_konsentrasi; ?>">KRS Mahasiswa</a>
         <?php } else { ?>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/kelas_mhs/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>">KRS Mahasiswa</a>
@@ -61,9 +62,20 @@
             </div>
             <!-- /.box-body -->
           </div>
-          
+          <?php
+               if ($mahasiswa->id_status != '1' ) { 
+            } 
+                 ?>
+ <?php echo form_close();?>
+              <?php 
+              if ($mahasiswa->id_status == '1') { echo '
+              <br>
+              <a href="'.base_url('mahasiswa/kelas_mhs/'.$mahasiswa->id_mahasiswa.'/'.$mahasiswa->id_prodi.'/'.$mahasiswa->semester_aktif).'" class="btn btn-warning btn-flat btn-sm pull-right">Lihat KRS Semester Ini</a> <br> <br>
+              ';
+            } ?> 
           
         <div class="box">
+          
         <section class="content">
       <div class="row">
         
@@ -86,7 +98,6 @@
                 <thead>
                 <tr>
                   <th>No</th>
-                  <th>Prodi</th>
                   <th>Kode Matkul</th>
                   <th>Nama Matkul</th>
                   <th>SKS</th>
@@ -103,8 +114,6 @@
                 foreach ($krs as $i) {
                   if ($i->nama_konsentrasi == 'Semua' OR $i->id_konsentrasi == $mahasiswa->id_konsentrasi AND $periode->id_periode == $i->id_periode) { if ($i->waktu == $mahasiswa->waktu) {
                     
-                  
-                       
                   $total_mahasiswa = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs WHERE id_kp = '$i->id_kp'")->row();
                   if(date('Y-m-d') > $i->tgl_mulai AND date('Y-m-d') < $i->tgl_akhir){
                   if ($total_mahasiswa->total < $i->kapasitas) {
@@ -114,7 +123,6 @@
                   
                 <tr>
                   <td>'.++$no.'</td>
-                  <td>'.$i->nama_prodi.'</td>
                   <td>'.$i->id_matkul.'</td>
                   <td>'.$i->nama_matkul.'</td>
                   <td>'.$i->bobot_matkul.'</td>
@@ -134,32 +142,31 @@
             }
           } else {
             echo '
-              <td colspan="6"> Anda sudah mengisi KRS</td>
+              <td colspan="6"> Anda sudah mengisi KRS Wajib</td>
             ';
           }
             ?>
                 </tbody>
               </table>
-
-            </div>
-            <?php echo form_open('mahasiswa/simpan_krs_mhs/'.$mahasiswa->id_prodi.'/'.$mahasiswa->semester_aktif.'/'.$periode->id_periode);?>
+              <?php echo form_open('mahasiswa/simpan_krs_mhs/'.$mahasiswa->id_prodi.'/'.$mahasiswa->semester_aktif.'/'.$periode->id_periode);?>
               <input type="hidden" class="form-control" id="id_mahasiswa" name="id_mahasiswa" value="<?php echo $id_mahasiswa ?>">
               <input type="hidden" class="form-control" id="semester_aktif" name="semester_aktif" value="<?php echo $semester_aktif ?>">
                <input type="hidden" class="form-control" id="id_kp" name="id_kp" value="<?php echo $id_kp ?>">
                <input type="hidden" class="form-control" id="id_detail_kurikulum" name="id_detail_kurikulum" value="<?php echo $id_detail_kurikulum ?>">
-               
+
                <?php
-               if ($mahasiswa->id_status != '1' ) { echo ' 
-              <button type="submit"  class="btn btn-success">Simpan</button> ';
+               if ($mahasiswa->id_status != '1' ) { echo ' <br>
+              <button type="submit"  class="btn btn-success btn-flat btn-sm pull-right">Simpan</button> ';
             } 
                  ?>
  <?php echo form_close();?>
+            </div>
+            
               <?php 
-              if ($mahasiswa->id_status == '1') { echo '
-              <br>
-              <a href="'.base_url('mahasiswa/kelas_mhs/'.$mahasiswa->id_mahasiswa.'/'.$mahasiswa->id_prodi.'/'.$mahasiswa->semester_aktif).'" class="btn btn-warning btn-flat btn-sm pull-right">Lihat KRS Semester Ini</a>
-              ';
-            } ?>
+              if ($mahasiswa->id_status == '1') { 
+            } ?> 
+               
+               <?php echo form_close()?>
 
              
             <!-- /.box-body -->
@@ -173,6 +180,110 @@
     
    
     </div>
+
+
+    <div class="box">
+        <section class="content">
+      <div class="row">
+        
+          
+            <div class="box-header">
+              <h3 class="box-title">Data KRS Pilihan</h3>
+        
+
+            
+            <!-- /.box-header -->
+            <div class="box-body">
+              <?php echo form_open('mahasiswa/simpan_krs_pilihan/'.$this->uri->segment(3).'/'.$mahasiswa->id_prodi.'/'.$mahasiswa->semester_aktif.'/'.$mahasiswa->id_konsentrasi); ?>
+
+              <table class="table table-bordered table-striped">
+                <thead>
+
+                <tr>
+                  <th>No</th>
+                  <th>Kode Matkul</th>
+                  <th>Nama Matkul</th>
+                  <th>SKS</th>
+                  <th>Dosen</th>
+                  <th>Aksi</th>
+                </tr>
+                </thead>
+                <tbody> 
+                    
+                  <?php 
+                $no = 0;
+                $cek_pilihan = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs JOIN tb_detail_kurikulum ON tb_detail_kurikulum.id_detail_kurikulum = tb_kelas_mhs.id_detail_kurikulum WHERE tb_detail_kurikulum.wajib = '' AND tb_detail_kurikulum.semester_kurikulum = '$mahasiswa->semester_aktif' AND tb_kelas_mhs.id_mahasiswa = '$mahasiswa->id_mahasiswa'")->row();
+
+
+                if ($cek_pilihan->total <= '0') {
+
+                foreach ($pilihan as $i) {
+
+                  if ($i->waktu == $mahasiswa->waktu) {
+                    
+                  $total_mahasiswa = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs WHERE id_kp = '$i->id_kp'")->row();
+                  if(date('Y-m-d') > $i->tgl_mulai AND date('Y-m-d') < $i->tgl_akhir){
+                  if ($total_mahasiswa->total < $i->kapasitas) {
+                        
+                 ?>
+
+
+                  
+                <tr>
+                  <td><?php echo ++$no ?></td>
+                  <td><?php echo $i->id_matkul ?></td>
+                  <td><?php echo $i->nama_matkul ?></td>
+                  <td><?php echo $i->bobot_matkul ?></td>
+                  <td><?php echo $i->nama_dosen ?></td>
+                  <td>
+
+                    <input type="checkbox" name="id[]" onchange="limit_checkbox('1','check');" value="<?php echo $i->id_kp; ?>/<?php echo $i->id_detail_kurikulum; ?>"></td>
+                </tr>
+                
+                  
+                <?php }   
+              } else {
+                ?>
+                 <tr>
+                    <td colspan="6"> Waktu mengisi KRS <?php echo $i->nama_matkul ?> sudah berakhir. Segera hubungi akademik!</td>
+                  </tr>
+                <?php 
+              }
+              } 
+            } ?>
+             <?php 
+          } else {
+            ?> 
+              <td colspan="6"> Anda sudah mengisi KRS Pilihan</td>
+            <?php
+          }
+            ?>
+                </tbody>
+              </table>
+              <?php if ($cek_pilihan->total <= '0') { ?>
+                <input type="submit" value="Simpan" onclick="return confirm('Data yang sudah dipilih tidak bisa dipilh ulang. Anda Yakin?')" class="btn btn-success btn-flat btn-sm pull-right" style="padding-right: 10px;"> 
+              <?php } ?>
+              
+<?php echo form_close()?>
+            </div>
+
+            
+
+             
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      
+      <!-- /.row -->
+    </section>
+    
+   
+    </div>
+
+    
+
     <div class="callout callout-info">
         <strong>Keterangan :</strong>
             <br />
@@ -244,5 +355,13 @@
   });
 
   </script>
+
+<script type="text/javascript">
+$("input:checkbox").click(function(){
+    if ($("input:checkbox:checked").length > 1){
+      return false;
+   }
+});
+</script>
 
 

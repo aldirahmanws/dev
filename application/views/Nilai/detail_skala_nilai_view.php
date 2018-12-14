@@ -1,4 +1,5 @@
 <form  method="post" action="<?php echo base_url(); ?>nilai/save_edit_skala_nilai/<?php echo $nilai->id_skala_nilai; ?>" enctype="multipart/form-data">
+  <?php echo $this->session->flashdata('message');?>
 <div class="row"> 
     <div class="col-md-12">
         <div>
@@ -8,7 +9,7 @@
             <div class="panel-body">
               <div class="row">
                 <div class="col-lg-6">
-                  <?php echo $this->session->flashdata('message');?>
+                  
                  
                           <div class="form-group">
                             <label>Program Studi</label>

@@ -8,6 +8,9 @@ class Ruang extends CI_Controller {
 		parent::__construct();
 		$this->load->model('ruang_model');
 		ini_set('display_errors', 0);
+		if ($this->session->userdata('level') == 4 OR $this->session->userdata('level') == 5 OR $this->session->userdata('level') == 2) {
+			redirect('login');
+		}
 	}
 
 	public function index(){
@@ -24,7 +27,10 @@ class Ruang extends CI_Controller {
 	{
 			if($this->ruang_model->simpan_ruang() == TRUE){
 				$username = $this->input->post('nama_ruang');
-				$this->session->set_flashdata('message', '<div class="alert alert-success">Ruangan '.$username.' berhasil ditambahkan </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data ruang berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('ruang'); 
 			} else{
 				$this->session->set_flashdata('message', '<div class="alert alert-danger"> '.validation_errors().' </div>');
@@ -34,7 +40,10 @@ class Ruang extends CI_Controller {
 
 	public function hapus_ruang($id_ruang){
 		if ($this->ruang_model->hapus_ruang($id_ruang) == TRUE) {
-			$this->session->set_flashdata('message', '<div class="alert alert-success"> Hapus Ruang Berhasil </div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data ruang berhasil dihapus </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 			redirect('ruang');
 		} else {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger"> Hapus Ruang Gagal </div>');
@@ -46,7 +55,10 @@ class Ruang extends CI_Controller {
 	public function edit_ruang(){
 			$id_ruang = $this->input->post('id_ruang');
 					if ($this->ruang_model->edit_ruang($id_ruang) == TRUE) {
-						$this->session->set_flashdata('message', '<div class="alert alert-success"> Edit Ruang Berhasil </div>');
+						$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data grade berhasil diubah </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 						redirect('ruang');
 					} else {
 						$this->session->set_flashdata('message', '<div class="alert alert-danger"> Edit Ruang Gagal </div>');

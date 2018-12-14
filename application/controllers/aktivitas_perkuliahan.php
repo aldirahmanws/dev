@@ -14,7 +14,7 @@ class Aktivitas_perkuliahan extends CI_Controller {
 
 	public function index()
 	{
-		if ($this->session->userdata('logged_in') == TRUE) {
+		if ($this->session->userdata('logged_in') == TRUE AND $this->session->userdata('level') == 1 OR $this->session->userdata('level') == 6) {
 			$data['getProdi'] = $this->daftar_ulang_model->getProdi();
 			$data['getPeriode'] = $this->daftar_ulang_model->getPeriode();
 			$data['aktivitas'] = $this->aktivitas_perkuliahan_model->data_aktivitas_perkuliahan();
@@ -72,6 +72,7 @@ class Aktivitas_perkuliahan extends CI_Controller {
 
 	public function detail_ap()
 	{
+		if ($this->session->userdata('logged_in') == TRUE AND $this->session->userdata('level') == 1 OR $this->session->userdata('level') == 6) {
 			$id_aktivitas = $this->uri->segment(3);
 			$id_mahasiswa = $this->uri->segment(4);
 			$id_periode = $this->uri->segment(5);
@@ -81,6 +82,10 @@ class Aktivitas_perkuliahan extends CI_Controller {
 			$data['nilai2'] = $this->aktivitas_perkuliahan_model->data_ipk($id_mahasiswa, $semester_ak);
 			$data['main_view'] = 'Aktivitas_perkuliahan/detail_aktivitas_perkuliahan_view';
 			$this->load->view('template', $data);
+		} else {
+			redirect('login');
+		}
+			
 	}
 
 
@@ -91,7 +96,10 @@ class Aktivitas_perkuliahan extends CI_Controller {
 		$semester_aktif = $this->input->post('semester_aktif');
 		$ipk_ak = $this->input->post('ipk_ak');
 			if($this->aktivitas_perkuliahan_model->save_ap() == TRUE && $this->aktivitas_perkuliahan_model->update_status($id_mahasiswa, $semester_aktif) == TRUE && $this->mahasiswa_model->update_grade($id_mahasiswa, $id_grade) == TRUE  && $this->aktivitas_perkuliahan_model->update_ipk($id_mahasiswa, $ipk_ak) == TRUE){
-				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Data aktivitas perkuliahan berhasil ditambahkan </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data aktivitas perkuliahan berhasil ditambahkan</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('aktivitas_perkuliahan');
 			} else{
 				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Data aktivitas perkuliahan gagal ditambahkan </div>');
@@ -107,7 +115,10 @@ class Aktivitas_perkuliahan extends CI_Controller {
 		$semester_aktif = $this->input->post('semester_aktif');
 		$ipk_ak = $this->input->post('ipk_ak');
 			if($this->aktivitas_perkuliahan_model->save_edit_ap($id_aktivitas) == TRUE && $this->aktivitas_perkuliahan_model->update_status($id_mahasiswa, $semester_aktif) == TRUE && $this->mahasiswa_model->update_grade($id_mahasiswa, $id_grade) == TRUE  && $this->aktivitas_perkuliahan_model->update_ipk($id_mahasiswa, $ipk_ak) == TRUE){
-				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Ubah data aktivitas perkuliahan berhasil </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data aktivitas perkuliahan berhasil diubah</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('aktivitas_perkuliahan');
 			} else{
 				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Edit perkuliahan gagal </div>');

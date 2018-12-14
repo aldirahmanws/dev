@@ -12,6 +12,9 @@ class Nilai_perkuliahan extends CI_Controller {
 		$this->load->model('nilai_perkuliahan_model');
 		$this->load->model('dosen_model');
 		ini_set('display_errors', 0);
+		if ($this->session->userdata('level') == 4 OR $this->session->userdata('level') == 5 OR $this->session->userdata('level') == 3) {
+			redirect('login');
+		}
 	}
 
 
@@ -95,8 +98,11 @@ class Nilai_perkuliahan extends CI_Controller {
 			$id_mahasiswa = $this->uri->segment(4);
 			$id_detail_kurikulum = $this->uri->segment(5);
 
-					if ($this->nilai_perkuliahan_model->save_edit_nilai($id_kelas_mhs) == TRUE && $this->nilai_perkuliahan_model->save_edit_ket_nilai($id_mahasiswa, $id_detail_kurikulum) == TRUE) {
-						$this->session->set_flashdata('message', '<div class="alert alert-success"> Input Nilai Berhasil </div>');
+					if ($this->nilai_perkuliahan_model->save_edit_nilai($id_kelas_mhs) == TRUE) {
+						$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Input nilai berhasil </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             			$id_kp = $this->input->post('id_kp');
             			redirect('nilai_perkuliahan/detail_nilai/'.$id_kp);
 					} else {

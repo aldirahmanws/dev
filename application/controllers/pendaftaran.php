@@ -9,6 +9,9 @@ class Pendaftaran extends CI_Controller {
 		$this->load->model('pendaftaran_model');
     $this->load->model('daftar_ulang_model');
     ini_set('display_errors', 0);
+    if ($this->session->userdata('level') == 4 OR $this->session->userdata('level') == 5 OR $this->session->userdata('level') == 2) {
+      redirect('login');
+    }
 	}
 
   public function data_pra_pendaftar()
@@ -40,7 +43,10 @@ class Pendaftaran extends CI_Controller {
     if ($this->session->userdata('logged_in') == TRUE) {
 			if($this->pendaftaran_model->save_pendaftaran_pagi() == TRUE){
 				$pendaftar = $this->input->post('nama_pendaftar');
-				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Data '.$pendaftar.' berhasil didaftarkan. </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data '.$pendaftaran.' berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('pendaftaran/data_pra_pendaftar');
 			} else{
 				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Username/password sudah ada. </div>');

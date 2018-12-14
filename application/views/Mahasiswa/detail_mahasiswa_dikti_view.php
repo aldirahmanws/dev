@@ -1,13 +1,6 @@
 
 
-<?php
-$ea = $this->session->flashdata('message');
-if(!empty($ea)){
-    echo '<div class="callout callout-info">';
-    echo $ea;
-    echo '</div>';
-}
-?>
+<?php echo $this->session->flashdata('message');?>
 <form  method="post" action="<?php echo base_url(); ?>mahasiswa/save_edit_mahasiswa/<?php echo $mahasiswa->id_mahasiswa; ?>/<?php echo $mahasiswa->nim; ?>" enctype="multipart/form-data">
         
         <div class="box box-info">
@@ -61,7 +54,7 @@ if(!empty($ea)){
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
               <li class="active"><a href="#tab_0" data-toggle="tab">Profil</a></li>
-              <li><a href="#tab_1" data-toggle="tab">Alamats</a></li>
+              <li><a href="#tab_1" data-toggle="tab">Alamat</a></li>
               <li><a href="#tab_2" data-toggle="tab">Orang Tua</a></li>
               <li><a href="#tab_3" data-toggle="tab">Wali</a></li>
               <li class="pull-right"><button class="btn btn-sm btn-primary btn-flat"><i class="fa fa-save"></i> Save</button> </li>
@@ -171,32 +164,32 @@ if(!empty($ea)){
                 </tr>
                 <tr>
                     <td class="left_column">Jenis Tinggal</td>
-                    <td colspan="5">: <select name="jenis_tinggal" id="jenis_tinggal">
-                    <option value="<?php echo $mahasiswa->jenis_tinggal; ?>"><?php echo $mahasiswa->jenis_tinggal; ?></option>
-                    <option value="Bersama orang tua">Bersama orang tua</option>
-                    <option value="Wali">Wali</option>
-                    <option value="Kost">Kost</option>
-                    <option value="Asrama">Asrama</option>
-                    <option value="Panti asuhan">Panti asuhan</option>
-                    <option value="Lainnya">Lainnya</option>
+                    <td colspan="5">: <select name="id_jt" id="id_jt">
+                    <option value="<?php echo $mahasiswa->id_jt; ?>"><?php echo $mahasiswa->jenis_tinggal; ?></option>
+                    <option value="1">Bersama orang tua</option>
+                    <option value="2">Wali</option>
+                    <option value="3">Kost</option>
+                    <option value="4">Asrama</option>
+                    <option value="5">Panti asuhan</option>
+                    <option value="6">Lainnya</option>
                     </select></td>
                 </tr>
                  <tr>
                     <td class="left_column">Alat Transportasi</td>
-                    <td colspan="5">: <select name="alat_transportasi" id="alat_transportasi">
-                    <option value="<?php echo $mahasiswa->transportasi; ?>"><?php echo $mahasiswa->transportasi; ?></option>
-                    <option value="Jalan kaki">Jalan kaki</option>
-                    <option value="Angkutan umum/bus/pete-pete">Angkutan umum/bus/pete-pete</option>
-                    <option value="Mobil/bus antar jemput">Mobil/bus antar jemput</option>
-                    <option value="Kereta api">Kereta api</option>
-                    <option value="Ojek">Ojek</option>
-                    <option value="Andong/bendi/sado/dokar/delman/becak">Andong/bendi/sado/dokar/delman/becak</option>
-                    <option value="Perahu penyeberangan/rakit/getek">Perahu penyeberangan/rakit/getek</option>
-                    <option value="Kuda">Kuda</option>
-                    <option value="Sepeda">Sepeda</option>
-                    <option value="Sepeda motor">Sepeda motor</option>
-                    <option value="Mobil pribadi">Mobil pribadi</option>
-                    <option value="Lainnya">Lainnya</option>
+                    <td colspan="5">: <select name="id_transportasi" id="id_transportasi">
+                    <option value="<?php echo $mahasiswa->id_transportasi; ?>"><?php echo $mahasiswa->transportasi; ?></option>
+                    <option value="1">Jalan kaki</option>
+                    <option value="2">Angkutan umum/bus/pete-pete</option>
+                    <option value="3">Mobil/bus antar jemput</option>
+                    <option value="4">Kereta api</option>
+                    <option value="5">Ojek</option>
+                    <option value="6">Andong/bendi/sado/dokar/delman/becak</option>
+                    <option value="7">Perahu penyeberangan/rakit/getek</option>
+                    <option value="8">Kuda</option>
+                    <option value="9">Sepeda</option>
+                    <option value="10">Sepeda motor</option>
+                    <option value="11">Mobil pribadi</option>
+                    <option value="12">Lainnya</option>
                 </select></td>
                 </tr>
                 <tr>

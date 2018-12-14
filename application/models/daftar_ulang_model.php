@@ -68,9 +68,17 @@ class Daftar_ulang_model extends CI_Model {
     public function get_concentrate($data){
       return $this->db->join('tb_konsentrasi','tb_konsentrasi.id_prodi=tb_prodi.id_prodi')
               ->where('tb_prodi.id_prodi',$data)
+              ->where('tb_konsentrasi.nama_konsentrasi !=', 'Semua')
               ->get('tb_prodi')
               ->result();
   }
+
+  public function get_dosen_pa($data){
+      return $this->db->where('id_prodi',$data)
+              ->get('tb_prodi')
+              ->row();
+  }
+
 
   public function get_grade($semester_aktif){
       return $this->db->like('tb_grade.ket',$semester_aktif)
@@ -136,6 +144,7 @@ class Daftar_ulang_model extends CI_Model {
             'nilai_mat'      => $this->input->post('mtk', TRUE),
             'nilai_bing'      => $this->input->post('bing', TRUE),
             'nilai_psikotes'     => $this->input->post('psikotes', TRUE),
+            'no_surat_tes'     => $this->input->post('no_surat_tes', TRUE),
             'tanggal_hasil_tes'     => date('Y-m-d')
 
         );

@@ -16,27 +16,9 @@ class Mahasiswa extends CI_Controller {
 		ini_set('display_errors', 0);
 	}
 	 
-	public function index()
-	{		
-		if ($this->session->userdata('logged_in') == TRUE) {
-		
-			if($this->session->userdata('level') == 5){
-				$id_mahasiswa = $this->session->userdata('id_mahasiswa');
-				$data['id_mahasiswa'] = $this->session->userdata('id_mahasiswa');
-				$data['mahasiswa'] = $this->mahasiswa_model->detail_mahasiswa_dikti($id_mahasiswa);
-				$data['main_view'] = 'Mahasiswa/lihat_mahasiswa_dikti_view';
-				$this->load->view('template', $data);	
-			} else {
-				redirect(base_url('login'));
-			}
-		} else {
-			redirect('login');
-		}
-			
-	}
 	public function mahasiswa_data()
 	{
-		if ($this->session->userdata('logged_in') == TRUE) {
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1 OR $this->session->userdata('level') == 3) {
 			
 			$data['mahasiswa'] = $this->mahasiswa_model->data_mahasiswa();
 			$data['main_view'] = 'Mahasiswa/data_mahasiswa_view';
@@ -49,7 +31,7 @@ class Mahasiswa extends CI_Controller {
 
 	public function detail_mahasiswa()
 	{
-		if ($this->session->userdata('logged_in') == TRUE) {
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1 OR $this->session->userdata('level') == 3) {
 			$id_mahasiswa = $this->uri->segment(3);
 			$data['du'] = $this->daftar_ulang_model->detail_du($id_mahasiswa);
 			$data['getUniversitas'] = $this->tamu_model->getUniversitas();
@@ -65,7 +47,9 @@ class Mahasiswa extends CI_Controller {
 
 	public function data_mahasiswa()
 	{
-		if ($this->session->userdata('logged_in') == TRUE) {
+		if ($this->session->userdata('logged_in') == TRUE ) {
+			if ($this->session->userdata('level') == 1 OR $this->session->userdata('level') == 6) {
+			
 			$data['getTahunAngkatan'] = $this->mahasiswa_model->getTahunAngkatan();
 			$data['mahasiswa'] = $this->mahasiswa_model->data_mahasiswa_dikti();
 			$data['drop_down_prodi'] = $this->konsentrasi_model->get_prodi();
@@ -73,7 +57,11 @@ class Mahasiswa extends CI_Controller {
 			$this->load->view('template', $data);
 		} else {
 			redirect('login');
-		}
+		} 
+		} else {
+			redirect('login');
+	}
+
 	}
 	
 
@@ -118,9 +106,22 @@ class Mahasiswa extends CI_Controller {
 		echo $option;
 	}
 
+	public function get_prodi_periode2($param = NULL) {
+		$prodi = $param;
+		$result = $this->kurikulum_model->get_prodi_periode2($prodi);
+		$option = "";
+		$option .= '<option value="">Pilih Periode</option>';
+		foreach ($result as $data) {
+			$option = 
+			$option .= "<option value='".$data->id_periode."'>".$data->semester."</option>";
+			
+		}
+		echo $option;
+	}
+
 	public function detail_mahasiswa_dikti()
 	{
-		if ($this->session->userdata('logged_in') == TRUE) {
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1 OR $this->session->userdata('level') == 3) {
 			$id_mahasiswa = $this->uri->segment(3);
 			$data['getStatus'] = $this->mahasiswa_model->getStatus();
 			$data['getGrade'] = $this->mahasiswa_model->getGrade();
@@ -128,6 +129,22 @@ class Mahasiswa extends CI_Controller {
 			$data['getConcentrate'] = $this->daftar_ulang_model->getProdi();
 			$data['mahasiswa'] = $this->mahasiswa_model->detail_mahasiswa_dikti($id_mahasiswa);
 			$data['main_view'] = 'Mahasiswa/detail_mahasiswa_dikti_view';
+			$this->load->view('template', $data);
+			} else {
+			redirect('login');
+		}
+	}
+
+	public function detail_mhs_dikti()
+	{
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1 OR $this->session->userdata('level') == 5) {
+			$id_mahasiswa = $this->uri->segment(3);
+			$data['getStatus'] = $this->mahasiswa_model->getStatus();
+			$data['getGrade'] = $this->mahasiswa_model->getGrade();
+			$data['getProdi'] = $this->daftar_ulang_model->getProdi();
+			$data['getConcentrate'] = $this->daftar_ulang_model->getProdi();
+			$data['mahasiswa'] = $this->mahasiswa_model->detail_mahasiswa_dikti($id_mahasiswa);
+			$data['main_view'] = 'Mahasiswa/detail_mhs_dikti_view';
 			$this->load->view('template', $data);
 			} else {
 			redirect('login');
@@ -142,14 +159,16 @@ class Mahasiswa extends CI_Controller {
 				$id_prodi = $session->id_prodi;
 				$semester_aktif = $session->semester_aktif;
 				$id_mahasiswa = $session->id_mahasiswa;
+				$id_konsentrasi = $session->id_konsentrasi;
 			} else {
 				$id_mahasiswa = $this->uri->segment(3);
 				$id_prodi = $this->uri->segment(4);
 				$semester_aktif = $this->uri->segment(5);
+				$id_konsentrasi = $this->uri->segment(6);
 			}
 			$data['mahasiswa'] = $this->mahasiswa_model->detail_krs_mahasiswa($id_mahasiswa);
-			$data['krs'] = $this->mahasiswa_model->data_krs_mhs($id_mahasiswa, $id_prodi, $semester_aktif);
-			//$data['periode2'] = $this->mahasiswa_model->getPer($id_prodi);
+			$data['krs'] = $this->mahasiswa_model->data_krs_mhs($id_prodi, $semester_aktif);
+			$data['pilihan'] = $this->mahasiswa_model->data_krs_pilihan($semester_aktif, $id_konsentrasi);
 			$data['periode'] = $this->mahasiswa_model->Periode_krs($id_prodi);
 			$data['main_view'] = 'Mahasiswa/krs_mahasiswa_view';
 			$this->load->view('template', $data);
@@ -174,11 +193,11 @@ class Mahasiswa extends CI_Controller {
 			}
 			$data['periode'] = $this->mahasiswa_model->Periode_krs($id_prodi);
 			$data['mahasiswa'] = $this->mahasiswa_model->detail_krs_mahasiswa($id_mahasiswa, $semester_aktif);
-			$data['senin'] = $this->mahasiswa_model->jadwal_mhs_senin($id_mahasiswa, $semester_aktif);
-			$data['selasa'] = $this->mahasiswa_model->jadwal_mhs_selasa($id_mahasiswa, $semester_aktif);
-			$data['rabu'] = $this->mahasiswa_model->jadwal_mhs_rabu($id_mahasiswa, $semester_aktif);
-			$data['kamis'] = $this->mahasiswa_model->jadwal_mhs_kamis($id_mahasiswa, $semester_aktif);
-			$data['jumat'] = $this->mahasiswa_model->jadwal_mhs_jumat($id_mahasiswa, $semester_aktif);
+			$data['senin'] = $this->mahasiswa_model->jadwal_mhs_senin($id_mahasiswa);
+			$data['selasa'] = $this->mahasiswa_model->jadwal_mhs_selasa($id_mahasiswa);
+			$data['rabu'] = $this->mahasiswa_model->jadwal_mhs_rabu($id_mahasiswa);
+			$data['kamis'] = $this->mahasiswa_model->jadwal_mhs_kamis($id_mahasiswa);
+			$data['jumat'] = $this->mahasiswa_model->jadwal_mhs_jumat($id_mahasiswa);
 			$data['main_view'] = 'Mahasiswa/jadwal_mahasiswa_view';
 			$this->load->view('template', $data);
 			} else {
@@ -355,7 +374,10 @@ class Mahasiswa extends CI_Controller {
 	{
 		$id_mahasiswa = $this->uri->segment(3);
 			if($this->mahasiswa_model->simpan_nilai_transfer() == TRUE && $this->mahasiswa_model->simpan_nilai_kp() == TRUE){
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Nilai berhasil ditransfer </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data nilai transfer berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('mahasiswa/transfer_nilai/'.$id_mahasiswa);
 			} 
 	}
@@ -365,7 +387,7 @@ class Mahasiswa extends CI_Controller {
 		$nik = $this->input->post('nik');
 		$id_mahasiswa = $this->uri->segment(3);
 		$nim_lama = $this->input->post('nim_lama');
-		if ($this->input->post('id_jenis_pendaftaran') == 2) {
+		if ($this->input->post('id_jenis_pendaftaran') == 2 OR $this->input->post('id_jenis_pendaftaran') == 3 OR $this->input->post('id_jenis_pendaftaran') == 4 OR $this->input->post('id_jenis_pendaftaran') == 5) {
 			if($this->mahasiswa_model->save_mahasiswa_pindahan() == TRUE && $this->mahasiswa_model->save_ayah() == TRUE  && $this->mahasiswa_model->save_ibu() == TRUE && $this->mahasiswa_model->save_alamat() == TRUE && $this->mahasiswa_model->save_wali() == TRUE && $this->mahasiswa_model->save_kependudukan() == TRUE && $this->mahasiswa_model->save_bio() == TRUE && $this->mahasiswa_model->save_kontak() == TRUE && $this->mahasiswa_model->simpan_pendidikan_pindahan() == TRUE && $this->mahasiswa_model->ubah_status_mhs_pindahan($id_mahasiswa) == TRUE && $this->mahasiswa_model->hapus_user_mhs_pindahan($nim_lama) == TRUE){
 				$nim = $this->input->post('nim');
 				$pass = $this->random_password();
@@ -393,7 +415,10 @@ class Mahasiswa extends CI_Controller {
 						
 						if($this->email->send()){
 								$nama_du = $this->input->post('nama_mahasiswa');
-								$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Data '.$nama_du.' berhasil didaftarkan. </div>');
+								$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data '.$nama_du.' berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 				            	redirect('mahasiswa/history_pendidikan/'.$id_mahasiswa.'/'.$nik);
 						}
 
@@ -418,10 +443,32 @@ class Mahasiswa extends CI_Controller {
 		$semester_aktif = $this->uri->segment(4);
 		$id_periode = $this->uri->segment(5);
 			if($this->mahasiswa_model->simpan_krs_mhs() == TRUE && $this->mahasiswa_model->update_status($id_mahasiswa) == TRUE && $this->kelas_perkuliahan_model->update_status_aktivitas($id_mahasiswa, $id_periode) == TRUE){
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Anda berhasil menambahkan KRS untuk semester ini </div>');
-            	redirect('mahasiswa/kelas_mhs/'.$id_mahasiswa.'/'.$id_prodi.'/'.$semester_aktif);
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data KRS Wajib pada semester ini berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
+            	redirect('mahasiswa/krs_mahasiswa/'.$id_mahasiswa.'/'.$id_prodi.'/'.$semester_aktif);
 			} 
 	}
+
+	function simpan_krs_pilihan(){
+		$id_mahasiswa = $this->uri->segment(3);
+		$id_prodi = $this->uri->segment(4);
+		$semester_aktif = $this->uri->segment(5);
+		$id_periode = $this->uri->segment(6);
+		foreach ($_POST['id'] as $id) {
+			$a = (explode("/", $id));
+			$id_kp = $a[0];
+			$id_detail_kurikulum = $a[1];
+				$this->mahasiswa_model->simpan_krs_pilihan($id_mahasiswa, $id_kp, $id_detail_kurikulum);
+			}
+			
+		$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data KRS pilihan pada semester ini berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
+		redirect('mahasiswa/krs_mahasiswa/'.$id_mahasiswa.'/'.$id_prodi.'/'.$semester_aktif);
+	} 
 
 	public function simpan_krs_mengulang()
 	{
@@ -429,8 +476,11 @@ class Mahasiswa extends CI_Controller {
 		$id_detail_kurikulum = $this->input->post('id_detail_kurikulum');
 		$id_prodi = $this->uri->segment(3);
 		$semester_aktif = $this->uri->segment(4);
-			if($this->mahasiswa_model->simpan_krs_mengulang() == TRUE && $this->mahasiswa_model->edit_kelas_mengulang($id_detail_kurikulum, $id_mahasiswa) == TRUE){
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Mata kuliah mengulang berhasil ditambahkan </div>');
+			if($this->mahasiswa_model->simpan_krs_mengulang() == TRUE){
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data mata kuliah mengulang berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('mahasiswa/kelas_mhs/'.$id_mahasiswa.'/'.$id_prodi.'/'.$semester_aktif);
 			} 
 	}
@@ -470,7 +520,10 @@ class Mahasiswa extends CI_Controller {
 	{
 		$id_mahasiswa = $this->uri->segment(3);
 			if($this->mahasiswa_model->simpan_prestasi($id_mahasiswa) == TRUE){
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Tambah Prestasi Berhasil </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data prestasi berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('mahasiswa/prestasi/'.$id_mahasiswa);
 			} 
 	}
@@ -481,7 +534,10 @@ class Mahasiswa extends CI_Controller {
 		$id_prestasi = $this->uri->segment(3);
 		$id_mahasiswa = $this->input->post('id_mahasiswa');
 			if($this->mahasiswa_model->edit_prestasi($id_prestasi) == TRUE){
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Edit Prestasi Berhasil </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data prestasi berhasil diubah</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('mahasiswa/prestasi/'.$id_mahasiswa);
 			} 
 	}
@@ -492,7 +548,10 @@ class Mahasiswa extends CI_Controller {
 		 $nim = $this->uri->segment(4);
 			if($this->mahasiswa_model->save_edit_user($nim) == TRUE && $this->mahasiswa_model->save_edit_mahasiswa($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_ayah($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_ibu($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_alamat($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_wali($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_kependudukan($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_bio($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_kontak($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_pendidikan($id_mahasiswa) == TRUE){
 				$nama_du = $this->input->post('nama_mahasiswa');
-				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Data '.$nama_du.' berhasil diedit </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data '.$nama_du.' berhasil diubah</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('mahasiswa/data_mahasiswa');
 			} else{
 				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Gagal </div>');
@@ -500,11 +559,26 @@ class Mahasiswa extends CI_Controller {
 			} 
 	} 
 
+	public function save_edit_mhs()
+	{
+		 $id_mahasiswa = $this->uri->segment(3);
+			if($this->mahasiswa_model->save_edit_ayah($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_ibu($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_alamat($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_wali($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_kependudukan_mhs($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_bio_mhs($id_mahasiswa) == TRUE && $this->mahasiswa_model->save_edit_kontak($id_mahasiswa) == TRUE){
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data mahasiswa berhasil diubah</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
+            	redirect('profile');
+			} else{
+				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Gagal </div>');
+            	redirect('profile');
+			} 
+	} 
+
 	public function save_mahasiswa()
 	{
-			if($this->mahasiswa_model->save_mahasiswa() == TRUE && $this->mahasiswa_model->save_ayah() == TRUE  && $this->mahasiswa_model->save_ibu() == TRUE && $this->mahasiswa_model->save_alamat() == TRUE && $this->mahasiswa_model->save_wali() == TRUE && $this->mahasiswa_model->save_kependudukan() == TRUE && $this->mahasiswa_model->save_bio() == TRUE && $this->mahasiswa_model->save_kontak() == TRUE && $this->mahasiswa_model->save_pendidikan() == TRUE){
-				$pass = $this->random_password();
+			if($this->mahasiswa_model->save_ayah() == TRUE  && $this->mahasiswa_model->save_ibu() == TRUE && $this->mahasiswa_model->save_alamat() == TRUE && $this->mahasiswa_model->save_wali() == TRUE && $this->mahasiswa_model->save_kependudukan() == TRUE && $this->mahasiswa_model->save_bio() == TRUE && $this->mahasiswa_model->save_kontak() == TRUE && $this->mahasiswa_model->save_pendidikan() == TRUE && $this->mahasiswa_model->save_mahasiswa() == TRUE){
 				$nim = $this->input->post('nim');
+				$pass = $this->random_password();
 				$this->user_model->signup_mahasiswa($nim, $pass);
 				$this->load->library('email');
 						$config = array(
@@ -529,7 +603,10 @@ class Mahasiswa extends CI_Controller {
 						
 						if($this->email->send()){
 								$nama_du = $this->input->post('nama_mahasiswa');
-								$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Data '.$nama_du.' berhasil didaftarkan. </div>');
+								$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data '.$nama_du.' berhasil ditambahkan</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 				            	redirect('mahasiswa/data_mahasiswa');
 						}
 
@@ -547,7 +624,10 @@ class Mahasiswa extends CI_Controller {
 	    $this->load->library('upload', $config);
 	    if($this->upload->do_upload('foto_mahasiswa')){
 	      if($this->mahasiswa_model->save_edit_foto_mahasiswa($this->upload->data(), $id_mahasiswa) == TRUE){
-	        $this->session->set_flashdata('message', 'Upload Foto Berhasil');
+	        $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Unggah foto berhasil </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 	            redirect('mahasiswa/detail_mahasiswa_dikti/'.$this->uri->segment(3));
 	      } else {
 	        $this->session->set_flashdata('message', 'Update foto gagal');
@@ -593,7 +673,10 @@ class Mahasiswa extends CI_Controller {
 	{
 		$id_mahasiswa = $this->input->post('id_mahasiswa');
 			if($this->mahasiswa_model->simpan_ld() == TRUE  && $this->mahasiswa_model->update_status_ld($id_mahasiswa) == TRUE){
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Tambah Mahasiswa Berhasil </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data mahasiswa berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('mahasiswa/data_ld');
 			} 
 	}
@@ -602,7 +685,10 @@ class Mahasiswa extends CI_Controller {
 	{
 		$id_mahasiswa = $this->input->post('id_mahasiswa');
 			if($this->mahasiswa_model->edit_ld($id_mahasiswa) == TRUE  && $this->mahasiswa_model->edit_status_ld($id_mahasiswa) == TRUE){
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Tambah Mahasiswa Berhasil </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data mahasiswa berhasil diubah</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('mahasiswa/data_ld');
 			} 
 	}
@@ -714,7 +800,10 @@ class Mahasiswa extends CI_Controller {
 	public function hapus_pendidikan(){
 		$id_mahasiswa = $this->uri->segment(3);
 		if ($this->mahasiswa_model->hapus_mhs_bio($id_mahasiswa) == TRUE && $this->mahasiswa_model->hapus_mhs_alamat($id_mahasiswa) == TRUE && $this->mahasiswa_model->hapus_mhs_ayah($id_mahasiswa) == TRUE && $this->mahasiswa_model->hapus_mhs_ibu($id_mahasiswa) == TRUE && $this->mahasiswa_model->hapus_mhs_wali($id_mahasiswa) == TRUE && $this->mahasiswa_model->hapus_mhs_kependudukan($id_mahasiswa) == TRUE && $this->mahasiswa_model->hapus_mhs_kontak($id_mahasiswa) == TRUE && $this->mahasiswa_model->hapus_mhs_mahasiswa($id_mahasiswa) == TRUE && $this->mahasiswa_model->hapus_mhs_pendidikan($id_mahasiswa) == TRUE) {
-			$this->session->set_flashdata('message', '<div class="alert alert-success"> Hapus Histori Pendidikan Berhasil </div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data mahasiswa beserta histori pendidikannya berhasil dihapus </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 			redirect('mahasiswa/data_mahasiswa');
 		} else {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger"> Hapus Gagal </div>');
@@ -728,7 +817,10 @@ class Mahasiswa extends CI_Controller {
 		$nik = $this->uri->segment(4);
 		$id_mahasiswa = $this->uri->segment(5);
 			if($this->mahasiswa_model->edit_pendidikan($id_pendidikan) == TRUE){
-				$this->session->set_flashdata('message', '<div class="alert alert-success"> Edit Histoy Pendidikan Berhasil </div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data histori pendidikan berhasil diubah</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
             	redirect('mahasiswa/history_pendidikan/'.$id_mahasiswa.'/'.$nik);
 			} 
 	}

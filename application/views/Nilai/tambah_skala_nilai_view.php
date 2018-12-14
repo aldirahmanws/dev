@@ -1,3 +1,4 @@
+<?php echo $this->session->flashdata('message');?>
 <div class="row"> 
     <div class="col-md-12">
         <div>
@@ -7,7 +8,7 @@
             <div class="panel-body">
               <div class="row">
                 <div class="col-lg-6">
-                  <?php echo $this->session->flashdata('message');?>
+                  
                   <?php echo form_open('nilai/save_skala_nilai'); ?>
                           <div class="form-group">
                             <label>Program Studi</label>

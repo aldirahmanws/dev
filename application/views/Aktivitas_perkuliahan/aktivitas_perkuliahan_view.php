@@ -1,10 +1,10 @@
 
-
+<?php echo $this->session->flashdata('message');?>
     <section class="content">
 
       <div class="row">
         <div class="col-xs-12">
-          <?php echo $this->session->flashdata('message');?>
+          
           <div class="box">
 
             <div class="box-header with-border">
@@ -267,7 +267,7 @@
                 var id_prodi = p;
 
                 $.ajax({
-                    url: '<?php echo base_url(); ?>kurikulum/get_prodi_periode/'+id_prodi,
+                    url: '<?php echo base_url(); ?>mahasiswa/get_prodi_periode2/'+id_prodi,
                     data: 'id_prodi='+id_prodi,
                     type: 'GET',
                     dataType: 'html',

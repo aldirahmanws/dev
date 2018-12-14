@@ -1,6 +1,6 @@
-
+<?php echo $this->session->flashdata('message');?>
 <div class="row"> 
-  <?php echo $this->session->flashdata('message');?>
+  
 
   <div class="col-md-12">
 

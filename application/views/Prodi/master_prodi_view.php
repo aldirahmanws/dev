@@ -1,7 +1,8 @@
+<?php echo $this->session->flashdata('message');?>
 <section class="content">
       <div class="row">
         <div class="col-xs-12">
-          <?php echo $this->session->flashdata('message');?>
+          
           <div class="box">
             <div class="box-header with-border">
               <h3 class="box-title">PROGRAM STUDI</h3>
@@ -34,7 +35,7 @@
                   <td>'.$data->id_prodi.'
                   </td>
                   <td>'.$data->nama_prodi.'</td>
-                  <td>'.$data->ketua_prodi.'</td>
+                  <td>'.$data->nama_dosen.'</td>
                   <td>
                   <a href="'.base_url('index.php/master_prodi/edit_prodi/'.$data->id_prodi).'" class="btn btn-warning btn-xs btn-flat"><i class="glyphicon glyphicon-pencil"></i><span class="tooltiptext">Edit</span></a>
                   <a href="'.base_url('index.php/master_prodi/hapus_prodi/'.$data->id_prodi).'" class="btn btn-danger btn-xs btn-flat" onclick="return confirm('.$alert.')"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus</span></a>
