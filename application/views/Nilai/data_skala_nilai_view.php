@@ -47,6 +47,7 @@
                 <thead>
                 <tr>
                   <th>No</th>
+                  <th>ID</th>
                   <th>Program Studi</th>
                   <th>Nilai Huruf</th>
                   <th>Nilai Indeks</th>
@@ -66,6 +67,7 @@
                   echo '
                 <tr>
                   <td>'.++$no.'</td>
+                  <td>'.$data->id_skala_nilai.'</td>
                   <td><a href="'.base_url('nilai/lihat_skala_nilai/'.$data->id_skala_nilai).'")>'.$data->nama_prodi.'</a></td>
                   <td>'.$data->nilai_huruf.'</td>
                   <td>'.$data->nilai_indeks.'</td>

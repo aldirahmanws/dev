@@ -11,7 +11,8 @@ class nilai_model extends CI_Model {
 
 	public function data_skala_nilai(){
 		return $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_skala_nilai.id_prodi')
-              ->order_by('nilai_indeks' AND 'nama_prodi')
+              ->order_by('nama_prodi','asc')
+              ->order_by('bobot_nilai_maksimum','desc')
               ->get('tb_skala_nilai')
               ->result();
 	}
