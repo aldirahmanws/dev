@@ -61,8 +61,6 @@ class Nilai_perkuliahan_model extends CI_Model {
               ->join('tb_skala_nilai','tb_skala_nilai.id_skala_nilai=tb_kelas_mhs.id_skala_nilai','left')
               ->join('tb_periode','tb_periode.id_periode=tb_kp.id_periode')
               ->where('tb_kelas_mhs.id_kp', $id_kp)
-              ->where('tgl_awal_kul <=', date('Y-m-d'))
-              ->where('tgl_akhir_kul >=', date('Y-m-d'))
               ->get('tb_kelas_mhs')
               ->result();
   }

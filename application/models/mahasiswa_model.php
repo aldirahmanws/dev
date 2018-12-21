@@ -121,6 +121,7 @@ class Mahasiswa_model extends CI_Model {
               ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
               ->join('tb_skala_nilai','tb_skala_nilai.id_skala_nilai=tb_kelas_mhs.id_skala_nilai')
               ->where('tb_kelas_mhs.id_detail_kurikulum', $b->id_detail_kurikulum)
+              ->where('tb_kelas_mhs.id_mahasiswa', $id_mahasiswa)
               ->order_by('tb_detail_kurikulum.semester_kurikulum', 'ASC')
               ->get('tb_kelas_mhs')
               ->row();
