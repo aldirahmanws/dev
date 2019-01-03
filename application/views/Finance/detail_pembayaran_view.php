@@ -47,7 +47,7 @@
             <div class="box-header">
               <h3 class="box-title">Riwayat Pembayaran</h3>
 
-              <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal-default">
+              <button type="button" class="btn btn-primary pull-right btn-flat" data-toggle="modal" data-target="#modal-default">
                 <i class="fa fa-plus"></i> Tambah
               </button>
             </div>
@@ -285,11 +285,11 @@
       <!-- this row will not appear when printing -->
       <div class="row no-print" style="display: none">
         <div class="col-xs-12">
-          <p class="btn btn-primary" onclick="print2()"> Cetak </p>
-          <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-          <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
+          <p class="btn btn-primary btn-flat" onclick="print2()"> Cetak </p>
+          <a href="invoice-print.html" target="_blank" class="btn btn-default btn-flat"><i class="fa fa-print"></i> Print</a>
+          <button type="button" class="btn btn-success pull-right btn-flat"><i class="fa fa-credit-card"></i> Submit Payment
           </button>
-          <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
+          <button type="button" class="btn btn-primary pull-right btn-flat" style="margin-right: 5px;">
             <i class="fa fa-download"></i> Generate PDF
           </button>
         </div>
@@ -298,15 +298,15 @@
 </div>
                 <?php $cart_check = $this->cart->contents();
                 if(empty($cart_check)) {
-                echo '<button type="submit" class="btn btn-success" disabled>Simpan & Cetak</button>';
+                echo '<button type="submit" class="btn btn-success btn-flat" disabled>Simpan & Cetak</button>';
                 
                 } else {
-                  echo '<button type="submit" class="btn btn-success" > Simpan </button>';
-                  echo '&nbsp;<p class="btn btn-primary" onclick="print1()"> Cetak </p>';
+                  echo '<button type="submit" class="btn btn-success btn-flat" > Simpan </button>';
+                  echo '&nbsp;<p class="btn btn-primary btn-flat" onclick="print1()"> Cetak </p>';
 
                 } ?> 
                 
-                <?= anchor('finance/clear_cart/'.$this->uri->segment(3),'Reset',['class'=>'btn btn-danger']) ?>         
+                <?= anchor('finance/clear_cart/'.$this->uri->segment(3),'Reset',['class'=>'btn btn-danger btn-flat']) ?>         
             <?php echo form_close();?>
       
     </div>
@@ -424,7 +424,7 @@
                       </div>
                     </div>
                     <center>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    <button type="submit" class="btn btn-primary btn-flat">Simpan</button>
                     </center>
                   </div>
                   <!-- /.box-body -->
