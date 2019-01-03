@@ -1213,6 +1213,136 @@ class Laporan_model extends CI_Model {
                 
                 }
     }
+    function laporan_keuangan($tanggal_awal, $tanggal_akhir, $id_prodi, $id_waktu){
+      $query = $this->db->select('*')
+                ->from('tb_pembayaran')
+                ->join('tb_detail_pembayaran', 'tb_detail_pembayaran.kode_pembayaran=tb_pembayaran.kode_pembayaran')
+                ->join('tb_mahasiswa', 'tb_mahasiswa.id_mahasiswa=tb_pembayaran.id_mahasiswa')
+                ->join('tb_konsentrasi', 'tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
+                ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
+                ->join('tb_biaya', 'tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+                ->where('tanggal_cetak >=', $tanggal_awal)
+                ->where('tanggal_cetak <=', $tanggal_akhir)
+                ->like('tb_prodi.id_prodi', $id_prodi)
+                ->like('tb_mahasiswa.id_waktu', $id_waktu)
+                /*->order_by("tanggal_pendaftaran", "asc")*/
+                ->get();
+      $row = $query->result();
+      $prodi = $this->db->where('id_prodi', $id_prodi)->get('tb_prodi')->row()->nama_prodi;
+      $waktu = $this->db->where('id_waktu', $id_waktu)->get('tb_waktu')->row()->waktu;
+      if($prodi == ''){
+        $prodi = 'Semua';
+      }
+      if($waktu == ''){
+        $waktu = 'Semua';
+      }
+                if ($query->num_rows() > 0)
+                { 
+                  $tanggal_awal = date("d M Y", strtotime($tanggal_awal));
+                  $tanggal_akhir = date("d M Y", strtotime($tanggal_akhir));
+                  $no = 0;
+                  $option = "";
+                  $option .= '<section class="content" id="ea">
+      <div class="row">
+        <div class="col-xs-12">
+            <!-- /.box-header -->
+            <div class="box-body">
+            <h4><b>Laporan Keuangan</h4></b>
+            <table>
+              <tr>
+                <td width="120px">Perguruan Tinggi</td>
+                <td width="300px">: 033082 - STIE Jakarta International College</td>
+                <td width="120px">Alamat</td>
+                <td>: Jalan Perunggu No 53-54 10640</td>
+              </tr>
+              <tr>
+                <td width="120px">Tanggal Awal</td>
+                <td width="300px">: '.$tanggal_awal.'</td>
+                <td width="120px">Tanggal Akhir</td>
+                <td>: '.$tanggal_akhir.'</td>
+              </tr>
+              <tr>
+                <td width="120px">Prodi</td>
+                <td width="300px">: '.$prodi.'</td>
+                <td width="120px">Waktu</td>
+                <td>: '.$waktu.'</td>
+              </tr>
+            </table>
+            <br>
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Tanggal Laporan</th>
+                  <th>No. TT</th>
+                  <th>NIM</th>
+                  <th>Nama Mahasiswa</th>
+                  <th>Jenis Bayar</th>
+                  <th>Nama Pembayaran</th>
+                  <th>Biaya</th>
+                </tr>
+                </thead>
+                <tbody>';
+                  foreach ($row as $data) {
+                    $option .= "
+                    <tr>
+                      <td>".++$no."</td>
+                      <td>".date("d M Y", strtotime($data->tanggal_cetak))."</td>
+                      <td>".$data->kode_pembayaran."</td>
+                      <td>".$data->nim."</td>
+                      <td>".$data->nama_mahasiswa."</td>
+                      <td>".$data->jenis_biaya."</td>
+                      <td>".$data->nama_biaya."</td>
+                      <td>".$data->jumlah_biaya."</td>
+                    </tr>";
+                    
+                  }
+                  $option .= '</tbody>
+              </table>
+            </div>
+            
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>';
+                  echo $option;
+
+                } else{
+                $option = "";
+                  $option .= '
+                  <section class="content" id="ea">
+      <div class="row">
+        <div class="col-xs-12">
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Semester</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <td></td><td></td>
+                  </tbody>
+              </table>
+            </div>
+            
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </section>';
+
+                  echo $option;
+                
+                }
+    }
 
     function getPeriode()
     {

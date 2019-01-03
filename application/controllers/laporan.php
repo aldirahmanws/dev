@@ -268,12 +268,32 @@ class Laporan extends CI_Controller {
 
 	public function laporan_buku_indukku(){
 		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1) {
-    $angkatan = $this->input->get('angkatan');
-    $id_prodi = $this->input->get('id_prodi');
-    $this->laporan_model->laporan_buku_induk($angkatan, $id_prodi);
-    } else {
-			redirect('login');
+	    $angkatan = $this->input->get('angkatan');
+	    $id_prodi = $this->input->get('id_prodi');
+	    $this->laporan_model->laporan_buku_induk($angkatan, $id_prodi);
+	    } else {
+				redirect('login');
 		}	
+	}
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public function laporan_keuangan(){
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1 OR $this->session->userdata('level') == 3) {
+		$data['main_view'] = 'Laporan/laporan_keuangan_view';
+		$this->load->view('template', $data);	
+		} else {
+			redirect('login');
+		}
+	}
+	public function laporan_keuanganku(){
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1 OR $this->session->userdata('level') == 3) {
+	    $tanggal_awal = $this->input->get('tanggal_awal');
+	    $tanggal_akhir = $this->input->get('tanggal_akhir');
+	    $id_prodi = $this->input->get('id_prodi');
+	    $id_waktu = $this->input->get('id_waktu');
+	    $this->laporan_model->laporan_keuangan($tanggal_awal, $tanggal_akhir, $id_prodi, $id_waktu);
+	    } else {
+				redirect('login');
+		}
   	}
 }
 

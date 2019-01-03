@@ -276,7 +276,8 @@ class Finance_model extends CI_Model {
     {
           $invoice = array(
              'kode_pembayaran'      => $this->input->post('kodeku_pembayaran'),
-             'id_mahasiswa'   => $this->input->post('id_mhsa')
+             'id_mahasiswa'   => $this->input->post('id_mhsa'),
+             'tanggal_cetak' => date('Y-m-d')
             
         );
         $this->db->insert('tb_pembayaran', $invoice);
