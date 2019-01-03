@@ -64,6 +64,24 @@ class Laporan extends CI_Controller {
 		}
   	}
   	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	public function laporan_pembayaran(){
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1 OR $this->session->userdata('level') == 3) {
+		$data['main_view'] = 'Laporan/laporan_pembayaran_view';
+		$this->load->view('template', $data);	
+		} else {
+			redirect('login');
+		}
+	}
+	public function laporan_pembayaranku(){
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1 OR $this->session->userdata('level') == 3) {
+    $tanggal_awal = $this->input->get('tanggal_awal');
+    $tanggal_akhir = $this->input->get('tanggal_akhir');
+    $this->laporan_model->laporan_pembayaran($tanggal_awal, $tanggal_akhir);
+    } else {
+			redirect('login');
+		}
+  	}
+  	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   	public function laporan_mahasiswa(){
   		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1 OR $this->session->userdata('level') == 3) {
 		$data['main_view'] = 'Laporan/laporan_mahasiswa_view';

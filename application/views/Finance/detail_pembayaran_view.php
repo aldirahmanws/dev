@@ -326,11 +326,15 @@
                   <div class="box-body">
                     <div class="box-body">
                       <input type="hidden" name="id_grade" id="id_grade" value="<?php echo $data->id_grade?>">
-                        <input type="hidden" class="form-control" name="tanggal_pembayaran" id="tanggal_pembayaran" placeholder="" 
-                        value="<?php echo date('d-m-Y'); ?>" readonly>
-                        <input type="hidden" class="form-control" id="kode_pembayaran" name="kode_pembayaran" value="<?= $kodeunik; ?>" placeholder="" readonly="">
                         <input type="hidden" class="form-control" id="id_mhsa" name="id_mhsa" value="<?php echo $data->id_mahasiswa ?>" placeholder="" readonly >
                         <input type="hidden" class="form-control" id="nama_mhsa" name="nama_mhsa" value="<?php echo $data->nama_mahasiswa ?>" placeholder="" readonly>
+                    <div class="form-group">
+                      <label for="inputEmail3" class="col-sm-3 control-label">Kode Pembayaran</label>
+
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="kode_pembayaran" name="kode_pembayaran" value="<?= $kodeunik; ?>" placeholder="" readonly="">
+                      </div>
+                    </div>
                     <div class="form-group">
                       <label for="inputEmail3" class="col-sm-3 control-label">Tahun Akademik</label>
 
@@ -374,6 +378,13 @@
                         </select>
                       </div>
                     </div>
+                    <div class="form-group">
+                      <label for="inputEmail3" class="col-sm-3 control-label">Tanggal Pembayaran</label>
+
+                      <div class="col-sm-8">
+                        <input type="date" class="form-control" name="tanggal_pembayaran" id="tanggal_pembayaran" value="<?php echo date('Y-m-d'); ?>">
+                      </div>
+                    </div>
                     <div class="form-group" id="myText2" style="display: none;">
                       <label for="inputEmail3" class="col-sm-3 control-label">Mata Kuliah</label>
 
@@ -412,7 +423,9 @@
                         <input type="hidden" class="form-control" readonly="" name="biayaku" id="biayaku" required="" value="">
                       </div>
                     </div>
-                    <button type="submit">Simpan</button>
+                    <center>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                    </center>
                   </div>
                   <!-- /.box-body -->
                   <!-- /.box-footer -->
