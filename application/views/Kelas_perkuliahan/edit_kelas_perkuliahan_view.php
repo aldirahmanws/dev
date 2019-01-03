@@ -6,20 +6,20 @@
          <form  method="post" action="<?php echo base_url(); ?>kelas_perkuliahan/save_edit_kp/<?php echo $kp->id_kp; ?>" enctype="multipart/form-data">
 		<table class="table">
     	   <tr>
-          <td class="left_column">Masukan Jadwal <font color="#FF0000">*</font>
+          <td class="left_column">Mata Kuliah 
             </td>
           <td colspan="9">: 
-      <input type="text" name="jadwal" id="jadwal" class="validate[required] text-input"  size="5" style="width: 90%;" required="" placeholder="Masukan mata kuliah yang sudah terjadwal"  value="<?php echo $kp->hari; ?> - (<?php echo $kp->jam_awal; ?> - <?php echo $kp->jam_akhir; ?>) - <?php echo $kp->nama_matkul; ?>">
+      <input type="text" name="jadwal" id="jadwal" class="validate[required] text-input"  size="5" style="width: 90%;background-color:#E0E0E0" required="" placeholder="Masukan mata kuliah yang sudah terjadwal"  value="<?php echo $kp->nama_matkul; ?>" readonly>
       <input type="hidden" name="id_jadwal" id="id_jadwal" class="validate[required] text-input"  size="5" style="width: 90%;" value="<?php echo $kp->id_jadwal; ?>"></td>
         </tr> 
         <tr>
-          <td class="left_column">Nama Kelas <font color="#FF0000">*</font>
+          <td class="left_column">Nama Kelas 
             </td>
           <td colspan="9">: 
       <input type="text" name="nama_kelas" id="nama_kelas" class="validate[required] text-input"  size="5" style="width: 40%;" required="" value="<?php echo $kp->nama_kelas; ?>"> </td>
         </tr> 
         <tr>
-          <td class="left_column">Konsentrasi <font color="#FF0000">*</font>
+          <td class="left_column">Konsentrasi 
             </td>
           <td colspan="9">: 
       <input type="text" name="konsentrasi" id="id_konsentrasi" class="validate[required] text-input"  size="5" style="width: 40%; background-color:#E0E0E0" readonly="" value="<?php echo $kp->nama_konsentrasi; ?>">

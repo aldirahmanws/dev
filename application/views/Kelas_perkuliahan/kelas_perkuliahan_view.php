@@ -105,7 +105,7 @@
                   <td>'.$data->waktu.'</td>
                   <td>'.$total_mahasiswa->total.'</td>';?>
                   
-                  <td> <?php if (date('Y-m-d') >= $data->tgl_mulai AND date('Y-m-d') <= $data->tgl_akhir) { ?>
+                  <td> <?php if (date('Y-m-d') >= $data->tgl_awal_kul AND date('Y-m-d') <= $data->tgl_akhir_kul) { ?>
                   <?= '
                        <a href="'.base_url('kelas_perkuliahan/detail_kp/'.$data->id_kp).'" class="btn btn-warning  btn-xs btn-flat"><i class="glyphicon glyphicon-pencil"></i><span class="tooltiptext">Edit Kelas </span></a>
                         <a href="'.base_url('kelas_perkuliahan/hapus_kp/'.$data->id_kp).'" class="btn btn-danger btn-xs btn-flat" onclick="return confirm('.$alert.')"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus Kelas</span></a> ';?><?php } ?> <?= '

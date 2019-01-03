@@ -110,9 +110,11 @@
                 $no = 0;
                 $id_kp = '';
                 $id_detail_kurikulum = '';
+                $ang_mhs = explode('-', $mahasiswa->tgl_du);
+                $ang = $ang_mhs[0];
                 if ($mahasiswa->id_status != '1') {
                 foreach ($krs as $i) {
-                  if ($i->nama_konsentrasi == 'Semua' OR $i->id_konsentrasi == $mahasiswa->id_konsentrasi AND $periode->id_periode == $i->id_periode) { if ($i->waktu == $mahasiswa->waktu) {
+                  if ($i->nama_konsentrasi == 'Semua' OR $i->id_konsentrasi == $mahasiswa->id_konsentrasi AND $periode->id_periode == $i->id_periode ) { if ($i->waktu == $mahasiswa->waktu AND $ang >= $i->ang_awal AND $ang <= $i->ang_akhir) {
                     
                   $total_mahasiswa = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs WHERE id_kp = '$i->id_kp'")->row();
                   if(date('Y-m-d') > $i->tgl_mulai AND date('Y-m-d') < $i->tgl_akhir){

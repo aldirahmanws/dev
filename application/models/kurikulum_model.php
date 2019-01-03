@@ -15,7 +15,8 @@ class Kurikulum_model extends CI_Model {
             'id_kurikulum'         => $this->input->post('id_kurikulum'),
             'nama_kurikulum'      => $this->input->post('nama_kurikulum'),
             'id_prodi'                 => $this->input->post('id_prodi'),
-            'id_periode'                 => $this->input->post('id_periode'),
+            'ang_awal'                 => $this->input->post('ang_awal'),
+            'ang_akhir'                 => $this->input->post('ang_akhir'),
             'bobot_matkul_wajib'      		=> $this->input->post('bobot_matkul_wajib'),
             'bobot_matkul_pilihan'         => $this->input->post('bobot_matkul_pilihan')
             
@@ -102,7 +103,6 @@ class Kurikulum_model extends CI_Model {
   public function data_kurikulum(){
 
    return $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_kurikulum.id_prodi')
-              ->join('tb_periode','tb_periode.id_periode=tb_kurikulum.id_periode')
               ->get('tb_kurikulum')
               ->result();
 
@@ -110,7 +110,6 @@ class Kurikulum_model extends CI_Model {
 
   public function detail_kurikulum($id_kurikulum){
       return $this->db->join('tb_prodi','tb_prodi.id_prodi=tb_kurikulum.id_prodi')
-              ->join('tb_periode','tb_periode.id_periode=tb_kurikulum.id_periode')
               ->where('tb_kurikulum.id_kurikulum', $id_kurikulum)
               ->get('tb_kurikulum')
               ->row();
@@ -158,7 +157,8 @@ class Kurikulum_model extends CI_Model {
     $data = array(
             'nama_kurikulum'      => $this->input->post('nama_kurikulum'),
             'id_prodi'                 => $this->input->post('id_prodi'),
-            'id_periode'                 => $this->input->post('id_periode'),
+            'ang_awal'                 => $this->input->post('ang_awal'),
+            'ang_akhir'                 => $this->input->post('ang_akhir'),
             'bobot_matkul_wajib'          => $this->input->post('bobot_matkul_wajib'),
             'bobot_matkul_pilihan'         => $this->input->post('bobot_matkul_pilihan')
       );

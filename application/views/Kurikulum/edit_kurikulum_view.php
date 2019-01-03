@@ -25,11 +25,16 @@
         </td>
         </tr>
         <tr>
-            <td class="left_column">Mulai Berlaku <font color="#FF0000">*</font></td>
-            <td>:  <select name="id_periode" id="id_periode" class="validate[required]" required="">
-            <option value="<?php echo $kurikulum->id_periode; ?>"><?php echo $kurikulum->semester; ?></option>   
-
-        </td>
+            <td class="left_column">Berlaku dari Angkatan</td>
+            <td>: 
+            <input type="number" name="ang_awal" id="ang_awal" class="text-input" style="width:10%" placeholder="ex: 2010" required="" value="<?php echo $kurikulum->ang_awal; ?>">  
+            </td>
+        </tr>
+        <tr>
+            <td class="left_column">Berakhir pada Angkatan</td>
+            <td>: 
+            <input type="number" name="ang_akhir" id="ang_akhir" class="text-input" style="width:10%" placeholder="ex: 2013" required="" value="<?php echo $kurikulum->ang_akhir; ?>">  
+            </td>
         </tr>
         <tr>
             <td class="left_column">Jumlah Bobot Mata Kuliah Wajib (sks)</td>
@@ -51,20 +56,5 @@
     </form>
 </div>
 
-<script type="text/javascript">
-            function get_prodi_periode(p) {
-                var id_prodi = p;
-
-                $.ajax({
-                    url: '<?php echo base_url(); ?>mahasiswa/get_prodi_periode2/'+id_prodi,
-                    data: 'id_prodi='+id_prodi,
-                    type: 'GET',
-                    dataType: 'html',
-                    success: function(msg) {
-                        $("#id_periode").html(msg);
-                    }
-                });
-            }
-</script>
 
 

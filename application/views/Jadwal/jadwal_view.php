@@ -9,7 +9,7 @@
             </div>
             <div class="box-body">
     
-
+              <div class="table-responsive">
               <table id="example1" class="table table-hover table-striped table-condensed" style="text-transform: uppercase;">
              
 
@@ -62,6 +62,7 @@
               ?>
                 </tbody>
               </table>
+              </div>
             </div>
             
             <!-- /.box-body -->

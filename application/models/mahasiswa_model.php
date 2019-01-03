@@ -208,9 +208,10 @@ class Mahasiswa_model extends CI_Model {
 
       
               foreach ($c as $b) {
-      $a = $this->db->select('MAX(tb_ruang.kapasitas) as kapasitas, tb_konsentrasi.nama_konsentrasi, tb_konsentrasi.id_konsentrasi, tb_waktu.id_waktu, tb_waktu.waktu, tb_kp.id_kp, tb_kp.tgl_mulai, tb_kp.tgl_akhir, tb_detail_kurikulum.id_detail_kurikulum, tb_matkul.id_matkul, tb_matkul.nama_matkul, tb_matkul.bobot_matkul, tb_dosen.nama_dosen, tb_periode.id_periode, tb_matkul.kode_matkul')
+      $a = $this->db->select('MAX(tb_ruang.kapasitas) as kapasitas, tb_konsentrasi.nama_konsentrasi, tb_konsentrasi.id_konsentrasi, tb_waktu.id_waktu, tb_waktu.waktu, tb_kp.id_kp, tb_kp.tgl_mulai, tb_kp.tgl_akhir, tb_detail_kurikulum.id_detail_kurikulum, tb_matkul.id_matkul, tb_matkul.nama_matkul, tb_matkul.bobot_matkul, tb_dosen.nama_dosen, tb_periode.id_periode, tb_matkul.kode_matkul, tb_kurikulum.ang_awal, tb_kurikulum.ang_akhir')
               ->join('tb_kp','tb_kp.id_kp=tb_jadwal.id_kp')
               ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kp.id_detail_kurikulum')
+              ->join('tb_kurikulum','tb_kurikulum.id_kurikulum=tb_detail_kurikulum.id_kurikulum')
               ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
               ->join('tb_periode','tb_periode.id_periode=tb_kp.id_periode')
               ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_kp.id_konsentrasi')

@@ -9,18 +9,24 @@
         <tr>
 
 
-            <td width="15%" class="left_column">Nama Kurikulum <font color="#FF0000">*</font></td>
+            <td width="15%" class="left_column">Nama Kurikulum </td>
             <td>: <?php echo $kurikulum->nama_kurikulum; ?>   </td>
       
-           <td class="left_column" width="25%">Tanggal Mulai <font color="#FF0000">*</font></td>
+           <td class="left_column" width="25%">Berlaku dari angkatan </td>
             <td>:
-               <?php echo $kurikulum->semester; ?>                        </td>
+               <?php echo $kurikulum->ang_awal; ?>                        </td>
+                                  
+           
+            </td>
+            <td class="left_column" width="25%">Berakhir pada angkatan </td>
+            <td>:
+               <?php echo $kurikulum->ang_akhir; ?>                        </td>
                                   
            
             </td>
         </tr>
         <tr>
-            <td class="left_column" width="15%" value=>Program Studi <font color="#FF0000">*</font></td>
+            <td class="left_column" width="15%" value=>Program Studi </td>
             <td width=20%">: <?php echo $kurikulum->nama_prodi; ?>        </td>
             <td class="left_column" width="15%">Jumlah Bobot Matakuliah Wajib <font color="#FF0000">*</font></td>
             <td>:

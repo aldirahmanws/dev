@@ -133,7 +133,10 @@ class Kelas_perkuliahan extends CI_Controller {
                 </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 			redirect('kelas_perkuliahan');
 		} else {
-			$this->session->set_flashdata('message', '<div class="alert alert-success"> Hapus Kelas Berhasil </div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data kelas_perkuliahan berhasil dihapus </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 			redirect('kelas_perkuliahan');
 		}
 	}
