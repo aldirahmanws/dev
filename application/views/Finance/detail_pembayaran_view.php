@@ -210,13 +210,13 @@
               </tr>
               <tr>
                 <td width="120px"><strong>Tanggal Terima</strong></td>
-                <td>: <?php echo date('d-m-Y'); ?></td>
+                <td>: <?php echo date("d M Y"); ?></td>
               </tr>
             </table>
         </div>
         <!-- /.col -->
         <div class="col-sm-4 invoice-col">
-          <img class="pull-right" src="<?php echo base_url(); ?>/uploads/jiclogo.png">
+          <img class="pull-right" src="<?php echo base_url(); ?>/assets/img/STIE JIC-RED-01.png">
         </div>
         <!-- /.col -->
       </div>
