@@ -1247,7 +1247,7 @@ class Laporan_model extends CI_Model {
         <div class="col-xs-12">
             <!-- /.box-header -->
             <div class="box-body">
-            <h4><b>Laporan Keuangan</h4></b>
+            <h4><b>Laporan Pembayaran</h4></b>
             <table>
               <tr>
                 <td width="120px">Perguruan Tinggi</td>
@@ -1274,11 +1274,11 @@ class Laporan_model extends CI_Model {
                 <tr>
                   <th>No</th>
                   <th>Tanggal Laporan</th>
-                  <th>No. TT</th>
+                  <th>No. Tanda Terima</th>
                   <th>NIM</th>
                   <th>Nama Mahasiswa</th>
-                  <th>Jenis Bayar</th>
-                  <th>Nama Pembayaran</th>
+                  <th>jenis Biaya</th>
+                  <th>Nama Biaya</th>
                   <th>Biaya</th>
                 </tr>
                 </thead>

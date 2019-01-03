@@ -66,7 +66,7 @@ class Laporan extends CI_Controller {
   	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public function laporan_pembayaran(){
 		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1 OR $this->session->userdata('level') == 3) {
-		$data['main_view'] = 'Laporan/laporan_pembayaran_view';
+		$data['main_view'] = 'Laporan/laporan_keuangan_view';
 		$this->load->view('template', $data);	
 		} else {
 			redirect('login');
