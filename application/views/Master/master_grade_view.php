@@ -11,7 +11,7 @@
             
             <!-- /.box-header -->
             <div class="box-body">
-              <div class="table-responsive">
+              <div class="table-responsive" style="overflow-x: hidden;">
               <table id="example1" class="table2 table-hover table-striped table-condensed" style="text-transform: uppercase;">
                 
                 <a href="" data-toggle="modal" data-target="#modal_tambah" class="btn btn-primary btn-sm btn-flat" ><i class="fa fa-plus"></i> Tambah</a> <br> <br>
@@ -19,7 +19,7 @@
               <tr>
                 <th width="1%" >No.</th>
                 <th width="15%" >Grade</th>
-                <th>Diskon</th>
+                <!-- <th>Diskon</th> -->
                 <th>Nilai Awal</th>
                 <th>Nilai Akhir</th>
                 <th width="20%" colspan="2">Berlaku pada</th>
@@ -35,8 +35,8 @@
                   ?>
                   <tr>
                   <td><?php echo ++$no;?></td>
-                    <td><?php echo $data->grade;?></td>
-                    <td><?php echo $data->diskon;?>%</td>
+                    <td><?php echo $data->grade;?></td> 
+                    <!-- <td><?php echo $data->diskon;?>%</td> -->
                     <td><?php echo $data->grade_awal;?></td>
                     <td><?php echo $data->grade_akhir;?></td>
                     <td><?php echo date("d-m-Y", strtotime($data->tgl_awal_grade));?></td>
@@ -85,12 +85,12 @@
                         <input type="text" name="grade" class="form-control">
                     </div>
                 </div>
-                <div class="form-group ">
+                <!-- <div class="form-group ">
                     <label for="name" class="col-md-3 control-label">Diskon</label>
                     <div class="col-md-7 col-sm-12 required">
                         <input type="text" name="diskon" class="form-control">
                     </div>
-                </div>
+                </div> -->
                 <div class="form-group ">
                     <label for="name" class="col-md-3 control-label">Nilai Awal</label>
                     <div class="col-md-7 col-sm-12 required">
@@ -140,12 +140,12 @@
                         <input type="text" name="grade" class="form-control" id="grade">
                     </div>
                 </div>
-                <div class="form-group ">
+                <!-- <div class="form-group ">
                     <label for="name" class="col-md-3 control-label">Diskon</label>
                     <div class="col-md-7 col-sm-12 required">
                         <input type="text" name="diskon" class="form-control" id="diskon">
                     </div>
-                </div>
+                </div> -->
                 <div class="form-group ">
                     <label for="name" class="col-md-3 control-label">Nilai Awal</label>
                     <div class="col-md-7 col-sm-12 required">
@@ -183,7 +183,7 @@
         $('#modal_edit').modal('show');
         $('#id_grade').val(p);
         $('#grade').val($('#data_grade'+p).val());
-        $('#diskon').val($('#data_diskon'+p).val());
+        /*$('#diskon').val($('#data_diskon'+p).val());*/
         $('#grade_awal').val($('#data_grade_awal'+p).val());
         $('#grade_akhir').val($('#data_grade_akhir'+p).val());
         $('#ket').val($('#data_ket'+p).val());

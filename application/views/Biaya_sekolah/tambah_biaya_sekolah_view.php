@@ -1,4 +1,6 @@
-<?php echo $this->session->flashdata('message');?>
+<?php echo $this->session->flashdata('message');
+$date = date('Y-m-d');
+?>
 <div class="row"> 
     <div class="col-md-12">
         <div>
@@ -13,6 +15,21 @@
                       <div class="form-group">
                         <label for="email">Id Biaya</label>
                         <input type="text" name="id_biaya" class="form-control" id="id_biaya" placeholder="Masukkan Id Konsentrasi" value="<?= $kodeunik; ?>" readonly>
+                      </div>
+                      <div class="form-group">
+                        <label for="email">Grade</label>
+                        <select class="form-control" name="id_grade">
+                          <?php 
+                              $grade = $this->db->where('tgl_awal_grade <= ', $date )
+                                                  ->where('tgl_akhir_grade >= ', $date )
+                                                  ->get('tb_grade')
+                                                  ->result(); 
+
+                              foreach ($grade as $key) {?>
+                                <option value="<?= $key->id_grade ?>"><?= $key->grade ?></option>
+                              <?php }
+                          ?>
+                        </select>
                       </div>
                       <div class="form-group">
                         <label for="email">Jenis Biaya</label>

@@ -15,7 +15,7 @@ class Master_grade_model extends CI_Model {
     {
         $data = array(
             'grade'                        => $this->input->post('grade'),
-            'diskon'                        => $this->input->post('diskon'),
+            /*'diskon'                        => $this->input->post('diskon'),*/
             'grade_awal'                        => $this->input->post('grade_awal'),
             'grade_akhir'                        => $this->input->post('grade_akhir'),
             'tgl_awal_grade'                        => $this->input->post('tgl_awal_grade'),
@@ -36,7 +36,7 @@ class Master_grade_model extends CI_Model {
     public function edit_grade(){
         $data = array(
             'grade'                        => $this->input->post('grade'),
-            'diskon'                        => $this->input->post('diskon'),
+            /*'diskon'                        => $this->input->post('diskon'),*/
             'grade_awal'                        => $this->input->post('grade_awal'),
             'grade_akhir'                        => $this->input->post('grade_akhir'),
             'tgl_awal_grade'                        => $this->input->post('tgl_awal_grade'),

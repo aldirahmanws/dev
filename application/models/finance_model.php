@@ -151,23 +151,25 @@ class Finance_model extends CI_Model {
                 
                 }
     }
-     public function get_dropdown_pembayaran($data, $waktu, $periode){
+     public function get_dropdown_pembayaran($data, $waktu, $periode, $id_grade){
       $this->db->select('*');
      $this->db->from('tb_biaya');
      $this->db->join('tb_waktu','tb_waktu.id_waktu=tb_biaya.id_waktu');
      $this->db->where('tb_waktu.waktu', $waktu);
      $this->db->where('tb_biaya.jenis_biaya', $data);
      $this->db->where('tb_biaya.periode', $periode);
+     $this->db->where('tb_biaya.id_grade', $id_grade);
      $query = $this->db->get();
      return $query->result();
   }
-  public function get_ta($data, $waktu){
+  public function get_ta($data, $waktu, $id_grade){
       $this->db->distinct();
       $this->db->select('tb_biaya.jenis_biaya');
      $this->db->from('tb_biaya');
      $this->db->join('tb_waktu','tb_waktu.id_waktu=tb_biaya.id_waktu');
      $this->db->where('tb_waktu.waktu', $waktu);
      $this->db->where('tb_biaya.periode', $data);
+     $this->db->where('tb_biaya.id_grade', $id_grade);
      $query = $this->db->get();
      return $query->result();
   }

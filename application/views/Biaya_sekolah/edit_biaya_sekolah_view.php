@@ -14,6 +14,28 @@
                         <input type="text" name="id_biaya" class="form-control" id="id_biaya" placeholder="Masukkan Id konsentrasi" value="<?php echo $edit->id_biaya; ?>" readonly>
                       </div>
                       <div class="form-group">
+                        <label for="email">Grade</label>
+                        <select class="form-control" name="id_grade">
+                          <?php 
+                              $date = date('Y-m-d');
+                              $grade = $this->db->where('tgl_awal_grade <= ', $date )
+                                                  ->where('tgl_akhir_grade >= ', $date )
+                                                  ->get('tb_grade')
+                                                  ->result(); 
+
+                              foreach ($grade as $key) {
+                                if($key->id_grade == $edit->id_grade){
+                                  $c = 'selected=""';
+                                } else {
+                                  $c = '';
+                                }
+                                ?>
+                                <option value="<?= $key->id_grade ?>" <?= $c ?>><?= $key->grade ?></option>
+                              <?php }
+                          ?>
+                        </select>
+                      </div>
+                      <div class="form-group">
                         <label for="email">Nama Biaya</label>
                         <input type="text" name="nama_biaya" class="form-control" id="nama_biaya" placeholder="Masukkan Nama konsentrasi" value="<?php echo $edit->nama_biaya; ?>">
                       </div>

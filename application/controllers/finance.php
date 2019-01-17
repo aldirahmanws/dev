@@ -280,8 +280,9 @@ class Finance extends CI_Controller {
 		$param = $this->input->get('jenis_biaya');
 		$waktu = $this->input->get('waktu');
 		$periode = $this->input->get('periode');
+		$id_grade = $this->input->get('id_grade');
 		$jenis_biaya = urldecode($param);
-		$result = $this->finance_model->get_dropdown_pembayaran($jenis_biaya, $waktu, $periode);
+		$result = $this->finance_model->get_dropdown_pembayaran($jenis_biaya, $waktu, $periode, $id_grade);
 		$option = "";
 		$option .= '<option value="">Pilih Pembayaran</option>';
 		foreach ($result as $data) {
@@ -295,7 +296,8 @@ class Finance extends CI_Controller {
 		// $layanan =$this->input->post('layanan');
 		$param = $this->input->get('periode');
 		$waktu = $this->input->get('waktu');
-		$result = $this->finance_model->get_ta($param , $waktu);
+		$id_grade = $this->input->get('id_grade');
+		$result = $this->finance_model->get_ta($param , $waktu, $id_grade);
 		$option = "";
 		$option .= '<option value="">Pilih Pembayaran</option>';
 		foreach ($result as $data) {
@@ -317,10 +319,12 @@ class Finance extends CI_Controller {
 
 		if ($par == 'Angsuran Tahun 1'){
 			$yaya = $this->finance_model->get_yaya($pae);
-			$ee = $result->jumlah_biaya * $yaya->diskon / 100;		
+			/*$ee = $result->jumlah_biaya * $yaya->diskon / 100;		*/
+			$ee = 0;
 		} else if($par == 'Angsuran Tahun 2'  or $par == 'Angsuran Tahun 3' or $par == 'Angsuran Tahun 4'){
 			$yaya = $this->finance_model->get_yaya($pae);
-			$ee = $result->jumlah_biaya * $yaya->diskon / 100;	
+			/*$ee = $result->jumlah_biaya * $yaya->diskon / 100;	*/
+			$ee = 0;
 		} else {
 			$ee = 0;
 		}

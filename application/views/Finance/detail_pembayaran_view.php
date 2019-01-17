@@ -73,6 +73,7 @@
                 foreach ($data_pembayaran as $i) {
                   if ($i->jenis_biaya == 'Angsuran Tahun 1'){
                     $dataea = $i->jumlah_biaya * $i->diskon / 100;
+                    $dataea = 0;
                     $iae = $i->jumlah_biaya - $dataea;
                     $iea = $i->jumlah_biaya - $dataea  - $i->potongan + $i->denda;
                   } else if($i->jenis_biaya == 'KRS'){
@@ -81,9 +82,11 @@
                     $i->nama_biaya = $i->nama_biaya.' - '.$i->kode_matkul;
                   }  else if($i->jenis_biaya == 'Angsuran Tahun 2' or $i->jenis_biaya == 'Angsuran Tahun 3' or $i->jenis_biaya == 'Angsuran Tahun 4'){
                     $dataea = $i->jumlah_biaya * $i->diskon / 100;
+                    $dataea = 0;
                     $iae = $i->jumlah_biaya - $dataea;
                     $iea = $i->jumlah_biaya - $dataea   - $i->potongan + $i->denda;
                   } else {
+                    $dataea = 0;
                     $iae = $i->jumlah_biaya;
                     $iea = $i->jumlah_biaya - $dataea   - $i->potongan + $i->denda;
                   }
@@ -488,9 +491,10 @@ function myFunction() {
                 var jenis_biaya = p;
                 var waktu = document.getElementById("waktu").value;
                 var periode = document.getElementById('tahun_akademik').value;
+                var id_grade = document.getElementById('js_ranking').value;
                 $.ajax({
                     url: '<?php echo base_url(); ?>finance/get_dropdown_pembayaran/',
-                    data: 'jenis_biaya='+jenis_biaya+'&waktu='+waktu+'&periode='+periode,
+                    data: 'jenis_biaya='+jenis_biaya+'&waktu='+waktu+'&periode='+periode+'&id_grade='+id_grade,
                     type: 'GET',
                     dataType: 'html',
                     success: function(msg) {
@@ -503,9 +507,10 @@ function myFunction() {
             function get_ta(p) {
                 var periode = p;
                 var waktu = document.getElementById("waktu").value;
+                var id_grade = document.getElementById('js_ranking').value;
                 $.ajax({
                     url: '<?php echo base_url(); ?>finance/get_ta/',
-                    data: 'periode='+periode+'&waktu='+waktu,
+                    data: 'periode='+periode+'&waktu='+waktu+'&id_grade='+id_grade,
                     type: 'GET',
                     dataType: 'html',
                     success: function(msg) {
