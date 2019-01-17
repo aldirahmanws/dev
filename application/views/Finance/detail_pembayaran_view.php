@@ -72,7 +72,7 @@
                 $no = 0;
                 foreach ($data_pembayaran as $i) {
                   if ($i->jenis_biaya == 'Angsuran Tahun 1'){
-                    $dataea = $i->jumlah_biaya * $i->diskon / 100;
+                    /*$dataea = $i->jumlah_biaya * $i->diskon / 100;*/
                     $dataea = 0;
                     $iae = $i->jumlah_biaya - $dataea;
                     $iea = $i->jumlah_biaya - $dataea  - $i->potongan + $i->denda;
@@ -81,7 +81,7 @@
                     $iea = ($i->jumlah_biaya * $i->bobot_matkul)   - $i->potongan + $i->denda;
                     $i->nama_biaya = $i->nama_biaya.' - '.$i->kode_matkul;
                   }  else if($i->jenis_biaya == 'Angsuran Tahun 2' or $i->jenis_biaya == 'Angsuran Tahun 3' or $i->jenis_biaya == 'Angsuran Tahun 4'){
-                    $dataea = $i->jumlah_biaya * $i->diskon / 100;
+                    /*$dataea = $i->jumlah_biaya * $i->diskon / 100;*/
                     $dataea = 0;
                     $iae = $i->jumlah_biaya - $dataea;
                     $iea = $i->jumlah_biaya - $dataea   - $i->potongan + $i->denda;
