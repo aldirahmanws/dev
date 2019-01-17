@@ -92,6 +92,8 @@
                   <th>Konsentrasi</th>
                   <th>Status</th>
                   <th>Angkatan</th>
+                  <th>SMT</th>
+                  <th>Grade</th>
                   <th style="width: 10%">Aksi</th>
                 </tr>
                 </thead>
@@ -115,12 +117,14 @@
                   <td>'.$data->id_mahasiswa.'</td>
                   <td><a href="'.base_url('mahasiswa/lihat_mahasiswa_dikti/'.$data->id_mahasiswa).'")>'.$data->nama_mahasiswa.'</a></td>
                   <td>'.$data->nim.'</td>
-                  <td>'.$data->jenis_kelamin.'</td>
+                  <td>'.$data->id_kelamin.'</td>
                   <td>'.$data->waktu.'</td>
                   <td>'.$data->nama_prodi.'</td>
                   <td>'.$data->nama_konsentrasi.'</td>
                   <td>'.$status.'</td>
                   <td>'.substr($data->tgl_du,0,4).'</td>
+                  <td>'.$data->semester_aktif.'</td>
+                  <td>'.$data->id_grade.'</td>
                   <td>
 
                   <a href="'.base_url('mahasiswa/detail_mahasiswa_dikti/'.$data->id_mahasiswa).'" class="btn btn-warning btn-xs btn-flat"><i class="fa fa-pencil"></i><span class="tooltiptext">Edit</span></a>

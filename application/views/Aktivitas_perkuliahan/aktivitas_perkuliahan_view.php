@@ -137,7 +137,7 @@
                            <td class="left_column">Mahasiswa <font color="#FF0000">*</font></td>
             <td colspan="9">: 
       <input type="text" name="nama_mahasiswa" id="nama_mahasiswa" class="validate[required] text-input ui-autocomplete-input" size="20"  style="width: 50%;" required="" placeholder="Masukan Nama"><span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>            <input type="hidden" name="id_mahasiswa" id="id_mahasiswa" > <input type="hidden" name="nama_m" id="nama_m" > <input type="hidden" name="id_prodi" id="id_prodi" > 
-      <input type="hidden" name="semester_aktif" id="semester_aktif" > <input type="hidden" name="nama" id="nama" > <input type="hidden" name="asal_pt" id="asal_pt" >
+      <input type="hidden" name="semester_aktif" id="semester_aktif" > <input type="hidden" name="nama" id="nama" > <input type="hidden" name="asal_pt" id="asal_pt" > <input type="hidden" name="tgl_du" id="tgl_du" > <input type="hidden" name="id_waktu" id="id_waktu" > 
             </td>
         </tr>
         <tr>
@@ -200,8 +200,10 @@
         $('#nama_m').val(ui.item.nama_m);
         $('#id_prodi').val(ui.item.prodi);
         $('#asal_pt').val(ui.item.asal_pt);
+        $('#id_waktu').val(ui.item.id_waktu);
         $('#semester_aktif').val(ui.item.semester_aktif);
         $('#id_grade').val(ui.item.grade);
+        $('#tgl_du').val(ui.item.tgl_du);
         get_prodi_periode();
       }
     });    

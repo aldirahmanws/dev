@@ -1225,7 +1225,7 @@ class Laporan_model extends CI_Model {
                 ->where('tanggal_cetak <=', $tanggal_akhir)
                 ->like('tb_prodi.id_prodi', $id_prodi)
                 ->like('tb_mahasiswa.id_waktu', $id_waktu)
-                /*->order_by("tanggal_pendaftaran", "asc")*/
+                ->order_by('tanggal_cetak', 'asc')
                 ->get();
       $row = $query->result();
       $prodi = $this->db->where('id_prodi', $id_prodi)->get('tb_prodi')->row()->nama_prodi;
@@ -1277,7 +1277,7 @@ class Laporan_model extends CI_Model {
                   <th>No. Tanda Terima</th>
                   <th>NIM</th>
                   <th>Nama Mahasiswa</th>
-                  <th>jenis Biaya</th>
+                  <th>Jenis Biaya</th>
                   <th>Nama Biaya</th>
                   <th>Biaya</th>
                 </tr>

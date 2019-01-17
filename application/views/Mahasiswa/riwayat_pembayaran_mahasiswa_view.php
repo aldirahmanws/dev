@@ -99,7 +99,26 @@
                   <?php 
                   $no = 0;
                 foreach ($riwayat as $i) {
-                  $total = $i->jumlah_biaya - $i->potongan + $i->denda;
+                   if ($i->jenis_biaya == 'Angsuran Tahun 1'){
+                    $dataea = $i->jumlah_biaya * $i->diskon / 100;
+                    $iae = $i->jumlah_biaya - $dataea;
+                    $iea = $i->jumlah_biaya - $dataea  - $i->potongan + $i->denda;
+                  } else if($i->jenis_biaya == 'KRS'){
+                    $iae = $i->jumlah_biaya * $i->bobot_matkul;
+                    $iea = ($i->jumlah_biaya * $i->bobot_matkul)   - $i->potongan + $i->denda;
+                    $i->nama_biaya = $i->nama_biaya.' - '.$i->kode_matkul;
+                  }  else if($i->jenis_biaya == 'Angsuran Tahun 2' or $i->jenis_biaya == 'Angsuran Tahun 3' or $i->jenis_biaya == 'Angsuran Tahun 4'){
+                    $dataea = $i->jumlah_biaya * $i->diskon / 100;
+                    $iae = $i->jumlah_biaya - $dataea;
+                    $iea = $i->jumlah_biaya - $dataea   - $i->potongan + $i->denda;
+                  } else if ($i->jenis_biaya == 'Registrasi'){
+                    $iea = $i->jumlah_biaya;
+                    $iae = $i->jumlah_biaya;
+                  } else {
+                    $iae = $i->jumlah_biaya;
+                    $iea = $i->jumlah_biaya - $dataea   - $i->potongan + $i->denda;
+                  }
+
                   echo '
                   
                 <tr>
@@ -107,10 +126,10 @@
                   <td>'.date("d M Y", strtotime($i->tanggal_pembayaran)).'</td>
                   <td>'.$i->nama_biaya.'</td>
                   <td>'.$i->jenis_biaya.'</td>
-                  <td style="text-align:right">'.number_format($i->jumlah_biaya, 2, ",", ".").'</td>
+                  <td style="text-align:right">'.number_format($iae, 2, ",", ".").'</td>
                   <td style="text-align:right">'.number_format($i->potongan, 2, ",", ".").'</td>
                   <td style="text-align:right">'.number_format($i->denda, 2, ",", ".").'</td>
-                  <td style="text-align:right">'.number_format($total, 2, ",", ".").'</td>
+                  <td style="text-align:right">'.number_format($iea, 2, ",", ".").'</td>
                 </tr>
                 ' ;
                   

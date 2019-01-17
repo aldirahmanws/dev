@@ -189,7 +189,7 @@
                 </tr>
                 <tr>
                     <td class="left_column" width="15%"> Semester Aktif <font color="#FF0000">*</font></td>
-                    <td colspan="4">:  <select name="semester_aktif" id="semester_aktif" required="" onchange="return get_grade(this.value)"> 
+                    <td colspan="4">:  <select name="semester_aktif" id="semester_aktif" required=""> 
                             <option value=""> Pilih Semester Aktif </option>
                             <option value="1"> 1 </option>
                             <option value="2"> 2 </option>
@@ -207,7 +207,14 @@
                     <td colspan="4">:  
 
                 <select name="id_grade" id="id_grade" required="">
-                            <option value="">Pilih Semester Aktif Dahulu</option>  
+                            <option value="">Pilih Grade</option>  
+                            <?php 
+
+                  foreach($getGradeAktif as $row)
+                  { 
+                    echo '<option value="'.$row->id_grade.'">'.$row->grade.'</option>';
+                  }
+                  ?>
                             
                 </select>  
 
@@ -653,20 +660,6 @@ function undisableTxt() {
                     dataType: 'html',
                     success: function(msg) {
                         $("#concentrate").html(msg);
-
-                    }
-                });
-            }
-     function get_grade(p) {
-                var semester_aktif = p;
-
-                $.ajax({
-                    url: '<?php echo base_url(); ?>daftar_ulang/get_grade/'+semester_aktif,
-                    data: 'semester_aktif='+semester_aktif,
-                    type: 'GET',
-                    dataType: 'html',
-                    success: function(msg) {
-                        $("#id_grade").html(msg);
 
                     }
                 });

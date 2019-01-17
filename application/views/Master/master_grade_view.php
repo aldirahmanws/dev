@@ -22,9 +22,7 @@
                 <th>Diskon</th>
                 <th>Nilai Awal</th>
                 <th>Nilai Akhir</th>
-                <th width="1%">Keterangan</th>
-                <th width="1%">Tanggal Awal Grade</th>
-                <th width="1%">Tanggal Akhir Grade</th>
+                <th width="20%" colspan="2">Berlaku pada</th>
                 <th width="10%">Aksi</th>
               </tr>
               </thead>
@@ -41,16 +39,14 @@
                     <td><?php echo $data->diskon;?>%</td>
                     <td><?php echo $data->grade_awal;?></td>
                     <td><?php echo $data->grade_akhir;?></td>
-                    <td><?php echo $data->ket;?></td>
-                    <td><?php echo $data->tgl_awal_grade;?></td>
-                    <td><?php echo $data->tgl_akhir_grade;?></td>
+                    <td><?php echo date("d-m-Y", strtotime($data->tgl_awal_grade));?></td>
+                    <td><?php echo date("d-m-Y", strtotime($data->tgl_akhir_grade));?></td>
 
                     <td>
                       <input type="hidden" id="data_grade<?= $data->id_grade ?>" value="<?= $data->grade ?>">
                       <input type="hidden" id="data_diskon<?= $data->id_grade ?>" value="<?= $data->diskon ?>">
                       <input type="hidden" id="data_grade_awal<?= $data->id_grade ?>" value="<?= $data->grade_awal ?>">
                       <input type="hidden" id="data_grade_akhir<?= $data->id_grade ?>" value="<?= $data->grade_akhir ?>">
-                      <input type="hidden" id="data_ket<?= $data->id_grade ?>" value="<?= $data->ket ?>">
                       <input type="hidden" id="data_tgl_awal_grade<?= $data->id_grade ?>" value="<?= $data->tgl_awal_grade ?>">
                       <input type="hidden" id="data_tgl_akhir_grade<?= $data->id_grade ?>" value="<?= $data->tgl_akhir_grade ?>">
                       <a onclick="show_modal('<?= $data->id_grade; ?>')"  class="btn btn-warning btn-xs btn-flat glyphicon glyphicon-pencil"><span class="tooltiptext">Edit</span></a>
@@ -108,12 +104,6 @@
                     </div>
                 </div>
                 <div class="form-group ">
-                    <label for="name" class="col-md-3 control-label">Keterangan</label>
-                    <div class="col-md-7 col-sm-12 required">
-                        <input type="text" name="ket" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group ">
                     <label for="name" class="col-md-3 control-label">Tanggal Awal Grade</label>
                     <div class="col-md-7 col-sm-12 required">
                         <input type="date" name="tgl_awal_grade" class="form-control">
@@ -166,12 +156,6 @@
                     <label for="name" class="col-md-3 control-label">Nilai Akhir</label>
                     <div class="col-md-7 col-sm-12 required">
                         <input type="text" name="grade_akhir" class="form-control" id="grade_akhir">
-                    </div>
-                </div>
-                <div class="form-group ">
-                    <label for="name" class="col-md-3 control-label">Keterangan</label>
-                    <div class="col-md-7 col-sm-12 required">
-                        <input type="text" name="ket" class="form-control" id="ket">
                     </div>
                 </div>
                 <div class="form-group ">

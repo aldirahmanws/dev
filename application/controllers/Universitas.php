@@ -7,7 +7,7 @@ class Universitas extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('universitas_model');
-		ini_set('display_errors', 0);
+		//ini_set('display_errors', 0);
 		if ($this->session->userdata('level') == 4 OR $this->session->userdata('level') == 5 OR $this->session->userdata('level') == 2) {
 			redirect('login');
 		}
@@ -16,11 +16,19 @@ class Universitas extends CI_Controller {
 	public function index()
 	{
 		if ($this->session->userdata('logged_in') == TRUE) {
-			$data['universitas'] = $this->universitas_model->data_universitas();
-			$data['main_view'] = 'Universitas/data_universitas_view';
-			$this->load->view('template', $data);
-			} else {
-			redirect('login');
+			$ambil_db = $this->db->get('tb_pt')->result();
+		$c = 0;
+		$alert = "'Apakah anda yakin mengapus data ini ?'";
+		foreach ($ambil_db as $key) {
+			$arrayName[] = array(++$c,$key->nama_pt, '<a href="'.base_url('universitas/hapus_universitas/'.$key->id_pt).'" onclick="return confirm('.$alert.')" class="btn btn-danger  btn-xs btn-flat" ><i class="fa fa-trash"></i><span class="tooltiptext">Hapus</span></a>');	
+		}
+		
+		$ambil_db = json_encode($arrayName);
+		$data['universitas'] = $ambil_db;
+		$data['main_view'] = 'Universitas/data_universitas_view';
+		$this->load->view('template', $data);
+		} else {
+		redirect('login');
 		}
 	}
 
@@ -73,5 +81,7 @@ class Universitas extends CI_Controller {
 			redirect('universitas');
 		}
 	}
+
+	
 		
 }

@@ -464,7 +464,7 @@ a:hover .tooltiptext {
         </li>
          
 
-        <li class="treeview <?php if($this->uri->segment(2) == 'laporan_mahasiswa' OR $this->uri->segment(2) == 'laporan_dmm' OR $this->uri->segment(2) == 'laporan_transkrip' OR $this->uri->segment(2) == 'laporan_tamu' OR $this->uri->segment(2) == 'laporan_peserta_tes' OR $this->uri->segment(2) == 'laporan_data_getstudent' OR $this->uri->segment(2) == 'laporan_buku_induk' OR $this->uri->segment(2) == 'laporan_khs' OR $this->uri->segment(1) == 'ledger') echo 'active'; else echo  '';?>">
+        <li class="treeview <?php if($this->uri->segment(2) == 'laporan_mahasiswa' OR $this->uri->segment(2) == 'laporan_dmm' OR $this->uri->segment(2) == 'laporan_transkrip' OR $this->uri->segment(2) == 'laporan_tamu' OR $this->uri->segment(2) == 'laporan_peserta_tes' OR $this->uri->segment(2) == 'laporan_data_getstudent' OR $this->uri->segment(2) == 'laporan_buku_induk' OR $this->uri->segment(2) == 'laporan_khs' OR $this->uri->segment(1) == 'ledger' OR $this->uri->segment(1) == 'laporan_pembayaran') echo 'active'; else echo  '';?>">
               <a href="#"><i class="fa fa-share"></i><span>Laporan</span>
                 <span class="pull-right-container">
                   <i class="fa fa-angle-left pull-right"></i>
@@ -483,6 +483,7 @@ a:hover .tooltiptext {
                 <li <?php if($this->uri->segment(2) == 'laporan_tamu') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>laporan/laporan_tamu"><i class="fa fa-circle-o"></i>Laporan Tamu</a></li>
                 <li <?php if($this->uri->segment(2) == 'laporan_peserta_tes') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>laporan/laporan_peserta_tes"><i class="fa fa-circle-o"></i>Laporan Peserta Tes</a></li>
                 <li <?php if($this->uri->segment(2) == 'laporan_data_getstudent') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>laporan/laporan_data_getstudent"><i class="fa fa-circle-o"></i>Laporan Student Get <br>Student</a></li>
+                <li <?php if($this->uri->segment(2) == 'laporan_pembayaran') echo 'class="active"'; else echo  '';?>><a href="<?php echo base_url(); ?>laporan/laporan_pembayaran"><i class="fa fa-circle-o"></i>Laporan Pembayaran</a></li>
               </ul>
             </li>
 

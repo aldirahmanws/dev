@@ -17,6 +17,8 @@ class Aktivitas_perkuliahan_model extends CI_Model {
               ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
               ->join('tb_status_mhs','tb_status_mhs.id_status=tb_aktivitas_perkuliahan.id_status')
               ->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
+              ->where('tb_periode.tgl_awal_kul <=',  date('Y-m-d'))
+              ->where('tb_periode.tgl_akhir_kul >=',  date('Y-m-d'))
               ->get('tb_aktivitas_perkuliahan')
               ->result();
 	}
@@ -28,6 +30,7 @@ class Aktivitas_perkuliahan_model extends CI_Model {
               ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
               ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
               ->join('tb_status_mhs','tb_status_mhs.id_status=tb_aktivitas_perkuliahan.id_status')
+              ->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
               ->like('tb_prodi.id_prodi', $id_prodi)
               ->like('tb_aktivitas_perkuliahan.id_periode', $id_periode)
               ->get('tb_aktivitas_perkuliahan')

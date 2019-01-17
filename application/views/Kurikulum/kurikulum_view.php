@@ -8,6 +8,7 @@
               <h3 class="box-title">DATA KURIKULUM</h3>
             </div>
             <div class="box-body">
+              <div class="table-responsive">
               <table id="example3" class="table2 table-hover table-striped table-condensed table-bordered" style="text-transform: uppercase;">
                 <a class="btn btn-primary btn-sm btn-flat" href="" data-toggle="modal" data-target="#modal_view"><i class="fa fa-plus"></i> Tambah</a> <br> <br>
                 <thead>
@@ -15,7 +16,7 @@
                   <th rowspan="2" style="vertical-align : middle;">No</th>
                   <th rowspan="2" style="vertical-align : middle;">Nama Kurikulum</th>
                   <th rowspan="2" style="vertical-align : middle;">Program Studi</th>
-                  <th rowspan="2" style="vertical-align : middle;">Mulai Berlaku</th>
+                  <th rowspan="2" style="vertical-align : middle;">Berlaku Pada Angkatan</th>
                   <th colspan="3">Aturan Jumlah SKS</th>
                   <th rowspan="2" style="vertical-align : middle;">Aksi</th>
                 </tr>
@@ -37,7 +38,7 @@
                   <td>'.++$no.'</td>
                   <td><a href="'.base_url('kurikulum/detail_kurikulum/'.$data->id_kurikulum).'">'.$data->nama_kurikulum.'</a></td>
                   <td>'.$data->nama_prodi.'</td>
-                  <td>'.$data->semester.'</td>
+                  <td>'.$data->ang_awal.' - '.$data->ang_akhir.'</td>
                   <td>'.$jumlah_sks.'</td>
                   <td>'.$data->bobot_matkul_wajib.'</td>
                   <td>'.$data->bobot_matkul_pilihan.'</td>
@@ -55,6 +56,7 @@
         
                 </tbody>
               </table>
+              </div>
             </div>
             
             <!-- /.box-body -->

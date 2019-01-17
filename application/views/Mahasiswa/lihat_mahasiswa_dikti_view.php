@@ -1,12 +1,7 @@
            <?php echo $this->session->flashdata('message');?>
            <?php 
                 if($this->session->userdata('level') == 5){ ?>
-        <!-- <a class="btn btn-sm btn-primary" href="<?php echo base_url();?>mahasiswa">Detail Mahasiswa</a>
-        <a class="btn btn-sm btn-info" href="<?php echo base_url();?>mahasiswa/history_pendidikan">History Pendidikan</a>
-        <a class="btn btn-sm btn-primary" href="<?php echo base_url();?>mahasiswa/krs_mahasiswa">KRS Mahasiswa</a>
-        <a class="btn btn-sm btn-info" href="<?php echo base_url();?>mahasiswa/history_nilai">History Nilai</a>
-        <a class="btn btn-sm btn-primary" href="<?php echo base_url();?>mahasiswa/aktivitas_perkuliahan">Aktivitas Perkuliahan</a>
-        <a class="btn btn-sm btn-info" href="<?php echo base_url();?>mahasiswa/prestasi">Prestasi</a> -->
+        
         
            <?php } else { ?>
         <a class="btn btn-sm btn-default btn-flat" href="<?php echo base_url(); ?>mahasiswa/data_mahasiswa"><i class="fa fa-angle-left"></i> Back</a>
@@ -121,6 +116,10 @@
                         $status = $mahasiswa->status_mhs;
                     } ?>
                     <td colspan="6" size="100">: <?php echo $status; ?></td>
+                </tr>
+                <tr>
+                    <td class="left_column" width="15%"> Dosen PA</td>
+                    <td colspan="6" size="100">: <?php echo $mahasiswa->nama_dosen; ?></td>
                 </tr>
                 
             </table>

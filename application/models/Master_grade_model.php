@@ -18,7 +18,6 @@ class Master_grade_model extends CI_Model {
             'diskon'                        => $this->input->post('diskon'),
             'grade_awal'                        => $this->input->post('grade_awal'),
             'grade_akhir'                        => $this->input->post('grade_akhir'),
-            'ket'                        => $this->input->post('ket'),
             'tgl_awal_grade'                        => $this->input->post('tgl_awal_grade'),
             'tgl_akhir_grade'                        => $this->input->post('tgl_akhir_grade')
         );
@@ -40,7 +39,6 @@ class Master_grade_model extends CI_Model {
             'diskon'                        => $this->input->post('diskon'),
             'grade_awal'                        => $this->input->post('grade_awal'),
             'grade_akhir'                        => $this->input->post('grade_akhir'),
-            'ket'                        => $this->input->post('ket'),
             'tgl_awal_grade'                        => $this->input->post('tgl_awal_grade'),
             'tgl_akhir_grade'                        => $this->input->post('tgl_akhir_grade')
         );

@@ -218,6 +218,8 @@ class Kelas_perkuliahan extends CI_Controller {
 						'grade' => $row->id_grade,
 						'asal_pt' => $row->asal_pt,
 						'semester_aktif' => $row->semester_aktif,
+						'tgl_du' => $row->tgl_du,
+						'id_waktu' => $row->id_waktu,
 						'prodi' => $row->id_prodi);
 				echo json_encode($result_array);
 			

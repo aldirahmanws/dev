@@ -23,7 +23,7 @@
             <td>: <?php echo $data->grade;?>  </td>
         </tr>
         <tr>
-            <td class="left_column">Nomor Telephone</td>
+            <td class="left_column">Nomor Telepon</td>
             <td>: <?php echo $data->no_telepon ?></td>
             <td class="left_column">Program Studi <font color="#FF0000">*</font></td>
             <td>: <?php echo $data->nama_prodi; ?></td>
@@ -424,7 +424,7 @@
                       </div>
                     </div>
                     <center>
-                    <button type="submit" class="btn btn-primary btn-flat">Simpan</button>
+                    <button type="submit" class="btn btn-primary btn-flat pull-right" style="margin-right: 9%">Simpan</button>
                     </center>
                   </div>
                   <!-- /.box-body -->

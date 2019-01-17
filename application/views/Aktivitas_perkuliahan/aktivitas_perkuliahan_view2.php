@@ -257,23 +257,25 @@
                     ->where('grade_awal <=', $ipk2)
                     ->where('grade_akhir >=', $ipk2)
                     ->like('grade', 'gr')
-                    ->where('tgl_awal_grade <=', date('Y-m-d'))
-                    ->where('tgl_akhir_grade >=', date('Y-m-d'))
+                    ->where('tgl_awal_grade <=', $this->input->get('tgl_du'))
+                    ->where('tgl_akhir_grade >=', $this->input->get('tgl_du'))
                     ->get('tb_grade')
                     ->row();
 
                     $grade_atas = $this->db->select('id_grade AS wew')
                     ->like('grade', 'non')
                     ->where('grade_akhir <=', 4)
-                    ->where('tgl_awal_grade <=', date('Y-m-d'))
-                    ->where('tgl_akhir_grade >=', date('Y-m-d'))
+                    ->where('tgl_awal_grade <=', $this->input->get('tgl_du'))
+                    ->where('tgl_akhir_grade >=', $this->input->get('tgl_du'))
                     ->get('tb_grade')
                     ->row();
               ?>
 
                 <?php if ($this->input->get('semester_aktif') == 1 OR $this->input->get('semester_aktif') == 3 OR $this->input->get('semester_aktif') == 5 OR $this->input->get('semester_aktif') == 7 AND $this->input->get('asal_pt') != 1 AND $this->input->get('asal_pt') != '' AND $this->input->get('asal_pt') != NULL AND $this->input->get('asal_pt') != ' ') {
                  $grade_aktif = $this->input->get('id_grade');
-                } elseif ($this->input->get('semester_aktif') == 9) {
+                } elseif ($this->input->get('semester_aktif') >= 9) {
+                  $grade_aktif = $grade_atas->wew;
+                } elseif ($this->input->get('id_waktu') == 2) {
                   $grade_aktif = $grade_atas->wew;
                 } else {
                    $grade_aktif = $gradee->wow;
@@ -281,7 +283,7 @@
 
                 ?>
 
-             <input type="text" name="id_grade" id="id_grade" value="<?php echo $grade_aktif; ?>">
+             <input type="hidden" name="id_grade" id="id_grade" value="<?php echo $grade_aktif; ?>">
                     </td>
         </tr>
         <tr>

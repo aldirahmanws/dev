@@ -339,7 +339,7 @@ class Finance_model extends CI_Model {
                                      </td>
         </tr>
         <tr>
-            <td class="left_column">Nomor Telephone</td>
+            <td class="left_column">Nomor Telepon</td>
             <td>: '.$row->no_telepon.'</td>
             <td class="left_column">Program Studi <font color="#FF0000">*</font></td>
             <td>: '.$row->nama_prodi.'</td>

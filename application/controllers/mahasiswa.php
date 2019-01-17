@@ -13,6 +13,7 @@ class Mahasiswa extends CI_Controller {
 		$this->load->model('user_model');
 		$this->load->model('kelas_perkuliahan_model');
 		$this->load->model('tamu_model');
+		$this->load->model('dosen_model');
 		ini_set('display_errors', 0);
 	}
 	 
@@ -100,7 +101,7 @@ class Mahasiswa extends CI_Controller {
 		$option .= '<option value="uygydg">Pilih Periode</option>';
 		foreach ($result as $data) {
 			$option = 
-			$option .= "<option value='".$data->semester."'>".$data->semester."</option>";
+			$option .= "<option value='".$data->id_periode."'>".$data->semester."</option>";
 			
 		}
 		echo $option;
@@ -125,6 +126,7 @@ class Mahasiswa extends CI_Controller {
 			$id_mahasiswa = $this->uri->segment(3);
 			$data['getStatus'] = $this->mahasiswa_model->getStatus();
 			$data['getGrade'] = $this->mahasiswa_model->getGrade();
+			$data['getDosenPA'] = $this->dosen_model->data_dosen();
 			$data['getProdi'] = $this->daftar_ulang_model->getProdi();
 			$data['getConcentrate'] = $this->daftar_ulang_model->getProdi();
 			$data['mahasiswa'] = $this->mahasiswa_model->detail_mahasiswa_dikti($id_mahasiswa);
@@ -318,7 +320,7 @@ class Mahasiswa extends CI_Controller {
 			$data['getStatus'] = $this->mahasiswa_model->getStatus();
 			$data['kodeunik_mhs'] = $this->mahasiswa_model->buat_kode_mhs();
 			$data['getStatus'] = $this->mahasiswa_model->getStatus();
-			$data['getGrade'] = $this->mahasiswa_model->getGrade();
+			$data['getGradeAktif'] = $this->mahasiswa_model->getGrade();
 			$data['getProdi'] = $this->daftar_ulang_model->getProdi();
 			$data['main_view'] = 'Mahasiswa/tambah_mahasiswa_view';
 			$this->load->view('template', $data);
@@ -542,7 +544,7 @@ class Mahasiswa extends CI_Controller {
 			} 
 	}
 
-	public function save_edit_mahasiswa($nim)
+	public function save_edit_mahasiswa()
 	{
 		 $id_mahasiswa = $this->uri->segment(3);
 		 $nim = $this->uri->segment(4);
@@ -790,6 +792,38 @@ class Mahasiswa extends CI_Controller {
 			$data['a47'] = $this->mahasiswa_model->checklist_47($id_mahasiswa);
 			$data['a48'] = $this->mahasiswa_model->checklist_48($id_mahasiswa);
 			$data['a49'] = $this->mahasiswa_model->checklist_49($id_mahasiswa);
+
+			$data['a51'] = $this->mahasiswa_model->checklist_51($id_mahasiswa);
+			$data['a52'] = $this->mahasiswa_model->checklist_52($id_mahasiswa);
+			$data['a53'] = $this->mahasiswa_model->checklist_53($id_mahasiswa);
+			$data['a54'] = $this->mahasiswa_model->checklist_54($id_mahasiswa);
+			$data['a55'] = $this->mahasiswa_model->checklist_55($id_mahasiswa);
+			$data['a56'] = $this->mahasiswa_model->checklist_56($id_mahasiswa);
+			$data['a57'] = $this->mahasiswa_model->checklist_57($id_mahasiswa);
+			$data['a58'] = $this->mahasiswa_model->checklist_58($id_mahasiswa);
+			$data['a59'] = $this->mahasiswa_model->checklist_59($id_mahasiswa);
+
+			$data['a61'] = $this->mahasiswa_model->checklist_61($id_mahasiswa);
+			$data['a62'] = $this->mahasiswa_model->checklist_62($id_mahasiswa);
+			$data['a63'] = $this->mahasiswa_model->checklist_63($id_mahasiswa);
+			$data['a64'] = $this->mahasiswa_model->checklist_64($id_mahasiswa);
+			$data['a65'] = $this->mahasiswa_model->checklist_65($id_mahasiswa);
+			$data['a66'] = $this->mahasiswa_model->checklist_66($id_mahasiswa);
+			$data['a67'] = $this->mahasiswa_model->checklist_67($id_mahasiswa);
+			$data['a68'] = $this->mahasiswa_model->checklist_68($id_mahasiswa);
+			$data['a69'] = $this->mahasiswa_model->checklist_69($id_mahasiswa);
+
+			$data['a71'] = $this->mahasiswa_model->checklist_71($id_mahasiswa);
+			$data['a72'] = $this->mahasiswa_model->checklist_72($id_mahasiswa);
+			$data['a73'] = $this->mahasiswa_model->checklist_73($id_mahasiswa);
+			$data['a74'] = $this->mahasiswa_model->checklist_74($id_mahasiswa);
+			$data['a75'] = $this->mahasiswa_model->checklist_75($id_mahasiswa);
+			$data['a76'] = $this->mahasiswa_model->checklist_76($id_mahasiswa);
+			$data['a77'] = $this->mahasiswa_model->checklist_77($id_mahasiswa);
+			$data['a78'] = $this->mahasiswa_model->checklist_78($id_mahasiswa);
+			$data['a79'] = $this->mahasiswa_model->checklist_79($id_mahasiswa);
+
+
 			$data['main_view'] = 'Mahasiswa/checklist_pembayaran_mahasiswa_view';
 			$this->load->view('template', $data);
 			} else {

@@ -266,7 +266,7 @@
                   <td><?php if ($a39 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
                 </tr>
 
-              <?php } else  { ?>
+              <?php } else if($mahasiswa->semester_aktif == 7 OR $mahasiswa->semester_aktif == 8)  { ?>
                 <tr>
                   <td>1</td>
                   <td>Angsuran Tahun 4</td>
@@ -322,8 +322,178 @@
                   <td><?php if ($a49 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
                 </tr>
 
+              <?php } else if ($mahasiswa->semester_aktif == 9 OR $mahasiswa->semester_aktif == 10) { ?>
+                  
+                <tr>
+                  <td>1</td>
+                  <td>Angsuran Tahun 5</td>
+                  <td>Angsuran 1</td>
+                  <td><?php if ($a51 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Angsuran Tahun 5</td>
+                  <td>Angsuran 2</td>
+                  <td><?php if ($a52 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Angsuran Tahun 5</td>
+                  <td>Angsuran 3</td>
+                  <td><?php if ($a53 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Angsuran Tahun 5</td>
+                  <td>Angsuran 4</td>
+                  <td><?php if ($a54 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>Angsuran Tahun 5</td>
+                  <td>Angsuran 5</td>
+                  <td><?php if ($a55 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>Angsuran Tahun 5</td>
+                  <td>Angsuran 6</td>
+                  <td><?php if ($a56 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td>Angsuran Tahun 5</td>
+                  <td>Angsuran 7</td>
+                  <td><?php if ($a57 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td>Angsuran Tahun 5</td>
+                  <td>Angsuran 8</td>
+                  <td><?php if ($a58 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td>Angsuran Tahun 5</td>
+                  <td>Angsuran 9</td>
+                  <td><?php if ($a59 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+
+              <?php } else if ($mahasiswa->semester_aktif == 11 OR $mahasiswa->semester_aktif == 12) { ?>
+                  
+                <tr>
+                  <td>1</td>
+                  <td>Angsuran Tahun 6</td>
+                  <td>Angsuran 1</td>
+                  <td><?php if ($a61 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Angsuran Tahun 6</td>
+                  <td>Angsuran 2</td>
+                  <td><?php if ($a62 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Angsuran Tahun 6</td>
+                  <td>Angsuran 3</td>
+                  <td><?php if ($a63 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Angsuran Tahun 6</td>
+                  <td>Angsuran 4</td>
+                  <td><?php if ($a64 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>Angsuran Tahun 6</td>
+                  <td>Angsuran 5</td>
+                  <td><?php if ($a65 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>Angsuran Tahun 6</td>
+                  <td>Angsuran 6</td>
+                  <td><?php if ($a66 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td>Angsuran Tahun 6</td>
+                  <td>Angsuran 7</td>
+                  <td><?php if ($a67 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td>Angsuran Tahun 6</td>
+                  <td>Angsuran 8</td>
+                  <td><?php if ($a68 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td>Angsuran Tahun 6</td>
+                  <td>Angsuran 9</td>
+                  <td><?php if ($a69 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+
+              <?php } else { ?>
+                  
+                <tr>
+                  <td>1</td>
+                  <td>Angsuran Tahun 6</td>
+                  <td>Angsuran 1</td>
+                  <td><?php if ($a71 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Angsuran Tahun 6</td>
+                  <td>Angsuran 2</td>
+                  <td><?php if ($a72 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Angsuran Tahun 6</td>
+                  <td>Angsuran 3</td>
+                  <td><?php if ($a73 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>Angsuran Tahun 6</td>
+                  <td>Angsuran 4</td>
+                  <td><?php if ($a74 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>Angsuran Tahun 6</td>
+                  <td>Angsuran 5</td>
+                  <td><?php if ($a75 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>Angsuran Tahun 6</td>
+                  <td>Angsuran 6</td>
+                  <td><?php if ($a76 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td>Angsuran Tahun 6</td>
+                  <td>Angsuran 7</td>
+                  <td><?php if ($a77 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>8</td>
+                  <td>Angsuran Tahun 6</td>
+                  <td>Angsuran 8</td>
+                  <td><?php if ($a78 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
+                <tr>
+                  <td>9</td>
+                  <td>Angsuran Tahun 6</td>
+                  <td>Angsuran 9</td>
+                  <td><?php if ($a79 != null) { echo '<i class="fa fa-check"> ';} else { echo '';} ?></td>
+                </tr>
               <?php } ?>
-      
+
                 </tbody>
               </table>
 

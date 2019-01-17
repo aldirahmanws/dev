@@ -171,6 +171,7 @@ class Mahasiswa_model extends CI_Model {
               ->join('tb_agama','tb_agama.id_agama=tb_bio.id_agama')
               ->join('tb_kelamin','tb_kelamin.id_kelamin=tb_bio.id_kelamin')
               ->join('tb_waktu','tb_waktu.id_waktu=tb_mahasiswa.id_waktu')
+              ->join('tb_dosen','tb_dosen.id_dosen=tb_mahasiswa.dosen_pa')
               ->where('tb_mahasiswa.id_mahasiswa', $id_mahasiswa)
               ->get('tb_mahasiswa')
               ->row();
@@ -349,7 +350,9 @@ class Mahasiswa_model extends CI_Model {
   } 
 
    public function getGrade(){
-      return $this->db->get('tb_grade')
+      return $this->db->where('tgl_awal_grade <=', date('Y-m-d'))
+              ->where('tgl_akhir_grade >=', date('Y-m-d'))
+              ->get('tb_grade')
               ->result();
   } 
 
@@ -971,6 +974,7 @@ class Mahasiswa_model extends CI_Model {
             'nim'      => $this->input->post('nim', TRUE),   
             'id_konsentrasi'      => $this->input->post('concentrate', TRUE),
             'id_waktu'      => $this->input->post('id_waktu', TRUE),
+            'dosen_pa'      => $this->input->post('dosen_pa', TRUE),
             'id_grade'      => $this->input->post('id_grade', TRUE)
       );
 
@@ -1384,6 +1388,7 @@ class Mahasiswa_model extends CI_Model {
       return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
               ->join('tb_pembayaran','tb_pembayaran.kode_pembayaran=tb_detail_pembayaran.kode_pembayaran')
               ->join('tb_mahasiswa','tb_mahasiswa.id_mahasiswa=tb_detail_pembayaran.id_mahasiswa')
+              ->join('tb_grade','tb_grade.id_grade=tb_detail_pembayaran.id_grade')
               ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
               ->get('tb_detail_pembayaran')
               ->result();
@@ -1681,6 +1686,249 @@ class Mahasiswa_model extends CI_Model {
               ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
               ->like('nama_biaya', 'Angsuran 9')
               ->like('jenis_biaya', 'Angsuran Tahun 4')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_51($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 1')
+              ->like('jenis_biaya', 'Angsuran Tahun 5')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_52($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 2')
+              ->like('jenis_biaya', 'Angsuran Tahun 5')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_53($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 3')
+              ->like('jenis_biaya', 'Angsuran Tahun 5')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_54($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 4')
+              ->like('jenis_biaya', 'Angsuran Tahun 5')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_55($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 5')
+              ->like('jenis_biaya', 'Angsuran Tahun 5')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_56($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 6')
+              ->like('jenis_biaya', 'Angsuran Tahun 5')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_57($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 7')
+              ->like('jenis_biaya', 'Angsuran Tahun 5')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_58($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 8')
+              ->like('jenis_biaya', 'Angsuran Tahun 5')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_59($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 9')
+              ->like('jenis_biaya', 'Angsuran Tahun 5')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_61($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 1')
+              ->like('jenis_biaya', 'Angsuran Tahun 6')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_62($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 2')
+              ->like('jenis_biaya', 'Angsuran Tahun 6')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_63($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 3')
+              ->like('jenis_biaya', 'Angsuran Tahun 6')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_64($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 4')
+              ->like('jenis_biaya', 'Angsuran Tahun 6')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_65($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 5')
+              ->like('jenis_biaya', 'Angsuran Tahun 6')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_66($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 6')
+              ->like('jenis_biaya', 'Angsuran Tahun 6')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_67($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 7')
+              ->like('jenis_biaya', 'Angsuran Tahun 6')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_68($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 8')
+              ->like('jenis_biaya', 'Angsuran Tahun 6')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_69($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 9')
+              ->like('jenis_biaya', 'Angsuran Tahun 6')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_71($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 1')
+              ->like('jenis_biaya', 'Angsuran Tahun 7')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_72($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 2')
+              ->like('jenis_biaya', 'Angsuran Tahun 7')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_73($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 3')
+              ->like('jenis_biaya', 'Angsuran Tahun 7')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_74($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 4')
+              ->like('jenis_biaya', 'Angsuran Tahun 7')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_75($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 5')
+              ->like('jenis_biaya', 'Angsuran Tahun 7')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_76($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 6')
+              ->like('jenis_biaya', 'Angsuran Tahun 7')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_77($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 7')
+              ->like('jenis_biaya', 'Angsuran Tahun 7')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_78($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 8')
+              ->like('jenis_biaya', 'Angsuran Tahun 7')
+              ->get('tb_detail_pembayaran')
+              ->row();
+  } 
+
+  public function checklist_79($id_mahasiswa){
+      return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+              ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->like('nama_biaya', 'Angsuran 9')
+              ->like('jenis_biaya', 'Angsuran Tahun 7')
               ->get('tb_detail_pembayaran')
               ->row();
   } 

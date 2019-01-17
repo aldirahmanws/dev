@@ -114,6 +114,20 @@
                              </select>                            
                     </td>
                 </tr>
+                <tr>
+                    <td class="left_column" width="15%"> Dosen PA <font color="#FF0000">*</font></td>
+                    <td colspan="4">:  <select name="dosen_pa" id="dosen_pa" required="">
+                            <option value="<?php echo $mahasiswa->dosen_pa; ?>"><?php echo $mahasiswa->nama_dosen; ?></option>  
+                             <?php 
+
+                  foreach($getDosenPA as $row)
+                  { 
+                    echo '<option value="'.$row->id_dosen.'">'.$row->nama_dosen.'</option>';
+                  }
+                  ?>
+                             </select>                            
+                    </td>
+                </tr>
             </table>
 
               </div>
