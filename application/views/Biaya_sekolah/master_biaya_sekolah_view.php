@@ -15,6 +15,7 @@
                 <tr>
                   <th>No</th>
                   <th>Id Biaya</th>
+                  <th>Grade</th>
                   <th>Jenis Biaya</th>
                   <th>Nama Biaya</th>
                   <th>Jumlah Biaya</th>
@@ -34,6 +35,8 @@
                 <tr>
                   <td>'.++$no.'</td>
                   <td>'.$data->id_biaya.'
+                  </td>
+                  <td>'.$data->grade.'
                   </td>
                   <td>'.$data->jenis_biaya.'</td>
                   <td>'.$data->nama_biaya.'</td>

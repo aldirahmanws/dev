@@ -84,6 +84,7 @@ class Mahasiswa_model extends CI_Model {
               ->like('tb_bio.id_agama', $id_agama)
               ->like('tb_bio.id_kelamin', $id_kelamin)
               ->like('tb_pendidikan.tgl_du', $angkatan)
+              ->order_by('tb_mahasiswa.id_mahasiswa','asc')
               ->get('tb_mahasiswa')
               ->result();
   }
@@ -98,7 +99,7 @@ class Mahasiswa_model extends CI_Model {
      $this->db->join('tb_skala_nilai','tb_skala_nilai.id_skala_nilai=tb_kelas_mhs.id_skala_nilai');
      $this->db->join('tb_periode','tb_periode.id_periode=tb_kp.id_periode');
      $this->db->like('tb_kelas_mhs.id_mahasiswa',$id_mahasiswa);
-     $this->db->like('tb_periode.semester',$id_periode);
+     $this->db->like('tb_periode.id_periode',$id_periode);
      $query = $this->db->get();
      return $query->result();
       }

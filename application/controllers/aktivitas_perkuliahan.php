@@ -9,7 +9,7 @@ class Aktivitas_perkuliahan extends CI_Controller {
 		$this->load->model('aktivitas_perkuliahan_model');
 		$this->load->model('daftar_ulang_model');
 		$this->load->model('mahasiswa_model');
-		//ini_set('display_errors', 0);
+		ini_set('display_errors', 0);
 	}
 
 	public function index()

@@ -12,6 +12,7 @@ class Biaya_sekolah_model extends CI_Model {
      $this->db->select('*');
      $this->db->from('tb_biaya');
      $this->db->join('tb_waktu','tb_waktu.id_waktu=tb_biaya.id_waktu');
+     $this->db->join('tb_grade','tb_grade.id_grade=tb_biaya.id_grade','left');
      $query = $this->db->get();
      return $query->result();
 	}
