@@ -11,6 +11,7 @@ class Master_biaya_sekolah extends CI_Controller {
 	}
 
 	public function index(){
+
 		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 1 OR $this->session->userdata('level') == 4) {
 				$data['data_biaya'] = $this->biaya_sekolah_model->data_biaya();
 				$data['main_view'] = 'Biaya_sekolah/master_biaya_sekolah_view';
@@ -18,6 +19,7 @@ class Master_biaya_sekolah extends CI_Controller {
 			} else {
 			redirect('login');
 		}
+
 	}
 
 	public function page_tambah_biaya_sekolah(){
