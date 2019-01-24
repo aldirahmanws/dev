@@ -1,7 +1,7 @@
 <body onload="myFunction()">
    <section class="content" id="ea" >
           
-          <br>
+    
           <br>
           <br>
       <div class="row">

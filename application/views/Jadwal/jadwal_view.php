@@ -71,6 +71,14 @@
         </div>
         <!-- /.col -->
       </div>
+
+      <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+            - Menu jadwal hanya menampilkan jadwal pada periode aktif.
+            <br>
+            - Untuk melihat riwayat jadwal di periode sebelumnya, gunakan fitur filter.
+         </div>
       <!-- /.row -->
     </section>
 

@@ -1389,7 +1389,6 @@ class Mahasiswa_model extends CI_Model {
       return $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
               ->join('tb_pembayaran','tb_pembayaran.kode_pembayaran=tb_detail_pembayaran.kode_pembayaran')
               ->join('tb_mahasiswa','tb_mahasiswa.id_mahasiswa=tb_detail_pembayaran.id_mahasiswa')
-              ->join('tb_grade','tb_grade.id_grade=tb_detail_pembayaran.id_grade')
               ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
               ->get('tb_detail_pembayaran')
               ->result();

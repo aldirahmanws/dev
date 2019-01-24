@@ -101,6 +101,13 @@
 
           </div>
 
+           <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+           - Digunakan untuk mendata kelas yang telah dosen ajar pada tiap periodenya.
+            
+         </div>
+
           
         
         

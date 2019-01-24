@@ -52,7 +52,7 @@
           </div>
           
 
-           <a class="btn btn-primary btn-flat btn-sm pull-right"  data-toggle="modal" data-target="#modal_tambah"><i class="fa fa-plus"></i> Tambah Penelitian</a><br><br><br><br>
+           <a class="btn btn-primary btn-flat btn-sm pull-right"  data-toggle="modal" data-target="#modal_tambah"><i class="fa fa-plus"></i> Tambah Penelitian</a><br><br><br>
             
           
 
@@ -100,6 +100,13 @@
 
 
           </div>
+
+           <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+           - Digunakan untuk mendata riwayat penelitian yang pernah dilakukan dosen.
+            
+         </div>
 
            <div class="modal fade" id="modal_tambah" >
             <div class="modal-dialog">

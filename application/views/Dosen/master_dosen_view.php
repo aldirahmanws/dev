@@ -65,5 +65,15 @@
         </div>
         <!-- /.col -->
       </div>
+
+      <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+            - Master dosen digunakan untuk mengelola data dosen.
+            <br />
+            - User wajib mengisi inputan yang disediakan (wajib dengan tanda bintang merah).
+            <br />
+            - Username dan password dosen akan dikirim otomatis melalui email sesuai inputan.
+         </div>
       <!-- /.row -->
     </section>

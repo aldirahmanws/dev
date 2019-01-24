@@ -54,5 +54,13 @@
         </div>
         <!-- /.col -->
       </div>
+
+       <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+           - Master prodi digunakan untuk mengelola data program studi perkuliahan.
+           <br />
+            - User wajib mengisi seluruh inputan yang disediakan.
+         </div>
       <!-- /.row -->
     </section>

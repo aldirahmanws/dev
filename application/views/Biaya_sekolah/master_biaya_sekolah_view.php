@@ -144,6 +144,25 @@
         </div>
         <!-- /.col -->
       </div>
+
+      <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+            - Master biaya kuliah digunakan untuk mengelola data seluruh biaya perkuliahan mulai dari angsuran, administrasi, dan biaya lainnya.
+
+            <br />
+            - Setiap tahun akademik baru, finance diwajibkan untuk menginputkan data biaya kuliah.
+
+            <br />
+
+              - Data dibedakan per grade, finance wajib menginputkan data biaya kuliah per grade meskipun harganya sama.
+              <br />
+             &nbsp; <b>Contoh : Amenities untuk grade A: 800000, grade B: 800000, grade C: 800000. Finance wajib menginput semuanya. </b>
+              <br />
+              - Data dibedakan per waktu kuliah, finance wajib menginputkan data biaya kuliah per waktu kuliah meskipun harganya sama.
+              <br />
+              &nbsp; <b> Contoh : Almamater untuk pagi: 200000, sore: 200000. Finance wajib menginput semuanya. </b>
+         </div>
       <!-- /.row -->
     </section>
     <script type="text/javascript">

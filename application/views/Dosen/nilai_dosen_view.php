@@ -112,6 +112,16 @@
     
    
     </div>
+
+     <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+            - Digunakan untuk menginputkan nilai mahasiswa aktif pada semester ini (Klik kode mata kuliah untuk membuka data nilai).
+            <br />
+            - Data terisi digunakan untuk mendata jumlah nilai yang sudah diinput oleh user.
+            <br />
+            
+         </div>
           <!-- nav-tabs-custom -->
     
         <!-- /.col -->

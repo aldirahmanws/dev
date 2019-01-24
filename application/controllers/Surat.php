@@ -464,7 +464,7 @@ class Surat extends CI_Controller {
 						$this->email->initialize($config);
 						$this->email->set_newline("\r\n");
 						$this->email->from('jic.itservices@gmail.com','Do not reply to this email (Surat Pengantar Riset)');
-						$recipientArr = array($surat->email, 'bayu.krisna@jic.ac.id');
+						$recipientArr = array($surat->email);
 						$this->email->to($recipientArr);
 						
 						$this->email->subject('Permohonan Surat Pengantar Riset');

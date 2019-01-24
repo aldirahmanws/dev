@@ -52,6 +52,14 @@
         </div>
         <!-- /.col -->
       </div>
+
+       <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+           - Master user digunakan untuk mengelola data user.
+           <br>
+           - User harus mengisi seluruh inputan yang disediakan jika akan menambahkan user baru.
+         </div>
       <!-- /.row -->
     </section>
         <div class="modal fade" id="modal-tambah" >

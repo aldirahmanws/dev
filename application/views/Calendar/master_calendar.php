@@ -58,8 +58,21 @@
         </div>
         <!-- /.col -->
       </div>
+
+      <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+            - Master kalender digunakan untuk menambahkan agenda-agenda perkuliahan pada kelender akademik.
+            <br />
+            - User diwajibkan untuk mengisi judul agenda, tanggal, dan waktu agenda.
+             <br />
+            - User dapat memilih warna pada setiap agenda dengan tujuan sebagai tanda (mark) atau pembeda tiap agenda.
+         </div>
+
       <!-- /.row -->
     </section>
+
+
         <div class="modal fade" id="modal_tambah" >
             <div class="modal-dialog">
             <div class="modal-content">

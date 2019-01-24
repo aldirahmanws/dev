@@ -129,6 +129,17 @@
         </div>
         <!-- /.col -->
       </div>
+
+      <div class="callout callout-info">
+
+      <strong>Keterangan :</strong>
+            <br />
+         - Kelas perkuliahan digunakan untuk mendata kelas perkuliahan pada tiap periode atau semester.
+         <br />
+
+         - Hanya kelas perkuliahan aktif yang ditampilkan (gunakan fitur filter untuk melihat kelas pada periode sebelumnya).
+
+         </div>
       <!-- /.row -->
     </section>
     
@@ -204,10 +215,22 @@
                         </table>
 
                     </div>
+                    <div class="callout callout-info">
+
+      <strong>Keterangan :</strong>
+            <br />
+         - Tanggal efektif digunakan sebagai rentang waktu mahasiswa mengisi KRS aktif.
+         <br />
+
+         </div>
 
                 </div>
+
             </div>
+
             </div>
+
+
         </div>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>

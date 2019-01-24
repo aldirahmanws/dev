@@ -17,7 +17,7 @@
                   <th rowspan="2" style="vertical-align : middle;">Nama Kurikulum</th>
                   <th rowspan="2" style="vertical-align : middle;">Program Studi</th>
                   <th rowspan="2" style="vertical-align : middle;">Berlaku Pada Angkatan</th>
-                  <th colspan="3">Aturan Jumlah SKS</th>
+                  <th colspan="3" style="text-align: center;">Aturan Jumlah SKS</th>
                   <th rowspan="2" style="vertical-align : middle;">Aksi</th>
                 </tr>
                   <th>Lulus</th>
@@ -65,6 +65,16 @@
         </div>
         <!-- /.col -->
       </div>
+
+       <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+            - Menu kurikulum digunakan untuk mengelola data kurikulum aktif.
+            <br>
+            - Masa penggunaan kurikulum berpacu pada tiap angkatan mahasiswa.
+            <br>
+            - Aturan jumlah SKS adalah total minimal SKS mahasiswa agar bisa dikatakan lulus.
+         </div>
       <!-- /.row -->
     </section>
     

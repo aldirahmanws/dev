@@ -98,6 +98,13 @@
 
           </div>
 
+          <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+           - Digunakan untuk mendata riwayat sertifikasi dosen.
+            
+         </div>
+
            <div class="modal fade" id="modal_tambah" >
             <div class="modal-dialog">
             <div class="modal-content">

@@ -121,6 +121,21 @@
 
           </div>
 
+           <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+           - Digunakan untuk menginputkan nilai mahasiswa aktif pada semester ini (Klik icon pensil "input nilai" untuk memasukan data nilai).
+
+           <br>
+
+           - <b>Jika angka 0 diinputkan, sama dengan nilai kosong (belum diinput), angka 0 atau kosong diberi tanda seru segitiga merah.</b>
+
+           <br>
+
+           - Tanda nilai akhir sudah terisi adalah munculnya nilai indeks (nilai huruf). 
+
+         </div>
+
            <div class="tab-pane" id="tab_3">
                 <section class="content" id="ea" style="display: none">
 

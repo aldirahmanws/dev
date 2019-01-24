@@ -61,7 +61,7 @@
         </tr>
          <tr>
             <td class="left_column" width="15%" value=><b>Status</b> </td>
-            <td colspan="3" style="color: blue">: <b><?php $sudah_bayar = $this->db->query("SELECT count(*) AS total FROM tb_detail_pembayaran JOIN tb_biaya ON tb_biaya.id_biaya = tb_detail_pembayaran.id_biaya WHERE tb_biaya.nama_biaya = 'Surat Pengantar Riset' AND tb_detail_pembayaran.id_mahasiswa = '$data->id_mahasiswa'")->row(); if ($sudah_bayar->total >= 1) {
+            <td colspan="3" style="color: blue">: <b><?php $sudah_bayar = $this->db->query("SELECT count(*) AS total FROM tb_detail_pembayaran JOIN tb_biaya ON tb_biaya.id_biaya = tb_detail_pembayaran.id_biaya WHERE tb_biaya.nama_biaya LIKE 'Surat Pengantar Riset' AND tb_detail_pembayaran.id_mahasiswa = '$surat->id_mahasiswa'")->row(); if ($sudah_bayar->total >= 1) {
               $sudah = $surat->status_sisp;
             } else {
               $sudah = 'Payment Process';
@@ -96,7 +96,7 @@
           <br>
           <br>
           <br>
-          <br>
+          
       <div class="row" style="margin-left: 10px; margin-right: 10px">
         
           

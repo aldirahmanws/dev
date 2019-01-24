@@ -118,6 +118,29 @@
         </div>
         <!-- /.col -->
       </div>
+
+       <div class="callout callout-info">
+
+      <strong>Keterangan :</strong>
+            <br />
+         - Aktivitas perkuliahan digunakan untuk mendata IPK dan IPS mahasiswa pada tiap periode atau semester.
+         <br />
+
+         - Aktivitas perkuliahan diwajibkan diinput pada akhir periode ketika semua nilai mahasiswa sudah diinput (aktif, non-aktif, maupun cuti).
+
+         <br>
+
+         &nbsp; <b>Note 1: Dalam satu periode atau semester, user hanya dapat menginput 1 aktivitas perkuliahan mahasiswa. </b>
+
+         <br>
+
+         &nbsp; <b>Note 2: Mahasiswa yang sudah diinput aktivitas perkuliahannya otomatis dia memasuki semester berikutnya, kecuali untuk status non-aktif dan cuti. </b>
+
+         <br>
+
+          &nbsp; <b>Note 3: Fitur edit digunakan HANYA untuk mengubah aktivitas perkuliahan mahasiswa yang sebelumnya non-aktif atau cuti menjadi aktif. </b>
+
+         </div>
       <!-- /.row -->
     </section>
     

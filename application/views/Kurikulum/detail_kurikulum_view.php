@@ -63,6 +63,13 @@
             </div>
             <!-- /.box-body -->
           </div>
+
+           <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+            - Salin mata kuliah digunakan untuk menyalin isi seluruh mata kuliah yang ada pada satu kurikulum (pastikan memilih prodi yang sama).
+            
+         </div>
           <div class="">
            
 
@@ -91,6 +98,8 @@
             <br>
             
           </div>
+
+
 
 
           <div class="box box-info">

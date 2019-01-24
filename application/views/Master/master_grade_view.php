@@ -68,8 +68,26 @@
         </div>
         <!-- /.col -->
       </div>
+
+       <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+          - Digunakan untuk mengelola data grade yang sedang berlaku.
+          <br>
+
+            - Tanggal grade yang berlaku mengacu pada tanggal pendaftaran.
+            <br>
+
+        &nbsp; <b> Contoh : Tanggal grade yang berlaku pada 1 Januari 2016 - 31 Desember 2018. Maka grade tersebut berlaku untuk mahasiswa
+       
+       yang mendaftar pada rentang waktu tersebut, misal 20 Agustus 2017. </b>
+            
+         </div>
+
       <!-- /.row -->
     </section>
+
+   
     <div class="modal fade" id="modal_tambah" >
             <div class="modal-dialog">
             <div class="modal-content">

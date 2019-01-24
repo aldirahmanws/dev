@@ -54,5 +54,13 @@
         </div>
         <!-- /.col -->
       </div>
+
+      <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+            - Master asal sekolah digunakan untuk mengelola data sekolah menengah atas.
+            <br />
+            - Data ini dibutuhkan untuk kelengkapan administrasi ketika mahasiswa registrasi (Peserta didik baru).
+         </div>
       <!-- /.row -->
     </section>

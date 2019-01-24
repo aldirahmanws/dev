@@ -38,6 +38,14 @@
         </div>
         <!-- /.col -->
       </div>
+
+      <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+            - Master universitas digunakan untuk mengelola data universitas.
+            <br>
+            - Data ini dibutuhkan untuk kelengkapan administrasi ketika mahasiswa registrasi (Pindahan, mutasi, alih jenjang).
+         </div>
       <!-- /.row -->
     </section>
 

@@ -58,6 +58,13 @@
         </div>
         <!-- /.col -->
       </div>
+
+       <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+           - DIgunakan untuk mengelola data ruangan yang ada di STIE Jakarta International College.
+            
+         </div>
       <!-- /.row -->
     </section>
 
@@ -78,8 +85,8 @@
             <td colspan="9">  <input type="text" name="nama_ruang" id="nama_ruang" />
         </tr>
         <tr>
-          <td class="left_column">Kapasitas</td>
-            <td> <input type="number" name="kapasitas" id="kapasitas" class="text-input" style="width:50px"></td>
+          <td class="left_column">Kapasitas <font color="#FF0000">*</font></td>
+            <td> <input required="" type="number" name="kapasitas" id="kapasitas" class="text-input" style="width:50px"></td>
         </tr> 
         <tr>
           <td class="left_column">Keterangan</td>

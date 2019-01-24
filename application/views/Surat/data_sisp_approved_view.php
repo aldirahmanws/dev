@@ -16,8 +16,8 @@
                 <tr>
                   <th>No</th>
                   <th>No. Permohonan</th>
-                  <th>Nama Mahasiswa</th>
                   <th>NIM</th>
+                  <th>Nama Mahasiswa</th>
                   <th>Prodi</th>
                   <th>Angkatan</th>
                   <th>Status</th>
@@ -35,8 +35,8 @@
                   <td>'.++$no.'</td>
 
                   <td><a href="'.base_url('surat/detail_sisp/'.$data->no_permohonan).'")>'.$data->no_permohonan.'</a></td>
-                  <td>'.$data->nama_mahasiswa.'</td>
                   <td>'.$data->nim.'</td>
+                  <td>'.$data->nama_mahasiswa.'</td>
                   <td>'.$data->nama_prodi.'</td>
                   <td>'.substr($data->tgl_du,0,4).'</td>
                   <td>'.$data->status_sisp.'</td>

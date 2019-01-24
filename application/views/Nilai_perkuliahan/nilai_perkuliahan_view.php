@@ -127,6 +127,26 @@
         </div>
         <!-- /.col -->
       </div>
+      <div class="callout callout-info">
+
+      <strong>Keterangan :</strong>
+            <br />
+         - Nilai perkuliahan digunakan untuk mengolah data nilai perkuliahan mahasiswa.
+         <br />
+
+         - Nilai yang ditampilkan hanya nilai yang aktif pada periode atau semester ini.
+
+         <br>
+
+         - Untuk melihat nilai perkuliahan pada periode sebelumnya, gunakan fitur filter.
+
+         <br>
+
+         - Klik kode mata kuliah untuk melihat data nilai mahasiswa pada mata kuliah tersebut.
+
+
+
+         </div>
       <!-- /.row -->
     </section>
     

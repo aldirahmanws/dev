@@ -571,7 +571,9 @@ class Laporan_model extends CI_Model {
                 </tr>
                 </thead>
                 <tbody>';
+                  $totalsks = 0;
                   foreach ($row as $data) {
+                    $totalsks += $data->bobot_matkul;
                     $total_mahasiswa = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs WHERE id_kp = '$data->id_kp'")->row();
                     $option .= "
                     <tr>
@@ -582,10 +584,18 @@ class Laporan_model extends CI_Model {
                       <td>".$data->nama_prodi."</td>
                       <td>".$total_mahasiswa->total."</td>
                     </tr>"
+
                     ;
                     
                   }
-                  $option .= '</tbody>
+                  $option .= '
+                  <tr>
+                      <td colspan="3" style="text-align:right"> <b>Total SKS : </b></td>
+                      <td><b>'.$totalsks.'</b></td>
+                      <td colspan="2"></td>
+                    </tr>
+                  </tbody>
+                  
               </table>
             </div>
             
@@ -664,7 +674,9 @@ class Laporan_model extends CI_Model {
                 </tr>
                 </thead>
                 <tbody>';
+                  
                   foreach ($row as $data) {
+                    $totalsks += $data->bobot_matkul;
                     $option .= "
                     <tr>
                       <td>".++$no."</td>
@@ -678,7 +690,14 @@ class Laporan_model extends CI_Model {
                     ;
                     
                   }
-                  $option .= '</tbody>
+                  $option .= '
+                   <tr>
+                      <td colspan="3" style="text-align:right"> <b>Total SKS : </b></td>
+                      <td><b>'.$totalsks.'</b></td>
+                      <td colspan="3"></td>
+                    </tr>
+
+                    </tbody>
               </table>
             </div>
             

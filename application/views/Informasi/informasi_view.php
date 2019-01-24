@@ -182,6 +182,17 @@
         </div>
         <!-- /.col -->
       </div>
+
+       <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+           - Digunakan untuk mengelola data informasi dan membuat pengumuman.
+
+           <br>
+
+          - Data informasi terbaru akan ditampilkan pada dashboard (menu utama) pada tiap jabatan sesuai tujuan.
+            
+         </div>
       <!-- /.row -->
     </section>
 

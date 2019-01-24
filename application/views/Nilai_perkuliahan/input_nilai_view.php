@@ -65,6 +65,23 @@
     </table>
 
 </div>
+</form>
+</div>
+</div>
+<div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+         - Nilai akhir dijumlah secara otomatis sesuai persentase yang telah disepakati.
+
+         <br>
+
+  &nbsp; <b> Notes 1 : User bisa menginput manual nilai akhir yang tidak memerlukan semua komposisi nilai dan persentase. </b> 
+  <br>
+  &nbsp; <b> Notes 2 : Nilai akhir yang berbeda persentase tapi tetap butuh semua atau 1 komposisi nilai maka harus diinput di akhir ketika komposisi nilai lain selesai diinput. </b>
+
+
+         </div>
+
 
 
 <script>

@@ -266,7 +266,6 @@ class Finance_model extends CI_Model {
      $this->db->from('tb_mahasiswa');
      $this->db->join('tb_detail_pembayaran','tb_detail_pembayaran.id_mahasiswa=tb_mahasiswa.id_mahasiswa');
      $this->db->join('tb_biaya','tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya');
-     $this->db->join('tb_grade','tb_grade.id_grade=tb_detail_pembayaran.id_grade', 'left');
      $this->db->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_pembayaran.kode_matkul' ,'left');
      $this->db->join('tb_pembayaran','tb_pembayaran.kode_pembayaran=tb_detail_pembayaran.kode_pembayaran');
      $this->db->where('tb_mahasiswa.id_mahasiswa', $ya);
@@ -291,7 +290,6 @@ class Finance_model extends CI_Model {
             'id_biaya'    => $item['id'],
             'kode_matkul'    => $item['kdmatkul'],
             'tanggal_pembayaran'       => $item['tgl'],
-            'id_grade'       => $item['idgrade'],
             'potongan'       => $item['potongan'],
             'denda'       => $item['denda'],
             'keterangan'       => $item['keterangan']

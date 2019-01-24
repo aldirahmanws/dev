@@ -31,7 +31,7 @@
                 <?php 
                 $no = 0;
                 foreach ($surat as $data) {
-$sudah_bayar = $this->db->query("SELECT count(*) AS total FROM tb_detail_pembayaran JOIN tb_biaya ON tb_biaya.id_biaya = tb_detail_pembayaran.id_biaya WHERE tb_biaya.nama_biaya = 'Surat Pengantar Riset' AND tb_detail_pembayaran.id_mahasiswa = '$data->id_mahasiswa'")->row();
+$sudah_bayar = $this->db->query("SELECT count(*) AS total FROM tb_detail_pembayaran JOIN tb_biaya ON tb_biaya.id_biaya = tb_detail_pembayaran.id_biaya WHERE tb_biaya.nama_biaya LIKE 'Surat Pengantar Riset' AND tb_detail_pembayaran.id_mahasiswa = '$data->id_mahasiswa'")->row();
 
                   echo '
                   

@@ -159,6 +159,13 @@
             </div>
         </div>
 
+        <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+           - Digunakan untuk mendata riwayat pendidikan dosen (hanya riwayat perguruan tinggi).
+            
+         </div>
+
           
         
         

@@ -43,3 +43,13 @@
         </div>
           </div>
         </div></div>
+
+        <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+            - User wajib mengisi seluruh inputan yang disediakan.
+            <br />
+            - Apabila ada tambahan program studi, user diwajibkan untuk menambahkan konsentrasi baru dengan nama "Semua" dengan kode "KS diikuti 3 digit angka".
+            <br />
+            &nbsp; Hal ini bertujuan untuk pembagian kelas mahasiswa pada semester awal (Kelas pada semester awal yang tidak dibagi per konsentrasi).
+         </div>
