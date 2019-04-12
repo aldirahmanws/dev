@@ -11,8 +11,7 @@
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/sertifikasi/<?php echo $dosen->id_dosen; ?>">Sertifikasi</a>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>master_dosen/penelitian/<?php echo $dosen->id_dosen; ?>">Penelitian</a>
        
-         <br/><br/> 
-        <?php } ?>
+         <br/><br/>        <?php } ?>
       
         <div class="box box-info">
             
@@ -48,7 +47,7 @@
             <ul class="nav nav-tabs">
             <li class="active"><a href="#tab_0" data-toggle="tab">PROFIL</a></li>
             <?php if($this->session->userdata('level') == 2){ ?>
-            <li><a href="#tab_1" data-toggle="tab">Ganti Password</a></li>
+            
           <?php } ?>
               <!--<li><a href="#tab_4" data-toggle="tab">Kebutuhan Khusus</a></li> -->
              
@@ -73,7 +72,7 @@
                     <td rowspan="8" width="15%">
                       <form  method="post" runat="server" action="<?php echo base_url(); ?>profile/save_data" enctype="multipart/form-data">
                         <div class="btn btn-file" >
-              <img src="<?php echo base_url();?>uploads/<?php echo $dosen->foto; ?>" onerror="this.src='<?php echo base_url();?>uploads/user.jpg'" id="avatar" height="200" width="200"  alt="avatar">
+              <img src="<?php echo base_url();?>uploads/<?php echo $foto_dosen->foto; ?>" onerror="this.src='<?php echo base_url();?>uploads/user.jpg'" id="avatar" height="200" width="200"  alt="avatar">
               <input type="file" id="foto" name="foto" onchange="loadFile(event)">
 
             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
@@ -91,7 +90,7 @@
                 </tr>
                 <tr>
                     <td class="left_column" width="15%">NIDN/NUP/NIDK</td>
-                    <td colspan="6" size="100">: <?php echo $dosen->id_dosen; ?></td>
+                    <td colspan="6" size="100">: <?php echo $dosen->nidn; ?></td>
                 </tr>
                  <tr>
                     <td class="left_column" width="15%">Email</td>

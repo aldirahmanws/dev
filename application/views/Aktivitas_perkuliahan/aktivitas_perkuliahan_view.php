@@ -21,7 +21,7 @@
                     <td>Program Studi</td>     
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       
-                      <select name="id_prodi" onchange="return get_prodi_periode2(this.value)">
+                      <select name="id_prodi">
                         <option value="">-- Semua --</option>
                         <?php 
 
@@ -37,6 +37,13 @@
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <select name="id_periode" id="id_periode2">
                         <option value="">-- Semua --</option>
+                        <?php 
+
+                                        foreach($getPeriode2 as $row)
+                                        { 
+                                          echo '<option value="'.$row->semester.'">'.$row->semester.'</option>';
+                                        }
+                                    ?>
               
                       </select>
                     </td>
@@ -82,6 +89,12 @@
                  $alert = "'Apakah anda yakin menghapus data ini ?'";
 
                 foreach ($aktivitas as $data) { 
+
+                  if ($data->tgl_awal_kul <= date('Y-m-d') AND $data->tgl_akhir_kul >= date('Y-m-d')) {
+                    echo $edit = '<a href="'.base_url('aktivitas_perkuliahan/edit_ap/'.$data->id_aktivitas.'/'.$data->id_mahasiswa.'/'.$data->id_periode).'" class="btn btn-warning btn-xs btn-flat" ><i class="glyphicon glyphicon-pencil"></i><span class="tooltiptext">Edit</span></a>';
+                  } else {
+
+                  }
                   
                   
 
@@ -98,9 +111,9 @@
                   <td>'.$data->ipk_ak.'</td>
                   <td>'.$data->sks_semester.'</td>
                   <td>'.$data->sks_total.'</td>
-                  <td> <a href="'.base_url('aktivitas_perkuliahan/edit_ap/'.$data->id_aktivitas.'/'.$data->id_mahasiswa.'/'.$data->id_periode).'" class="btn btn-warning btn-xs btn-flat" ><i class="glyphicon glyphicon-pencil"></i><span class="tooltiptext">Edit</span></a>
+                  <td> 
                   </td>
-                  
+                      '.$edit.'
                   </tr>
                 ' ;
                 

@@ -8,13 +8,14 @@ class Finance extends CI_Controller {
 		parent::__construct();
 		$this->load->model('finance_model');
 		$this->load->model('biaya_sekolah_model');
+		$this->load->model('tamu_model');
 		ini_set('display_errors', 0);
 	}
 
 		public function index()
 	{
 		if ($this->session->userdata('logged_in') == TRUE) {
-		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1){
+		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1 || $this->session->userdata('level') == 3){
 			redirect(base_url('dashboard'));
 		} else {
 			redirect(base_url('login'));
@@ -24,6 +25,7 @@ class Finance extends CI_Controller {
 		}
 		
 	}
+
 	public function data_registrasi(){
 		
 		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1){
@@ -36,7 +38,7 @@ class Finance extends CI_Controller {
 	}
 	public function detail_pembayaran()
 	{
-		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1){
+		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1 || $this->session->userdata('level') == 3){
 			$ea = $this->uri->segment(3);
 		$ya = $this->uri->segment(3);
 		$dataku = $this->finance_model->get_data_detail_mahasiswa($ya);
@@ -57,7 +59,7 @@ class Finance extends CI_Controller {
 		
 	}
 	public function cek_mahasiswa(){
-		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1){
+		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1 || $this->session->userdata('level') == 3){
 			$id_mahasiswa = $this->input->get('id_mahasiswa');
     		$this->finance_model->cek_mahasiswa($id_mahasiswa);
 		} else {
@@ -67,7 +69,7 @@ class Finance extends CI_Controller {
   }
   public function add_to_cart()
 	{
-		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1){
+		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1 || $this->session->userdata('level') == 3){
 			$ea = $this->uri->segment(3);
 			$product_id = $this->input->post('pembayaran');
 			$product = $this->finance_model->find($product_id);
@@ -105,7 +107,7 @@ class Finance extends CI_Controller {
 	}
 	public function simpan_pembayaran()
 	{
-		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1){
+		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1 || $this->session->userdata('level') == 3){
 			if($this->finance_model->simpan_pembayaran() == TRUE){
 				$this->cart->destroy();
 				$ea = $this->uri->segment(3);
@@ -122,7 +124,7 @@ class Finance extends CI_Controller {
 	}
 	public function clear_cart()
 	{
-		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1){
+		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1 || $this->session->userdata('level') == 3){
 			$this->cart->destroy();
 			$ea = $this->uri->segment(3);
 			redirect(base_url('finance/detail_pembayaran/'.$ea));
@@ -133,7 +135,7 @@ class Finance extends CI_Controller {
 	}
 	public function tambah_cart()
 	{
-		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1){
+		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1 || $this->session->userdata('level') == 3){
 			$data = array(
 	            'id_mahasiswa'                        => $this->input->post('id_mhsa'),
 	            'kode_pembayaran'                        => $this->input->post('kode_pembayaran'),
@@ -148,7 +150,7 @@ class Finance extends CI_Controller {
 		
 	}
 	function data_pembayaran_mahasiswa(){
-		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1){
+		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1 || $this->session->userdata('level') == 3){
 			$id = $this->input->get('id_mahasiswa');
 			$data=$this->finance_model->coba_mahasiswa($id);
 			echo json_encode($data);
@@ -158,7 +160,7 @@ class Finance extends CI_Controller {
 		
 	}
 	function pembayaran(){
-		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1){
+		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1 || $this->session->userdata('level') == 3){
 			$this->cart->destroy();
 			$data['main_view'] = 'Finance/pembayaran_view';
 			$this->load->view('template', $data);
@@ -168,7 +170,7 @@ class Finance extends CI_Controller {
 		
 	}
 	function data_gg(){
-		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1){
+		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1 || $this->session->userdata('level') == 3){
 			$data=$this->finance_model->barang_gg();
 			echo json_encode($data);
 		} else {
@@ -181,7 +183,7 @@ class Finance extends CI_Controller {
 		$this->load->view('Finance/pembayaran_view');
 	}
 	function autocomplete(){
-		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1){
+		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1 || $this->session->userdata('level') == 3){
 			$searchTerm = $_GET['term'];
 			//mendapatkan data yang sesuai dari tabel daftar_kota
 			$query = $this->db->query("SELECT * FROM tb_biaya WHERE nama_biaya LIKE '%".$searchTerm."%' ORDER BY nama_biaya ASC");
@@ -197,7 +199,7 @@ class Finance extends CI_Controller {
 		
 	}
 	public function get_autocomplete(){
-		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1){
+		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1 || $this->session->userdata('level') == 3){
 			if(isset($_GET['term'])){
 				$result = $this->finance_model->autocomplete($_GET['term']);
 				if(count($result) > 0){
@@ -218,7 +220,7 @@ class Finance extends CI_Controller {
 
 	public function data_lunas()
 	{
-		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1){
+		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1 || $this->session->userdata('level') == 3){
 			$data['main_view'] = 'Finance/data_lunas_view';
 		$data['mahasiswa'] = $this->finance_model->data_lunas();
 		$this->load->view('template', $data);
@@ -229,7 +231,7 @@ class Finance extends CI_Controller {
 	}
 
 	public function konfirmasi(){
-		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1){
+		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1 || $this->session->userdata('level') == 3){
 			$id_pendaftaran = $this->input->post('id_pendaftaran');
 				if ($this->input->post('reg') == 'No Registrasi Tersedia'){
 					if ($this->finance_model->save_konfirmasi($id_pendaftaran) == TRUE) {
@@ -248,8 +250,21 @@ class Finance extends CI_Controller {
 		} else {
 			redirect(base_url('login'));
 		}
-	}				
-	public function konfirmasi_gagal($id_pendaftaran){				
+	}	
+
+	public function form_penolakan($id_pendaftaran){				
+		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1){
+			$id_pendaftaran = $this->uri->segment(3);
+			$data['edit'] = $this->tamu_model->get_tamu_by_id($id_pendaftaran);
+			$data['main_view'] = 'Finance/form_penolakan_view';	
+			$this->load->view('template', $data);
+			} else {
+			redirect(base_url('login'));
+			}
+		
+		}
+
+	public function gagal_konfirmasi($id_pendaftaran){				
 		if($this->session->userdata('level') == 4 || $this->session->userdata('level') == 1){
 			$id_pendaftaran = $this->uri->segment(3);
 				if ($this->finance_model->gagal_konfirmasi($id_pendaftaran) == TRUE) {
@@ -257,10 +272,10 @@ class Finance extends CI_Controller {
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <p><i class="icon fa fa-check"></i> Konfirmasi pembayaran berhasil ditolak </p>
                 </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
-						redirect('finance');
+						redirect('finance/data_registrasi');
 					} else {
 						$this->session->set_flashdata('message', '<div class="alert alert-danger"> Konfirmasi Gagal </div>');
-						redirect('finance');
+						redirect('finance/data_registrasi');
 					}
 			} else {
 			redirect(base_url('login'));

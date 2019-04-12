@@ -28,9 +28,7 @@
                 <?php 
                 $no = 0;
                 foreach ($mahasiswa as $data) {
-                  $form_konfirmasi = '';
-                $form_close = '';
-                $form_close .= form_close();
+
 
                   echo '
                   

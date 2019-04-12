@@ -119,7 +119,7 @@ class Kelas_perkuliahan_model extends CI_Model {
      $this->db->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kp.id_detail_kurikulum');
      $this->db->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul');
      $this->db->like('tb_prodi.id_prodi',$id_prodi);
-     $this->db->like('tb_periode.id_periode',$id_periode);
+     $this->db->like('tb_periode.semester',$id_periode);
      $query = $this->db->get();
      return $query->result();
   }
@@ -333,6 +333,7 @@ class Kelas_perkuliahan_model extends CI_Model {
 
   public function save_edit_kp($id_kp){
     $data = array(
+            'id_kp'       => $this->input->post('id_kp'),
             'nama_kelas'       => $this->input->post('nama_kelas'),
             'bahasan'          => $this->input->post('bahasan'),
             'tgl_mulai'          => $this->input->post('tgl_mulai'),

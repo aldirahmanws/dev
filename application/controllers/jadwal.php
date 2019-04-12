@@ -17,6 +17,25 @@ class Jadwal extends CI_Controller {
 		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1) {
 			$data['jadwal'] = $this->jadwal_model->data_jadwal();
 			$data['getProdi'] = $this->daftar_ulang_model->getProdi();
+			$data['getPeriode'] = $this->daftar_ulang_model->getPeriode();
+			$data['getPeriode2'] = $this->jadwal_model->getPeriode();
+			$data['getRuang'] = $this->ruang_model->getRuang();
+			$data['main_view'] = 'Jadwal/jadwal_view';
+			$this->load->view('template', $data);
+			} else {
+			redirect('login');
+		}
+	}
+
+	public function filter_jadwal()
+	{
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1) {
+			$id_prodi = $this->input->get('id_prodi');
+			$semester = $this->input->get('semester');
+			$data['jadwal'] = $this->jadwal_model->filter_jadwal($id_prodi,$semester);
+			$data['getProdi'] = $this->daftar_ulang_model->getProdi();
+			$data['getPeriode'] = $this->daftar_ulang_model->getPeriode();
+			$data['getPeriode2'] = $this->jadwal_model->getPeriode();
 			$data['getRuang'] = $this->ruang_model->getRuang();
 			$data['main_view'] = 'Jadwal/jadwal_view';
 			$this->load->view('template', $data);

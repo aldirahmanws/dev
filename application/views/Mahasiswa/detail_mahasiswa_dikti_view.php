@@ -1,7 +1,7 @@
 
 
 <?php echo $this->session->flashdata('message');?>
-<form  method="post" action="<?php echo base_url(); ?>mahasiswa/save_edit_mahasiswa/<?php echo $mahasiswa->id_mahasiswa; ?>/<?php echo $mahasiswa->nim; ?>" enctype="multipart/form-data">
+<form  method="post" action="<?php echo base_url(); ?>mahasiswa/save_edit_mahasiswa/<?php echo $this->uri->segment(3); ?>/<?php echo $mahasiswa->nim; ?>" enctype="multipart/form-data">
         
         <div class="box box-info">
             
@@ -57,6 +57,7 @@
               <li><a href="#tab_1" data-toggle="tab">Alamat</a></li>
               <li><a href="#tab_2" data-toggle="tab">Orang Tua</a></li>
               <li><a href="#tab_3" data-toggle="tab">Wali</a></li>
+              
               <li class="pull-right"><button class="btn btn-sm btn-primary btn-flat"><i class="fa fa-save"></i> Save</button> </li>
             </ul>
             <div class="tab-content">

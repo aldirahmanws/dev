@@ -11,6 +11,7 @@ class Nilai_perkuliahan extends CI_Controller {
 		$this->load->model('finance_model');
 		$this->load->model('nilai_perkuliahan_model');
 		$this->load->model('dosen_model');
+		$this->load->model('jadwal_model');
 		ini_set('display_errors', 0);
 		if ($this->session->userdata('level') == 4 OR $this->session->userdata('level') == 5 OR $this->session->userdata('level') == 3) {
 			redirect('login');
@@ -22,6 +23,7 @@ class Nilai_perkuliahan extends CI_Controller {
 		if ($this->session->userdata('logged_in') == TRUE) {
 				$data['getProdi'] = $this->daftar_ulang_model->getProdi();
 				$data['getPeriode'] = $this->daftar_ulang_model->getPeriode();
+				$data['getPeriode2'] = $this->jadwal_model->getPeriode();
 				$data['kp'] = $this->kelas_perkuliahan_model->data_kp();
 				$data['main_view'] = 'Nilai_perkuliahan/nilai_perkuliahan_view';
 				$this->load->view('template', $data);
@@ -34,6 +36,7 @@ class Nilai_perkuliahan extends CI_Controller {
 	{
 			$data['getProdi'] = $this->daftar_ulang_model->getProdi();
 			$data['getPeriode'] = $this->daftar_ulang_model->getPeriode();
+			$data['getPeriode2'] = $this->jadwal_model->getPeriode();
 			$id_prodi=$this->input->get('id_prodi');
 			$id_periode=$this->input->get('id_periode');
 			$data['kp'] = $this->kelas_perkuliahan_model->filter_kp($id_prodi,$id_periode);
@@ -49,8 +52,9 @@ class Nilai_perkuliahan extends CI_Controller {
 				
 				if($this->session->userdata('level') == 2){
 				$username = $this->session->userdata('username');
-				$session = $this->dosen_model->detail_dosen($username);
-				$id_dosen = $session->id_dosen;
+				 $session = $this->dosen_model->session_dosen($username);
+            		$id_dosen = $session->id_dosen;
+            		$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
 			} else {
 				$id_dosen = $this->uri->segment(4);
 			}
@@ -72,8 +76,9 @@ class Nilai_perkuliahan extends CI_Controller {
 
 				if($this->session->userdata('level') == 2){
 				$username = $this->session->userdata('username');
-				$session = $this->dosen_model->detail_dosen($username);
-				$id_dosen = $session->id_dosen;
+				 $session = $this->dosen_model->session_dosen($username);
+            		$id_dosen = $session->id_dosen;
+            		$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
 				$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
 			} 
 				

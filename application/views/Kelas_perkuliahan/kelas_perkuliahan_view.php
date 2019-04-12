@@ -21,7 +21,7 @@
                     <td>Program Studi</td>     
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       
-                      <select name="id_prodi" onchange="return get_prodi_periode2(this.value)">
+                      <select name="id_prodi">
                         <option value="">-- Semua --</option>
                         <?php 
 
@@ -37,7 +37,13 @@
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                       <select name="id_periode" id="id_periode2">
                         <option value="">-- Semua --</option>
-              
+                           <?php 
+
+                                        foreach($getPeriode2 as $row)
+                                        { 
+                                          echo '<option value="'.$row->semester.'">'.$row->semester.'</option>';
+                                        }
+                                    ?>
                       </select>
                     </td>
                     <td>
@@ -255,18 +261,3 @@
   });
 
   </script>
-<script type="text/javascript">
-            function get_prodi_periode2(p) {
-                var id_prodi = p;
-
-                $.ajax({
-                    url: '<?php echo base_url(); ?>mahasiswa/get_prodi_periode2/'+id_prodi,
-                    data: 'id_prodi='+id_prodi,
-                    type: 'GET',
-                    dataType: 'html',
-                    success: function(msg) {
-                        $("#id_periode2").html(msg);
-                    }
-                });
-            }
-</script>

@@ -1,6 +1,6 @@
            <?php 
                 if($this->session->userdata('level') == 5){ 
-                  $id_mahasiswa = $mahasiswa->id_mahasiswa; $semester_aktif = $mahasiswa->semester_aktif?>
+                  $id_mahasiswa = $this->uri->segment(3); $semester_aktif = $mahasiswa->semester_aktif?>
 
         <!-- <a class="btn btn-sm btn-primary" href="<?php echo base_url();?>mahasiswa">Detail Mahasiswa</a>
         <a class="btn btn-sm btn-info" href="<?php echo base_url();?>mahasiswa/history_pendidikan">History Pendidikan</a>
@@ -11,23 +11,28 @@
         
            <?php } else { ?>
            
-        <a class="btn btn-sm btn-default btn-flat" href="<?php echo base_url(); ?>mahasiswa/data_mahasiswa"><i class="fa fa-angle-left"></i> Back</a>
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/lihat_mahasiswa_dikti/<?php echo $mahasiswa->id_mahasiswa; ?>">Detail Mahasiswa</a>
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/history_pendidikan/<?php echo $mahasiswa->id_mahasiswa; ?>/<?php echo $mahasiswa->nik; ?>">History Pendidikan</a>
+        <?php if ($mahasiswa->tanggal_keluar == '0000-00-00' OR $mahasiswa->tanggal_keluar == NULL) { ?>
+                          <a class="btn btn-sm btn-default btn-flat" href="<?php echo base_url(); ?>mahasiswa/data_mahasiswa"><i class="fa fa-angle-left"></i> Back</a>
+                       <?php } else { ?>
+                        <a class="btn btn-sm btn-default btn-flat" href="<?php echo base_url(); ?>mahasiswa/data_ld"><i class="fa fa-angle-left"></i> Back</a>
+                       <?php } ?> 
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/lihat_mahasiswa_dikti/<?php echo $this->uri->segment(3); ?>">Detail Mahasiswa</a>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/history_pendidikan/<?php echo $this->uri->segment(3); ?>/<?php echo $mahasiswa->nik; ?>">History Pendidikan</a>
         <?php if ($mahasiswa->id_jenis_pendaftaran == '2') { ?>
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/transfer_nilai/<?php echo $mahasiswa->id_mahasiswa; ?>">Nilai Transfer</a>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/transfer_nilai/<?php echo $this->uri->segment(3); ?>">Nilai Transfer</a>
         <?php } ?>
-
+        <?php if ($mahasiswa->tanggal_keluar == '0000-00-00' OR $mahasiswa->tanggal_keluar == NULL) { ?>
         <?php if ($mahasiswa->asal_pt == 1 OR $mahasiswa->asal_pt == '' OR $mahasiswa->asal_pt == ' ') { ?>
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/krs_mahasiswa/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>/<?php echo $mahasiswa->id_konsentrasi; ?>">KRS Mahasiswa</a>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/krs_mahasiswa/<?php echo $this->uri->segment(3) ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>/<?php echo $mahasiswa->id_konsentrasi; ?>">KRS Mahasiswa</a>
         <?php } else { ?>
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/kelas_mhs/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>">KRS Mahasiswa</a>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/kelas_mhs/<?php echo $this->uri->segment(3) ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>">KRS Mahasiswa</a>
         <?php } ?> 
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/jadwal_mhs/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>">Jadwal Kuliah</a>
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/history_nilai/<?php echo $mahasiswa->id_mahasiswa; ?>">History Nilai</a>
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/aktivitas_perkuliahan/<?php echo $mahasiswa->id_mahasiswa; ?>">Aktivitas Perkuliahan</a>
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/prestasi/<?php echo $mahasiswa->id_mahasiswa; ?>">Prestasi</a>
-        <a class="btn btn-sm btn-warning btn-flat" href="<?php echo base_url();?>mahasiswa/checklist_pembayaran/<?php echo $mahasiswa->id_mahasiswa; ?>/<?php echo $mahasiswa->id_prodi; ?>">Pembayaran</a>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/jadwal_mhs/<?php echo $this->uri->segment(3) ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>">Jadwal Kuliah</a>
+        <?php } ?>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/history_nilai/<?php echo $this->uri->segment(3); ?>">History Nilai</a>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/aktivitas_perkuliahan/<?php echo $this->uri->segment(3); ?>">Aktivitas Perkuliahan</a>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/prestasi/<?php echo $this->uri->segment(3); ?>">Prestasi</a>
+        <a class="btn btn-sm btn-warning btn-flat" href="<?php echo base_url();?>mahasiswa/checklist_pembayaran/<?php echo $this->uri->segment(3); ?>/<?php echo $mahasiswa->id_prodi; ?>">Pembayaran</a>
         
          <br/><br/>  
            <?php }           ?>
@@ -69,9 +74,20 @@
           
             <div class="box-header">
               <h3 class="box-title">Tabel Angsuran </h3>
+
+              <?php  
+        if ($this->session->userdata('level') != 5) {
+           $id_mhs1 = $this->uri->segment(3);
+          $status_mahasiswa = $this->db->query("SELECT id_status as abc FROM tb_mahasiswa WHERE id_mahasiswa = '$id_mhs1'")->row();
+          $id_mahasiswa = $this->db->query("SELECT id_mahasiswa as abc FROM tb_mahasiswa WHERE id_mahasiswa = '$id_mhs1'")->row(); 
+        } else {
+           $id_mhs1 = $this->session->userdata('username');
+           $status_mahasiswa = $this->db->query("SELECT id_status as abc FROM tb_mahasiswa WHERE nim = '$id_mhs1'")->row(); 
+            $id_mahasiswa = $this->db->query("SELECT id_mahasiswa as abc FROM tb_mahasiswa WHERE nim = '$id_mhs1'")->row(); 
+      } ?>
           
 
-               <a class="pull-right" href="<?php echo base_url(); ?>mahasiswa/riwayat_pembayaran/<?php echo $mahasiswa->id_mahasiswa; ?>/<?php echo $mahasiswa->id_prodi; ?>"><button type="button" class="btn btn-warning pull-right">
+               <a class="pull-right" href="<?php echo base_url(); ?>mahasiswa/riwayat_pembayaran/<?php echo $id_mahasiswa->abc;?>/<?php echo $mahasiswa->id_prodi; ?>"><button type="button" class="btn btn-warning pull-right">
                  Riwayat Pembayaran
               </button>
               </a>
@@ -532,7 +548,7 @@
             </td>
           <td colspan="15">: 
       <input type="text" name="nama_matkul" id="nama_matkul" class="validate[required] text-input"  size="40" style="width: 90%;" required="">
-       <input type="hidden" name="id_mahasiswa" id="id_mahasiswa" class="validate[required] text-input"  size="40" style="width: 90%;" value="<?php echo $mahasiswa->id_mahasiswa; ?>">
+       <input type="hidden" name="id_mahasiswa" id="id_mahasiswa" class="validate[required] text-input"  size="40" style="width: 90%;" value="<?php echo $this->uri->segment(3); ?>">
        <input type="hidden" name="semester_aktif" id="semester_aktif" class="validate[required] text-input"  size="40" style="width: 90%;" value="<?php echo $mahasiswa->semester_aktif; ?>">
       </td>
       <input type="hidden" name="id_kp" id="id_kp2" class="validate[required] text-input"  size="5" style="width: 90%;">

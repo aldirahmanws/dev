@@ -260,6 +260,7 @@ class Surat_model extends CI_Model {
               ->join('tb_status_mhs','tb_status_mhs.id_status=tb_mahasiswa.id_status')        
               ->join('tb_agama','tb_agama.id_agama=tb_bio.id_agama')
               ->join('tb_dosen','tb_dosen.id_dosen=tb_prodi.id_dosen')
+              ->join('tb_ld','tb_ld.id_mahasiswa=tb_mahasiswa.id_mahasiswa','left')
               ->where('tb_mahasiswa.id_mahasiswa', $id_mahasiswa)
               ->get('tb_mahasiswa')
               ->row();

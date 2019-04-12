@@ -1,4 +1,9 @@
-          
+    <style type="text/css">
+  @page {
+  size: A4;
+}
+
+</style>      
       <?php echo $this->session->flashdata('message');?>
         <div class="box box-info">
 
@@ -97,7 +102,7 @@
           <br>
           <br>
           
-      <div class="row" style="margin-left: 10px; margin-right: 10px">
+      <div class="row" style="margin-left: 10px; margin-right: 10px" class="page">
         
           
             <div class="box-header">
@@ -141,7 +146,7 @@
                     <td colspan="4"><br></td>
                   </tr>
                    <tr>
-                    <td colspan="4"><br>
+                    <td colspan="4">
 
                   </td>
                   </tr>

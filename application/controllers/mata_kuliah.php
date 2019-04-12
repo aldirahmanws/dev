@@ -19,8 +19,18 @@ class Mata_kuliah extends CI_Controller {
 		if ($this->session->userdata('logged_in') == TRUE) {
 			$data['getProdi'] = $this->daftar_ulang_model->getProdi();
 			$data['getJenisMatkul'] = $this->daftar_ulang_model->getJenisMatkul();
-			$data['matkul'] = $this->mata_kuliah_model->data_matkul();
-			$data['main_view'] = 'Mata_kuliah/mata_kuliah_view';
+			$ambil_db = $this->mata_kuliah_model->data_matkul();
+				$c = 0;
+				$alert = "'Apakah anda yakin mengapus data ini ?'";
+				foreach ($ambil_db as $key) {
+				$arrayName[] = array(++$c,$key->id_matkul,$key->nama_matkul, $key->bobot_mk, $key->nama_prodi, $key->nama_jenis_matkul,'  <a href="'.base_url('mata_kuliah/detail_matkul/'.$key->kode_matkul).'" class="btn btn-warning btn-xs btn-flat"><i class="glyphicon glyphicon-pencil"></i><span class="tooltiptext">Edit</span></a>
+
+                   <a href="'.base_url('mata_kuliah/hapus_matkul/'.$key->kode_matkul).'" class="btn btn-danger  btn-xs btn-flat" onclick="return confirm('.$alert.')"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus</span></a>', '<input type="checkbox" name="id[]" value="'.$key->kode_matkul.'">');	
+		}
+		
+		$ambil_db = json_encode($arrayName);
+		$data['mata_kuliah'] = $ambil_db;
+		$data['main_view'] = 'Mata_kuliah/mata_kuliah_view';
 			$this->load->view('template', $data);
 			} else {
 			redirect('login');

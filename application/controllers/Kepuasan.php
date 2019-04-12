@@ -8,7 +8,10 @@ class Kepuasan extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Kepuasan_model');
 		 ini_set('display_errors', 0);
-		  if ($this->session->userdata('logged_in') != TRUE && $this->session->userdata('level') != 6 OR $this->session->userdata('level') != 1) {
+		  if ($this->session->userdata('logged_in') != TRUE) {
+		  	if ($this->session->userdata('level') != 1 AND $this->session->userdata('level') != 6) {
+		  		redirect(base_url('login'));
+		  	}
 		  	redirect(base_url('login'));
 		  }
 	}

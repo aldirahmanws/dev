@@ -96,5 +96,16 @@
         </div>
         <!-- /.col -->
       </div>
+
+      <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+           - Menu skala nilai digunakan untuk mengelola data skala nilai yang aktif.
+           <br />
+           - Tanggal efektif digunakan sebagai rentang waktu skala nilai tersebut digunakan.
+            <br />
+            - <b> Notes: Nilai maksimum harus 2 angka di belakang koma, karena persentase pada nilai akhir dibulatkan 2 angka di belakang koma.
+            
+         </div>
       <!-- /.row -->
     </section>

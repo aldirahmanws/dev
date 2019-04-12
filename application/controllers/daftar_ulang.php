@@ -32,53 +32,23 @@ class daftar_ulang extends CI_Controller {
 	}
 	public function save_mahasiswa_pagi()
 	{
-			if($this->mahasiswa_model->save_ayah() == TRUE  && $this->mahasiswa_model->save_ibu() == TRUE && $this->mahasiswa_model->save_alamat() == TRUE && $this->mahasiswa_model->save_wali() == TRUE && $this->mahasiswa_model->save_kependudukan() == TRUE && $this->mahasiswa_model->save_bio() == TRUE && $this->mahasiswa_model->save_kontak() == TRUE && $this->mahasiswa_model->simpan_pendidikan() == TRUE && $this->mahasiswa_model->save_mahasiswa_pagi() == TRUE)
-				$id_du = $this->input->post('id_du');
-				$this->tamu_model->save_update_status2($id_du);
-				$nim = $this->input->post('nim');
-				$pass = $this->random_password();
-				$this->user_model->signup_mahasiswa($nim, $pass);
-				$cc = $this->finance_model->buat_kode();
-				$id_mahasiswa = $this->input->post('id_mahasiswa');
-				$this->daftar_ulang_model->insert_registrasi($cc, $id_mahasiswa);
-				$this->load->library('email');
-						$config = array(
-							'protocol' => 'smtp',
-							'smtp_host' 	=> 'ssl://smtp.googlemail.com',
-							'smtp_port' 	=> 465,
-							'smtp_user' 	=> 'jic.itservices@gmail.com',
-							'smtp_pass' 	=> 'm0nash01',
-							'mailtype'		=> 'html',
-							'wordwrap'	=> TRUE
-						);
-						$this->email->initialize($config);
-						$this->email->set_newline("\r\n");
-						$this->email->from('jic.itservices@gmail.com','STIE Jakarta International College');
-						$this->email->to($this->input->post('email'));
-						
-						$this->email->subject('STIE Jakarta International College');
-						$this->email->message('
-							<h2> Akun Login Mahasiswa!</h2>
-							<br> Username : '.$nim.'
-							<br> Password : '.$pass.' <br><br>
-							Terimakasih');
-						
-						if($this->email->send()){
+		$id_pendaftaran = $this->uri->segment(3);
+			if($this->mahasiswa_model->save_ayah() == TRUE  && $this->mahasiswa_model->save_ibu() == TRUE && $this->mahasiswa_model->save_alamat() == TRUE && $this->mahasiswa_model->save_wali() == TRUE && $this->mahasiswa_model->save_kependudukan() == TRUE && $this->mahasiswa_model->save_bio() == TRUE && $this->mahasiswa_model->save_kontak() == TRUE && $this->mahasiswa_model->simpan_pendidikan() == TRUE && $this->mahasiswa_model->save_mahasiswa_pagi() == TRUE && $this->daftar_ulang_model->ubah_status_pendaftaran($id_pendaftaran) == TRUE)
 							if ($this->input->post('id_jenis_pendaftaran') != 1 OR $this->input->post('id_waktu') == 2) {
 								$nama_du = $this->input->post('nama_mahasiswa');
 							$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <p><i class="icon fa fa-check"></i> Data '.$nama_du.' berhasil ditambahkan</p>
+                <p><i class="icon fa fa-check"></i> Data '.$nama_du.' berhasil ditambahkan </p>
                 </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 			            	redirect('mahasiswa/mahasiswa_data');
 							} else {
 								$nama_du = $this->input->post('nama_mahasiswa');
-							$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-success"> Data '.$nama_du.' berhasil didaftarkan. </div>');
+							$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data '.$nama_du.' berhasil ditambahkan </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 			            	redirect('daftar_ulang/data_peserta_tes');
-							}
-							
-						
-			} else {
+							} else {
 				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Data  '.$nama_pendaftar.' Sudah Ada </div>');
             	redirect('daftar_ulang/page_du_pagi');
 			} 

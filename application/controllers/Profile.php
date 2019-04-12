@@ -16,7 +16,6 @@ class Profile extends CI_Controller {
 	{
         if ($this->session->userdata('logged_in') == TRUE) {
         if($this->session->userdata('level') == 5){
-
             $username = $this->session->userdata('username');
             $session = $this->mahasiswa_model->session_mahasiswa($username);
             $id_mahasiswa = $session->id_mahasiswa;
@@ -26,8 +25,11 @@ class Profile extends CI_Controller {
             $this->load->view('template', $data);   
         } else if($this->session->userdata('level') == 2) {
             $username = $this->session->userdata('username');
-            $data['data_user'] = $this->user_model->data_session();
-            $data['dosen'] = $this->dosen_model->detail_dosen($username);
+            $session = $this->dosen_model->session_dosen($username);
+            $id_dosen = $session->id_dosen;
+            $data['foto_dosen'] = $this->dosen_model->foto_dosen($username);
+            $data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
+            $data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
             $data['main_view'] = 'Dosen/detail_dosen_view';
             $this->load->view('template', $data);  
 
@@ -43,72 +45,26 @@ class Profile extends CI_Controller {
 	}
     public function save_data()
     {
-        
-        $username = $this->input->post('username');
-        $password = $this->input->post('password');
-        $password_baru = $this->input->post('password_baru');
+        $username = $this->session->userdata('username');
         $config['upload_path'] = './uploads/';
-        $config['allowed_types'] = 'jpg|png|jpeg|pdf';
+        $config['allowed_types'] = 'jpg|png|jpeg';
         $this->load->library('upload', $config);
-        if($username && $password && $password_baru != null && !empty($_FILES['foto']['name'])){
-            if($this->user_model->save_data($username,$password, $password_baru) == TRUE){
-                if($this->upload->do_upload('foto')){
-                  if($this->user_model->save_foto($this->upload->data(), $username) == TRUE){
-                    if ($this->session->userdata('level') == 2) {
-                         $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+        if($this->upload->do_upload('foto')){
+          if($this->user_model->save_edit_foto($this->upload->data(), $username) == TRUE){
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <p><i class="icon fa fa-check"></i> Data profil berhasil diubah </p>
+                <p><i class="icon fa fa-check"></i> Unggah foto berhasil </p>
                 </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
-                         redirect('index');
-                    } else {
-                         $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <p><i class="icon fa fa-check"></i> Data profil berhasil diubah </p>
-                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
-                        redirect('profile'); 
-                    }
-                    
-                  } else {
-                    $this->session->set_flashdata('message', '<div class="alert alert-danger"> Profil gagal diganti </div>');
-                        redirect('profile');
-                  }
-                } else {
-                  $this->session->set_flashdata('message', $this->upload->display_errors());
-                    redirect('profile');
-                }
-            } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger"> Password Lama salah</div>');
-                    redirect('profile');
-            }
-        } else if($username && $password && $password_baru != null){
-            if($this->user_model->save_data($username,$password, $password_baru) == TRUE){
-                $this->session->set_flashdata('message', '<div class="alert alert-success"> Password berhasil diganti </div>');
-                    redirect('profile');
-            } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger"> Password Lama salah</div>');
-                    redirect('profile');
-            }
-            
-        } else if(!empty($_FILES['foto']['name'])){
-            if($this->upload->do_upload('foto')){
-              if($this->user_model->save_foto($this->upload->data(), $this->session->userdata('username')) == TRUE){
-                $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <p><i class="icon fa fa-check"></i> Foto profil berhasil diubah </p>
-                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
-                    redirect('profile');
-              } else {
-                $this->session->set_flashdata('message', '<div class="alert alert-danger"> Foto gagal diganti </div>');
-                    redirect('profile');
-              }
-            } else {
-              $this->session->set_flashdata('message', $this->upload->display_errors());
                 redirect('profile');
-            }
+          } else {
+            $this->session->set_flashdata('message', 'Update foto gagal');
+                redirect('profile');
+          }
         } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-info"> Tidak Ada Perubahan </div>');
-            redirect('profile');
+          $this->session->set_flashdata('message', $this->upload->display_errors());
+             redirect('profile');
         }
+        
     }
 
 }

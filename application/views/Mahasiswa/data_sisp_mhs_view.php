@@ -8,8 +8,11 @@
               <h3 class="box-title">DATA SURAT PENGANTAR RISET</h3>
             </div>
             <div class="box-body">
+              <?php if ($mahasiswa->tanggal_keluar == '0000-00-00' OR $mahasiswa->tanggal_keluar == NULL) { ?>
                                
               <a class="btn btn-primary btn-sm btn-flat" href="" data-toggle="modal" data-target="#modal_view"><i class="fa fa-plus"></i> Tambah </a>
+
+            <?php } ?>
 
               <table id="example1" class="table table-hover table-striped table-condensed" style="text-transform: uppercase;">
                 

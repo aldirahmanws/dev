@@ -76,6 +76,14 @@
         </div>
         <!-- /.col -->
       </div>
+
+      <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+           - Menu tingkat kepuasan digunakan untuk mendata hasil kuisioner pada tiap mata kuliah yang diajarkan dosen (nilai maksimal adalah 5).
+          
+            
+         </div>
       <!-- /.row -->
     </section>
     <div class="modal fade" id="modal_tambah" >
@@ -326,8 +334,7 @@
         $('#modal_edit').modal('show');
         $('#id_kepuasan').val(p);
         $('#id_prodi').val($('#data_prodi'+p).val()).trigger("change");
-        $('#id_periode2').val($('#data_periode'+p).val()).trigger("change");
-        $('#id_dosen').val($('#data_periode'+p).val()).trigger("change");
+        $('#id_dosen').val($('#data_dosen'+p).val()).trigger("change");
         $('#kode_matkul').val($('#data_kode_matkul'+p).val()).trigger("change");
         $('#jml_pertanyaan').val($('#data_jml_pertanyaan'+p).val());
         $('#jml_mahasiswa').val($('#data_jml_mahasiswa'+p).val());
@@ -336,6 +343,8 @@
         $('#total_nilai_3').val($('#data_total_nilai_3'+p).val());
         $('#total_nilai_2').val($('#data_total_nilai_2'+p).val());
         $('#total_nilai_1').val($('#data_total_nilai_1'+p).val());
+        get_semester2($('#data_prodi'+p).val());
+        $('#id_periode2').val($('#data_periode'+p).val()).trigger("change");
       }
       function get_semester(p) {
                 $.ajax({

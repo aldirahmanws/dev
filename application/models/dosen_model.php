@@ -21,13 +21,24 @@ class Dosen_model extends CI_Model {
 	}
 
   public function detail_dosen($id_dosen){
-    return $this->db->join('tb_status_mhs','tb_status_mhs.id_status=tb_dosen.status')
+    return $this->db->join('tb_status_mhs','tb_status_mhs.id_status=tb_dosen.status','left')
               ->join('tb_status_dosen','tb_status_dosen.id_status_dosen=tb_dosen.jenis_dosen')
               ->join('tb_agama','tb_agama.id_agama=tb_dosen.id_agama')
               ->join('tb_kelamin','tb_kelamin.id_kelamin=tb_dosen.id_kelamin')
-              ->join('tb_user','tb_user.username=tb_dosen.id_dosen')
               ->where('tb_dosen.id_dosen', $id_dosen)
               ->get('tb_dosen')
+              ->row();
+  }
+
+  public function session_dosen($username){
+    return $this->db->like('tb_dosen.email', $username)
+              ->get('tb_dosen')
+              ->row();
+  }
+
+  public function foto_dosen($username){
+    return $this->db->like('username', $username)
+              ->get('tb_user')
               ->row();
   }
 
@@ -49,12 +60,6 @@ class Dosen_model extends CI_Model {
      $this->db->order_by('id_info','DESC');
      $query = $this->db->get();
      return $query->result();
-  }
-
-  public function foto_dosen($id_dosen){
-    return $this->db->where('username', $id_dosen)
-              ->get('tb_user')
-              ->row();
   }
 
   public function  buat_kode_dosen()   {
@@ -303,7 +308,7 @@ class Dosen_model extends CI_Model {
               ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
               ->join('tb_waktu','tb_waktu.id_waktu=tb_kp.id_waktu')
               ->where('tb_kelas_dosen.id_dosen', $id_dosen)
-              ->order_by('tb_periode.semester','ASC')
+              ->order_by('tb_periode.semester','desc')
               ->order_by('tb_matkul.nama_matkul','ASC')
               ->get('tb_kelas_dosen')
               ->result();

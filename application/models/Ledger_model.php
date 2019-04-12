@@ -19,6 +19,8 @@ class Ledger_model extends CI_Model {
               ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
               ->like('tb_pendidikan.tgl_du', $angkatan)
               ->like('tb_matkul.id_prodi', $id_prodi)
+              ->order_by('tb_detail_kurikulum.semester_kurikulum','asc')
+              ->order_by('tb_matkul.nama_matkul','asc')
               ->get('tb_kelas_mhs')
               ->result();
   }

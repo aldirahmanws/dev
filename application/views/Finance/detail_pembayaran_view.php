@@ -72,29 +72,24 @@
                 $no = 0;
                 foreach ($data_pembayaran as $i) {
                   if ($i->jenis_biaya == 'Angsuran Tahun 1'){
-                    /*$dataea = $i->jumlah_biaya * $i->diskon / 100;*/
-                    $dataea = 0;
-                    $iae = $i->jumlah_biaya - $dataea;
-                    $iea = $i->jumlah_biaya - $dataea  - $i->potongan + $i->denda;
+                    $iae = $i->jumlah_biaya;
+                    $iea = $i->jumlah_biaya  - $i->potongan + $i->denda;
                   } else if($i->jenis_biaya == 'KRS'){
                     $iae = $i->jumlah_biaya * $i->bobot_matkul;
                     $iea = ($i->jumlah_biaya * $i->bobot_matkul)   - $i->potongan + $i->denda;
                     $i->nama_biaya = $i->nama_biaya.' - '.$i->kode_matkul;
-                  }  else if($i->jenis_biaya == 'Angsuran Tahun 2' or $i->jenis_biaya == 'Angsuran Tahun 3' or $i->jenis_biaya == 'Angsuran Tahun 4'){
-                    /*$dataea = $i->jumlah_biaya * $i->diskon / 100;*/
-                    $dataea = 0;
-                    $iae = $i->jumlah_biaya - $dataea;
-                    $iea = $i->jumlah_biaya - $dataea   - $i->potongan + $i->denda;
-                  } else {
-                    $dataea = 0;
+                  }  else if($i->jenis_biaya == 'Angsuran Tahun 2' or $i->jenis_biaya == 'Angsuran Tahun 3' or $i->jenis_biaya == 'Angsuran Tahun 4' or $i->jenis_biaya == 'Angsuran Tahun 5' or $i->jenis_biaya == 'Angsuran Tahun 6' or $i->jenis_biaya == 'Angsuran Tahun 7' or $i->jenis_biaya == 'Angsuran Tahun 8' or $i->jenis_biaya == 'Angsuran Tahun 9'){
                     $iae = $i->jumlah_biaya;
-                    $iea = $i->jumlah_biaya - $dataea   - $i->potongan + $i->denda;
+                    $iea = $i->jumlah_biaya - $i->potongan + $i->denda;
+                  } else {
+                    $iae = $i->jumlah_biaya;
+                    $iea = $i->jumlah_biaya   - $i->potongan + $i->denda;
                   }
                   echo '
                   
                 <tr>
                   <td>'.++$no.'</td>
-                  <td>'.$i->tanggal_pembayaran.'</td>
+                  <td>'.date("d M Y", strtotime($i->tanggal_pembayaran)).'</td>
                   <td>'.$i->jenis_biaya.'</td>
                   <td>'.$i->nama_biaya.'</td>
                   <td style="text-align:right">'.number_format($iae, 2, ",", ".").'</td>

@@ -32,47 +32,7 @@
     </div>
 
         <!-- MODAL ADD -->
-        <div class="modal fade" id="ModalaAdd" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
-            <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 class="modal-title" id="myModalLabel">Tambah Barang</h3>
-            </div>
-            <form class="form-horizontal">
-                <div class="modal-body">
-
-                    <div class="form-group">
-                        <label class="control-label col-xs-3" >Kode Barang</label>
-                        <div class="col-xs-9">
-                            <input name="kobar" id="kode_barang" class="form-control" type="text" placeholder="Kode Barang" style="width:335px;" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-xs-3" >Nama Barang</label>
-                        <div class="col-xs-9">
-                            <input name="nabar" id="nama_barang" class="form-control" type="text" placeholder="Nama Barang" style="width:335px;" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-xs-3" >Harga</label>
-                        <div class="col-xs-9">
-                            <input name="harga" id="harga" class="form-control" type="text" placeholder="Harga" style="width:335px;" required>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal" aria-hidden="true">Tutup</button>
-                    <button class="btn btn-info" id="btn_simpan">Simpan</button>
-                </div>
-            </form>
-            </div>
-            </div>
-        </div>
+       
         <!--END MODAL ADD-->
 
         <!-- MODAL EDIT -->
@@ -102,7 +62,7 @@
 
                 <div class="modal-footer">
                     <button class="btn" data-dismiss="modal" aria-hidden="true">Tutup</button>
-                    <button class="btn btn-info" type="submit" id="btn_update">Update</button>
+                    <button class="btn btn-info" type="submit" id="btn_update">Konfirmasi</button>
                 </div>
             </div>
             </div>
@@ -111,28 +71,6 @@
         <!--END MODAL EDIT-->
 
         <!--MODAL HAPUS-->
-        <div class="modal fade" id="ModalHapus" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">X</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Hapus Barang</h4>
-                    </div>
-                    <form class="form-horizontal">
-                    <div class="modal-body">
-                                          
-                            <input type="hidden" name="kode" id="textkode" value="">
-                            <div class="alert alert-warning"><p>Apakah Anda yakin mau memhapus data ini?</p></div>
-                                        
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                        <button class="btn_hapus btn btn-danger" id="btn_hapus">Hapus</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
         <!--END MODAL HAPUS-->
 
 
@@ -153,7 +91,6 @@
                     var html = '';
                     var i;
                     var a = 1;
-                    var alert = "'Apakah anda yakin mengapus data ini ?'";
                     for(i=0; i<data.length; i++){
                         html += '<tr>'+
                                 '<td>'+a+++'</td>'+
@@ -163,7 +100,7 @@
                                 '<td><a href="<?php echo base_url()?>uploads/'+data[i].bukti_transfer+'" class="btn btn-info btn-sm" target="_blank">Lihat Bukti</a></td>'+
                                 '<td style="text-align:right;">'+
                                     '<a href="javascript:;" class="btn btn-info btn-xs item_edit" data="'+data[i].id_pendaftaran+'">Konfirmasi</a>'+' '+
-                                    '<a onclick="return confirm('+alert+')" href="<?php echo base_url()?>finance/konfirmasi_gagal/'+data[i].id_pendaftaran+'" class="btn btn-danger btn-xs item_hapus" data="'+data[i].barang_kode+'">Hapus</a>'+
+                                    '<a href="<?php echo base_url()?>finance/form_penolakan/'+data[i].id_pendaftaran+'" class="btn btn-danger btn-xs item_hapus" data="'+data[i].barang_kode+'">Tolak</a>'+
                                 '</td>'+
                                 '</tr>';
                     }

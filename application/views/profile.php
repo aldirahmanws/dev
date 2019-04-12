@@ -1,5 +1,5 @@
-<section class="content">
-  <?php echo $this->session->flashdata('message');?>
+<?php echo $this->session->flashdata('message');?><section class="content">
+  
   <div class="box box-default">
     <div class="box-header with-border">
           <h3 class="box-title"><i class="fa fa-tag"></i> Profile</h3>
@@ -45,20 +45,20 @@
                       <div class="form-group" >
                         <div class="col-xs-12">
                           <div class="col-xs-2">
-                              <label for="first_name"><h5 style="font-size: 13.5px"><b>Password Lama</b></h5></label>
+                              <label for="first_name"><h5 style="font-size: 13.5px"><b>Jabatan</b></h5></label>
                           </div>
                           <div class="col-xs-4">
-                              <input type="password" class="form-control" name="password" id="password" placeholder="****" title="enter your first name if any.">
+                              <input type="text" class="form-control" name="password" id="password" value="<?php echo $data_user->nama_level; ?>" readonly>
                           </div>
                         </div>
                       </div>
                       <div class="form-group" >
                         <div class="col-xs-12">
                           <div class="col-xs-2">
-                              <label for="first_name"><h5><b>Password Baru</b></h5></label>
+                              <label for="first_name"><h5><b>Nama </b></h5></label>
                           </div>
                           <div class="col-xs-4">
-                              <input type="password" class="form-control" name="password_baru" id="password_baru" placeholder="****" title="enter your first name if any.">
+                              <input type="text" class="form-control" name="password_baru" id="password_baru" value="<?php echo $data_user->fullname; ?>" readonly>
                           </div>
                         </div>
                       </div>

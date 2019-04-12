@@ -49,6 +49,7 @@ class Finance_model extends CI_Model {
     $this->db->select('*');
      $this->db->from('tb_pembayaran');
      $this->db->where('tb_pembayaran.id_mahasiswa', $id_mahasiswa);
+     $this->db->order_by('tb_pembayaran.tanggal_cetak','desc');
      $query = $this->db->get();
      return $query->result();
   }
@@ -95,7 +96,7 @@ class Finance_model extends CI_Model {
  
 
   public function data_lunas(){
-    $query = $this->db->query("SELECT * FROM tb_pendaftaran WHERE id_status = '20' OR id_status = '1'")->result();
+    $query = $this->db->query("SELECT * FROM tb_pendaftaran WHERE id_status = '20'")->result();
     return $query;
   }
 
@@ -119,7 +120,8 @@ class Finance_model extends CI_Model {
   public function gagal_konfirmasi($id_pendaftaran){
     $data = array(
        'id_pendaftaran'     => $id_pendaftaran,
-        'id_status'  => '21'
+       'notes' => $this->input->post('notes', TRUE),
+        'id_status'  => '24',
       );
 
     $this->db->where('id_pendaftaran', $id_pendaftaran)
@@ -170,6 +172,7 @@ class Finance_model extends CI_Model {
      $this->db->where('tb_waktu.waktu', $waktu);
      $this->db->where('tb_biaya.periode', $data);
      $this->db->where('tb_biaya.id_grade', $id_grade);
+     $this->db->order_by('tb_biaya.periode', 'desc');
      $query = $this->db->get();
      return $query->result();
   }
@@ -269,6 +272,7 @@ class Finance_model extends CI_Model {
      $this->db->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_pembayaran.kode_matkul' ,'left');
      $this->db->join('tb_pembayaran','tb_pembayaran.kode_pembayaran=tb_detail_pembayaran.kode_pembayaran');
      $this->db->where('tb_mahasiswa.id_mahasiswa', $ya);
+     $this->db->order_by('tb_pembayaran.tanggal_cetak','desc');
      $query = $this->db->get();
      return $query->result();
     }

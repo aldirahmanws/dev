@@ -1,6 +1,6 @@
 <div class="row"> 
   <?php echo $this->session->flashdata('message');?>
-  <?php echo form_open('daftar_ulang/save_mahasiswa_pagi'); ?>
+  <?php echo form_open('daftar_ulang/save_mahasiswa_pagi/'.$du_pagi->id_pendaftaran); ?>
   <div class="col-md-12">
 
   <div class="box box-primary">

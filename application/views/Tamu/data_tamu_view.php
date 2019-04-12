@@ -29,7 +29,7 @@
 
                 <?php 
                 foreach ($tamu as $data) {
-                  if ($data->id_status == 22) {
+                  if ($data->id_status == 22 OR $data->id_status == 24) {
                     if ($data->id_sekolah == NULL OR $data->id_sekolah == '' OR $data->id_sekolah == ' ') {
                       $asal = $data->nama_pt;
                     } else {

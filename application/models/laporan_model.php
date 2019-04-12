@@ -327,16 +327,21 @@ class Laporan_model extends CI_Model {
               </tr>
             </table>
             <br>
-              <table id="example1" class="table table-bordered table-striped">
-                <thead>
+              <table id="example1" class="table table-bordered table-striped" style="text-align:center">
+                <thead  style="text-align:center">
                 <tr>
-                  <th>No</th>
-                  <th>Nama Peserta</th>
-                  <th>Asal Sekolah</th>
-                  <th>Nama Prodi</th>
-                  <th>Nama Konsentrasi</th>
-                  <th>Waktu</th>
-                  <th>Status</th>
+                  <th rowspan="2">No</th>
+                  <th rowspan="2">Nama Peserta</th>
+                  <th rowspan="2">Asal Sekolah</th>
+                  <th rowspan="2">Program Studi</th>
+                  <th rowspan="2">Konsentrasi</th>
+                  <th colspan="3">Jawaban Benar</th>
+                  <th rowspan="2">Nilai</th>
+                </tr>
+                <tr>
+                  <th>MTK</th>
+                  <th>B.Inggris</th>
+                  <th>Psikotes</th>
                 </tr>
                 </thead>
                 <tbody>';
@@ -348,6 +353,8 @@ class Laporan_model extends CI_Model {
                       $status_a = $data->status_mhs;
                     }
 
+                    $nilai = ((($data->nilai_mat + $data->nilai_bing + $data->nilai_psikotes) / 9) * 10);
+
                     $option .= "
                     <tr>
                       <td>".++$no."</td>
@@ -355,8 +362,10 @@ class Laporan_model extends CI_Model {
                       <td>".$data->nama_sekolah."</td>
                       <td>".$data->nama_prodi."</td>
                       <td>".$data->nama_konsentrasi."</td>
-                      <td>".$data->waktu."</td>
-                      <td>".$status_a."</td>
+                      <td>".$data->nilai_mat."</td>
+                      <td>".$data->nilai_bing."</td>
+                      <td>".$data->nilai_psikotes."</td>
+                      <td>".round($nilai,2)."</td>
                     </tr>";
                     
                   }
@@ -410,13 +419,13 @@ class Laporan_model extends CI_Model {
       $query = $this->db->select('*')
                 ->from('tb_pendaftaran')
                 ->join('tb_mahasiswa','tb_mahasiswa.nim=tb_pendaftaran.sgs')
-                ->like('tanggal_konfirmasi', $tanggal)
+                ->like('tb_pendaftaran.tanggal_pendaftaran', $tanggal)
                 ->get();
       $row = $query->result();
       $coo = $this->db->select('count(tb_pendaftaran.id_pendaftaran) as total')
                 ->from('tb_pendaftaran')
                 ->join('tb_mahasiswa','tb_mahasiswa.nim=tb_pendaftaran.sgs')
-                ->like('tanggal_konfirmasi', $tanggal)
+                ->like('tb_pendaftaran.tanggal_pendaftaran', $tanggal)
                 ->get();
       $eee = $coo->row();
 
@@ -463,7 +472,7 @@ class Laporan_model extends CI_Model {
                       <td>".$data->nama_pendaftar."</td>
                       <td>".$data->nama_mahasiswa."</td>
                       <td>".$data->nim."</td>
-                      <td>".$data->tanggal_konfirmasi."</td>
+                      <td>".date("d-m-Y", strtotime($data->tanggal_pendaftaran))."</td>
                     </tr>";
                     
                   }
@@ -1234,17 +1243,19 @@ class Laporan_model extends CI_Model {
     }
     function laporan_keuangan($tanggal_awal, $tanggal_akhir, $id_prodi, $id_waktu){
       $query = $this->db->select('*')
-                ->from('tb_pembayaran')
-                ->join('tb_detail_pembayaran', 'tb_detail_pembayaran.kode_pembayaran=tb_pembayaran.kode_pembayaran')
+                ->from('tb_detail_pembayaran')
+                ->join('tb_pembayaran', 'tb_pembayaran.kode_pembayaran=tb_detail_pembayaran.kode_pembayaran')
                 ->join('tb_mahasiswa', 'tb_mahasiswa.id_mahasiswa=tb_pembayaran.id_mahasiswa')
                 ->join('tb_konsentrasi', 'tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
                 ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
                 ->join('tb_biaya', 'tb_biaya.id_biaya=tb_detail_pembayaran.id_biaya')
+                ->join('tb_matkul', 'tb_matkul.kode_matkul=tb_detail_pembayaran.kode_matkul','left')
                 ->where('tanggal_cetak >=', $tanggal_awal)
                 ->where('tanggal_cetak <=', $tanggal_akhir)
                 ->like('tb_prodi.id_prodi', $id_prodi)
                 ->like('tb_mahasiswa.id_waktu', $id_waktu)
                 ->order_by('tanggal_cetak', 'asc')
+                ->order_by('tb_pembayaran.kode_pembayaran', 'asc')
                 ->get();
       $row = $query->result();
       $prodi = $this->db->where('id_prodi', $id_prodi)->get('tb_prodi')->row()->nama_prodi;
@@ -1288,7 +1299,7 @@ class Laporan_model extends CI_Model {
               </tr>
             </table>
             <br>
-              <table id="example1" class="table table-bordered table-striped">
+              <table id="example1" class="table2 table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>No</th>
@@ -1302,17 +1313,36 @@ class Laporan_model extends CI_Model {
                 </tr>
                 </thead>
                 <tbody>';
-                  foreach ($row as $data) {
+                  foreach ($row as $i) {
+                    if ($i->jenis_biaya == 'Angsuran Tahun 1'){
+                    /*$dataea = $i->jumlah_biaya * $i->diskon / 100;*/
+                    $dataea = 0;
+                    $iae = $i->jumlah_biaya - $dataea;
+                    $iea = $i->jumlah_biaya - $dataea  - $i->potongan + $i->denda;
+                  } else if($i->jenis_biaya == 'KRS'){
+                    $iae = $i->jumlah_biaya * $i->bobot_matkul;
+                    $iea = ($i->jumlah_biaya * $i->bobot_matkul)   - $i->potongan + $i->denda;
+                    $i->nama_biaya = $i->nama_biaya.' - '.$i->id_matkul;
+                  }  else if($i->jenis_biaya == 'Angsuran Tahun 2' or $i->jenis_biaya == 'Angsuran Tahun 3' or $i->jenis_biaya == 'Angsuran Tahun 4'){
+                    /*$dataea = $i->jumlah_biaya * $i->diskon / 100;*/
+                    $dataea = 0;
+                    $iae = $i->jumlah_biaya - $dataea;
+                    $iea = $i->jumlah_biaya - $dataea   - $i->potongan + $i->denda;
+                  } else {
+                    $dataea = 0;
+                    $iae = $i->jumlah_biaya;
+                    $iea = $i->jumlah_biaya - $dataea   - $i->potongan + $i->denda;
+                  }
                     $option .= "
                     <tr>
                       <td>".++$no."</td>
-                      <td>".date("d M Y", strtotime($data->tanggal_cetak))."</td>
-                      <td>".$data->kode_pembayaran."</td>
-                      <td>".$data->nim."</td>
-                      <td>".$data->nama_mahasiswa."</td>
-                      <td>".$data->jenis_biaya."</td>
-                      <td>".$data->nama_biaya."</td>
-                      <td>".$data->jumlah_biaya."</td>
+                      <td>".date("d M Y", strtotime($i->tanggal_cetak))."</td>
+                      <td>".$i->kode_pembayaran."</td>
+                      <td>".$i->nim."</td>
+                      <td>".$i->nama_mahasiswa."</td>
+                      <td>".$i->jenis_biaya."</td>
+                      <td>".$i->nama_biaya."</td>
+                      <td>".$iea."</td>
                     </tr>";
                     
                   }
@@ -1403,7 +1433,7 @@ class Laporan_model extends CI_Model {
 
     }
     public function getTahunSgs(){
-      $this->db->select('DATE_FORMAT(tb_pendaftaran.tanggal_konfirmasi, "%Y") as tanggal_konfirmasi')->distinct();
+      $this->db->select('DATE_FORMAT(tb_pendaftaran.tanggal_pendaftaran, "%Y") as tanggal_pendaftaran')->distinct();
       $this->db->from('tb_pendaftaran');
       $this->db->join('tb_mahasiswa','tb_mahasiswa.nim=tb_pendaftaran.sgs');
       $this->db->where('id_sumber',4);

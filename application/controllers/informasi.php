@@ -103,10 +103,15 @@ class Informasi extends CI_Controller {
 	{
 		if ($this->session->userdata('level') == 2) {
 			$username = $this->session->userdata('username');
-			$data['dosen'] = $this->dosen_model->detail_dosen($username);
+			$session = $this->dosen_model->session_dosen($username);
+            $id_dosen = $session->id_dosen;
+            $data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
+            $data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
 		} else if ($this->session->userdata('level') == 5) {
-			$id_mahasiswa = $this->session->userdata('username');
-			$data['mahasiswa'] = $this->mahasiswa_model->session_mahasiswa($id_mahasiswa);
+			$username = $this->session->userdata('username');
+			$session = $this->mahasiswa_model->session_mahasiswa($username);
+			$id_mahasiswa = $session->id_mahasiswa;
+			$data['mahasiswa'] = $this->mahasiswa_model->detail_krs_mahasiswa($id_mahasiswa);
 		}
 			$id_level= $this->uri->segment(3);
 			$data['getJabatan'] = $this->informasi_model->getJabatan();

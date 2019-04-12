@@ -1,4 +1,12 @@
-<body onload="myFunction()">
+<style type="text/css">
+  @page {
+  size: A4;
+}
+
+</style>
+
+
+<body onload="myFunction()" class="page">
    <section class="content" id="ea" >
           
     
@@ -48,7 +56,7 @@
                     <td colspan="4"><br></td>
                   </tr>
                    <tr>
-                    <td colspan="4"><br>
+                    <td colspan="4">
 
                   </td>
                   </tr>

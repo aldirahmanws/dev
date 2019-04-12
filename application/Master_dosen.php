@@ -60,12 +60,13 @@ class Master_dosen extends CI_Controller {
 		if($this->session->userdata('level') == 2){
 				$username = $this->session->userdata('username');
 				 $session = $this->dosen_model->session_dosen($username);
-            		$id_dosen = $session->id_dosen;
-            		$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
+            $id_dosen = $session->id_dosen;
+
 			} else {
 		$id_dosen = $this->uri->segment(3);
 		}
 		$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
+		$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
 		$data['main_view'] = 'Dosen/detail_dosen_view';
 		$this->load->view('template', $data);
 		} else {

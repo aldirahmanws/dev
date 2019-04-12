@@ -15,12 +15,14 @@ class Mahasiswa extends CI_Controller {
 		$this->load->model('tamu_model');
 		$this->load->model('dosen_model');
 		ini_set('display_errors', 0);
+		 if ($this->session->userdata('logged_in') != TRUE) {
+		  	redirect(base_url('login'));
+		  }
 	}
 	 
 	public function mahasiswa_data()
 	{
 		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1 OR $this->session->userdata('level') == 3) {
-			
 			$data['mahasiswa'] = $this->mahasiswa_model->data_mahasiswa();
 			$data['main_view'] = 'Mahasiswa/data_mahasiswa_view';
 			$this->load->view('template', $data);
@@ -81,9 +83,9 @@ class Mahasiswa extends CI_Controller {
 
 	public function filter_nilai(){
 			$id_mahasiswa = $this->uri->segment(3);
-			$id_periode=$this->input->get('id_periode');
+			$semester=$this->input->get('semester');
 			$data['mahasiswa'] = $this->mahasiswa_model->detail_krs_mahasiswa($id_mahasiswa);
-			$data['nilai'] = $this->mahasiswa_model->filter_nilai($id_mahasiswa,$id_periode);
+			$data['nilai'] = $this->mahasiswa_model->filter_nilai($id_mahasiswa,$semester);
 			$data['nilai2'] = $this->mahasiswa_model->data_nilai_mhs($id_mahasiswa);
 			$data['main_view'] = 'Mahasiswa/history_ips_view';
 			$this->load->view('template', $data);
@@ -101,11 +103,13 @@ class Mahasiswa extends CI_Controller {
 		$option .= '<option value="uygydg">Pilih Periode</option>';
 		foreach ($result as $data) {
 			$option = 
-			$option .= "<option value='".$data->id_periode."'>".$data->semester."</option>";
+			$option .= "<option value='".$data->semester."'>".$data->semester."</option>";
 			
 		}
 		echo $option;
 	}
+
+
 
 	public function get_prodi_periode2($param = NULL) {
 		$prodi = $param;
@@ -579,42 +583,13 @@ class Mahasiswa extends CI_Controller {
 	public function save_mahasiswa()
 	{
 			if($this->mahasiswa_model->save_ayah() == TRUE  && $this->mahasiswa_model->save_ibu() == TRUE && $this->mahasiswa_model->save_alamat() == TRUE && $this->mahasiswa_model->save_wali() == TRUE && $this->mahasiswa_model->save_kependudukan() == TRUE && $this->mahasiswa_model->save_bio() == TRUE && $this->mahasiswa_model->save_kontak() == TRUE && $this->mahasiswa_model->save_pendidikan() == TRUE && $this->mahasiswa_model->save_mahasiswa() == TRUE){
-				$nim = $this->input->post('nim');
-				$pass = $this->random_password();
-				$this->user_model->signup_mahasiswa($nim, $pass);
-				$this->load->library('email');
-						$config = array(
-							'protocol' => 'smtp',
-							'smtp_host' 	=> 'ssl://smtp.googlemail.com',
-							'smtp_port' 	=> 465,
-							'smtp_user' 	=> 'bayukrisnaovo@gmail.com',
-							'smtp_pass' 	=> 'pacnut12',
-							'mailtype'		=> 'html',
-							'wordwrap'	=> TRUE
-						);
-						$this->email->initialize($config);
-						$this->email->set_newline("\r\n");
-						$this->email->from('bayukrisnaovo@gmail.com','Panitia PSB');
-						$this->email->to($this->input->post('email'));
-						$this->email->subject('STIE Jakarta International College');
-						$this->email->message('
-							<h2> Akun Login Mahasiswa!</h2>
-							<br> Username : '.$nim.'
-							<br> Password : '.$pass.' <br><br>
-							Terimakasih');
-						
-						if($this->email->send()){
-								$nama_du = $this->input->post('nama_mahasiswa');
 								$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <p><i class="icon fa fa-check"></i> Data '.$nama_du.' berhasil ditambahkan</p>
+                <p><i class="icon fa fa-check"></i> Data mahasiswa berhasil ditambahkan</p>
                 </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 				            	redirect('mahasiswa/data_mahasiswa');
-						}
-
-				
-			} else{
-				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Data  '.$nama_pendaftar.' Sudah Ada </div>');
+						} else{
+				$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Data  mahasiswa sudah ada </div>');
             	redirect('mahasiswa/data_mahasiswa');
 			} 
 	} 
@@ -645,10 +620,19 @@ class Mahasiswa extends CI_Controller {
 	public function data_ld(){
 		if ($this->session->userdata('logged_in') == TRUE) {
 			$data['getTahunAngkatan'] = $this->mahasiswa_model->getTahunAngkatan();
-			$data['ld'] = $this->mahasiswa_model->data_ld();
 			$data['getProdi'] = $this->daftar_ulang_model->getProdi();
-			$data['main_view'] = 'LD/lulus_do_view';
-			$this->load->view('template', $data);
+			$ambil_db = $this->mahasiswa_model->data_ld();
+		$c = 0;
+		//$alert = "'Apakah anda yakin mengapus data ini ?'";
+		foreach ($ambil_db as $key) {
+			$arrayName[] = array(++$c,$key->nim, '<a href="'.base_url('mahasiswa/lihat_mahasiswa_dikti/'.$key->id_mahasiswa).'")>'.$key->nama_mahasiswa.'</a> ',substr($key->tgl_du,0,4), $key->nama_prodi, $key->status_mhs, $key->tanggal_keluar, '<a href="'.base_url('mahasiswa/page_edit_ld/'.$key->id_mahasiswa).'" class="btn btn-info  btn-xs btn-flat" ><i class="fa fa-pencil"></i><span class="tooltiptext">Edit</span></a>','');	
+		}
+		
+		$ambil_db = json_encode($arrayName);
+		$data['mahasiswa'] = $ambil_db;
+		$data['main_view'] = 'LD/lulus_do_view';
+		$this->load->view('template', $data);
+
 		} else {
 			redirect('login');
 		}
@@ -683,9 +667,21 @@ class Mahasiswa extends CI_Controller {
 			} 
 	}
 
+	public function page_edit_ld()
+	{
+		if ($this->session->userdata('logged_in') == TRUE) {
+			$id_mahasiswa = $this->uri->segment(3);
+			$data['mahasiswa'] = $this->mahasiswa_model->detail_mahasiswa_dikti($id_mahasiswa);
+			$data['main_view'] = 'LD/edit_ld_view';
+			$this->load->view('template', $data);
+			} else {
+			redirect('login');
+		}
+	}
+
 	public function edit_ld()
 	{
-		$id_mahasiswa = $this->input->post('id_mahasiswa');
+		$id_mahasiswa = $this->uri->segment(3);
 			if($this->mahasiswa_model->edit_ld($id_mahasiswa) == TRUE  && $this->mahasiswa_model->edit_status_ld($id_mahasiswa) == TRUE){
 				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -702,9 +698,18 @@ class Mahasiswa extends CI_Controller {
 			$id_prodi=$this->input->get('id_prodi');
 			$id_status=$this->input->get('id_status');
 			$angkatan=$this->input->get('angkatan');
-			$data['ld'] = $this->mahasiswa_model->filter_ld($id_prodi,$id_status,$angkatan);
-			$data['main_view'] = 'LD/lulus_do_view';
-			$this->load->view('template', $data);
+
+			$ambil_db = $this->mahasiswa_model->filter_ld($id_prodi,$id_status,$angkatan);
+			$c = 0;
+		//$alert = "'Apakah anda yakin mengapus data ini ?'";
+		foreach ($ambil_db as $key) {
+			$arrayName[] = array(++$c,$key->nim, '<a href="'.base_url('mahasiswa/lihat_mahasiswa_dikti/'.$key->id_mahasiswa).'")>'.$key->nama_mahasiswa.'</a> ',substr($key->tgl_du,0,4), $key->nama_prodi, $key->status_mhs, $key->tanggal_keluar, '<a href="'.base_url('mahasiswa/detail_mahasiswa_dikti/'.$key->id_mahasiswa).'" class="btn btn-info  btn-xs btn-flat" ><i class="fa fa-pencil"></i><span class="tooltiptext">Edit</span></a>','');	
+		}
+		
+		$ambil_db = json_encode($arrayName);
+		$data['mahasiswa'] = $ambil_db;
+		$data['main_view'] = 'LD/lulus_do_view';
+		$this->load->view('template', $data);
 	}
 	function random_password() 
     {

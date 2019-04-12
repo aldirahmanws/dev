@@ -23,7 +23,7 @@
                         <input type="text" name="ketua_prodi" class="form-control" id="ketua_prodi" placeholder="Masukkan Ketua Prodi">
                         <input type="hidden" name="id_dosen" class="form-control" id="id_dosen">
                       </div>
-                      <button type="submit" class="btn btn-info">Tambah</button>
+                      <button type="submit" class="btn btn-info">Save</button>
                       <button type="reset" class="btn btn-default">Reset</button>
                   <?php echo form_close();?>
               </div></div>

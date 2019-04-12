@@ -19,7 +19,7 @@
 
                             foreach($getTahunSgs as $row)
                             { 
-                              echo '<option value="'.$row->tanggal_konfirmasi.'">'.$row->tanggal_konfirmasi.'</option>';
+                              echo '<option value="'.$row->tanggal_pendaftaran.'">'.$row->tanggal_pendaftaran.'</option>';
                             }
                             ?>
                     </select>

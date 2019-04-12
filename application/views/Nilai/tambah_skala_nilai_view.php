@@ -30,17 +30,17 @@
                       </div>
                        <div class="form-group">
                         <label for="email">Nilai Indeks</label>
-                        <input type="text" name="nilai_indeks" class="form-control" id="nilai_indeks" placeholder="3.8 / 4">
+                        <input type="text" name="nilai_indeks" class="form-control" id="nilai_indeks" placeholder="3.89 / 4">
                       </div>
                        <div class="form-group">
                         <label for="email">Bobot Nilai Minimum</label>
-                        <input type="text" name="bobot_nilai_minimum" class="form-control" id="bobot_nilai_minimum" placeholder="87 / 87.8">
+                        <input type="text" name="bobot_nilai_minimum" class="form-control" id="bobot_nilai_minimum" placeholder="87">
                       </div>
                     </div>
                     <div class="col-lg-6">
                        <div class="form-group">
                         <label for="email">Bobot Nilai Maksimum</label>
-                        <input type="text" name="bobot_nilai_maksimum" class="form-control" id="bobot_nilai_maksimum" placeholder="92 / 92.4">
+                        <input type="text" name="bobot_nilai_maksimum" class="form-control" id="bobot_nilai_maksimum" placeholder="88.99">
                       </div>
                        <div class="form-group">
                         <label for="email">Tanggal Mulai Efektif</label>
@@ -60,4 +60,15 @@
           </div>
         </div>
           </div>
+          <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+           - Menu skala nilai digunakan untuk mengelola data skala nilai yang aktif.
+           <br />
+           - Tanggal efektif digunakan sebagai rentang waktu skala nilai tersebut digunakan.
+            <br />
+            - <b> Notes: Nilai maksimum harus 2 angka di belakang koma, karena persentase pada nilai akhir dibulatkan 2 angka di belakang koma.
+            
+         </div>
         </div></div>
+

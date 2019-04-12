@@ -43,7 +43,7 @@
                   </td>
                 </tr>
                 
-               <button type="submit" class="btn btn-info pull-right">Update</button>
+               <button type="submit" class="btn btn-info pull-right">Save</button>
             </div>
             <!-- /.modal-content -->
           </div>

@@ -49,7 +49,7 @@ $sudah_bayar = $this->db->query("SELECT count(*) AS total FROM tb_detail_pembaya
                     $hihi = 'Payment Process';
                   } echo $hihi ?></td>
                    <?='
-                 
+                 </tr>
                   
                 ' ;
                 

@@ -8,6 +8,53 @@
               <h3 class="box-title">JADWAL PERKULIAHAN</h3>
             </div>
             <div class="box-body">
+              <table class="table-responsive">
+                <tbody>
+                  <form method="get" action="<?php echo base_url("jadwal/filter_jadwal/")?>">
+                  <tr>
+                    <th>Filter</th>
+                  </tr>
+                  <tr>                                                                    
+                    <td>Program Studi</td>     
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      
+                      <select name="id_prodi">
+                        <option value="">-- Semua --</option>
+                        <?php 
+
+                                        foreach($getProdi as $row)
+                                        { 
+                                          echo '<option value="'.$row->id_prodi.'">'.$row->nama_prodi.'</option>';
+                                        }
+                                    ?>
+                      </select>
+
+                    </td>                                            
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Semester</td>     
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <select name="semester" id="semester">
+                        <option value="">-- Semua --</option>
+                          <?php 
+
+                                        foreach($getPeriode2 as $row)
+                                        { 
+                                          echo '<option value="'.$row->semester.'">'.$row->semester.'</option>';
+                                        }
+                                    ?>
+                      </select>
+                    </td>
+                    <td>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" class="btn btn-primary btn-xs btn-flat" value="Cari">  
+                    </td>
+
+                  </tr>
+                  
+                </tbody>
+              </table>
+                      
+               </form>
+               <br>
+
     
               <div class="table-responsive">
               <table id="example1" class="table table-hover table-striped table-condensed" style="text-transform: uppercase;">

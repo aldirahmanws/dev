@@ -1,7 +1,7 @@
            <?php echo $this->session->flashdata('message');?>
            <?php 
                 if($this->session->userdata('level') == 5){ 
-                  $id_mahasiswa = $mahasiswa->id_mahasiswa; $semester_aktif = $mahasiswa->semester_aktif?>
+                  $id_mahasiswa = $this->uri->segment(3); $semester_aktif = $mahasiswa->semester_aktif?>
 
         <!-- <a class="btn btn-sm btn-primary" href="<?php echo base_url();?>mahasiswa">Detail Mahasiswa</a>
         <a class="btn btn-sm btn-info" href="<?php echo base_url();?>mahasiswa/history_pendidikan">History Pendidikan</a>
@@ -11,25 +11,30 @@
         <a class="btn btn-sm btn-info" href="<?php echo base_url();?>mahasiswa/prestasi">Prestasi</a> -->
         
            <?php } else {
-           $id_mahasiswa = $mahasiswa->id_mahasiswa; $semester_aktif = $mahasiswa->semester_aktif?>
+           $id_mahasiswa = $this->uri->segment(3); $semester_aktif = $mahasiswa->semester_aktif?>
            
-        <a class="btn btn-sm btn-default btn-flat" href="<?php echo base_url(); ?>mahasiswa/data_mahasiswa"><i class="fa fa-angle-left"></i> Back</a>
-         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/lihat_mahasiswa_dikti/<?php echo $mahasiswa->id_mahasiswa; ?>">Detail Mahasiswa</a>
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/history_pendidikan/<?php echo $mahasiswa->id_mahasiswa; ?>/<?php echo $mahasiswa->nik; ?>">History Pendidikan</a>
+        <?php if ($mahasiswa->tanggal_keluar == '0000-00-00' OR $mahasiswa->tanggal_keluar == NULL) { ?>
+                          <a class="btn btn-sm btn-default btn-flat" href="<?php echo base_url(); ?>mahasiswa/data_mahasiswa"><i class="fa fa-angle-left"></i> Back</a>
+                       <?php } else { ?>
+                        <a class="btn btn-sm btn-default btn-flat" href="<?php echo base_url(); ?>mahasiswa/data_ld"><i class="fa fa-angle-left"></i> Back</a>
+                       <?php } ?> 
+         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/lihat_mahasiswa_dikti/<?php echo $this->uri->segment(3); ?>">Detail Mahasiswa</a>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/history_pendidikan/<?php echo $this->uri->segment(3); ?>/<?php echo $mahasiswa->nik; ?>">History Pendidikan</a>
         <?php if ($mahasiswa->id_jenis_pendaftaran == '2') { ?>
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/transfer_nilai/<?php echo $mahasiswa->id_mahasiswa; ?>">Nilai Transfer</a>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/transfer_nilai/<?php echo $this->uri->segment(3); ?>">Nilai Transfer</a>
         <?php } ?>
-
+        <?php if ($mahasiswa->tanggal_keluar == '0000-00-00' OR $mahasiswa->tanggal_keluar == NULL) { ?>
        <?php if ($mahasiswa->asal_pt == 1 OR $mahasiswa->asal_pt == '' OR $mahasiswa->asal_pt == ' ') { ?>
-        <a class="btn btn-sm btn-warning btn-flat" href="<?php echo base_url();?>mahasiswa/krs_mahasiswa/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>/<?php echo $mahasiswa->id_konsentrasi; ?>">KRS Mahasiswa</a>
+        <a class="btn btn-sm btn-warning btn-flat" href="<?php echo base_url();?>mahasiswa/krs_mahasiswa/<?php echo $this->uri->segment(3) ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>/<?php echo $mahasiswa->id_konsentrasi; ?>">KRS Mahasiswa</a>
         <?php } else { ?>
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/kelas_mhs/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>">KRS Mahasiswa</a>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/kelas_mhs/<?php echo $this->uri->segment(3) ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>">KRS Mahasiswa</a>
         <?php } ?> 
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/jadwal_mhs/<?php echo $mahasiswa->id_mahasiswa ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>">Jadwal Kuliah</a>
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/history_nilai/<?php echo $mahasiswa->id_mahasiswa; ?>">History Nilai</a>
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/aktivitas_perkuliahan/<?php echo $mahasiswa->id_mahasiswa; ?>">Aktivitas Perkuliahan</a>
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/prestasi/<?php echo $mahasiswa->id_mahasiswa; ?>">Prestasi</a>
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/checklist_pembayaran/<?php echo $mahasiswa->id_mahasiswa; ?>/<?php echo $mahasiswa->id_prodi; ?>">Pembayaran</a>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/jadwal_mhs/<?php echo $this->uri->segment(3) ?>/<?php echo $mahasiswa->id_prodi; ?>/<?php echo $mahasiswa->semester_aktif; ?>">Jadwal Kuliah</a>
+      <?php } ?>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/history_nilai/<?php echo $this->uri->segment(3); ?>">History Nilai</a>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/aktivitas_perkuliahan/<?php echo $this->uri->segment(3); ?>">Aktivitas Perkuliahan</a>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/prestasi/<?php echo $this->uri->segment(3); ?>">Prestasi</a>
+        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/checklist_pembayaran/<?php echo $this->uri->segment(3); ?>/<?php echo $mahasiswa->id_prodi; ?>">Pembayaran</a>
         
          <br/><br/>  
            <?php }           ?>
@@ -56,21 +61,30 @@
              echo $mahasiswa->semester_aktif;?></td>
 
         </tr>
+
+        <?php  
+        if ($this->session->userdata('level') != 5) {
+           $id_mhs1 = $this->uri->segment(3);
+          $status_mahasiswa = $this->db->query("SELECT id_status as abc FROM tb_mahasiswa WHERE id_mahasiswa = '$id_mhs1'")->row();
+          $id_mahasiswa = $this->db->query("SELECT id_mahasiswa as abc FROM tb_mahasiswa WHERE id_mahasiswa = '$id_mhs1'")->row(); 
+        } else {
+           $id_mhs1 = $this->session->userdata('username');
+           $status_mahasiswa = $this->db->query("SELECT id_status as abc FROM tb_mahasiswa WHERE nim = '$id_mhs1'")->row(); 
+            $id_mahasiswa = $this->db->query("SELECT id_mahasiswa as abc FROM tb_mahasiswa WHERE nim = '$id_mhs1'")->row(); 
+      } ?>
+       
                 
 
         </table>
             </div>
             <!-- /.box-body -->
           </div>
-          <?php
-               if ($mahasiswa->id_status != '1' ) { 
-            } 
-                 ?>
+
  <?php echo form_close();?>
               <?php 
-              if ($mahasiswa->id_status == '1') { echo '
+              if ($status_mahasiswa->abc == '1') { echo '
               <br>
-              <a href="'.base_url('mahasiswa/kelas_mhs/'.$mahasiswa->id_mahasiswa.'/'.$mahasiswa->id_prodi.'/'.$mahasiswa->semester_aktif).'" class="btn btn-warning btn-flat btn-sm pull-right">Lihat KRS Semester Ini</a> <br> <br>
+              <a href="'.base_url('mahasiswa/kelas_mhs/'.$id_mahasiswa->abc.'/'.$mahasiswa->id_prodi.'/'.$mahasiswa->semester_aktif).'" class="btn btn-warning btn-flat btn-sm pull-right">Lihat KRS Semester Ini</a> <br> <br>
               ';
             } ?> 
           
@@ -81,7 +95,7 @@
         
           
             <div class="box-header">
-              <h3 class="box-title">Data KRS</h3>
+              <h3 class="box-title">Data KRS </h3> 
               <?php if($mahasiswa->semester_aktif == 3 AND 5 AND 7) { ?>
 
               <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal-default">
@@ -108,11 +122,13 @@
                     
                   <?php 
                 $no = 0;
+                $jumlah_bariss2 = 0;
+                $jumlah_baris2 = 1;
                 $id_kp = '';
                 $id_detail_kurikulum = '';
                 $ang_mhs = explode('-', $mahasiswa->tgl_du);
                 $ang = $ang_mhs[0];
-                if ($mahasiswa->id_status != '1') {
+                if ($status_mahasiswa->abc != '1') {
                 foreach ($krs as $i) {
                   if ($i->nama_konsentrasi == 'Semua' OR $i->id_konsentrasi == $mahasiswa->id_konsentrasi AND $periode->id_periode == $i->id_periode ) { if ($i->waktu == $mahasiswa->waktu AND $ang >= $i->ang_awal AND $ang <= $i->ang_akhir) {
                     
@@ -120,7 +136,8 @@
                   if(date('Y-m-d') > $i->tgl_mulai AND date('Y-m-d') < $i->tgl_akhir){
                   if ($total_mahasiswa->total < $i->kapasitas) {
                    $id_kp .= $i->id_kp.',';
-                   $id_detail_kurikulum .= $i->id_detail_kurikulum.',';         
+                   $id_detail_kurikulum .= $i->id_detail_kurikulum.','; 
+                   $jumlah_bariss2 += $jumlah_baris2;        
                   echo '
                   
                 <tr>
@@ -157,15 +174,19 @@
                <input type="hidden" class="form-control" id="id_detail_kurikulum" name="id_detail_kurikulum" value="<?php echo $id_detail_kurikulum ?>">
 
                <?php
-               if ($mahasiswa->id_status != '1' ) { echo ' <br>
+
+               if ($status_mahasiswa->abc != '1' AND $mahasiswa->tanggal_keluar == NULL OR $mahasiswa->tanggal_keluar == '0000-00-00') {
+                if ($jumlah_bariss2 != 0) {
+                
+                echo ' <br>
               <button type="submit"  class="btn btn-success btn-flat btn-sm pull-right">Simpan</button> ';
-            } 
+            } }
                  ?>
  <?php echo form_close();?>
             </div>
             
               <?php 
-              if ($mahasiswa->id_status == '1') { 
+              if ($status_mahasiswa->abc == '1') { 
             } ?> 
                
                <?php echo form_close()?>
@@ -190,7 +211,7 @@
         
           
             <div class="box-header">
-              <h3 class="box-title">Data KRS Pilihan</h3>
+              <h3 class="box-title">Data KRS Pilihan </h3>
         
 
             
@@ -211,10 +232,16 @@
                 </tr>
                 </thead>
                 <tbody> 
+
+
                     
                   <?php 
+
+                $id_id = $this->uri->segment(3);
+                $jumlah_bariss = 0;
+                $jumlah_baris = 1;
                 $no = 0;
-                $cek_pilihan = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs JOIN tb_detail_kurikulum ON tb_detail_kurikulum.id_detail_kurikulum = tb_kelas_mhs.id_detail_kurikulum WHERE tb_detail_kurikulum.wajib = '' AND tb_detail_kurikulum.semester_kurikulum = '$mahasiswa->semester_aktif' AND tb_kelas_mhs.id_mahasiswa = '$mahasiswa->id_mahasiswa'")->row();
+                $cek_pilihan = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs JOIN tb_detail_kurikulum ON tb_detail_kurikulum.id_detail_kurikulum = tb_kelas_mhs.id_detail_kurikulum WHERE tb_detail_kurikulum.wajib = 'T' AND tb_detail_kurikulum.semester_kurikulum = '$mahasiswa->semester_aktif' AND tb_kelas_mhs.id_mahasiswa = '$id_id'")->row();
 
 
                 if ($cek_pilihan->total <= '0') {
@@ -232,6 +259,7 @@
 
                   
                 <tr>
+                  <?php $jumlah_bariss += $jumlah_baris; ?>
                   <td><?php echo ++$no ?></td>
                   <td><?php echo $i->id_matkul ?></td>
                   <td><?php echo $i->nama_matkul ?></td>
@@ -262,9 +290,10 @@
             ?>
                 </tbody>
               </table>
-              <?php if ($cek_pilihan->total <= '0') { ?>
+              <?php if ($cek_pilihan->total <= '0' AND $mahasiswa->tanggal_keluar == NULL OR $mahasiswa->tanggal_keluar == '0000-00-00') {?>
+                <?php if ($jumlah_bariss != 0) { ?>
                 <input type="submit" value="Simpan" onclick="return confirm('Data yang sudah dipilih tidak bisa dipilh ulang. Anda Yakin?')" class="btn btn-success btn-flat btn-sm pull-right" style="padding-right: 10px;"> 
-              <?php } ?>
+              <?php }  }?>
               
 <?php echo form_close()?>
             </div>
@@ -318,7 +347,7 @@
             </td>
           <td colspan="15">: 
       <input type="text" name="nama_matkul" id="nama_matkul" class="validate[required] text-input"  size="40" style="width: 90%;" required="">
-       <input type="hidden" name="id_mahasiswa" id="id_mahasiswa" class="validate[required] text-input"  size="40" style="width: 90%;" value="<?php echo $mahasiswa->id_mahasiswa; ?>">
+       <input type="hidden" name="id_mahasiswa" id="id_mahasiswa" class="validate[required] text-input"  size="40" style="width: 90%;" value="<?php echo $this->uri->segment(3); ?>">
        <input type="hidden" name="semester_aktif" id="semester_aktif" class="validate[required] text-input"  size="40" style="width: 90%;" value="<?php echo $mahasiswa->semester_aktif; ?>">
       </td>
       <input type="hidden" name="id_kp" id="id_kp2" class="validate[required] text-input"  size="5" style="width: 90%;">

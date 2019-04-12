@@ -122,6 +122,7 @@ class Daftar_ulang_model extends CI_Model {
               ->where('tb_mahasiswa.id_hasil_tes !=', '')
               ->where('tb_mahasiswa.id_hasil_tes !=', NULL)
               ->where('tb_mahasiswa.id_hasil_tes !=', ' ')
+              ->order_by('tb_mahasiswa.id_hasil_tes','desc')
               ->get('tb_mahasiswa')
               ->result();
   }
@@ -170,6 +171,21 @@ class Daftar_ulang_model extends CI_Model {
 
     $this->db->where('id_hasil_tes', $id_tes)
         ->update('tb_mahasiswa', $data);
+
+    if ($this->db->affected_rows() > 0) {
+      return TRUE;
+    } else {
+      return FALSE;
+    }
+  }
+
+   public function ubah_status_pendaftaran($id_pendaftaran){
+    $data = array(
+       'id_status'     => '1'
+      );
+
+    $this->db->where('id_pendaftaran', $id_pendaftaran)
+        ->update('tb_pendaftaran', $data);
 
     if ($this->db->affected_rows() > 0) {
       return TRUE;
@@ -255,15 +271,12 @@ return array(
       $arr = array('kode_pembayaran' => $cc,
                     'id_mahasiswa' => $id_mahasiswa,
                     'tanggal_pembayaran' => date('d-m-Y'),
-                    'id_grade' => 4,
                     'id_biaya' => $key->id_biaya
          );
       $this->db->insert('tb_detail_pembayaran', $arr);
     }
   }
 
-
-  /*
 
 
 
@@ -274,27 +287,7 @@ return array(
 
     
 
-  public function save_edit_hasil_tes($id_tes){
-    $data = array(
-            'id_hasil_tes'      => $this->input->post('id_hasil_tes', TRUE),
-            'nilai_mat'      => $this->input->post('mtk', TRUE),
-            'nilai_bing'      => $this->input->post('bing', TRUE),
-            'nilai_psikotes'     => $this->input->post('psikotes', TRUE),
-            'total_nilai'     => $this->input->post('nilai', TRUE),
-            'total_jawaban'     => $this->input->post('total_jawaban', TRUE),
-            'grade'     => $this->input->post('grade', TRUE),
-            'tanggal_hasil_tes'     => date('Y-m-d')
-      );
-
-    if (!empty($data)) {
-            $this->db->where('id_hasil_tes', $id_tes)
-        ->update('tb_hasil_tes', $data);
-
-          return true;
-        } else {
-            return null;
-        }
-  } */
+ 
 
 }
    

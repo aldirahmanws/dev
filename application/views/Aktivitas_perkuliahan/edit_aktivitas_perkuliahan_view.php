@@ -81,13 +81,6 @@
 
     <input type="hidden" name="ipk" id="ipk" value="<?php $ipk2 = round($ipk, 2);echo $ipk2; ?>"> 
 
-    <?php if ($ipk <= 3.5) {
-         $a = '7';
-    } elseif ($ipk < 3.76) {
-         $a = '6';
-    } else {
-         $a = '5';
-    } ?>
 
      
 
@@ -173,50 +166,106 @@
             <td width="15%" class="left_column">Nama</td>
             <td>: <input type="text" name="nama" id="nama" class="text-input" maxlength="16" style="width:40%" value="<?php echo $ap->nama_mahasiswa; ?>" readonly>
               <input type="hidden" name="id_mahasiswa" id="id_mahasiswa" class="text-input" maxlength="16" style="width:40%" value="<?php echo $ap->id_mahasiswa; ?>" readonly>
-              <input type="hidden" name="id_aktivitas" id="id_aktivitas" class="text-input" maxlength="16" style="width:40%" value="<?php echo $ap->id_aktivitas; ?>" readonly>
+              <input type="hidden" name="semester_ak" id="semester_ak" class="text-input" maxlength="16" style="width:40%" value="<?php echo $ap->semester_ak; ?>">
+
+               <input type="hidden" name="id_aktivitas" id="id_aktivitas" class="text-input" maxlength="16" style="width:40%" value="<?php echo $ap->id_aktivitas; ?>" readonly>
+
+
              
             </td>
             <td width="15%" class="left_column">Periode</td>
             <td>: <input type="text" name="semester" id="semester" class="text-input" maxlength="16" style="width:80%" value="<?php echo $ap->semester; ?>">
-              <input type="hidden" name="id_periode" id="id_periode" class="text-input" maxlength="16" style="width:40%" value="<?php echo $ap->id_periode; ?>">
+              <input type="hidden" name="id_periode" id="id_periode" class="text-input" maxlength="16" style="width:40%" value="<?php echo $ap->id_periode ?>">
 
-              <input type="hidden" name="semester_aktif" id="semester_aktif" class="text-input" maxlength="16" style="width:40%" value="<?php echo $ap->semester_ak + 1; ?>">
+              <input type="hidden" name="semester_aktif" id="semester_aktif" class="text-input" maxlength="16" style="width:40%" value="<?php 
+              if($ap->id_status == '19' OR $ap->id_status == '1'){
+              echo $ap->semester_aktif;
+              } else {
+                echo $ap->semester_aktif + 1; 
+              }
+              ?>">
               
             </td>
         </tr>
         <tr>
              <td width="15%" class="left_column">Status Mahasiswa</td>
-            <td>: <input type="text" name="Status" id="Status" class="text-input" maxlength="16" style="width:40%" value="<?php
-            if($ap->id_status == 1){
-              echo 'Aktif';
-            } else if ($ap->id_status == '2'){
-              echo 'Non-Aktif'; }
-              else if($ap->id_status == '3'){
-                echo 'Cuti';
+            <td>: <input type="text" name="Status" id="Status" class="text-input" maxlength="16" style="width:40%" value="<?php 
+            if ($ap->id_status == 19 OR $ap->id_status == 1){
+              $a = 'Aktif'; }
+              else if ($ap->id_status == 2){
+              $a = 'Non Aktif'; }
+              else {
+                $a = 'Cuti';
               }
-             ?>" readonly>
-               <input type="hidden" name="id_status_ak" id="id_status_ak" class="text-input" maxlength="16" style="width:40%" value="<?php echo $ap->id_status; ?>">
+            echo $a; ?>" readonly>
+               <input type="hidden" name="id_status_ak" id="id_status_ak" class="text-input" maxlength="16" style="width:40%" value="1">
+
+               
             </td>
 
             <td class="left_column" width="15%">IPS</td>
-            <td>: <input type="text" name="ips" id="ips" class="text-input" maxlength="16" size="30" style="width:40%" value="<?php echo round($ips,2); ?>">          </td>
+            <td>: <input type="text" name="ips" id="ips" class="text-input" maxlength="16" size="30" style="width:40%" value="<?php 
+              $a = round($ips,2);
+          
+            echo$a;
+
+            ?>">          </td>
         </tr>
         <tr>
              <td width="15%" class="left_column">Jumlah SKS Semester</td>
-            <td>: <input type="text" name="sks_semester" id="sks_semester" class="text-input" maxlength="16" size="30" style="width:40%" value="<?php echo $totalbobot; ?>" readonly>
+            <td>: <input type="text" name="sks_semester" id="sks_semester" class="text-input" maxlength="16" size="30" style="width:40%" value="<?php 
+            if ($ap->id_status != 90){
+              if ($totalbobot == 1){
+                $ab = '0';
+              } else {
+                $ab = $totalbobot;
+              }
+              $a = $ab; }
+              else if ($this->input->get('id_status_ak') == 2){
+              $a = '0'; }
+              else if($this->input->get('id_status_ak') == 3){
+                $a = '0';
+              } else {
+                $a = $totalbobot;
+              }
+            echo $a; ?>" readonly>
               
             </td>
             <td class="left_column" width="15%">IPK</td>
             <td>: <input type="text" name="ipk_ak" id="ipk_ak" class="text-input" maxlength="16" size="30" style="width:40%" value="<?php echo $ipk2; ?>">    
-              <?php if ($ipk2 <= 3.5) {
-                     $a = '7';
-                } elseif ($ipk2 < 3.76) {
-                     $a = '6';
-                } else {
-                     $a = '5';
-                } ?>
+             
 
-             <input type="hidden" name="id_grade" id="id_grade" value="<?php echo $a; ?>">
+              <?php $gradee = $this->db->select('id_grade AS wow')
+                    ->where('grade_awal <=', $ipk2)
+                    ->where('grade_akhir >=', $ipk2)
+                    ->like('grade', 'gr')
+                    ->where('tgl_awal_grade <=', $ap->tgl_du)
+                    ->where('tgl_akhir_grade >=', $ap->tgl_du)
+                    ->get('tb_grade')
+                    ->row();
+
+                    $grade_atas = $this->db->select('id_grade AS wew')
+                    ->like('grade', 'non')
+                    ->where('grade_akhir <=', 4)
+                    ->where('tgl_awal_grade <=', $ap->tgl_du)
+                    ->where('tgl_akhir_grade >=', $ap->tgl_du)
+                    ->get('tb_grade')
+                    ->row();
+              ?>
+
+                <?php if ($ap->semester_ak == 1 OR $ap->semester_ak == 3 OR $ap->semester_ak == 5 OR $ap->semester_ak == 7 AND $ap->asal_pt != 1 AND $ap->asal_pt != '' AND $ap->asal_pt != NULL AND $ap->asal_pt != ' ') {
+                 $grade_aktif = $ap->id_grade;
+                } elseif ($ap->semester_ak >= 9) {
+                  $grade_aktif = $grade_atas->wew;
+                } elseif ($ap->id_waktu == 2) {
+                  $grade_aktif = $grade_atas->wew;
+                } else {
+                   $grade_aktif = $gradee->wow;
+                }
+
+                ?>
+
+             <input type="hidden" name="id_grade" id="id_grade" value="<?php echo $grade_aktif; ?>">
                     </td>
         </tr>
         <tr>
@@ -231,7 +280,7 @@
               
             </td>
             <td width="15%" class="left_column"></td>
-            <td> <button type="submit" class="btn btn-primary btn-flat"><i class="fa fa-save"></i> Save</button>
+            <td> <button type="submit" class="btn btn-info">Simpan</button>
               
             </td>
         </tr>    

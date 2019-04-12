@@ -9,6 +9,7 @@ class Aktivitas_perkuliahan extends CI_Controller {
 		$this->load->model('aktivitas_perkuliahan_model');
 		$this->load->model('daftar_ulang_model');
 		$this->load->model('mahasiswa_model');
+		$this->load->model('jadwal_model');
 		ini_set('display_errors', 0);
 	}
 
@@ -17,6 +18,7 @@ class Aktivitas_perkuliahan extends CI_Controller {
 		if ($this->session->userdata('logged_in') == TRUE AND $this->session->userdata('level') == 1 OR $this->session->userdata('level') == 6) {
 			$data['getProdi'] = $this->daftar_ulang_model->getProdi();
 			$data['getPeriode'] = $this->daftar_ulang_model->getPeriode();
+			$data['getPeriode2'] = $this->jadwal_model->getPeriode();
 			$data['aktivitas'] = $this->aktivitas_perkuliahan_model->data_aktivitas_perkuliahan();
 			$data['main_view'] = 'Aktivitas_perkuliahan/aktivitas_perkuliahan_view';
 			$this->load->view('template', $data);
@@ -49,6 +51,7 @@ class Aktivitas_perkuliahan extends CI_Controller {
 			$id_periode = $this->input->get('id_periode');
 			$data['getProdi'] = $this->daftar_ulang_model->getProdi();
 			$data['getPeriode'] = $this->daftar_ulang_model->getPeriode();
+			$data['getPeriode2'] = $this->jadwal_model->getPeriode();
 			$data['aktivitas'] = $this->aktivitas_perkuliahan_model->filter_data_ap($id_prodi,$id_periode);
 			$data['main_view'] = 'Aktivitas_perkuliahan/aktivitas_perkuliahan_view';
 			$this->load->view('template', $data);

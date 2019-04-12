@@ -79,4 +79,18 @@ class Admin extends CI_Controller {
 			redirect('admin');
 		}
 	}
+
+	public function edit_jabatan(){
+		$username = $this->uri->segment(3);
+		if ($this->user_model->edit_jabatan($username) == TRUE) {
+			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Data user berhasil diubah</p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
+			redirect('admin');
+		} else {
+			$this->session->set_flashdata('message', '<div class="col-md-12 alert alert-danger"> Hapus User Gagal </div>');
+			redirect('admin');
+		}
+	}
 }

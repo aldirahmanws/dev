@@ -9,6 +9,7 @@ class Kelas_perkuliahan extends CI_Controller {
 		$this->load->model('kelas_perkuliahan_model');
 		$this->load->model('daftar_ulang_model');
 		$this->load->model('finance_model');
+		$this->load->model('jadwal_model');
 		ini_set('display_errors', 0);
 	}
 
@@ -16,6 +17,7 @@ class Kelas_perkuliahan extends CI_Controller {
 	{
 			$data['getProdi'] = $this->daftar_ulang_model->getProdi();
 			$data['getPeriode'] = $this->daftar_ulang_model->getPeriode();
+			$data['getPeriode2'] = $this->jadwal_model->getPeriode();
 			$id_prodi=$this->input->get('id_prodi');
 			$id_periode=$this->input->get('id_periode');
 			$data['kp'] = $this->kelas_perkuliahan_model->filter_kp($id_prodi,$id_periode);
@@ -27,6 +29,7 @@ class Kelas_perkuliahan extends CI_Controller {
 		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 6 OR $this->session->userdata('level') == 1) {
 				$data['getProdi'] = $this->daftar_ulang_model->getProdi();
 				$data['getPeriode'] = $this->daftar_ulang_model->getPeriode();
+				$data['getPeriode2'] = $this->jadwal_model->getPeriode();
 				$data['kp'] = $this->kelas_perkuliahan_model->data_kp();
 				$data['main_view'] = 'Kelas_perkuliahan/kelas_perkuliahan_view';
 				$this->load->view('template', $data);
@@ -129,25 +132,24 @@ class Kelas_perkuliahan extends CI_Controller {
 		if ($this->kelas_perkuliahan_model->hapus_kp($id_kp) == TRUE && $this->kelas_perkuliahan_model->hapus_kelas_dosen($id_kp) == TRUE && $this->kelas_perkuliahan_model->hapus_jadwal_by_kp($id_kp) == TRUE && $this->kelas_perkuliahan_model->hapus_kelas_mhs_by_kp($id_kp) == TRUE) {
 			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <p><i class="icon fa fa-check"></i> Data kelas_perkuliahan berhasil dihapus </p>
+                <p><i class="icon fa fa-check"></i> Data kelas perkuliahan berhasil dihapus </p>
                 </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 			redirect('kelas_perkuliahan');
 		} else {
 			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <p><i class="icon fa fa-check"></i> Data kelas_perkuliahan berhasil dihapus </p>
+                <p><i class="icon fa fa-check"></i> Data kelas perkuliahan berhasil dihapus </p>
                 </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 			redirect('kelas_perkuliahan');
 		}
 	}
 
 	public function save_edit_kp(){
-			$id_kp = $this->uri->segment(3);
+			$id_kp = $this->input->post('id_kp');
 					if ($this->kelas_perkuliahan_model->save_edit_kp($id_kp) == TRUE) {
-						$username = $this->input->post('nama_kp');
 						$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <p><i class="icon fa fa-check"></i> Data kelas_perkuliahan berhasil diubah </p>
+                <p><i class="icon fa fa-check"></i> Data kelas perkuliahan berhasil diubah </p>
                 </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
 						redirect('kelas_perkuliahan');
 					} else {

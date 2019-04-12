@@ -109,8 +109,9 @@ class User_model extends CI_Model {
     public function data_user(){
         $this->db->select('*');
         $this->db->from('tb_user');
-        $this->db->join('tb_mahasiswa', 'tb_mahasiswa.id_mahasiswa=tb_user.username', 'left');
         $this->db->join('tb_jabatan', 'tb_jabatan.id_level=tb_user.id_level');
+        $this->db->where('tb_user.id_level !=', 5);
+        $this->db->where('tb_user.id_level !=', 2);
         $query = $this->db->get();
         return $query->result();
     }
@@ -206,6 +207,86 @@ class User_model extends CI_Model {
       } else {
         return FALSE;
       }
+    }
+
+    public function create_user($username, $group, $fullname) {
+
+        if ($group == 'DosenStieGroup') {
+           $level = 2;
+        } else if ($group == 'MarketingStieGroup') {
+           $level = 3;
+        } else if ($group == 'FinanceStieGroup') {
+           $level = 4;
+        } else if ($group == 'MhsStieGroup') {
+           $level = 5;
+        } else if ($group == 'AkademikStieGroup' OR $username == 'zahroh.dhoffir') {
+           $level = 6;
+        } else if ($group == 'IT' OR $group == 'ITGroup' OR $group == 'AdminStieGroup') {
+           $level = 7;
+        } else {
+            redirect('login');
+        }
+
+        $query = $this->db->select('*')
+                ->where('username', $username)
+                ->get('tb_user')
+                ->row();
+
+        if ($query == null)
+
+            {
+                $data = array(
+                    'username' => $username,
+                    'id_level' => $level,
+                    'level_before' => $level,
+                    'fullname' => $fullname
+                );
+            
+                $this->db->insert('tb_user', $data);
+                return true;
+    
+            } else {
+                if ($query->id_level == 1) {
+                 
+                } else {
+                     $data = array(
+                            'id_level' => $level,
+                            'level_before' => $level,
+                            'fullname' => $fullname
+                        );
+                    
+                        $this->db->where('username', $username)->update('tb_user', $data); 
+                        return true;
+                }
+            }
+
+    }
+
+     public function save_edit_foto($foto, $username)
+   {    
+    $data = array('foto' => $foto['file_name'] )
+                  ;
+    $this->db->where('username', $username)->update('tb_user', $data);
+    if ($this->db->affected_rows() > 0) {
+      return TRUE;
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function edit_jabatan($username){
+        $data = array(
+           'id_level'     => $this->input->post('id_level')
+          );
+
+        $this->db->where('username', $username)
+            ->update('tb_user', $data);
+
+        if ($this->db->affected_rows() > 0) {
+          return TRUE;
+        } else {
+          return FALSE;
+        }
     }
 	
 

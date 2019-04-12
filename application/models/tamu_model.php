@@ -20,7 +20,10 @@ class Tamu_model extends CI_Model {
               ->join('tb_waktu','tb_waktu.id_waktu=tb_pendaftaran.id_waktu')
               ->join('tb_sumber','tb_sumber.id_sumber=tb_pendaftaran.id_sumber')
               ->join('tb_status_mhs','tb_status_mhs.id_status=tb_pendaftaran.id_status')
-              ->where('tb_pendaftaran.id_status !=', 1)
+              ->where('tb_pendaftaran.id_status', 22)
+              ->or_where('tb_pendaftaran.id_status', 23)
+              ->or_where('tb_pendaftaran.id_status', 24)
+              ->or_where('tb_pendaftaran.id_status', 20)
               ->order_by('tb_pendaftaran.id_pendaftaran','DESC')
 		          ->get('tb_pendaftaran')
 		          ->result();

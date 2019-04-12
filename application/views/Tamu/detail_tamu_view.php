@@ -50,6 +50,14 @@
                   </select>                                     
                   
                 </div>
+                <?php if ($edit->id_status == 24) { ?>
+                
+                <div class="form-group">
+                  <label for="no">Alasan Penolakan</label>
+                  <textarea type="text" class="form-control input-sm" id="notes" name="notes" readonly=""><?php echo $edit->notes; ?></textarea>
+                </div>
+
+              <?php } ?>
                 
 
               </div>

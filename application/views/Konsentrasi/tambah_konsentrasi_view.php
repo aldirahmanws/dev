@@ -34,7 +34,7 @@
                         <br>
                         <br>
 
-                      <button type="submit" class="btn btn-info">Tambah</button>
+                      <button type="submit" class="btn btn-info">Save</button>
                       <button type="reset" class="btn btn-default">Reset</button>
                   <?php echo form_close();?>
               </div></div>

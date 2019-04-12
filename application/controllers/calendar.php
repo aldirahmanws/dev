@@ -26,10 +26,10 @@ class Calendar extends CI_Controller {
 				$data['mahasiswa'] = $this->mahasiswa_model->detail_krs_mahasiswa($id_mahasiswa);
 		} elseif ($this->session->userdata('level') == 2) {
 			$username = $this->session->userdata('username');
-				$session = $this->dosen_model->detail_dosen($username);
-				$id_dosen = $session->id_dosen;
-				$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
-				$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
+			$session = $this->dosen_model->session_dosen($username);
+            $id_dosen = $session->id_dosen;
+            $data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
+            $data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
 		} else {
 
 		}
@@ -92,10 +92,10 @@ class Calendar extends CI_Controller {
 		if ($this->session->userdata('level') != 5) {
 		if ($this->session->userdata('level') == 2) {
 			$username = $this->session->userdata('username');
-				$session = $this->dosen_model->detail_dosen($username);
-				$id_dosen = $session->id_dosen;
-				$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
-				$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
+				$session = $this->dosen_model->session_dosen($username);
+            $id_dosen = $session->id_dosen;
+            $data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
+            $data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
 		} else {
 			
 		}

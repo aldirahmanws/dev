@@ -27,7 +27,7 @@ class Mahasiswa_model extends CI_Model {
           $kodejadi = "M".$kodemax;    // hasilnya ODJ-991-0001 dst.
           return $kodejadi; 
     }
-    public function session_mahasiswa($nim){
+    public function session_mahasiswa($username){
       return $this->db->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
               ->join('tb_kependudukan','tb_kependudukan.id_mahasiswa=tb_mahasiswa.id_mahasiswa') 
               ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
@@ -39,7 +39,7 @@ class Mahasiswa_model extends CI_Model {
               ->join('tb_status_mhs','tb_status_mhs.id_status=tb_mahasiswa.id_status')
               ->join('tb_agama','tb_agama.id_agama=tb_bio.id_agama')
               ->join('tb_kelamin','tb_kelamin.id_kelamin=tb_bio.id_kelamin')
-              ->where('tb_mahasiswa.nim', $nim)
+              ->where('tb_mahasiswa.nim', $username)
               ->get('tb_mahasiswa')
               ->row();
     }
@@ -64,6 +64,11 @@ class Mahasiswa_model extends CI_Model {
               ->join('tb_agama','tb_agama.id_agama=tb_bio.id_agama')
               ->join('tb_kelamin','tb_kelamin.id_kelamin=tb_bio.id_kelamin')
               ->join('tb_waktu','tb_waktu.id_waktu=tb_mahasiswa.id_waktu') 
+              ->where('tb_mahasiswa.id_status',1)
+              ->or_where('tb_mahasiswa.id_status',19)
+              ->or_where('tb_mahasiswa.id_status',2)
+              ->or_where('tb_mahasiswa.id_status',3)
+              ->or_where('tb_mahasiswa.id_status',4)
               ->order_by('tb_mahasiswa.id_mahasiswa', 'DESC')
               ->get('tb_mahasiswa')
               ->result();
@@ -89,7 +94,7 @@ class Mahasiswa_model extends CI_Model {
               ->result();
   }
 
-   function filter_nilai($id_mahasiswa,$id_periode){
+   function filter_nilai($id_mahasiswa,$semester){
 
      $this->db->select('*');
      $this->db->from('tb_kelas_mhs');
@@ -99,7 +104,7 @@ class Mahasiswa_model extends CI_Model {
      $this->db->join('tb_skala_nilai','tb_skala_nilai.id_skala_nilai=tb_kelas_mhs.id_skala_nilai');
      $this->db->join('tb_periode','tb_periode.id_periode=tb_kp.id_periode');
      $this->db->like('tb_kelas_mhs.id_mahasiswa',$id_mahasiswa);
-     $this->db->like('tb_periode.id_periode',$id_periode);
+     $this->db->like('tb_periode.semester',$semester);
      $query = $this->db->get();
      return $query->result();
       }
@@ -173,6 +178,7 @@ class Mahasiswa_model extends CI_Model {
               ->join('tb_kelamin','tb_kelamin.id_kelamin=tb_bio.id_kelamin')
               ->join('tb_waktu','tb_waktu.id_waktu=tb_mahasiswa.id_waktu')
               ->join('tb_dosen','tb_dosen.id_dosen=tb_mahasiswa.dosen_pa')
+              ->join('tb_ld','tb_ld.id_mahasiswa=tb_mahasiswa.id_mahasiswa','left')
               ->where('tb_mahasiswa.id_mahasiswa', $id_mahasiswa)
               ->get('tb_mahasiswa')
               ->row();
@@ -186,6 +192,8 @@ class Mahasiswa_model extends CI_Model {
               ->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
               ->join('tb_kependudukan','tb_kependudukan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
               ->join('tb_waktu','tb_waktu.id_waktu=tb_mahasiswa.id_waktu')
+              ->join('tb_dosen','tb_dosen.id_dosen=tb_mahasiswa.dosen_pa')
+              ->join('tb_ld','tb_ld.id_mahasiswa=tb_mahasiswa.id_mahasiswa','left')
               ->where('tb_mahasiswa.id_mahasiswa', $id_mahasiswa)
               ->get('tb_mahasiswa')
               ->row();
@@ -274,6 +282,50 @@ class Mahasiswa_model extends CI_Model {
         return $row;
 
   } 
+
+  public function total_krs_pilihan($semester_aktif, $id_konsentrasi){
+
+     $c = $this->db->select('tb_jadwal.id_kp')
+                  ->distinct()
+                  ->join('tb_ruang','tb_ruang.id_ruang=tb_jadwal.id_ruang')
+                  ->join('tb_kp','tb_kp.id_kp=tb_jadwal.id_kp')
+                  ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
+                  ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_jadwal.id_konsentrasi')
+                  ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
+                  ->where('tb_detail_kurikulum.semester_kurikulum', $semester_aktif)
+                  ->where('tb_detail_kurikulum.wajib !=', 'Y')
+                  ->where('tgl_mulai <= ', date('Y-m-d'))
+                  ->where('tgl_akhir >= ', date('Y-m-d'))
+                  ->get('tb_jadwal')
+                  ->result();
+
+      
+              foreach ($c as $b) {
+      $a = $this->db->select('MAX(tb_ruang.kapasitas) as kapasitas, tb_konsentrasi.nama_konsentrasi, tb_konsentrasi.id_konsentrasi, tb_waktu.id_waktu, tb_waktu.waktu, tb_kp.id_kp, tb_kp.tgl_mulai, tb_kp.tgl_akhir, tb_detail_kurikulum.id_detail_kurikulum, tb_matkul.id_matkul, tb_matkul.nama_matkul, tb_matkul.bobot_matkul, tb_dosen.nama_dosen, tb_periode.id_periode, tb_matkul.kode_matkul')
+              ->join('tb_kp','tb_kp.id_kp=tb_jadwal.id_kp')
+              ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kp.id_detail_kurikulum')
+              ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
+              ->join('tb_periode','tb_periode.id_periode=tb_kp.id_periode')
+              ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_kp.id_konsentrasi')
+              ->join('tb_waktu','tb_waktu.id_waktu=tb_kp.id_waktu')
+              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
+              ->join('tb_kelas_dosen','tb_kelas_dosen.id_kp=tb_kp.id_kp')
+              ->join('tb_ruang','tb_ruang.id_ruang=tb_jadwal.id_ruang')
+              ->join('tb_dosen','tb_dosen.id_dosen=tb_kelas_dosen.id_dosen')
+              ->where('tb_jadwal.id_kp', $b->id_kp)
+              ->where('tb_kp.id_konsentrasi !=', $id_konsentrasi)
+              ->where('tb_detail_kurikulum.wajib !=', 'Y')
+              ->get('tb_jadwal')
+              ->row();
+           
+            $row[] = $a;
+              }
+         
+        return $row;
+
+  } 
+
+   
 
   public function data_transfer_nilai($id_mahasiswa){
       return $this->db->join('tb_matkul','tb_matkul.kode_matkul=tb_transfer_nilai.kode_matkul')
@@ -520,9 +572,9 @@ class Mahasiswa_model extends CI_Model {
     public function simpan_krs_mengulang()
     {
         $data = array(
-            'id_mahasiswa'        => $this->input->post('id_mahasiswa'),
-            'id_kp'        => $this->input->post('id_kp'),
-            'id_detail_kurikulum'        => $this->input->post('id_detail_kurikulum'),
+            'id_mahasiswa'            => $this->input->post('id_mahasiswa'),
+            'id_kp'                   => $this->input->post('id_kp'),
+            'id_detail_kurikulum'     => $this->input->post('id_detail_kurikulum'),
         );
     
         $this->db->insert('tb_kelas_mhs', $data);
@@ -1309,7 +1361,6 @@ class Mahasiswa_model extends CI_Model {
 
      public function edit_status_ld($id_mahasiswa){
     $data = array(
-            'id_mahasiswa' => $this->input->post('id_mahasiswa', TRUE),
             'id_status'      => $this->input->post('id_status', TRUE)
       );
 
@@ -1325,7 +1376,6 @@ class Mahasiswa_model extends CI_Model {
 
   public function edit_ld($id_mahasiswa){
     $data = array(
-           'id_mahasiswa'      =>$this->input->post('id_mahasiswa', TRUE),
             'id_status'      => $this->input->post('id_status', TRUE),
             'keterangan'      => $this->input->post('keterangan', TRUE),
             'sk_yudisium'      => $this->input->post('sk_yudisium', TRUE),
@@ -1390,6 +1440,7 @@ class Mahasiswa_model extends CI_Model {
               ->join('tb_pembayaran','tb_pembayaran.kode_pembayaran=tb_detail_pembayaran.kode_pembayaran')
               ->join('tb_mahasiswa','tb_mahasiswa.id_mahasiswa=tb_detail_pembayaran.id_mahasiswa')
               ->where('tb_detail_pembayaran.id_mahasiswa', $id_mahasiswa)
+              ->order_by('tb_pembayaran.tanggal_cetak','desc')
               ->get('tb_detail_pembayaran')
               ->result();
   } 

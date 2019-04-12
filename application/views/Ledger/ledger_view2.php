@@ -220,7 +220,17 @@ float: left;
                     <td style="text-align: center"> <?php echo $a; ?></td>
 
                   <?php } ?>
-                  <td style="text-align: center"><?php echo $data->ipk ?></td>
+
+                    <?php $ipk = $this->db->select('ipk_ak AS ipks')
+                    ->join('tb_periode','tb_periode.id_periode=tb_aktivitas_perkuliahan.id_periode')
+                    ->where('tb_aktivitas_perkuliahan.id_mahasiswa',$data->id_mahasiswa)
+                    ->order_by('tb_periode.semester','desc')
+                    ->limit(1)
+                    ->get('tb_aktivitas_perkuliahan')
+                    ->row(); ?>
+
+                  <td style="text-align: center"><?php echo $ipk->ipks ?></td>
+
 
                   </tr>
                  

@@ -13,7 +13,36 @@ class Master_biaya_sekolah extends CI_Controller {
 	public function index(){
 
 		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 1 OR $this->session->userdata('level') == 4) {
-				$data['data_biaya'] = $this->biaya_sekolah_model->data_biaya();
+				$ambil_db = $this->biaya_sekolah_model->data_biaya();
+				$c = 0;
+				$alert = "'Apakah anda yakin mengapus data ini ?'";
+				foreach ($ambil_db as $key) {
+				$arrayName[] = array(++$c,$key->id_biaya,$key->grade, $key->jenis_biaya, $key->nama_biaya, $key->jumlah_biaya, $key->periode, $key->waktu, ' <a href="'.base_url('master_biaya_sekolah/edit_biaya_sekolah/'.$key->id_biaya).'" class="btn btn-warning btn-xs btn-flat" ><i class="glyphicon glyphicon-pencil"></i><span class="tooltiptext">Edit</span></a> <a href="'.base_url('master_biaya_sekolah/hapus_biaya/'.$key->id_biaya).'" class="btn btn-danger btn-xs btn-flat" onclick="return confirm('.$alert.')"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus</span></a>');	
+		}
+		
+		$ambil_db = json_encode($arrayName);
+		$data['biaya_kuliah'] = $ambil_db;
+		$data['main_view'] = 'Biaya_sekolah/master_biaya_sekolah_view';
+		$this->load->view('template', $data);
+
+			} else {
+			redirect('login');
+		}
+
+	}
+
+	public function filter(){
+
+		if ($this->session->userdata('logged_in') == TRUE && $this->session->userdata('level') == 1 OR $this->session->userdata('level') == 4) {
+				$ambil_db = $this->biaya_sekolah_model->data_biaya2();
+				$c = 0;
+				$alert = "'Apakah anda yakin mengapus data ini ?'";
+				foreach ($ambil_db as $key) {
+				$arrayName[] = array(++$c,$key->id_biaya,$key->grade, $key->jenis_biaya, $key->nama_biaya, $key->jumlah_biaya, $key->periode, $key->waktu, ' <a href="'.base_url('master_biaya_sekolah/edit_biaya_sekolah/'.$key->id_biaya).'" class="btn btn-warning btn-xs btn-flat" ><i class="glyphicon glyphicon-pencil"></i><span class="tooltiptext">Edit</span></a> <a href="'.base_url('master_biaya_sekolah/hapus_biaya/'.$key->id_biaya).'" class="btn btn-danger btn-xs btn-flat" onclick="return confirm('.$alert.')"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus</span></a>');	
+		}
+		
+		$ambil_db = json_encode($arrayName);
+		$data['biaya_kuliah'] = $ambil_db;
 				$data['main_view'] = 'Biaya_sekolah/master_biaya_sekolah_view';
 				$this->load->view('template', $data);
 			} else {

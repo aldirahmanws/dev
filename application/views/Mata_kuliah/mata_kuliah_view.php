@@ -14,7 +14,7 @@
             <div class="box-body">
               <?php echo form_open('mata_kuliah/remove'); ?>
               
-              <table id="example3" class="table2 table-hover table-striped table-condensed" style="text-transform: uppercase;">
+              <table id="example1" class="table2 table-hover table-striped table-condensed" style="text-transform: uppercase;">
                 <a href="<?php echo base_url(); ?>mata_kuliah/tambah_matkul" class="btn btn-primary btn-sm btn-flat" ><i class="fa fa-plus"></i> Tambah</a> <br> <br>
                 <thead>
                 <tr>
@@ -30,29 +30,7 @@
                 </thead>
                 <tbody>
 
-                <?php 
-                $no = 0;
-                $alert = "'Apakah anda yakin mengapus data ini ?'";
-                foreach ($matkul as $data) {
-                  echo '
-                  
-                <tr>
-                  <td>'.++$no.'</td>
-                  <td><a href="" data-toggle="modal" data-target="#modal_view'.$data->kode_matkul.'">'.$data->id_matkul.'</a></td>
-                  <td>'.$data->nama_matkul.'</a></td>
-                  <td>'.$data->bobot_matkul.'</td>
-                  <td>'.$data->nama_prodi.'</td>
-                  <td>'.$data->nama_jenis_matkul.'</td>
-                  <td style="text-align:center"> 
-                  <a href="'.base_url('mata_kuliah/detail_matkul/'.$data->kode_matkul).'" class="btn btn-warning btn-xs btn-flat"><i class="glyphicon glyphicon-pencil"></i><span class="tooltiptext">Edit</span></a>
-
-                   <a href="'.base_url('mata_kuliah/hapus_matkul/'.$data->kode_matkul).'" class="btn btn-danger  btn-xs btn-flat" onclick="return confirm('.$alert.')"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus</span></a>
-                   </td>
-                   <td style="text-align: center"><input type="checkbox" name="id[]" value="'.$data->kode_matkul.'"></td>
-                ' ;
-                
-              }
-              ?>
+               
                 </tbody>
               </table>
               <input type="submit" value="Hapus Mata Kuliah Terpilih" onclick="return confirm('Anda yakin menghapus data yang sudah anda pilih ?')" class="btn btn-danger pull-right btn-flat">
@@ -69,89 +47,22 @@
       </div>
       <!-- /.row -->
     </section>
-<?php 
-        foreach($matkul as $i):
-        ?>
-        <div class="modal fade" id="modal_view<?php echo $i->kode_matkul;?>">
-            <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                <h3 class="modal-title" id="myModalLabel">Detail Mata Kuliah</h3>
-            </div>
-                <div class="modal-body">
 
-                    <div class="form-group">
-                      <table class="table">
-                          <tr>
-          <td class="left_column" width="40%">Kode Mata Kuliah <font color="#FF0000">*</font></td>
-            <td>: 
-      <?php echo $i->kode_matkul;?></td>
-        </tr>
-        <tr>
-          <td class="left_column">Nama Mata Kuliah <font color="#FF0000">*</font></td>
-            <td>: <?php echo $i->nama_matkul;?></td>
-        </tr> 
-        <tr>
-            <td class="left_column">Program Studi Pengampu <font color="#FF0000">*</font></td>
-            <td>:  <?php echo $i->nama_prodi;?></td>
-        </tr>
-        <tr>
-            <td class="left_column">Jenis Mata Kuliah</td>
-            <td>: <?php echo $i->nama_jenis_matkul;?></td>
-        </tr>
-            <tr>
-          <td class="left_column">Bobot Mata Kuliah (sks)</td>
-            <td>: 
-      <?php echo $i->bobot_matkul;?>            <font color="#999999"></font>
-            </td>
-        </tr>
-        <tr>
-          <td class="left_column">Bobot Tatap Muka (sks)</td>
-            <td>: <?php echo $i->bobot_tatap_muka;?></td>
-        </tr>
-        <tr>
-          <td class="left_column">Bobot Praktikum (sks)</td>
-            <td>: <?php echo $i->bobot_praktikum;?></td>
-        </tr>
-        <tr>
-          <td class="left_column">Bobot Praktik Lapangan (sks)</td>
-            <td>: <?php echo $i->bobot_praktik_lapangan;?></td>
-        </tr>
-        <tr>
-          <td class="left_column">Bobot Simulasi (sks)</td>
-            <td>: <?php echo $i->bobot_simulasi;?></td>
-        </tr>
-        <tr>
-            <td class="left_column">Metode Pembelajaran</td>
-            <td>: 
-      <?php echo $i->metode_pembelajaran;?>      </td>
-        </tr>
-                <tr>
-         <td class="left_column">Tanggal Mulai Efektif</td>
-            <td>: 
-      <?php echo $i->tanggal_mulai;?>            
-            </td>
-        </tr>
-        <tr>
-         <td class="left_column">Tanggal Akhir Efektif</td>
-            <td>:
-        <?php echo $i->tanggal_akhir;?>           </td>
-        </tr>
-
-                        </table>
-
-                    </div>
-
-                </div>
-            </div>
-            </div>
-        </div>
-
-    <?php endforeach;?>
 
     
-
+ <script src="<?php echo base_url(); ?>assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script type="text/javascript">
+ $(document).ready(function() {
+        $('#example1').DataTable( {
+            data:           <?= $mata_kuliah; ?>,  
+            deferRender:    true,
+            scrollCollapse: true,
+            scroller:       true,
+            "autoWidth": true
+        } );
+        
+    } );
+</script>
 
 <script>
 function sum() {

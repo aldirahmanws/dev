@@ -16,8 +16,8 @@
                 <thead>
                 <tr>
                   <th>No</th>
+                  <th>ID</th>
                   <th>Semester</th>
-
                   <th>Program Studi</th>
                   <th>Target Mahasiswa Baru</th>
                   <th>Tanggal Awal Perkuliahan</th>
@@ -36,7 +36,7 @@
                   
                 <tr>
                   <td>'.++$no.'</td>
-
+                  <td>'.$data->id_periode.'</td>
                   <td><a href="" data-toggle="modal" data-target="#modal_view'.$data->id_periode.'">'.$data->semester.'</a></td>
                   <td>'.$data->nama_prodi.'</td>
                   <td>'.$data->target_mhs_baru.'</td>
@@ -61,6 +61,16 @@
         </div>
         <!-- /.col -->
       </div>
+      <div class="callout callout-info">
+        <strong>Keterangan :</strong>
+            <br />
+           - Menu setting periode digunakan untuk mengelola data periode aktif.
+           <br />
+           - Tanggal awal dan akhir digunakan sebagai rentang waktu periode tersebut digunakan.
+            <br />
+            - <b> Notes: Nilai maksimum harus 2 angka di belakang koma, karena persentase pada nilai akhir dibulatkan 2 angka di belakang koma.
+            
+         </div>
       <!-- /.row -->
     </section>
 <?php 

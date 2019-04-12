@@ -141,7 +141,7 @@
                  echo '
                 <tr>
                   <td>'.++$no.'</td>
-                  <td>'.$data->id_dosen.'</a></td>
+                  <td>'.$data->nidn.'</a></td>
                   <td>'.$data->nama_dosen.'</td>
                   <td id="bobot_matkul">'.$data->bobot_matkul.'</td>
                   <td id="rencana">'.$data->rencana.'</td>

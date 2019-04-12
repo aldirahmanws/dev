@@ -17,15 +17,15 @@ class Dashboard extends CI_Controller {
         $this->load->view('pie_chart');
     }
 	public function index()
-	{
+    {
         if ($this->session->userdata('logged_in') == TRUE) {
-		if($this->session->userdata('level') == 4){
-			$data['dashboard'] = $this->dashboard_model->dashboard_finance();
+        if($this->session->userdata('level') == 4){
+            $data['dashboard'] = $this->dashboard_model->dashboard_finance();
              $id_level = $this->session->userdata('level');
             $data['informasi'] = $this->dosen_model->informasi_dosen($id_level);
             $data['main_view'] = 'Finance/dashboard_finance_view';
             $this->load->view('template', $data);
-		} elseif ($this->session->userdata('username') == 'Zahroh') {
+        } elseif ($this->session->userdata('username') == 'zahroh.dhoffir') {
             $data['dashboard'] = $this->surat_model->dashboard_surat();
                 $data['main_view'] = 'Surat/dashboard_sisp_view';
                 $this->load->view('template', $data);
@@ -115,7 +115,8 @@ class Dashboard extends CI_Controller {
             $id_level = $this->session->userdata('level');
             $username = $this->session->userdata('username');
             $session = $this->mahasiswa_model->session_mahasiswa($username);
-            $semester_aktif = $session->semester_aktif;
+           
+                 $semester_aktif = $session->semester_aktif;
             $id_mahasiswa = $session->id_mahasiswa;
             $id_waktu = $session->id_waktu;
 
@@ -130,6 +131,7 @@ class Dashboard extends CI_Controller {
 
                     );
             }
+           
 
             $ea2 = json_encode($arr2);
 
@@ -162,21 +164,26 @@ class Dashboard extends CI_Controller {
         } else if($this->session->userdata('level') == 2){
             $username = $this->session->userdata('username');
             $id_level = $this->session->userdata('level');
-            $session = $this->dosen_model->detail_dosen($username);
-            $id_dosen = $session->id_dosen;
+            $session = $this->dosen_model->session_dosen($username);
+          
+                $id_dosen = $session->id_dosen;
             $data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
             $data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
             $data['informasi'] = $this->dosen_model->informasi_dosen($id_level);
             $data['dashboard'] = $this->dashboard_model->dashboard_dosen($id_dosen);
             $data['main_view'] = 'Dosen/dashboard_dosen_view';
             $this->load->view('template', $data);
+            
+            
+        } else if($this->session->userdata('level') == 7){
+            redirect('login/blank');
+            
         } else {
-			redirect(base_url('login'));
-		}
+            redirect(base_url('login'));
+        }
         } else {
             redirect('login');
         }
-			
-	}
-
+            
+    }
 }

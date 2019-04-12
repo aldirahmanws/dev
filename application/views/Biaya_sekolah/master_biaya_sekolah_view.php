@@ -20,15 +20,15 @@
                     <select id="filter_grade">
                       <option value="">-- Semua --</option>
                       <?php 
-                      $grade = $this->db->get('tb_grade')->result();
+                      $grade = $this->db->select('distinct(grade)')->get('tb_grade')->result();
                       foreach ($grade as $key) {
-                        if($this->input->get('grade') == $key->id_grade){
+                        if($this->input->get('grade') == $key->grade){
                           $a = 'selected=""';
                         } else {
                           $a = '';
                         }
                         ?>
-                        <option value="<?= $key->id_grade ?>" <?= $a; ?> ><?= $key->grade ?></option>
+                        <option value="<?= $key->grade ?>" <?= $a; ?> ><?= $key->grade ?></option>
                       <?php }
                       ?>
                     </select>
@@ -56,7 +56,7 @@
                     <select id="filter_ta">
                       <option value="">-- Semua --</option>
                       <?php 
-                      $ta = $this->db->select('distinct(periode)')->get('tb_biaya')->result();
+                      $ta = $this->db->select('distinct(periode)')->order_by('periode','desc')->get('tb_biaya')->result();
                       foreach ($ta as $key) {
                         if($this->input->get('ta') == $key->periode){
                           $a = 'selected=""';
@@ -109,32 +109,7 @@
                 </thead>
                 <tbody>
 
-                <?php 
-                $no = 0;
-                $alert = "'Apakah anda yakin mengapus data ini ?'";
-                foreach ($data_biaya as $data) {
-                  echo '
-                  
-                <tr>
-                  <td>'.++$no.'</td>
-                  <td>'.$data->id_biaya.'
-                  </td>
-                  <td>'.$data->grade.'
-                  </td>
-                  <td>'.$data->jenis_biaya.'</td>
-                  <td>'.$data->nama_biaya.'</td>
-                  <td>'.$data->jumlah_biaya.'</td>
-                  <td>'.$data->periode.'</td>
-                  <td>'.$data->waktu.'</td>
-                  <td>
-                    <a href="'.base_url('master_biaya_sekolah/edit_biaya_sekolah/'.$data->id_biaya).'" class="btn btn-warning btn-xs btn-flat" ><i class="glyphicon glyphicon-pencil"></i><span class="tooltiptext">Edit</span></a>
-                    <a href="'.base_url('master_biaya_sekolah/hapus_biaya/'.$data->id_biaya).'" class="btn btn-danger btn-xs btn-flat" onclick="return confirm('.$alert.')"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus</span></a>
-                  </td>
-                </tr>
-                ';
-                
-              }
-              ?>
+              
                 </tbody>
               </table>
             </div>
@@ -163,6 +138,20 @@
               <br />
               &nbsp; <b> Contoh : Almamater untuk pagi: 200000, sore: 200000. Finance wajib menginput semuanya. </b>
          </div>
+
+         <script src="<?php echo base_url(); ?>assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script type="text/javascript">
+ $(document).ready(function() {
+        $('#example1').DataTable( {
+            data:           <?= $biaya_kuliah; ?>,  
+            deferRender:    true,
+            scrollCollapse: true,
+            scroller:       true,
+            "autoWidth": true
+        } );
+        
+    } );
+</script>
       <!-- /.row -->
     </section>
     <script type="text/javascript">
@@ -171,6 +160,6 @@
         var waktu = document.getElementById('filter_waktu').value;
         var ta = document.getElementById('filter_ta').value;
         var jb = document.getElementById('filter_jb').value;
-        window.location.href = "<?= base_url(); ?>master_biaya_sekolah?grade="+grade+'&waktu='+waktu+'&ta='+ta+'&jb='+jb;
+        window.location.href = "<?= base_url(); ?>master_biaya_sekolah/filter?grade="+grade+'&waktu='+waktu+'&ta='+ta+'&jb='+jb;
       }
     </script>

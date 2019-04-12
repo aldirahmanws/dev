@@ -16,10 +16,10 @@
                 <thead>
                 <tr>
                   <th>No</th>
-                  <th>Title</th>
-                  <th>Start</th>
-                  <th>End</th>
-                  <th>Color</th>
+                  <th>Judul</th>
+                  <th>Mulai</th>
+                  <th>Berakhir</th>
+                  <th>Warna</th>
                   <th>Aksi</th>
                 </tr>
                 </thead>
@@ -78,27 +78,27 @@
             <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                <h3 class="modal-title" id="myModalLabel">Tambah Calendar</h3>
+                <h3 class="modal-title" id="myModalLabel">Tambah Kalender</h3>
             </div>
                 <div class="modal-body">
               <?php echo form_open('calendar/tambah_calendar'); ?>
               <div class="form-group">
-                <label>Title:</label>
+                <label>Judul:</label>
                 <input type="text" class="form-control" name="title">
               </div>
               <div class="form-group">
-                <label>Start:</label>
+                <label>Mulai:</label>
                 <input type="datetime-local" class="form-control" name="start">
               </div>
               <div class="form-group">
-                <label>End:</label>
+                <label>Berakhir:</label>
                 <input type="datetime-local" class="form-control" name="end">
               </div>
               <!-- /.form group -->
 
               <!-- Color Picker -->
               <div class="form-group">
-                <label>Color</label>
+                <label>Warna Bagan</label>
 
                 <div class="input-group my-colorpicker2">
                   <input type="text" class="form-control" value="#3da1cc" name="backgroundColor">
@@ -114,7 +114,7 @@
                 <textarea name="description" class="form-control"></textarea>
               </div>
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary pull-right">Tambah</button>
+              <button type="submit" class="btn btn-primary pull-right">Save</button>
 
                 </div>
                 <?php echo form_close();?>
@@ -132,29 +132,29 @@
             <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                <h3 class="modal-title" id="myModalLabel">Edit Calendar</h3>
+                <h3 class="modal-title" id="myModalLabel">Edit Kalender</h3>
             </div>
                 <div class="modal-body">
                   <?php echo form_open('calendar/edit_calendar'); ?>
 
                     <div class="form-group">
-                <label>Title:</label>
+                <label>Judul:</label>
                 <input type="hidden" class="form-control" name="id" value="<?php echo $i->id;?>">
                 <input type="text" class="form-control" name="title" value="<?php echo $i->title;?>">
               </div>
               <div class="form-group">
-                <label>Start:</label>
+                <label>Mulai:</label>
                 <input type="datetime-local" class="form-control" name="start" value="<?php echo $i->start;?>">
               </div>
               <div class="form-group">
-                <label>End:</label>
+                <label>Berakhir:</label>
                 <input type="datetime-local" class="form-control" name="end" value="<?php echo $i->end;?>">
               </div>
               <!-- /.form group -->
 
               <!-- Color Picker -->
               <div class="form-group">
-                <label>Color</label>
+                <label>Warna Bagan:</label>
 
                 <div class="input-group my-colorpicker2">
                   <input type="text" class="form-control" name="backgroundColor"  value="<?php echo $i->backgroundColor;?>">

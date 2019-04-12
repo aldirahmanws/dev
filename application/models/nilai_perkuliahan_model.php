@@ -92,7 +92,6 @@ class Nilai_perkuliahan_model extends CI_Model {
     $query = $this->db->select('*')
               ->where('grade_awal <=', $nilai)
               ->where('grade_akhir >=', $nilai)
-              ->like('ket', '1')
               ->where('tgl_awal_grade <=', date('Y-m-d'))
               ->where('tgl_akhir_grade >=', date('Y-m-d'))
               ->get('tb_grade')

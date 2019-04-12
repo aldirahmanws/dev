@@ -20,7 +20,7 @@ class Surat extends CI_Controller {
 				$this->load->view('template', $data);
 			} else if ($this->session->userdata('level') == 2) {
 				$username = $this->session->userdata('username');
-				$session = $this->dosen_model->detail_dosen($username);
+				$session = $this->dosen_model->session_dosen($username);
 				$id_dosen = $session->id_dosen;
 				$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
 				$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
@@ -49,10 +49,10 @@ class Surat extends CI_Controller {
 				$data['main_view'] = 'Mahasiswa/data_sisp_mhs_view';
 			} else if ($this->session->userdata('level') == 2){
 				$username = $this->session->userdata('username');
-				$session = $this->dosen_model->detail_dosen($username);
+				$session = $this->dosen_model->session_dosen($username);
 				$id_dosen = $session->id_dosen;
-				$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
 				$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
+				$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
 				$data['surat'] = $this->surat_model->data_sisp_dosen($id_dosen);
 				$data['main_view'] = 'Dosen/data_sisp_dosen_view';
 			} elseif ($this->session->userdata('level') == 1 OR $this->session->userdata('level') == 6) {
@@ -72,10 +72,10 @@ class Surat extends CI_Controller {
 		if ($this->session->userdata('logged_in') == TRUE) {
 			if ($this->session->userdata('level') == 2){
 				$username = $this->session->userdata('username');
-				$session = $this->dosen_model->detail_dosen($username);
+				$session = $this->dosen_model->session_dosen($username);
 				$id_dosen = $session->id_dosen;
-				$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
 				$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
+				$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
 				$data['surat'] = $this->surat_model->data_sisp_all();
 				$data['main_view'] = 'Surat/data_sisp_all_view';
 			} elseif ($this->session->userdata('level') == 1 OR $this->session->userdata('level') == 6) {
@@ -99,7 +99,7 @@ class Surat extends CI_Controller {
 				$this->load->view('template', $data);
 			} elseif ($this->session->userdata('level') == 2) {
 				$username = $this->session->userdata('username');
-				$session = $this->dosen_model->detail_dosen($username);
+				$session = $this->dosen_model->session_dosen($username);
 				$id_dosen = $session->id_dosen;
 				$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
 				$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
@@ -138,7 +138,7 @@ class Surat extends CI_Controller {
 				$this->load->view('template', $data);
 			} elseif ($this->session->userdata('level') == 2) {
 				$username = $this->session->userdata('username');
-				$session = $this->dosen_model->detail_dosen($username);
+				$session = $this->dosen_model->session_dosen($username);
 				$id_dosen = $session->id_dosen;
 				$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
 				$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
@@ -173,7 +173,7 @@ class Surat extends CI_Controller {
 			} elseif ($this->session->userdata('level') == 2) {
 				$no_permohonan = $this->uri->segment(3);
 				$username = $this->session->userdata('username');
-				$session = $this->dosen_model->detail_dosen($username);
+				$session = $this->dosen_model->session_dosen($username);
 				$id_dosen = $session->id_dosen;
 				$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
 				$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);
@@ -199,7 +199,7 @@ class Surat extends CI_Controller {
 			} elseif ($this->session->userdata('level') == 2) {
 				$no_permohonan = $this->uri->segment(3);
 				$username = $this->session->userdata('username');
-				$session = $this->dosen_model->detail_dosen($username);
+				$session = $this->dosen_model->session_dosen($username);
 				$id_dosen = $session->id_dosen;
 				$data['dosen'] = $this->dosen_model->detail_dosen($id_dosen);
 				$data['dosen2'] = $this->dosen_model->detail_dosen2($id_dosen);

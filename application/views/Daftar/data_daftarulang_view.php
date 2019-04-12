@@ -14,6 +14,7 @@
              
                 <thead>
                 <tr>
+                  <th>No.</th>
                   <th>NIM</th>
                   <th>Nama</th>
                   <th>No. Tes</th>
@@ -28,13 +29,14 @@
                 <tbody>
 
                 <?php 
-               
+                $no = 0;
                 foreach ($du as $data) {
                   if ($data->asal_pt == NULL OR $data->asal_pt == '' OR $data->asal_pt == ' ') {
                     if ($data->id_status == 12) {
                        echo '
                   
                 <tr>
+                  <td>'.++$no.'</td>
                   <td>'.$data->nim.'</td>
                   <td>'.$data->nama_mahasiswa.'
                   </td>
@@ -61,6 +63,7 @@
                     
                   
                 <tr>
+                   <td>'.++$no.'</td>
                   <td>'.$data->nim.'</td>
                   <td>'.$data->nama_mahasiswa.'
                   </td>
@@ -68,7 +71,7 @@
                   <td>'.$data->nama_prodi.'</td>
                   <td>'.$data->nama_konsentrasi.'</td>
                   <td>'.$data->waktu.'</td>
-                  <td>'.$data->tgl_du.'</td>
+                  <td>'.date("d M Y", strtotime($data->tgl_du)).'</td>
                   <td>'.$tampil.'</td>
                   <td>
                     <a href="'.base_url('daftar_ulang/detail_nilai/'.$data->id_mahasiswa).'" class="btn btn-warning btn-xs btn-flat" title="Detail"><i class="glyphicon glyphicon-list-alt"></i><span class="tooltiptext">Detail</span></a>
