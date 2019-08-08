@@ -20,7 +20,36 @@ class Kelas_perkuliahan extends CI_Controller {
 			$data['getPeriode2'] = $this->jadwal_model->getPeriode();
 			$id_prodi=$this->input->get('id_prodi');
 			$id_periode=$this->input->get('id_periode');
-			$data['kp'] = $this->kelas_perkuliahan_model->filter_kp($id_prodi,$id_periode);
+
+			$ambil_db = $this->kelas_perkuliahan_model->filter_kp($id_prodi,$id_periode);
+				$c = 0;
+				$alert = "'Apakah anda yakin menghapus data ini ?'";
+				//$alert = "'Apakah anda yakin mengapus data ini ?'";
+				foreach ($ambil_db as $key) {
+
+				$total_mahasiswa = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs WHERE id_kp = '$key->id_kp'")->row();
+
+				$nama_dosen = $this->db->query("SELECT nama_dosen AS abc FROM tb_kelas_dosen RIGHT JOIN tb_kp ON tb_kp.id_kp = tb_kelas_dosen.id_kp left JOIN tb_dosen ON tb_dosen.id_dosen = tb_kelas_dosen.id_dosen WHERE tb_kp.id_kp = '$key->id_kp'")->row();
+
+				if ($nama_dosen->abc == null) {
+                    $a = '<a href="'.base_url('kelas_perkuliahan/detail_kelas/'.$key->id_kp.'/'.$key->id_detail_kurikulum.'/'.$key->id_waktu).'"><p style="color:red;"><b>Belum diisi </b></p></a>';
+                  } else {
+                    $a = $nama_dosen->abc;
+                  }
+
+                 if (date('Y-m-d') >= $key->tgl_awal_kul AND date('Y-m-d') <= $key->tgl_akhir_kul) {
+                 	$tombol = '<a href="'.base_url('kelas_perkuliahan/detail_kp/'.$key->id_kp).'" class="btn btn-warning  btn-xs btn-flat"><i class="glyphicon glyphicon-pencil"></i><span class="tooltiptext">Edit Kelas </span></a>
+                        <a href="'.base_url('kelas_perkuliahan/hapus_kp/'.$key->id_kp).'" class="btn btn-danger btn-xs btn-flat" onclick="return confirm('.$alert.')"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus Kelas</span></a>';
+                 } else {
+                 	$tombol = '';
+                 }
+
+					$arrayName[] = array(++$c,$key->id_kp, $key->id_detail_kurikulum, $key->nama_prodi, $key->nama_konsentrasi, '<a href="'.base_url('kelas_perkuliahan/detail_kelas/'.$key->id_kp.'/'.$key->id_detail_kurikulum.'/'.$key->id_waktu).'")>'.$key->id_matkul.'</a> ' ,$key->nama_matkul,$key->wajib ,$key->nama_kelas, $key->semester, $a ,$key->waktu,$total_mahasiswa->total, $tombol);	
+				}
+			
+				$ambil_db = json_encode($arrayName);
+				$data['kelas_perkuliahan'] = $ambil_db;
+
 			$data['main_view'] = 'Kelas_perkuliahan/kelas_perkuliahan_view';
 			$this->load->view('template', $data);
 	}
@@ -30,7 +59,36 @@ class Kelas_perkuliahan extends CI_Controller {
 				$data['getProdi'] = $this->daftar_ulang_model->getProdi();
 				$data['getPeriode'] = $this->daftar_ulang_model->getPeriode();
 				$data['getPeriode2'] = $this->jadwal_model->getPeriode();
-				$data['kp'] = $this->kelas_perkuliahan_model->data_kp();
+
+				$ambil_db = $this->kelas_perkuliahan_model->data_kp();
+				$c = 0;
+				$alert = "'Apakah anda yakin menghapus data ini ?'";
+				//$alert = "'Apakah anda yakin mengapus data ini ?'";
+				foreach ($ambil_db as $key) {
+
+				$total_mahasiswa = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs WHERE id_kp = '$key->id_kp'")->row();
+
+				$nama_dosen = $this->db->query("SELECT nama_dosen AS abc FROM tb_kelas_dosen RIGHT JOIN tb_kp ON tb_kp.id_kp = tb_kelas_dosen.id_kp left JOIN tb_dosen ON tb_dosen.id_dosen = tb_kelas_dosen.id_dosen WHERE tb_kp.id_kp = '$key->id_kp'")->row();
+
+				if ($nama_dosen->abc == null) {
+                    $a = '<a href="'.base_url('kelas_perkuliahan/detail_kelas/'.$key->id_kp.'/'.$key->id_detail_kurikulum.'/'.$key->id_waktu).'"><p style="color:red;"><b>Belum diisi </b></p></a>';
+                  } else {
+                    $a = $nama_dosen->abc;
+                  }
+
+                 if (date('Y-m-d') >= $key->tgl_awal_kul AND date('Y-m-d') <= $key->tgl_akhir_kul) {
+                 	$tombol = '<a href="'.base_url('kelas_perkuliahan/detail_kp/'.$key->id_kp).'" class="btn btn-warning  btn-xs btn-flat"><i class="glyphicon glyphicon-pencil"></i><span class="tooltiptext">Edit Kelas </span></a>
+                        <a href="'.base_url('kelas_perkuliahan/hapus_kp/'.$key->id_kp).'" class="btn btn-danger btn-xs btn-flat" onclick="return confirm('.$alert.')"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus Kelas</span></a>';
+                 } else {
+                 	$tombol = '';
+                 }
+
+					$arrayName[] = array(++$c,$key->id_kp, $key->id_detail_kurikulum, $key->nama_prodi, $key->nama_konsentrasi, '<a href="'.base_url('kelas_perkuliahan/detail_kelas/'.$key->id_kp.'/'.$key->id_detail_kurikulum.'/'.$key->id_waktu).'")>'.$key->id_matkul.'</a> ' ,$key->nama_matkul,$key->wajib ,$key->nama_kelas, $key->semester, $a ,$key->waktu,$total_mahasiswa->total, $tombol);	
+				}
+			
+				$ambil_db = json_encode($arrayName);
+				$data['kelas_perkuliahan'] = $ambil_db;
+
 				$data['main_view'] = 'Kelas_perkuliahan/kelas_perkuliahan_view';
 				$this->load->view('template', $data);
 		} else {

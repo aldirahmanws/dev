@@ -686,7 +686,7 @@ function undisableTxt() {
                 var id_prodi = p;
 
                 $.ajax({
-                    url: '<?php echo base_url(); ?>mahasiswa/get_prodi_periode/'+id_prodi,
+                    url: '<?php echo base_url(); ?>mahasiswa/get_prodi_periode2/'+id_prodi,
                     data: 'id_prodi='+id_prodi,
                     type: 'GET',
                     dataType: 'html',

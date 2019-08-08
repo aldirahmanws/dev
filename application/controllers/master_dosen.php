@@ -76,7 +76,11 @@ class Master_dosen extends CI_Controller {
 	public function save_dosen()
 	{
 		$nim = $this->dosen_model->buat_kode_dosen();
-			if($this->dosen_model->save_dosen() == TRUE){
+		$config['upload_path'] = './uploads/';
+        $config['allowed_types'] = 'jpg|png|jpeg|gif';
+        $this->load->library('upload', $config);
+        $this->upload->do_upload('foto_dosen');
+			if($this->dosen_model->save_dosen($this->upload->data()) == TRUE){
 								$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <p><i class="icon fa fa-check"></i> Data dosen berhasil ditambahkan </p>
@@ -104,7 +108,11 @@ class Master_dosen extends CI_Controller {
 	public function edit_dosen()
 	{
 		$id_dosen = $this->uri->segment(3);
-			if($this->dosen_model->edit_dosen($id_dosen) == TRUE  && $this->dosen_model->edit_username($id_dosen) == TRUE){
+		$config['upload_path'] = './uploads/';
+        $config['allowed_types'] = 'jpg|png|jpeg|gif';
+        $this->load->library('upload', $config);
+        $this->upload->do_upload('foto_dosen');
+			if($this->dosen_model->edit_dosen($id_dosen, $this->upload->data()) == TRUE  && $this->dosen_model->edit_username($id_dosen) == TRUE){
 				if ($this->session->userdata('level') == 2) {
 					$dosen = $this->input->post('id_dosen');
 				$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">

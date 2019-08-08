@@ -13,6 +13,30 @@ class Aktivitas_perkuliahan extends CI_Controller {
 		ini_set('display_errors', 0);
 	}
 
+	function cek(){
+		$cek_data = $this->db->where('id_kelas_mhs >=', '201')
+							 ->where('id_kelas_mhs <=', '400')
+							 ->get('tb_kelas_mhs')
+							 ->result();
+
+			foreach ($cek_data as $key) {
+				$cek_smt = $this->db->where('id_detail_kurikulum', $key->id_detail_kurikulum)
+									->get('tb_detail_kurikulum')
+									->row();
+
+				$data = array(
+			            'semester_kelas'      => $cek_smt->semester_kurikulum,
+	      					);
+
+	            $this->db->where('id_kelas_mhs', $key->id_kelas_mhs)
+	        			->update('tb_kelas_mhs', $data);
+
+
+		}
+
+		echo 'sukses';
+	}
+
 	public function index()
 	{
 		if ($this->session->userdata('logged_in') == TRUE AND $this->session->userdata('level') == 1 OR $this->session->userdata('level') == 6) {
@@ -36,11 +60,14 @@ class Aktivitas_perkuliahan extends CI_Controller {
 
 	public function filter_ap()
 	{
+		 
 			$id_mahasiswa = $this->input->get('id_mahasiswa');
 			$id_periode = $this->input->get('id_periode');
 			$smt_pindah = $this->input->get('smt_pindah');
 			$data['nilai'] = $this->aktivitas_perkuliahan_model->filter_ap($id_mahasiswa,$id_periode);
-			$data['nilai2'] = $this->mahasiswa_model->data_nilai_mhs($id_mahasiswa);
+			$data['nilai_ipk'] = $this->mahasiswa_model->data_nilai_ipk_ak($id_mahasiswa);
+			$data['nilai_ips_skrg'] = $this->mahasiswa_model->data_nilai_ips_skrg($id_mahasiswa, $id_periode);
+			$data['nilai_ips_sblm'] = $this->mahasiswa_model->data_nilai_ips_sblm($id_mahasiswa);
 			$data['main_view'] = 'Aktivitas_perkuliahan/aktivitas_perkuliahan_view2';
 			$this->load->view('template', $data);
 	}

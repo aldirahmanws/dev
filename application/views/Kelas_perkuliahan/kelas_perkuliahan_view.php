@@ -58,71 +58,31 @@
                </form>
                <br>
                <div class="table-responsive">
-              <table id="example3" class="table2 table-hover table-striped table-condensed" style="text-transform: uppercase;">
+              <table id="example1" class="table2 table-hover table-striped table-condensed" style="text-transform: uppercase;">
                 <a class="btn btn-primary btn-sm btn-flat" href="" data-toggle="modal" data-target="#modal_tambah"><i class="fa fa-plus"></i> Tambah Kelas</a> <br> <br>
                 <thead>
                 <tr>
                   <th>No</th>
                   <th>ID KP</th>
                   <th>ID DK</th>
-                  <th>Wajib</th>
                   <th>Prodi</th>
                   <th>Kosentrasi</th>
                   <th>Kode MK</th>
                   <th>Nama MK</th>
+                  <th>Wajib</th>
                   <th>Nama Kelas</th>
                   <th>Periode</th>
                   <th>Nama Dosen</th>
                   <th>Waktu</th>
                   <th>Jumlah Mahasiswa</th>
-                  <th width="6%">Aksi</th>
+                  <th width="10%">Aksi</th>
                 </tr>
                  
                 </thead>
 
                 <tbody>
 
-                <?php 
-                $no = 0;
-                 $alert = "'Apakah anda yakin menghapus data ini ?'";
-
-                foreach ($kp as $data) { 
-                  $total_mahasiswa = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs WHERE id_kp = '$data->id_kp'")->row();
-
-                  $nama_dosen = $this->db->query("SELECT nama_dosen AS abc FROM tb_kelas_dosen RIGHT JOIN tb_kp ON tb_kp.id_kp = tb_kelas_dosen.id_kp left JOIN tb_dosen ON tb_dosen.id_dosen = tb_kelas_dosen.id_dosen WHERE tb_kp.id_kp = '$data->id_kp'")->row();
-                  if ($nama_dosen->abc == null) {
-                    $a = '<a href="'.base_url('kelas_perkuliahan/detail_kelas/'.$data->id_kp.'/'.$data->id_detail_kurikulum.'/'.$data->id_waktu).'"><p style="color:red;"><b>Belum diisi </b></p></a>';
-                  } else {
-                    $a = $nama_dosen->abc;
-                  }
-                  echo '                  
-                <tr>
-                  <td>'.++$no.'</td>
-                  <td>'.$data->id_kp.'</td>
-                  <td>'.$data->id_detail_kurikulum.'</td>
-                  <td>'.$data->wajib.'</td>
-                  <td>'.$data->nama_prodi.'</td>
-                  <td>'.$data->nama_konsentrasi.'</td>
-                  <td><a href="'.base_url('kelas_perkuliahan/detail_kelas/'.$data->id_kp.'/'.$data->id_detail_kurikulum.'/'.$data->id_waktu).'">'.$data->id_matkul.'</a></td>
-                  <td>'.$data->nama_matkul.'</td>
-                  <td>'.$data->nama_kelas.'</td>
-                  <td>'.$data->semester.'</td>
-                  <td>'.$a.'</td>
-                  <td>'.$data->waktu.'</td>
-                  <td>'.$total_mahasiswa->total.'</td>';?>
-                  
-                  <td> <?php if (date('Y-m-d') >= $data->tgl_awal_kul AND date('Y-m-d') <= $data->tgl_akhir_kul) { ?>
-                  <?= '
-                       <a href="'.base_url('kelas_perkuliahan/detail_kp/'.$data->id_kp).'" class="btn btn-warning  btn-xs btn-flat"><i class="glyphicon glyphicon-pencil"></i><span class="tooltiptext">Edit Kelas </span></a>
-                        <a href="'.base_url('kelas_perkuliahan/hapus_kp/'.$data->id_kp).'" class="btn btn-danger btn-xs btn-flat" onclick="return confirm('.$alert.')"><i class="glyphicon glyphicon-trash"></i><span class="tooltiptext">Hapus Kelas</span></a> ';?><?php } ?> <?= '
-                    
-                  </td>
-                  </tr>
-                ' ;
-                
-                
-              }
-              ?>
+            
         
                 </tbody>
               </table>
@@ -260,4 +220,19 @@
     });    
   });
 
+  </script>
+
+
+     <script src="<?php echo base_url(); ?>assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script type="text/javascript">
+ $(document).ready(function() {
+        $('#example1').DataTable( {
+            data:           <?= $kelas_perkuliahan; ?>,  
+            deferRender:    true,
+            scrollCollapse: true,
+            scroller:       true,
+            "autoWidth": true
+        } );
+        
+    } );
   </script>

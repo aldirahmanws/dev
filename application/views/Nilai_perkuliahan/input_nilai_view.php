@@ -22,27 +22,27 @@
              </td>
         </tr> 
         <tr>
-            <td class="left_column">Absensi (20%)</td>
+            <td class="left_column">Absensi (<?php echo $persentase->persen_absensi; ?>%)</td>
             <td>: <input type="text" name="absensi" id="absensi" class="validate[required] text-input" size="50" style="width:5%" maxlength="5" required="" value="<?php echo $dnilai->absensi; ?>"  onkeyup="sum(); get_skala()">
              </td>
         </tr> 
          <tr>
-            <td class="left_column">Nilai Tugas & Latihan (10%)</td>
+            <td class="left_column">Nilai Tugas & Latihan (<?php echo $persentase->persen_tugas; ?>%)</td>
             <td>: <input type="text" name="nilai_tugas" id="nilai_tugas" class="validate[required] text-input" size="50" style="width:5%" maxlength="5" required="" value="<?php echo $dnilai->nilai_tugas; ?>" onkeyup="sum(); get_skala()">
              </td>
         </tr> 
         <tr>
-            <td class="left_column">Penyajian Paper (10%)</td>
+            <td class="left_column">Penyajian Paper (<?php echo $persentase->persen_paper; ?>%)</td>
             <td>: <input type="text" name="nilai_paper" id="nilai_paper" class="validate[required] text-input" size="50" style="width:5%" maxlength="5" required="" value="<?php echo $dnilai->nilai_paper; ?>" onkeyup="sum(); get_skala()">
              </td>
         </tr> 
          <tr>
-            <td class="left_column">Nilai UTS (20%)</td>
+            <td class="left_column">Nilai UTS (<?php echo $persentase->persen_uts; ?>%)</td>
             <td>: <input type="text" name="nilai_uts" id="nilai_uts" class="validate[required] text-input" size="50" style="width:5%" maxlength="5" required="" value="<?php echo $dnilai->nilai_uts; ?>" onkeyup="sum(); get_skala()">
              </td>
         </tr> 
          <tr>
-            <td class="left_column">Nilai UAS (40%)</td>
+            <td class="left_column">Nilai UAS (<?php echo $persentase->persen_uas; ?>%)</td>
             <td>: <input type="text" name="nilai_uas" id="nilai_uas" class="validate[required] text-input" size="50" style="width:5%" maxlength="5" required="" value="<?php echo $dnilai->nilai_uas; ?>" onkeyup="sum(); get_skala()">
              </td>
         </tr> 
@@ -87,13 +87,21 @@
 <script>
 function sum() {
       var absensi = document.getElementById('absensi').value;
-            var nilai_tugas = document.getElementById('nilai_tugas').value;
-            var nilai_paper = document.getElementById('nilai_paper').value;
-            var nilai_uts = document.getElementById('nilai_uts').value;
-            var nilai_uas = document.getElementById('nilai_uas').value;
-      		var nilai_akhir = ( parseInt(absensi) * 20 / 100 )  + ( parseInt(nilai_tugas) * 10 / 100 )  + ( parseInt(nilai_paper) * 10 / 100 )  + ( parseInt(nilai_uts) * 20 / 100 )  + ( parseInt(nilai_uas) * 40 / 100 )  ;
+      var nilai_tugas = document.getElementById('nilai_tugas').value;
+      var nilai_paper = document.getElementById('nilai_paper').value;
+      var nilai_uts = document.getElementById('nilai_uts').value;
+      var nilai_uas = document.getElementById('nilai_uas').value;
+
+      var persentase_absensi = '<?= $persentase->persen_absensi; ?>';
+      var persentase_tugas = '<?= $persentase->persen_tugas; ?>';
+      var persentase_paper = '<?= $persentase->persen_paper; ?>';
+      var persentase_uts = '<?= $persentase->persen_uts; ?>';
+      var persentase_uas = '<?= $persentase->persen_uas; ?>';
+
+      		var nilai_akhir = ( parseInt(absensi) * persentase_absensi / 100 )  + ( parseInt(nilai_tugas) * persentase_tugas / 100 )  + ( parseInt(nilai_paper) * persentase_paper  / 100 )  + ( parseInt(nilai_uts) * persentase_uts / 100 )  + ( parseInt(nilai_uas) * persentase_uas / 100 )  ;
       if (!isNaN(nilai_akhir)) {
          document.getElementById('nilai').value = nilai_akhir;
+         console.log(persentase_absensi);
       }
 }
 </script>

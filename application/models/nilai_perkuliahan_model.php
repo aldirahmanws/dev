@@ -39,14 +39,14 @@ class Nilai_perkuliahan_model extends CI_Model {
               ->row();
   }
 
-  public function edit_nilai($id_kp){
+  public function edit_nilai($id_kelas_mhs){
       return $this->db->join('tb_mahasiswa','tb_mahasiswa.id_mahasiswa=tb_kelas_mhs.id_mahasiswa')
               ->join('tb_kp','tb_kp.id_kp=tb_kelas_mhs.id_kp')
               ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kp.id_detail_kurikulum')
                ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
                ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_kp.id_konsentrasi')
               ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
-              ->where('id_kelas_mhs', $id_kp)
+              ->where('id_kelas_mhs', $id_kelas_mhs)
               ->get('tb_kelas_mhs')
               ->row();
   }
@@ -107,9 +107,23 @@ class Nilai_perkuliahan_model extends CI_Model {
   
 
   public function save_edit_nilai($id_kelas_mhs){
+    $nilai = $this->input->post('nilai');
+    $id_prodi = $this->input->post('id_prodi');
+
+   $query = $this->db->select('*')
+              ->where('bobot_nilai_minimum <=', $nilai)
+              ->where('bobot_nilai_maksimum >=', $nilai)
+              ->where('id_prodi', $id_prodi)
+              ->where('tanggal_mulai_efektif <=', date('Y-m-d'))
+              ->where('tanggal_akhir_efektif >=', date('Y-m-d'))
+              ->get('tb_skala_nilai')
+              ->row();
+
+    $skala = $query->id_skala_nilai;
+
     $data = array(
-            'id_skala_nilai'        => $this->input->post('id_skala_nilai'),
-            'nilai_d'       => $this->input->post('nilai'),
+            'id_skala_nilai'        => $skala,
+            'nilai_d'       => $nilai,
             'id_kp'       => $this->input->post('id_kp'),
             'absensi'       => $this->input->post('absensi'),
             'nilai_tugas'       => $this->input->post('nilai_tugas'),
@@ -121,6 +135,32 @@ class Nilai_perkuliahan_model extends CI_Model {
     if (!empty($data)) {
             $this->db->where('id_kelas_mhs', $id_kelas_mhs)
         ->update('tb_kelas_mhs', $data);
+
+          return true;
+        } else {
+            return null;
+        }
+  }
+
+  public function data_persentase($id_kp){
+      return $this->db->where('tb_persentase_nilai.id_kp', $id_kp)
+              ->get('tb_persentase_nilai')
+              ->row();
+  }
+
+  public function simpan_persentase($id_kp){
+
+    $data = array(
+            'persen_absensi'       => $this->input->post('persen_absensi'),
+            'persen_tugas'       => $this->input->post('persen_tugas'),
+            'persen_paper'       => $this->input->post('persen_paper'),
+            'persen_uts'       => $this->input->post('persen_uts'),
+            'persen_uas'       => $this->input->post('persen_uas'),
+        );
+
+    if (!empty($data)) {
+            $this->db->where('id_kp', $id_kp)
+        ->update('tb_persentase_nilai', $data);
 
           return true;
         } else {

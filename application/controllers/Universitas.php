@@ -7,7 +7,7 @@ class Universitas extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('universitas_model');
-		//ini_set('display_errors', 0);
+		ini_set('display_errors', 0);
 		if ($this->session->userdata('level') == 4 OR $this->session->userdata('level') == 5 OR $this->session->userdata('level') == 2) {
 			redirect('login');
 		}

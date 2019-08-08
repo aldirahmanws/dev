@@ -54,8 +54,21 @@ class Mahasiswa extends CI_Controller {
 			if ($this->session->userdata('level') == 1 OR $this->session->userdata('level') == 6) {
 			
 			$data['getTahunAngkatan'] = $this->mahasiswa_model->getTahunAngkatan();
-			$data['mahasiswa'] = $this->mahasiswa_model->data_mahasiswa_dikti();
 			$data['drop_down_prodi'] = $this->konsentrasi_model->get_prodi();
+
+			$ambil_db = $this->mahasiswa_model->data_mahasiswa_dikti();
+			$c = 0;
+			//$alert = "'Apakah anda yakin mengapus data ini ?'";
+			foreach ($ambil_db as $key) {
+
+				
+
+				$arrayName[] = array(++$c,$key->id_mahasiswa, $key->nim, '<a href="'.base_url('mahasiswa/lihat_mahasiswa_dikti/'.$key->id_mahasiswa).'")>'.$key->nama_mahasiswa.'</a> ' ,$key->id_kelamin ,$key->waktu,$key->nama_prodi,$key->nama_konsentrasi,$key->status_mhs, substr($key->tgl_du,0,4), $key->semester_aktif, $key->id_grade, '<a href="'.base_url('mahasiswa/detail_mahasiswa_dikti/'.$key->id_mahasiswa).'" class="btn btn-warning btn-xs btn-flat"><i class="fa fa-pencil"></i><span class="tooltiptext">Edit</span></a>
+                  <a href="'.base_url('mahasiswa/lihat_mahasiswa_dikti/'.$key->id_mahasiswa).'" class="btn btn-primary btn-xs btn-flat"><i class="fa fa-list"></i><span class="tooltiptext">Detail</span></a>');	
+			}
+		
+			$ambil_db = json_encode($arrayName);
+			$data['mahasiswa'] = $ambil_db;
 			$data['main_view'] = 'Mahasiswa/mahasiswa_view';
 			$this->load->view('template', $data);
 		} else {
@@ -76,7 +89,17 @@ class Mahasiswa extends CI_Controller {
 			$id_kelamin=$this->input->get('id_kelamin');
 			$angkatan=$this->input->get('angkatan');
 			$data['getTahunAngkatan'] = $this->mahasiswa_model->getTahunAngkatan();
-			$data['mahasiswa'] = $this->mahasiswa_model->filter_mahasiswa($id_prodi,$id_agama,$id_kelamin,$angkatan);
+
+			$ambil_db = $this->mahasiswa_model->filter_mahasiswa($id_prodi,$id_agama,$id_kelamin,$angkatan);
+			$c = 0;
+			//$alert = "'Apakah anda yakin mengapus data ini ?'";
+			foreach ($ambil_db as $key) {
+				$arrayName[] = array(++$c,$key->id_mahasiswa, $key->nim, '<a href="'.base_url('mahasiswa/lihat_mahasiswa_dikti/'.$key->id_mahasiswa).'")>'.$key->nama_mahasiswa.'</a> ' ,$key->id_kelamin ,$key->waktu,$key->nama_prodi,$key->nama_konsentrasi,$key->status_mhs, substr($key->tgl_du,0,4), $key->semester_aktif, $key->id_grade, '<a href="'.base_url('mahasiswa/detail_mahasiswa_dikti/'.$key->id_mahasiswa).'" class="btn btn-warning btn-xs btn-flat"><i class="fa fa-pencil"></i><span class="tooltiptext">Edit</span></a>
+                  <a href="'.base_url('mahasiswa/lihat_mahasiswa_dikti/'.$key->id_mahasiswa).'" class="btn btn-primary btn-xs btn-flat"><i class="fa fa-list"></i><span class="tooltiptext">Detail</span></a>');	
+			}
+		
+			$ambil_db = json_encode($arrayName);
+			$data['mahasiswa'] = $ambil_db;
 			$data['main_view'] = 'Mahasiswa/mahasiswa_view';
 			$this->load->view('template', $data);
 	}
@@ -204,6 +227,7 @@ class Mahasiswa extends CI_Controller {
 			$data['rabu'] = $this->mahasiswa_model->jadwal_mhs_rabu($id_mahasiswa);
 			$data['kamis'] = $this->mahasiswa_model->jadwal_mhs_kamis($id_mahasiswa);
 			$data['jumat'] = $this->mahasiswa_model->jadwal_mhs_jumat($id_mahasiswa);
+			$data['sabtu'] = $this->mahasiswa_model->jadwal_mhs_sabtu($id_mahasiswa);
 			$data['main_view'] = 'Mahasiswa/jadwal_mahasiswa_view';
 			$this->load->view('template', $data);
 			} else {

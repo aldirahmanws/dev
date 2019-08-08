@@ -84,8 +84,8 @@
                 <tr>
                   <th>No</th>
                   <th>ID MHS</th>
-                  <th>Nama</th>
                   <th>NIM</th>
+                  <th>Nama</th>
                   <th>L/P</th>
                   <th>Waktu</th>
                   <th>Prodi</th>
@@ -99,47 +99,7 @@
                 </thead>
                 <tbody>
 
-                <?php 
-               $no = 0;
-                foreach ($mahasiswa as $data) {
-                  if ($data->id_status == 19) {
-                    $status = 'Aktif';}
-                    else if ($data->id_status == 1){
-                      $status = 'Aktif';
-                    } else {
-                      $status = $data->status_mhs;
-                    }
-                  if ($data->id_status != 12) {
-                  
-                  echo '
-                <tr>
-                  <td>'.++$no.'</td>
-                  <td>'.$data->id_mahasiswa.'</td>
-                  <td><a href="'.base_url('mahasiswa/lihat_mahasiswa_dikti/'.$data->id_mahasiswa).'")>'.$data->nama_mahasiswa.'</a></td>
-                  <td>'.$data->nim.'</td>
-                  <td>'.$data->id_kelamin.'</td>
-                  <td>'.$data->waktu.'</td>
-                  <td>'.$data->nama_prodi.'</td>
-                  <td>'.$data->nama_konsentrasi.'</td>
-                  <td>'.$status.'</td>
-                  <td>'.substr($data->tgl_du,0,4).'</td>
-                  <td>'.$data->semester_aktif.'</td>
-                  <td>'.$data->id_grade.'</td>
-                  <td>
-
-                  <a href="'.base_url('mahasiswa/detail_mahasiswa_dikti/'.$data->id_mahasiswa).'" class="btn btn-warning btn-xs btn-flat"><i class="fa fa-pencil"></i><span class="tooltiptext">Edit</span></a>
-                  <a href="'.base_url('mahasiswa/lihat_mahasiswa_dikti/'.$data->id_mahasiswa).'" class="btn btn-primary btn-xs btn-flat"><i class="fa fa-list"></i><span class="tooltiptext">Detail</span></a>
-                    
-
-                  </td>
-                  
-                </tr>
-                ';
-
-                  }
-                
-              }
-              ?>
+              
                 </tbody>
               </table>
               </div>
@@ -152,3 +112,17 @@
       </div>
       <!-- /.row -->
     </section>
+
+    <script src="<?php echo base_url(); ?>assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script type="text/javascript">
+ $(document).ready(function() {
+        $('#example1').DataTable( {
+            data:           <?= $mahasiswa; ?>,  
+            deferRender:    true,
+            scrollCollapse: true,
+            scroller:       true,
+            "autoWidth": true
+        } );
+        
+    } );
+</script>

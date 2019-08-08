@@ -11,12 +11,12 @@ class Admin extends CI_Controller {
 	}
 
 	public function yoi(){
-		$a = $this->db->where('id_kelas_mhs >=','1')->get('dump')->result();
+		$a = $this->db->where('id_impor >=', 801)->where('id_impor <=',1000)->get('tb_impor')->result();
 		foreach ($a as $data) {
-			$b = $this->db->where('nama_mahasiswa', $data->id_mahasiswa )->get('tb_mahasiswa')->row();
+			$b = $this->db->where('nim', $data->nim)->get('tb_mahasiswa')->row();
 			$param = array('id_mahasiswa' => $b->id_mahasiswa );
-			$this->db->where('id_kelas_mhs', $data->id_kelas_mhs)
-        ->update('dump', $param);
+			$this->db->where('id_impor', $data->id_impor)
+        ->update('tb_impor', $param);
 		}
 		echo 'success';
 		// echo substr("Hello world",0,10);

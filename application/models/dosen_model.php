@@ -83,7 +83,7 @@ class Dosen_model extends CI_Model {
 
  
 
-	 public function save_dosen()
+	 public function save_dosen($upload)
     {
         $data = array(
             'id_dosen'        => $this->buat_kode_dosen(),
@@ -99,6 +99,7 @@ class Dosen_model extends CI_Model {
             'id_kelamin'       => $this->input->post('jenis_kelamin'),
             'alamat'       => $this->input->post('alamat'),
             'nidn'       => $this->input->post('nidn'),
+            'foto_dosen'         => $upload['file_name'],
 
         );
     
@@ -113,7 +114,7 @@ class Dosen_model extends CI_Model {
         }
     }
 
-    public function edit_dosen($id_dosen){
+    public function edit_dosen($id_dosen,$upload){
     $data = array(
             'id_dosen'        => $this->input->post('id_dosen'),
             'nama_dosen'        => $this->input->post('nama_dosen'),
@@ -130,11 +131,17 @@ class Dosen_model extends CI_Model {
             'nidn'       => $this->input->post('nidn'),
       );
 
-   if (!empty($data)) {
+    $data2 = array('foto_dosen' => $upload['file_name'] );
+    if (!empty($data)) {
             $this->db->where('id_dosen', $id_dosen)
         ->update('tb_dosen', $data);
+        if($upload['file_name'] != null){
+            $this->db->where('id_dosen', $id_dosen)
+            ->update('tb_dosen', $data2);
 
+        }
           return true;
+
         } else {
             return null;
         }

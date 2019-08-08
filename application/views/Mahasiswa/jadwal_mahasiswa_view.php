@@ -274,6 +274,49 @@
             </div>
             <!-- /.box-body -->
           </div>
+
+          <div class="box-header">
+              <h3 class="box-title">Sabtu</h3>       
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="table-responsive">
+              <table class="table table-bordered table-striped" style="text-transform: uppercase;">
+                <thead>
+                 <tr>
+                  <th  style="width:5%">No</th>
+                  <th style="width:50%">Nama Matkul</th>
+                  <th style="width:20%">Dosen</th>
+                  <th style="width:30%">Waktu</th>
+                  <th style="width:15%">Kelas/Ruang</th>
+                </tr>
+                </thead>
+                <tbody> 
+                    
+                  <?php 
+                $no = 0;
+                $id_kp = '';
+                foreach ($sabtu as $i) {
+                 if ($periode->id_periode == $i->id_periode AND $i->id_waktu == $mahasiswa->id_waktu) {
+                            
+                  echo '
+                  
+                <tr>
+                  <td style="width:5%">'.++$no.'</td>
+                  <td style="width:30%">'.$i->nama_matkul.'</td>
+                  <td style="width:20%">'.$i->nama_dosen.'</td>
+                  <td style="width:30%">'.substr($i->jam_awal,0,-3).' - '.substr($i->jam_akhir,0,-3).'</td>
+                  <td style="width:15%">'.$i->nama_kelas.' / '.$i->nama_ruang.'</td>
+                ' ;
+                 
+                }   
+              }
+            ?>
+                </tbody>
+              </table>
+            </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
           <!-- /.box -->
         </div>
         <!-- /.col -->

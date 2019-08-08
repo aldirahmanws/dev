@@ -36,12 +36,22 @@
                if($this->session->userdata('level') == 1){ ?>
 
             <a class="btn btn-default btn-sm btn-flat pull-right"  href="<?php echo base_url(); ?>nilai_perkuliahan"><i class="fa fa-angle-left"></i> Back</a>
+
+            <a class="btn btn-primary btn-sm btn-flat pull-right"  data-toggle="modal" style="margin-right: 10px"data-target="#modal_persentase"><i class="fa fa-con"></i> Persentase</a>
+
+            <a href="<?php echo base_url(); ?>kelas_perkuliahan/detail_kelas/<?php echo $kp->id_kp; ?>" class="btn btn-primary btn-sm btn-flat pull-right" style="margin-right: 10px"> Kelas </a>
+
             <?php } ?>
 
              <?php 
                if($this->session->userdata('level') == 2){ ?>
 
             <a class="btn btn-primary btn-flat btn-sm pull-right" style="margin-right: 10px"  href="<?php echo base_url(); ?>master_dosen/nilai_dosen/<?php echo $this->uri->segment(4); ?>"></i> Daftar Kelas </a>
+
+            <a class="btn btn-primary btn-sm btn-flat pull-right"  data-toggle="modal" style="margin-right: 10px"data-target="#modal_persentase"><i class="fa fa-con"></i> Persentase</a>
+
+
+
 
           <?php } ?>
 
@@ -108,10 +118,10 @@
           $a = $data->nilai_d; }; echo $a;?></td>
         <td style="text-align:center"><?php echo $data->nilai_huruf;?> ( <?php echo $data->nilai_indeks;?> ) </td >
         <td style="text-align:center"> 
-          <?php if ($data->tgl_awal_kul <= date('Y-m-d') AND $data->tgl_akhir_kul >= date('Y-m-d')){ ?>
+         
 
                  <a href="<?php echo base_url(); ?>nilai_perkuliahan/edit_nilai/<?php echo $data->id_kelas_mhs; ?>/<?php echo $data->id_kp; ?>" class="btn btn-warning btn-xs btn-flat"><i class="glyphicon glyphicon-pencil"></i><span class="tooltiptext"> Input Nilai </span></a>
-          <?php } ?>
+         
 
     </tr>
 <?php endforeach; ?>
@@ -257,6 +267,61 @@
       <!-- /.row -->
     </section>
               </div>
+
+              <div class="modal fade" id="modal_persentase" >
+            <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <h3 class="modal-title" id="myModalLabel">Persentase Nilai</h3>
+            </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                      <?php echo form_open('nilai_perkuliahan/simpan_persentase/'.$this->uri->segment(3)); ?>
+                      <table class="table">
+                         <tr>
+            <td class="left_column">Absensi <font color="#FF0000">*</font></td>
+            <td>: <input type="text" name="persen_absensi" id="persen_absensi" class="validate[required] text-input" maxlength="50" size="50" style="width:10%" required="" value="<?php echo $persentase->persen_absensi; ?>"> %
+             
+          </td>
+                  <tr>
+                    <tr>
+            <td class="left_column">Nilai Tugas & Latihan <font color="#FF0000">*</font></td>
+            <td>: <input type="text" name="persen_tugas" id="persen_tugas" class="validate[required] text-input" maxlength="50" size="50" style="width:10%" required="" value="<?php echo $persentase->persen_tugas; ?>"> %
+             
+          </td>
+                  <tr>
+                    <tr>
+            <td class="left_column">Penyajian Paper <font color="#FF0000">*</font></td>
+            <td>: <input type="text" name="persen_paper" id="persen_paper" class="validate[required] text-input" maxlength="50" size="50" style="width:10%" required="" value="<?php echo $persentase->persen_paper; ?>"> %
+             
+          </td>
+                  <tr>
+                    <tr>
+            <td class="left_column">Nilai UTS <font color="#FF0000">*</font></td>
+            <td>: <input type="text" name="persen_uts" id="persen_uts" class="validate[required] text-input" maxlength="50" size="50" style="width:10%" required="" value="<?php echo $persentase->persen_uts; ?>"> %
+             
+          </td>
+                  <tr>
+                    <tr>
+            <td class="left_column">Nilai UAS <font color="#FF0000">*</font></td>
+            <td>: <input type="text" name="persen_uas" id="persen_uas" class="validate[required] text-input" maxlength="50" size="50" style="width:10%" required="" value="<?php echo $persentase->persen_uas; ?>"> %
+             
+          </td>
+                  <tr>
+                    <td colspan="4"><button type="submit" class="btn btn-primary btn-flat" id="myBtn"><i class="fa fa-save"></i> Save</button></td>
+                  </tr>
+              <?php echo form_close();?>
+
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+            </div>
+        </div>
 
               <script>
     function print1(){

@@ -14,7 +14,7 @@
                         <a class="btn btn-sm btn-default btn-flat" href="<?php echo base_url(); ?>mahasiswa/data_ld"><i class="fa fa-angle-left"></i> Back</a>
                        <?php } ?> 
           <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/lihat_mahasiswa_dikti/<?php echo $this->uri->segment(3); ?>">Detail Mahasiswa</a>
-        <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/history_pendidikan/<?php echo $this->uri->segment(3); ?>">History Pendidikan</a>
+          <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/history_pendidikan/<?php echo $this->uri->segment(3); ?>/<?php echo $mahasiswa->nik; ?>">History Pendidikan</a>
        <?php if ($mahasiswa->id_jenis_pendaftaran == '2') { ?>
         <a class="btn btn-sm btn-primary btn-flat" href="<?php echo base_url();?>mahasiswa/transfer_nilai/<?php echo $this->uri->segment(3); ?>">Nilai Transfer</a>
         <?php } ?>

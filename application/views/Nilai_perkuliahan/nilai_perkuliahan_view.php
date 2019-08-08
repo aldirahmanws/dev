@@ -59,14 +59,16 @@
                </form>
                <br>
               <div class="table-responsive">
-              <table id="example3" class="table2 table-hover table-striped table-condensed table-bordered" style="text-transform: uppercase;">
+              <table id="example1" class="table2 table-hover table-striped table-condensed table-bordered" style="text-transform: uppercase;">
                 
                 <thead>
                 <tr>
                   <th rowspan="2" style="text-align: center;width: 2%">No</th>
                   <th rowspan="2" style="text-align: center;width: 5%">Prodi</th>
+                  <th rowspan="2" style="text-align: center;width: 5%">Konsentrasi</th>
                   <th rowspan="2" style="text-align: center;width: 20%">Kode MK</th>
                   <th rowspan="2" style="text-align: center;width: 40%">Nama MK</th>
+                  <th rowspan="2" style="text-align: center;width: 2%">Wajib</th>
                   <th rowspan="2" style="text-align: center;width: 10%">Nama Kelas</th>
                   <th rowspan="2" style="text-align: center;width: 10%">Waktu</th>
                   <th rowspan="2" style="text-align: center;width: 10%">Bobot (SKS)</th>
@@ -75,10 +77,10 @@
                 </tr>
                 <tr>
                   <th style="text-align: center;width: 3%">Absensi</th>
-                  <th style="text-align: center;width: 3%">Nilai Tugas</th>
-                  <th style="text-align: center;width: 3%">Nilai Paper</th>
-                  <th style="text-align: center;width: 3%">Nilai UTS</th>
-                  <th style="text-align: center;width: 3%">Nilai UAS</th>
+                  <th style="text-align: center;width: 3%">Tugas</th>
+                  <th style="text-align: center;width: 3%">Paper</th>
+                  <th style="text-align: center;width: 3%">UTS</th>
+                  <th style="text-align: center;width: 3%">UAS</th>
                   <th style="text-align: center;width: 3%">Nilai Akhir</th>
                 </tr>
                  
@@ -86,43 +88,6 @@
 
                 <tbody>
 
-                <?php 
-                $no = 0;
-                 $alert = "'Apakah anda yakin menghapus data ini ?'";
-                foreach ($kp as $data) {                
-                  $total_mahasiswa = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs WHERE id_kp = '$data->id_kp'")->row();
-                  $total_nilai = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs WHERE nilai_d != 0 AND id_kp = '$data->id_kp'")->row();
-                  $absensi = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs WHERE absensi != 0 AND id_kp = '$data->id_kp'")->row();
-                  $nilai_tugas = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs WHERE nilai_tugas != 0 AND id_kp = '$data->id_kp'")->row();
-                  $nilai_uts = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs WHERE nilai_uts != 0 AND id_kp = '$data->id_kp'")->row();
-                  $nilai_uas = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs WHERE nilai_uas != 0 AND id_kp = '$data->id_kp'")->row();
-                  $nilai_paper = $this->db->query("SELECT count(*) AS total FROM tb_kelas_mhs WHERE nilai_uas != 0 AND id_kp = '$data->id_kp'")->row();
-                  
-
-                  echo '                  
-                <tr>
-                  <td>'.++$no.'</td>
-                  <td>'.$data->nama_prodi.'</td>
-                  <td><a href="'.base_url('nilai_perkuliahan/detail_nilai/'.$data->id_kp).'">'.$data->id_matkul.'</a></td>
-                  <td>'.$data->nama_matkul.'</td>
-                  <td>'.$data->nama_kelas.'</td>
-                  <td>'.$data->waktu.'</td>
-                  <td>'.$data->bobot_matkul.'</td>
-                  <td>'.$total_mahasiswa->total.'</td>
-                  <td>'.$absensi->total.'</td>
-                  <td>'.$nilai_tugas->total.'</td>
-                  <td>'.$nilai_paper->total.'</td>
-                  <td>'.$nilai_uts->total.'</td>
-                  <td>'.$nilai_uas->total.'</td>
-                  <td>'.$total_nilai->total.'</td>
-                  
-                  </tr>
-                ' ;
-                
-                
-              }
-              ?>
-        
                 </tbody>
               </table>
               </div>
@@ -171,4 +136,17 @@
                     }
                 });
             }
+</script>
+    <script src="<?php echo base_url(); ?>assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script type="text/javascript">
+ $(document).ready(function() {
+        $('#example1').DataTable( {
+            data:           <?= $nilai_perkuliahan; ?>,  
+            deferRender:    true,
+            scrollCollapse: true,
+            scroller:       true,
+            "autoWidth": true
+        } );
+        
+    } );
 </script>

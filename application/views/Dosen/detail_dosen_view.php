@@ -68,25 +68,17 @@
                     <td colspan="6">:  <?php echo $dosen->nip; ?>
                     </td>
 
-                    <?php if($this->session->userdata('level') == 2){ ?>
-                    <td rowspan="8" width="15%">
-                      <form  method="post" runat="server" action="<?php echo base_url(); ?>profile/save_data" enctype="multipart/form-data">
-                        <div class="btn btn-file" >
-              <img src="<?php echo base_url();?>uploads/<?php echo $foto_dosen->foto; ?>" onerror="this.src='<?php echo base_url();?>uploads/user.jpg'" id="avatar" height="200" width="200"  alt="avatar">
-              <input type="file" id="foto" name="foto" onchange="loadFile(event)">
-
-            </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
-          </form></td>
-            <?php } else { ?>
+                    
+         
           <td rowspan="8" width="15%">
                       
                         <div class="btn btn-file" >
-              <img src="<?php echo base_url();?>uploads/<?php echo $dosen->foto; ?>" onerror="this.src='<?php echo base_url();?>uploads/user.jpg'" id="avatar" height="200" width="200"  alt="avatar">
+              <img src="<?php echo base_url();?>uploads/<?php echo $dosen->foto_dosen; ?>" onerror="this.src='<?php echo base_url();?>uploads/user.jpg'" id="avatar" height="200" width="200"  alt="avatar">
               
 
             </div>
           </td>
-            <?php } ?>
+            
                 </tr>
                 <tr>
                     <td class="left_column" width="15%">NIDN/NUP/NIDK</td>

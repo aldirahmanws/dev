@@ -9,7 +9,7 @@
               <div class="row">
                 <div class="col-lg-6">
                   <?php echo $this->session->flashdata('message');?>
-                  <?php echo form_open('master_dosen/save_dosen'); ?>
+                  <form  method="post" runat="server" action="<?php echo base_url(); ?>master_dosen/save_dosen" enctype="multipart/form-data">
                    
                       <div class="form-group">
                         <label for="text">Nama Dosen <font color="#FF0000">*</font></label>
@@ -73,6 +73,10 @@
                        <div class="form-group">
                         <label for="text">No. Telepon</label>
                         <input type="text" name="no_telepon" class="form-control" id="no_telepon" value="">
+                      </div>
+                       <div class="form-group">
+                        <label for="text">Foto Dosen</label>
+                        <input type="file" name="foto_dosen" id="foto_dosen" class="form-control" value="">
                       </div>
                        <br>
                        <br>

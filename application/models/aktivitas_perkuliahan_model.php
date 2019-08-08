@@ -10,7 +10,8 @@ class Aktivitas_perkuliahan_model extends CI_Model {
 	}
 
 	public function data_aktivitas_perkuliahan(){
-		return $this->db->join('tb_mahasiswa','tb_mahasiswa.id_mahasiswa=tb_aktivitas_perkuliahan.id_mahasiswa')
+		return $this->db->select('*, tb_aktivitas_perkuliahan.id_periode')
+              ->join('tb_mahasiswa','tb_mahasiswa.id_mahasiswa=tb_aktivitas_perkuliahan.id_mahasiswa')
               ->join('tb_bio','tb_bio.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
               ->join('tb_periode','tb_periode.id_periode=tb_aktivitas_perkuliahan.id_periode')
               ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
@@ -79,7 +80,9 @@ class Aktivitas_perkuliahan_model extends CI_Model {
             'ipk_ak'      => $this->input->post('ipk_ak', TRUE),
             'sks_semester'      => $this->input->post('sks_semester', TRUE),
             'sks_total'      => $this->input->post('sks_total', TRUE),
-            'semester_ak' => $this->input->post('semester_ak', TRUE)
+            'semester_ak' => $this->input->post('semester_ak', TRUE),
+            'ipk_grade' => $this->input->post('ipk_grade', TRUE),
+            'id_grade' => $this->input->post('id_grade', TRUE),
             
         );
         $this->db->insert('tb_aktivitas_perkuliahan', $data);
@@ -187,8 +190,10 @@ class Aktivitas_perkuliahan_model extends CI_Model {
               ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kelas_mhs.id_detail_kurikulum')
               ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
               ->join('tb_skala_nilai','tb_skala_nilai.id_skala_nilai=tb_kelas_mhs.id_skala_nilai')
+              ->join('tb_kp','tb_kp.id_kp=tb_kelas_mhs.id_kp')
+              ->join('tb_periode','tb_periode.id_periode=tb_kp.id_periode')
               ->where('tb_kelas_mhs.id_mahasiswa', $id_mahasiswa)
-              ->where('tb_detail_kurikulum.semester_kurikulum', $semester_ak)
+              ->where('tb_periode.id_periode', $this->uri->segment(5))
               ->get('tb_kelas_mhs')
               ->result();
   }

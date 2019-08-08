@@ -41,6 +41,7 @@
         <option value="3"> Rabu </option>
         <option value="4"> Kamis </option>
         <option value="5"> Jumat </option>
+        <option value="6"> Sabtu </option>
 
 
       </select>  </td>

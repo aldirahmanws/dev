@@ -279,6 +279,19 @@ class Kelas_perkuliahan_model extends CI_Model {
     
         $this->db->insert('tb_kp', $data);
 
+        $id_kp = $this->db->insert_id();
+
+        $persentase = array(
+            'id_kp'                        => $id_kp,
+            'persen_absensi'               => '20',
+            'persen_tugas'                 => '10',
+            'persen_paper'                 => '10',
+            'persen_uts'                   => '20',
+            'persen_uas'                   => '40',
+        );
+
+        $this->db->insert('tb_persentase_nilai', $persentase);
+
         if($this->db->affected_rows() > 0){
             
                 return true;
@@ -312,6 +325,9 @@ class Kelas_perkuliahan_model extends CI_Model {
     public function hapus_kp($id_kp){
         $this->db->where('id_kp', $id_kp)
           ->delete('tb_kp');
+
+        $this->db->where('id_kp', $id_kp)
+          ->delete('tb_persentase_nilai');
 
     if ($this->db->affected_rows() > 0) {
       return TRUE;

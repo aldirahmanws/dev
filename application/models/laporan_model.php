@@ -855,43 +855,75 @@ class Laporan_model extends CI_Model {
             ->where('id_mahasiswa', $id_mahasiswa)            
             ->join('tb_konsentrasi', 'tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
             ->join('tb_prodi', 'tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
+            ->join('tb_dosen','tb_dosen.id_dosen=tb_mahasiswa.dosen_pa')
+            ->join('tb_grade','tb_grade.id_grade=tb_mahasiswa.id_grade')
             ->get('tb_mahasiswa')
             ->row();
 
                 if ($query->num_rows() > 0)
                 { 
                   $no = 0;
+                  $no2 = 0;
                   $totalsi = 0;
+                  $totalsi2 = 0;
                   $totalbobot = 0;
+                  $totalbobot2 = 0;
+
+
+                  if ($pp->id_waktu == 2) {
+                    $tampil_grade = '';
+                    $enter = '<br>';
+                  } else {
+                    $tampil_grade = '<text style="text-align:right; font-size:10px"><b>Grade</b> :  '.$pp->grade.' </text>';
+                    $enter = '';
+                  }
+
+
                   $option = "";
                   $option .= '<section class="content" id="ea">
+
+                  
+
       <div class="row">
+
         <div class="col-xs-12">
-        <h4 style="text-align:center" ><b>Kartu Hasil Studi (KHS)</h4></b>
-            <table>
+
+        <div class="col-xs-12" style="border:1px solid black">
+
+       
+
+        <h4 style="text-align:center" > <b>Kartu Hasil Studi (KHS)</h4></b>
+        <br>
+        <IMG src="'.base_url().'/uploads/STIE-01.png" class="pull-right" style="width:120px; margin-right: 2%">
+
+            <table style="margin-left:2%; font-size:10px">
               <tr>
                 <td width="200px"><b>Nama Mahasiswa</b></td>
-                <td width="500px">: '.$pp->nama_mahasiswa.'</td>
-                <td width="120px"><b>NIM</b></td>
+                <td width="200px">: '.$pp->nama_mahasiswa.'</td>
+              </tr>
+              <tr>
+                <td><b>NIM</b></td>
                 <td>: '.$pp->nim.'</td>
               </tr>
               <tr>
-                <td width="200px"><b>Program Studi</b></td>
+                <td ><b>Program Studi</b></td>
                 <td>: '.$pp->nama_prodi.' </td>
-                <td width="120px"><b>Periode</b></td>
-                <td width="300px">: '.$semester.'</td>
+              </tr>
+              <tr>
+                <td ><b>Periode</b></td>
+                <td >: '.$semester.'</td>
               </tr>
             </table>
-            <br>
+            
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example1" class="table table-bordered table-striped">
+              <table id="example1" class="table2 table-bordered table-striped" style="font-size:10px">
                 <thead>
                 <tr>
-                    <th style="width:5%;text-align:center" height="10" rowspan="2">No.</th>
+                    <th style="width:5%;text-align:center;" height="10" rowspan="2">No.</th>
                     <th style="text-align:center" height="10" rowspan="2">Kode MK</th>
                     <th style="text-align:center" height="10" rowspan="2">Nama MK</th>
-                    <th style="text-align:center" height="10" rowspan="2">Bobot MK<br />(sks)</th>
+                    <th style="text-align:center" height="10" rowspan="2" width="5%">Bobot MK<br />(sks)</th>
                      <th style="text-align:center" height="5" colspan="3">Nilai</th>
                      <th style="text-align:center"  height="10" rowspan="2">sks * N.indeks</th>
                    
@@ -911,16 +943,44 @@ class Laporan_model extends CI_Model {
                     $option .= "
                     <tr>
                       <td>".++$no."</td>
-                      <td>".$data->id_matkul."</td>
+                      <td style='text-align:center'>".$data->id_matkul."</td>
                       <td>".$data->nama_matkul."</td>
-                      <td style='text-align:right'>".$data->bobot_matkul."</td>
-                      <td style='text-align:right'>".$data->nilai_d."</td>
-                      <td style='text-align:right'>".$data->nilai_huruf."</td>
-                      <td style='text-align:right'>".$data->nilai_indeks."</td>
-                      <td style='text-align:right'>".$data->bobot_matkul * $data->nilai_indeks."</td>
+                      <td style='text-align:center'>".$data->bobot_matkul."</td>
+                      <td style='text-align:center'>".$data->nilai_d."</td>
+                      <td style='text-align:center'>".$data->nilai_huruf."</td>
+                      <td style='text-align:center'>".$data->nilai_indeks."</td>
+                      <td style='text-align:center'>".$data->bobot_matkul * $data->nilai_indeks."</td>
                     </tr>"
                     ;
                     
+                  }
+
+                   $tanggal = date('m');
+
+                  if ($tanggal == 1) {
+                    $bulan = 'Januari';
+                  } elseif ($tanggal == 2) {
+                    $bulan = 'Februari';
+                  } elseif ($tanggal == 3) {
+                    $bulan = 'Maret';
+                  } elseif ($tanggal == 4) {
+                    $bulan = 'April';
+                  } elseif ($tanggal == 5) {
+                    $bulan = 'Mei';
+                  } elseif ($tanggal == 6) {
+                    $bulan = 'Juni';
+                  } elseif ($tanggal == 7) {
+                    $bulan = 'Juli';
+                  } elseif ($tanggal == 8) {
+                    $bulan = 'Agustus';
+                  } elseif ($tanggal == 9) {
+                    $bulan = 'September';
+                  } elseif ($tanggal == 10) {
+                    $bulan = 'Oktober';
+                  } elseif ($tanggal == 11) {
+                    $bulan = 'November';
+                  } else {
+                    $bulan = 'Desember';
                   }
                   
                   if ($totalbobot == 0) {
@@ -928,22 +988,174 @@ class Laporan_model extends CI_Model {
                   } else {
                       $totalbobot;
                   }
+
+                  
+
                   $ipk = $totalsi / $totalbobot;
                   $option .= '</tbody>
                   <tr>
                     <td colspan="3" style="text-align:right"> <b> Jumlah Bobot : </b></td>
-                    <td style="text-align:right">  '.$totalbobot.' </td>
-                    <td colspan="3" style="text-align:right"> <b> Jumlah sks * N.indeks : </b></td>
-                    <td style="text-align:right"> '.$totalsi.'</td>
+                    <td style="text-align:center">  '.$totalbobot.' </td>
+                    <td colspan="3" style="text-align:right"> <b> Sks * N.indeks : </b></td>
+                    <td style="text-align:center"> '.$totalsi.'</td>
 
                 </tr>
                 <tr>
                     <td style="text-align:right" colspan="7"> IPS : </td>
-                    <td style="text-align:right"> '.$ipk.'  </td>
+                    <td style="text-align:center"> '.substr($ipk,0,4).'  </td>
                 </tr>
               </table>
+
+              '.$tampil_grade.'
+              
+
+               <text style="text-align:right; font-size:10px;" class="pull-right"> Jakarta, ................................ </text> '.$enter.'
+
+              <p style="text-align:right; font-size:10px"> Pembimbing Akademik </p>
+
+              <br>
+
+              <p style="text-align:right; font-size:10px"> '.$pp->nama_dosen.'</p>
+              </div>
+
+            </div>
+            </div>
+
+            <br clear="all" style="page-break-before:always" />
+            <br clear="all" style="page-break-before:always" />
+
+
+            <div class="col-xs-12" margin-top:100px>
+             <div class="col-xs-12" style="border:1px solid black">
+
+       
+
+        <h4 style="text-align:center" > <b>Kartu Hasil Studi (KHS)</h4></b>
+        <br>
+        <IMG src="'.base_url().'/uploads/STIE-01.png" class="pull-right" style="width:120px; margin-right: 2%">
+
+            <table style="margin-left:2%; font-size:10px">
+              <tr>
+                <td width="200px"><b>Nama Mahasiswa</b></td>
+                <td width="200px">: '.$pp->nama_mahasiswa.'</td>
+              </tr>
+              <tr>
+                <td><b>NIM</b></td>
+                <td>: '.$pp->nim.'</td>
+              </tr>
+              <tr>
+                <td ><b>Program Studi</b></td>
+                <td>: '.$pp->nama_prodi.' </td>
+              </tr>
+              <tr>
+                <td ><b>Periode</b></td>
+                <td >: '.$semester.'</td>
+              </tr>
+            </table>
+            
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="example1" class="table2 table-bordered table-striped" style="font-size:10px">
+                <thead>
+                <tr>
+                    <th style="width:5%;text-align:center;" height="10" rowspan="2">No.</th>
+                    <th style="text-align:center" height="10" rowspan="2">Kode MK</th>
+                    <th style="text-align:center" height="10" rowspan="2">Nama MK</th>
+                    <th style="text-align:center" height="10" rowspan="2">Bobot MK<br />(sks)</th>
+                     <th style="text-align:center" height="5" colspan="3">Nilai</th>
+                     <th style="text-align:center"  height="10" rowspan="2">sks * N.indeks</th>
+                   
+                </tr>
+                <tr>
+                    <th style="width:5%;text-align:center">Angka</th>
+                    <th style="width:5%;text-align:center">Huruf</th>
+                    <th style="width:5%;text-align:center">Indeks</th>
+                    
+                </tr>
+                </thead>
+                <tbody>';
+                  foreach ($row as $data) {
+                    $totalbobot2 += $data->bobot_matkul;
+                    $ea = $data->bobot_matkul * $data->nilai_indeks;
+                    $totalsi2 += $ea;
+                    $option .= "
+                    <tr>
+                      <td>".++$no2."</td>
+                      <td style='text-align:center'>".$data->id_matkul."</td>
+                      <td>".$data->nama_matkul."</td>
+                      <td style='text-align:center'>".$data->bobot_matkul."</td>
+                      <td style='text-align:center'>".$data->nilai_d."</td>
+                      <td style='text-align:center'>".$data->nilai_huruf."</td>
+                      <td style='text-align:center'>".$data->nilai_indeks."</td>
+                      <td style='text-align:center'>".$data->bobot_matkul * $data->nilai_indeks."</td>
+                    </tr>"
+                    ;
+                    
+                  }
+
+                   $tanggal = date('m');
+
+                  if ($tanggal == 1) {
+                    $bulan = 'Januari';
+                  } elseif ($tanggal == 2) {
+                    $bulan = 'Februari';
+                  } elseif ($tanggal == 3) {
+                    $bulan = 'Maret';
+                  } elseif ($tanggal == 4) {
+                    $bulan = 'April';
+                  } elseif ($tanggal == 5) {
+                    $bulan = 'Mei';
+                  } elseif ($tanggal == 6) {
+                    $bulan = 'Juni';
+                  } elseif ($tanggal == 7) {
+                    $bulan = 'Juli';
+                  } elseif ($tanggal == 8) {
+                    $bulan = 'Agustus';
+                  } elseif ($tanggal == 9) {
+                    $bulan = 'September';
+                  } elseif ($tanggal == 10) {
+                    $bulan = 'Oktober';
+                  } elseif ($tanggal == 11) {
+                    $bulan = 'November';
+                  } else {
+                    $bulan = 'Desember';
+                  }
+                  
+                  if ($totalbobot2 == 0) {
+                      $totalbobot2 = 1;
+                  } else {
+                      $totalbobot2;
+                  }
+                  $ipk = $totalsi2 / $totalbobot2;
+                  $option .= '</tbody>
+                  <tr>
+                    <td colspan="3" style="text-align:right"> <b> Jumlah Bobot : </b></td>
+                    <td style="text-align:center">  '.$totalbobot2.' </td>
+                    <td colspan="3" style="text-align:right"> <b> Sks * N.indeks : </b></td>
+                    <td style="text-align:center"> '.$totalsi2.'</td>
+
+                </tr>
+                <tr>
+                    <td style="text-align:right" colspan="7"> IPS : </td>
+                    <td style="text-align:center"> '.substr($ipk,0,4).'  </td>
+                </tr>
+              </table>
+              
+              '.$tampil_grade.'
+              
+
+               <text style="text-align:right; font-size:10px;" class="pull-right"> Jakarta, ................................ </text> '.$enter.'
+
+              <p style="text-align:right; font-size:10px"> Pembimbing Akademik </p>
+
+              <br>
+
+              <p style="text-align:right; font-size:10px"> '.$pp->nama_dosen.'</p>
+              </div>
+
             </div>
             
+
             <!-- /.box-body -->
           
           <!-- /.box -->
@@ -982,28 +1194,36 @@ class Laporan_model extends CI_Model {
                 { 
                   $no = 0;
                   $totalsi = 0;
+                  $totalsi2 = 0;
                   $totalbobot = 0;
+                  $totalbobot2 = 0;
                   $option = "";
                   $option .= '<section class="content" id="ea">
       <div class="row">
         <div class="col-xs-12">
         <h4 style="text-align:center" ><b>Transkrip Nilai</h4></b>
-            <table>
+          <IMG src="'.base_url().'/uploads/STIE-01.png" class="pull-right" style="width:120px; margin-right: 2%">
+          <br>
+
+            <table style="font-size:10px;margin-left:2%">
               <tr>
                 <td width="200px"><b>Nama Mahasiswa</b></td>
-                <td width="500px">: '.$pp->nama_mahasiswa.'</td>
-                <td width="120px"><b>NIM</b></td>
-                <td>: '.$pp->nim.'</td>
+                <td width="300px">: '.$pp->nama_mahasiswa.'</td>
               </tr>
               <tr>
                 <td width="200px"><b>Program Studi</b></td>
                 <td>: '.$pp->nama_prodi.' </td>
               </tr>
+              <tr>
+                 <td><b>NIM</b></td>
+                <td>: '.$pp->nim.'</td>
+              </tr>
+             
             </table>
             <br>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example1" class="table table-bordered table-striped">
+              <table id="example1" class="table2 table-bordered table-striped" style="font-size:10px">
                 <thead>
                 <tr>
                     <th style="width:5%;text-align:center" height="10" rowspan="2">No.</th>

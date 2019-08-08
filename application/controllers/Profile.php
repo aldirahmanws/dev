@@ -67,4 +67,28 @@ class Profile extends CI_Controller {
         
     }
 
+    public function save_foto_dosen()
+    {
+        $id_dosen = $this->uri->segment(3);
+        $config['upload_path'] = './uploads/';
+        $config['allowed_types'] = 'jpg|png|jpeg';
+        $this->load->library('upload', $config);
+        if($this->upload->do_upload('foto')){
+          if($this->user_model->save_edit_foto_dosen($this->upload->data(), $id_dosen) == TRUE){
+            $this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" style="margin-left: -20px;margin-right: -20px; margin-top: -15px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i> Unggah foto berhasil </p>
+                </div><script> window.setTimeout(function() { $(".alert-success").fadeTo(500, 0).slideUp(500, function(){ $(this).remove(); }); }, 5000); </script>');
+                redirect('profile');
+          } else {
+            $this->session->set_flashdata('message', 'Update foto gagal');
+                redirect('profile');
+          }
+        } else {
+          $this->session->set_flashdata('message', $this->upload->display_errors());
+             redirect('profile');
+        }
+        
+    }
+
 }

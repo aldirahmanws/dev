@@ -9,7 +9,7 @@
               <div class="row">
                 <div class="col-lg-6">
                  
-                  <?php echo form_open('master_dosen/edit_dosen/'.$dosen->id_dosen); ?>
+                  <?php echo form_open('master_dosen/edit_dosen/'.$dosen->id_dosen,' method="post" role="form" enctype="multipart/form-data"'); ?>
                       <div class="form-group">
                         <label for="text">Nama Dosen</label>
                         <input type="text" name="nama_dosen" class="form-control" id="nama_dosen" value="<?php echo $dosen->nama_dosen; ?>">
@@ -76,9 +76,12 @@
                               <option value="2">Tidak Tetap</option>
                           </select> 
                       </div>
+                       <div class="form-group">
+                        <label for="text">Foto Dosen</label>
+                        <input type="file" name="foto_dosen" id="foto_dosen" class="form-control" value="<?php echo $dosen->foto_dosen; ?>">
+                      </div>
                       <div class="form-group">
-                        <br>
-                        <br>
+                        
                       <button type="submit" class="btn btn-primary btn-flat pull-right"><i class="fa fa-save"></i> Update</button>
                       </div>
                   <?php echo form_close();?>

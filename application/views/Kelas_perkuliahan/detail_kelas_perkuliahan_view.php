@@ -63,12 +63,18 @@
 
 
             <?php if( $dsn['dosen'] != 1 OR 0) echo '
+
              <a class="btn btn-primary btn-sm btn-flat pull-right" style="margin-right: 10px" data-toggle="modal" data-target="#modal_tambah"><i class="fa fa-plus"></i> Tambah Dosen</a>'; else echo '';
             ?>
 
              <?php $ab = date('Y-m-d'); if( $dsn['jumlah_mhs'] <= 39 && $ab >= $kp->tanggal_mulai && $ab <= $kp->tgl_akhir) echo '
+
              
-             <a class="btn btn-primary btn-sm btn-flat pull-right"  data-toggle="modal" style="margin-right: 10px"data-target="#modal_tambah_mhs"><i class="fa fa-plus"></i> Tambah Mahasiswa</a>'; 
+             
+             <a class="btn btn-primary btn-sm btn-flat pull-right"  data-toggle="modal" style="margin-right: 10px"data-target="#modal_tambah_mhs"><i class="fa fa-plus"></i> Tambah Mahasiswa</a>
+
+              <a class="btn btn-primary btn-sm btn-flat pull-right"  data-toggle="modal" style="margin-right: 10px"data-target="#modal_tambah_jadwal"><i class="fa fa-plus"></i> Tambah Jadwal</a>
+              '; 
              else 
              echo '';
             ?>
@@ -76,7 +82,7 @@
             
              
 
-              
+              <a href="<?php echo base_url(); ?>nilai_perkuliahan/detail_nilai/<?php echo $kp->id_kp; ?>" class="btn btn-primary btn-sm btn-flat pull-right" style="margin-right: 10px"> Nilai </a>
 
              <a class="btn btn-default btn-sm pull-right" style="margin-right: 10px"  href="<?php echo base_url('kelas_perkuliahan'); ?>"><i class="fa fa-angle-left"></i> Back </a> <br> <br>
 
@@ -263,10 +269,7 @@
                <div class="tab-pane" id="tab_3">
                 <section class="content">
       <div class="row">
-        <?php if (date('Y-m-d') <= $kp->tgl_akhir AND date('Y-m-d') >= $kp->tgl_mulai) { ?>
-        
-        <a class="btn btn-primary btn-sm btn-flat"  data-toggle="modal" style="margin-right: 10px"data-target="#modal_tambah_jadwal"><i class="fa fa-plus"></i> Tambah Jadwal</a><br><br>
-      <?php } ?>
+       
           <div class="box box-primary">
 
 
@@ -583,7 +586,7 @@
     var prodikp = document.getElementById('prodikp').value;
    
 
-    if (prodikp == prodimhs && hai() == true)
+    if (hai() == true)
       {
          document.getElementById("myBtn").disabled = false;
       } else {

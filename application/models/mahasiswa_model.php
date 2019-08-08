@@ -138,6 +138,157 @@ class Mahasiswa_model extends CI_Model {
         return $row;
   } 
 
+   public function data_nilai_ipk_ak($id_mahasiswa){
+
+       $mahasiswa = $this->db->where('id_mahasiswa', $id_mahasiswa)->get('tb_mahasiswa')->row();
+
+       $c = $this->db->select('tb_kelas_mhs.id_detail_kurikulum')
+                  ->distinct()
+                  ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kelas_mhs.id_detail_kurikulum')
+                          ->where('tb_kelas_mhs.nilai_d !=', 0)
+                          ->where('tb_kelas_mhs.id_mahasiswa', $id_mahasiswa)
+                          ->where('tb_kelas_mhs.semester_kelas <=', $mahasiswa->semester_aktif)
+                          ->order_by('tb_detail_kurikulum.semester_kurikulum', 'ASC')
+                          ->get('tb_kelas_mhs')
+                          ->result();
+
+      
+              foreach ($c as $b) {
+      $a = $this->db->select('MAX(tb_kelas_mhs.nilai_d) as nilai_d, tb_matkul.nama_matkul, tb_matkul.bobot_matkul, tb_matkul.id_matkul, tb_kelas_mhs.nilai_tugas, tb_kelas_mhs.nilai_paper, tb_kelas_mhs.nilai_uts, tb_kelas_mhs.nilai_uas, tb_kelas_mhs.absensi, tb_skala_nilai.nilai_huruf, tb_skala_nilai.nilai_indeks, tb_detail_kurikulum.semester_kurikulum')
+              ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kelas_mhs.id_detail_kurikulum')
+              ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
+              ->join('tb_skala_nilai','tb_skala_nilai.id_skala_nilai=tb_kelas_mhs.id_skala_nilai')
+              ->where('tb_kelas_mhs.id_detail_kurikulum', $b->id_detail_kurikulum)
+              ->where('tb_kelas_mhs.id_mahasiswa', $id_mahasiswa)
+               ->where('tb_kelas_mhs.semester_kelas <=', $mahasiswa->semester_aktif)
+              ->order_by('tb_detail_kurikulum.semester_kurikulum', 'ASC')
+              ->get('tb_kelas_mhs')
+              ->row();
+           
+            $row[] = $a;
+              }
+         
+        return $row;
+  } 
+
+  public function data_nilai_ips_skrg($id_mahasiswa, $id_periode){
+
+          $smt = $this->db->where('id_mahasiswa', $id_mahasiswa)->get('tb_mahasiswa')->row();
+
+          $c = $this->db->select('tb_kelas_mhs.id_detail_kurikulum')
+                  ->distinct()
+                  ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kelas_mhs.id_detail_kurikulum')
+                   ->join('tb_kp','tb_kp.id_kp=tb_kelas_mhs.id_kp')
+              ->join('tb_periode','tb_periode.id_periode=tb_kp.id_periode')
+                          //->where('tb_kelas_mhs.nilai_d !=', 0)
+                          ->where('tb_kelas_mhs.id_mahasiswa', $id_mahasiswa)
+                          ->where('tb_kelas_mhs.semester_kelas', $smt->semester_aktif)
+                          //->or_where('tb_kp.id_periode', $id_periode)
+                          ->order_by('tb_detail_kurikulum.semester_kurikulum', 'ASC')
+                          ->get('tb_kelas_mhs')
+                          ->result();
+
+      
+              foreach ($c as $b) {
+      $a = $this->db->select('MAX(tb_kelas_mhs.nilai_d) as nilai_d, tb_matkul.nama_matkul, tb_matkul.bobot_matkul, tb_matkul.id_matkul, tb_kelas_mhs.nilai_tugas, tb_kelas_mhs.nilai_paper, tb_kelas_mhs.nilai_uts, tb_kelas_mhs.nilai_uas, tb_kelas_mhs.absensi, tb_skala_nilai.nilai_huruf, tb_skala_nilai.nilai_indeks, tb_detail_kurikulum.semester_kurikulum, tb_periode.semester')
+              ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kelas_mhs.id_detail_kurikulum')
+              ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
+              ->join('tb_skala_nilai','tb_skala_nilai.id_skala_nilai=tb_kelas_mhs.id_skala_nilai')
+              ->join('tb_kp','tb_kp.id_kp=tb_kelas_mhs.id_kp')
+              ->join('tb_periode','tb_periode.id_periode=tb_kp.id_periode')
+              ->where('tb_kelas_mhs.id_detail_kurikulum', $b->id_detail_kurikulum)
+              ->where('tb_kelas_mhs.id_mahasiswa', $id_mahasiswa)
+              ->where('tb_kelas_mhs.semester_kelas', $smt->semester_aktif)
+              //->or_where('tb_kp.id_periode', $id_periode)
+              ->order_by('tb_detail_kurikulum.semester_kurikulum', 'ASC')
+              ->get('tb_kelas_mhs')
+              ->row();
+           
+            $row[] = $a;
+              }
+         
+        return $row;
+  } 
+ 
+ function cek_periode_ap($id_periode = ''){
+    $id_mahasiswa = $this->input->get('id_mahasiswa');
+        
+     $cek_periode = $this->db->where('id_periode', $id_periode)->get('tb_periode')->row();
+
+    $ex = explode(" ", $cek_periode->semester);
+        if($ex[1] == 'Genap'){
+          $sms = 'Ganjil';
+          $hasilx = $ex[0].' '.$sms;
+        } else if($ex[1] == 'Ganjil'){
+          $sms = 'Genap';
+          $xs = explode("/", $ex[0]);
+          $hasilx = ((int)$xs[0] - 1).'/'.((int)$xs[1] - 1).' '.$sms;
+        }
+
+        $semester_aktif = $this->db->join('tb_periode','tb_periode.id_periode=tb_aktivitas_perkuliahan.id_periode')
+                      ->where('tb_periode.semester', $hasilx)
+                      ->where('tb_aktivitas_perkuliahan.id_mahasiswa', $id_mahasiswa)
+                      ->where('tb_aktivitas_perkuliahan.id_status', 1)
+                      ->get('tb_aktivitas_perkuliahan')
+                      ->row();
+
+    $x = '';
+    
+    if($semester_aktif == '' or $hasilx != $semester_aktif->semester){
+      $cek_periode_sebelumnya = $this->db->where('id_prodi', $cek_periode->id_prodi)->where('semester', $hasilx)->get('tb_periode')->row();
+        $this->cek_periode_ap($cek_periode_sebelumnya->id_periode);
+        // return false;
+        $x = '';
+    } else {
+        $cek_periode_sebelumnya = $this->db->where('id_prodi', $cek_periode->id_prodi)->where('semester', $hasilx)->get('tb_periode')->row();
+        
+         return $cek_periode_sebelumnya->id_periode;
+    }
+     
+    
+    
+  }
+
+   public function data_nilai_ips_sblm($id_mahasiswa = ''){
+
+       $smt = $this->db->where('id_mahasiswa', $id_mahasiswa)->get('tb_mahasiswa')->row();
+       $smt_lalu = $smt->semester_aktif - 1;
+
+          $c = $this->db->select('tb_kelas_mhs.id_detail_kurikulum')
+                  ->distinct()
+                  ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kelas_mhs.id_detail_kurikulum')
+                   ->join('tb_kp','tb_kp.id_kp=tb_kelas_mhs.id_kp')
+              ->join('tb_periode','tb_periode.id_periode=tb_kp.id_periode')
+                          ->where('tb_kelas_mhs.nilai_d !=', 0)
+                          ->where('tb_kelas_mhs.id_mahasiswa', $id_mahasiswa)
+                          ->where('tb_kelas_mhs.semester_kelas', $smt_lalu)
+                          //->where('tb_kp.id_periode', $cek_periode_sebelumnya->id_periode)
+                          ->order_by('tb_detail_kurikulum.semester_kurikulum', 'ASC')
+                          ->get('tb_kelas_mhs')
+                          ->result();
+
+      
+              foreach ($c as $b) {
+      $a = $this->db->select('MAX(tb_kelas_mhs.nilai_d) as nilai_d, tb_matkul.nama_matkul, tb_matkul.bobot_matkul, tb_matkul.id_matkul, tb_kelas_mhs.nilai_tugas, tb_kelas_mhs.nilai_paper, tb_kelas_mhs.nilai_uts, tb_kelas_mhs.nilai_uas, tb_kelas_mhs.absensi, tb_skala_nilai.nilai_huruf, tb_skala_nilai.nilai_indeks, tb_detail_kurikulum.semester_kurikulum, tb_periode.semester')
+              ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kelas_mhs.id_detail_kurikulum')
+              ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
+              ->join('tb_skala_nilai','tb_skala_nilai.id_skala_nilai=tb_kelas_mhs.id_skala_nilai')
+              ->join('tb_kp','tb_kp.id_kp=tb_kelas_mhs.id_kp')
+              ->join('tb_periode','tb_periode.id_periode=tb_kp.id_periode')
+              ->where('tb_kelas_mhs.id_detail_kurikulum', $b->id_detail_kurikulum)
+              ->where('tb_kelas_mhs.id_mahasiswa', $id_mahasiswa)
+              ->where('tb_kelas_mhs.semester_kelas', $smt_lalu)
+              ->order_by('tb_detail_kurikulum.semester_kurikulum', 'ASC')
+              ->get('tb_kelas_mhs')
+              ->row();
+           
+            $row[] = $a;
+              }
+         
+        return $row;
+  } 
+
+ 
   public function data_nilai_mhs_pindahan($id_mahasiswa, $smt_pindah){
       return $this->db->join('tb_kp','tb_kp.id_kp=tb_kelas_mhs.id_kp')
               ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_kp.id_detail_kurikulum')
@@ -160,24 +311,24 @@ class Mahasiswa_model extends CI_Model {
   } 
 
   public function detail_mahasiswa_dikti($id_mahasiswa){
-      return $this->db->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
-              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
-              ->join('tb_ayah','tb_ayah.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
-              ->join('tb_ibu','tb_ibu.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
-              ->join('tb_alamat','tb_alamat.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
-              ->join('tb_kependudukan','tb_kependudukan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
-              ->join('tb_wali','tb_wali.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
-              ->join('tb_kontak','tb_kontak.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
-              ->join('tb_bio','tb_bio.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
-              ->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
-              ->join('tb_grade','tb_grade.id_grade=tb_mahasiswa.id_grade')
-              ->join('tb_status_mhs','tb_status_mhs.id_status=tb_mahasiswa.id_status')
-              ->join('tb_jenis_tinggal','tb_jenis_tinggal.id_jt=tb_bio.id_jt','left')
+      return $this->db->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi','left')
+              ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi','left')
+              ->join('tb_ayah','tb_ayah.id_mahasiswa=tb_mahasiswa.id_mahasiswa','left')
+              ->join('tb_ibu','tb_ibu.id_mahasiswa=tb_mahasiswa.id_mahasiswa','left')
+              ->join('tb_alamat','tb_alamat.id_mahasiswa=tb_mahasiswa.id_mahasiswa','left')
+              ->join('tb_kependudukan','tb_kependudukan.id_mahasiswa=tb_mahasiswa.id_mahasiswa','left')
+              ->join('tb_wali','tb_wali.id_mahasiswa=tb_mahasiswa.id_mahasiswa','left')
+              ->join('tb_kontak','tb_kontak.id_mahasiswa=tb_mahasiswa.id_mahasiswa','left')
+              ->join('tb_bio','tb_bio.id_mahasiswa=tb_mahasiswa.id_mahasiswa','left')
+              ->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa','left')
+              ->join('tb_grade','tb_grade.id_grade=tb_mahasiswa.id_grade','left')
+              ->join('tb_status_mhs','tb_status_mhs.id_status=tb_mahasiswa.id_status','left')
+              ->join('tb_jenis_tinggal','tb_jenis_tinggal.id_jt=tb_bio.id_jt','left','left')
               ->join('tb_transportasi','tb_transportasi.id_transportasi=tb_bio.id_transportasi','left')
-              ->join('tb_agama','tb_agama.id_agama=tb_bio.id_agama')
-              ->join('tb_kelamin','tb_kelamin.id_kelamin=tb_bio.id_kelamin')
-              ->join('tb_waktu','tb_waktu.id_waktu=tb_mahasiswa.id_waktu')
-              ->join('tb_dosen','tb_dosen.id_dosen=tb_mahasiswa.dosen_pa')
+              ->join('tb_agama','tb_agama.id_agama=tb_bio.id_agama','left')
+              ->join('tb_kelamin','tb_kelamin.id_kelamin=tb_bio.id_kelamin','left')
+              ->join('tb_waktu','tb_waktu.id_waktu=tb_mahasiswa.id_waktu','left')
+              ->join('tb_dosen','tb_dosen.id_dosen=tb_mahasiswa.dosen_pa','left')
               ->join('tb_ld','tb_ld.id_mahasiswa=tb_mahasiswa.id_mahasiswa','left')
               ->where('tb_mahasiswa.id_mahasiswa', $id_mahasiswa)
               ->get('tb_mahasiswa')
@@ -189,10 +340,10 @@ class Mahasiswa_model extends CI_Model {
               ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
               ->join('tb_bio','tb_bio.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
               ->join('tb_grade','tb_grade.id_grade=tb_mahasiswa.id_grade')
-              ->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
-              ->join('tb_kependudukan','tb_kependudukan.id_mahasiswa=tb_mahasiswa.id_mahasiswa')
-              ->join('tb_waktu','tb_waktu.id_waktu=tb_mahasiswa.id_waktu')
-              ->join('tb_dosen','tb_dosen.id_dosen=tb_mahasiswa.dosen_pa')
+              ->join('tb_pendidikan','tb_pendidikan.id_mahasiswa=tb_mahasiswa.id_mahasiswa','left')
+              ->join('tb_kependudukan','tb_kependudukan.id_mahasiswa=tb_mahasiswa.id_mahasiswa','left')
+              ->join('tb_waktu','tb_waktu.id_waktu=tb_mahasiswa.id_waktu','left')
+              ->join('tb_dosen','tb_dosen.id_dosen=tb_mahasiswa.dosen_pa','left')
               ->join('tb_ld','tb_ld.id_mahasiswa=tb_mahasiswa.id_mahasiswa','left')
               ->where('tb_mahasiswa.id_mahasiswa', $id_mahasiswa)
               ->get('tb_mahasiswa')
@@ -271,7 +422,8 @@ class Mahasiswa_model extends CI_Model {
               ->join('tb_ruang','tb_ruang.id_ruang=tb_jadwal.id_ruang')
               ->join('tb_dosen','tb_dosen.id_dosen=tb_kelas_dosen.id_dosen')
               ->where('tb_jadwal.id_kp', $b->id_kp)
-              ->where('tb_kp.id_konsentrasi !=', $id_konsentrasi)
+              ->where('tb_kp.id_konsentrasi', $id_konsentrasi)
+              ->or_where('tb_konsentrasi.nama_konsentrasi', 'Semua')
               ->where('tb_detail_kurikulum.wajib !=', 'Y')
               ->get('tb_jadwal')
               ->row();
@@ -415,7 +567,7 @@ class Mahasiswa_model extends CI_Model {
               ->join('tb_kependudukan','tb_kependudukan.id_mahasiswa=tb_pendidikan.id_mahasiswa')
               ->join('tb_konsentrasi','tb_konsentrasi.id_konsentrasi=tb_mahasiswa.id_konsentrasi')
               ->join('tb_prodi','tb_prodi.id_prodi=tb_konsentrasi.id_prodi')
-              ->join('tb_periode','tb_periode.id_periode=tb_pendidikan.id_periode')
+              ->join('tb_periode','tb_periode.id_periode=tb_pendidikan.id_periode','left')
               ->join('tb_pt','tb_pt.id_pt=tb_pendidikan.asal_pt','left')
               ->join('tb_jenis_pendaftaran','tb_jenis_pendaftaran.id_jenis_pendaftaran=tb_pendidikan.id_jenis_pendaftaran')
               ->join('tb_pembiayaan_awal','tb_pembiayaan_awal.id_pembiayaan=tb_pendidikan.id_pembiayaan_awal','left')
@@ -510,6 +662,24 @@ class Mahasiswa_model extends CI_Model {
               ->where('tb_periode.tgl_akhir_kul >=', date('Y-m-d'))
               ->where('tb_kelas_mhs.id_mahasiswa', $id_mahasiswa)
               ->where('tb_jadwal.id_hari', '5')
+              ->order_by('tb_jadwal.jam_awal', 'ASC')
+              ->get('tb_kelas_mhs')
+              ->result();
+  }
+
+  public function jadwal_mhs_sabtu($id_mahasiswa){
+     return $this->db->join('tb_kp','tb_kp.id_kp=tb_kelas_mhs.id_kp')
+              ->join('tb_jadwal','tb_jadwal.id_kp=tb_kp.id_kp')
+              ->join('tb_detail_kurikulum','tb_detail_kurikulum.id_detail_kurikulum=tb_jadwal.id_detail_kurikulum')
+              ->join('tb_matkul','tb_matkul.kode_matkul=tb_detail_kurikulum.kode_matkul')
+              ->join('tb_ruang','tb_ruang.id_ruang=tb_jadwal.id_ruang')
+              ->join('tb_kelas_dosen','tb_kelas_dosen.id_kp=tb_kp.id_kp','left')
+              ->join('tb_dosen','tb_dosen.id_dosen=tb_kelas_dosen.id_dosen','left')
+              ->join('tb_periode','tb_periode.id_periode=tb_jadwal.id_periode')
+              ->where('tb_periode.tgl_awal_kul <=', date('Y-m-d'))
+              ->where('tb_periode.tgl_akhir_kul >=', date('Y-m-d'))
+              ->where('tb_kelas_mhs.id_mahasiswa', $id_mahasiswa)
+              ->where('tb_jadwal.id_hari', '6')
               ->order_by('tb_jadwal.jam_awal', 'ASC')
               ->get('tb_kelas_mhs')
               ->result();

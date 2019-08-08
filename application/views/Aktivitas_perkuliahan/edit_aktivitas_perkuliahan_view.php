@@ -48,7 +48,7 @@
         <td style="text-align:center"><?php echo $data->nama_matkul;?></td>
         <td style="text-align:center"><?php echo $data->semester_kurikulum;?></td>
         <td style="text-align:center"><?php $totalbobot2 += $data->bobot_matkul; echo $data->bobot_matkul;?></td>
-        <td style="text-align:center"><?php echo $data->nilai_d;?></td>
+        <td style="text-align:center"><?php echo round($data->nilai_d, 2);?></td>
         <td style="text-align:center"><?php echo $data->nilai_huruf;?></td>
         <td style="text-align:center"><?php echo $data->nilai_indeks;?></td>
         <td style="text-align:center"><?php $totalsi += $dataee; echo $dataee;?></td>

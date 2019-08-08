@@ -109,7 +109,7 @@ class User_model extends CI_Model {
     public function data_user(){
         $this->db->select('*');
         $this->db->from('tb_user');
-        $this->db->join('tb_jabatan', 'tb_jabatan.id_level=tb_user.id_level');
+        $this->db->join('tb_jabatan', 'tb_jabatan.id_level=tb_user.id_level','left');
         $this->db->where('tb_user.id_level !=', 5);
         $this->db->where('tb_user.id_level !=', 2);
         $query = $this->db->get();
@@ -267,6 +267,19 @@ class User_model extends CI_Model {
     $data = array('foto' => $foto['file_name'] )
                   ;
     $this->db->where('username', $username)->update('tb_user', $data);
+    if ($this->db->affected_rows() > 0) {
+      return TRUE;
+    } else {
+      return FALSE;
+    }
+  }
+
+   public function save_edit_foto_dosen($foto, $id_dosen)
+   {    
+    $data = array('foto' => $foto['file_name'] )
+                  ;
+
+    $this->db->where('id_dosen', $id_dosen)->update('tb_dosen', $data);
     if ($this->db->affected_rows() > 0) {
       return TRUE;
     } else {
